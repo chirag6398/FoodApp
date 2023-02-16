@@ -1,0 +1,63 @@
+<div class="spr__extDiv" ng-controller="brandAdminProductController">
+    <div style="height: 51px;">
+        <nav class="spr__header">
+            <div>
+                <span>
+                    logo
+                </span>
+            </div>
+            <div>
+                <span>
+                    {{brandName}}
+                </span>
+            </div>
+        </nav>
+    </div>
+    <div class="spr__mainDiv">
+
+    <div class="spr__nav">
+        <div ui-sref="brandadmin" class="nav">
+            Home
+        </div>
+        <div  ui-sref="brandAdminOutlets" class="nav">
+            Outlets
+        </div>
+        <div style="background-color: rgb(106, 106, 244);" ui-sref="brandAdminProducts" class="nav">
+            Create Products
+        </div>
+    </div>
+    <div class="spr__rightSide">
+        <!-- <div>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Create Brand</button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Enter Brand Details</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form name="BrandData" novalidate>
+                        <div class="form-group">
+                          <label for="brandName" class="col-form-label">BrandName:</label>
+                          <input type="text" name="brandName" ng-required="true" ng-minlength="3" ng-model="brand.name" class="form-control" id="brandName">
+                          <span ng-show="BrandData.brandName.$dirty && BrandData.brandName.$error.minlength">Minimum 3 characters required</span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" ng-disabled="BrandData.$invalid" ng-click="createBrand($event)" class="btn btn-primary">{{btnText}}</button>
+                          </div>
+                       
+                      </form>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div> -->
+    
+    </div>
+    </div>

@@ -1,0 +1,29 @@
+.lgn__extDiv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+.lgn__centerDiv{
+    display: flex;
+    flex-direction: column;
+    min-width: 475px;
+    min-height: 500px;
+    justify-content: flex-start;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    align-items: center;
+}
+.lgn__header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 70px;
+}
+.lgn__leftSide{
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    height: 430px;
+}
