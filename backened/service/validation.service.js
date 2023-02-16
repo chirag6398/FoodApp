@@ -1,12 +1,12 @@
 module.exports={
-    validateUserData:function(data){
-        var userName=data.userName;
-        var lastName=data.lastName;
-        var firstName=data.firstName;
-        var password=data.password;
-        var cpassword=data.cpassword;
-        var number=data.number;
-        var email=data.email;
+    validateUserData:function(req,res){
+        var userName=req.body.userName;
+        var lastName=req.body.lastName;
+        var firstName=req.body.firstName;
+        var password=req.body.password;
+        var cpassword=req.body.cpassword;
+        var number=req.body.number;
+        var email=req.body.email;
 
         
 

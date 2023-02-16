@@ -11,5 +11,5 @@ brandAdminRoute.get("/api/brandAdmin/getBrandAdminPage",passport.authenticate('j
 brandAdminRoute.get("/api/brandAdmin/getOutlets/:id",passport.authenticate('jwt',{session: false }),brandAdminController.getOutlets);
 
 brandAdminRoute.post("/api/brandAdmin/createOutlet",passport.authenticate('jwt',{session: false }),brandAdminController.createOutlet);
-
+brandAdminRoute.post("/api/brandAdmin/createOutletAdmin",passport.authenticate('jwt',{session: false }),brandAdminController.createBrandAdmin);
 module.exports=brandAdminRoute;

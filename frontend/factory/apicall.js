@@ -90,9 +90,25 @@ app.factory("apiHandler",function($http){
     obj.getOutletsByBrandId=function(id,cb){
         $http.get("http://localhost:5000/api/brandAdmin/getOutlets/"+id).then(function(response){
             console.log(response);
+            cb(response.data);
         }).catch(function(err){
             console.log(err);
         })
+    }
+
+    obj.createOutletAdmin=function(outletAdminData,id,cb){
+        var data={
+            ...outletAdminData,
+            id:id
+        };
+        console.log(data)
+        $http.post("http://localhost:5000/api/brandAdmin/createOutletAdmin",data).then(function(response){
+            console.log(response);
+            cb(response);
+        }),function(err){
+            cb(err);
+        }
+
     }
 
     return obj;

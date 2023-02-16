@@ -12,18 +12,12 @@ module.exports={
         }
     },
     getBrands:function (req,res){
-        // brandModel.deleteMany({}).then(function(result){
-        //     console.log(result);
-        // });
-
+       
 
         if(req.user.userType==="superAdmin"){
-            // console.log(req.body);
-
            
 
             brandModel.find({}).then(function(result){
-                // console.log("brands>>>>>",result);
                 return res.status(200).send({data:result,status:200});
             }).catch(function(err){
                 return res.status(500).send({message:"internal server error",error:err,status:500});
@@ -36,8 +30,6 @@ module.exports={
     },
     getBrandOutlets:function (req,res){
         if(req.user.userType==="superAdmin"){
-            // console.log(req.body);
-
            
 
             outletModel.find({}).then(function(result){
@@ -82,7 +74,7 @@ module.exports={
         req.body=req.body.admin;
         console.log(id,req.body);
 
-        var valid=validation.validateUserData(req.body);
+        var valid=validation.validateUserData(req,res);
 
         if(valid && id){
             var brandAdmin=new employeeModel({

@@ -20,6 +20,7 @@ app.controller("brandAdminController",["$scope","$http","$location","apiHandler"
         $event.preventDefault();
         apiHandler.createOutlet($scope.outlet,$scope.brandId,function(result){
             console.log(result);
+            
         })
     }
 }])

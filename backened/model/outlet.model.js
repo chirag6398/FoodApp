@@ -11,6 +11,10 @@ var outletSchema=new mongoose.Schema({
         type:Number,
         required:true
     },
+    outletAdminId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"employee",
+    },
     brandId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"brand",
