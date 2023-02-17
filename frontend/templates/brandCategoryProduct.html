@@ -13,7 +13,8 @@
             </div>
         </nav>
     </div>
-    <div>
+    <div style="display: flex;
+    padding: 30px;">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Create Product</button>
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -48,7 +49,7 @@
                     
                     <div class="form-group">
                     <label for="image" class="col-form-label">Image :</label>
-                    <input type="file" accept="image/*"  name="image" ng-required="true" ng-model="product.img" id="image">
+                    <input type="file" accept="image/*"  name="image" ng-required="true" file-model="product.image" id="image">
                     
                     <span ng-show="productDetail.image.$dirty && productDetail.image.$error.required">Please fill this field</span>
                     </div>

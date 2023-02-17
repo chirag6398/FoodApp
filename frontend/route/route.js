@@ -42,17 +42,21 @@ app.config(function($stateProvider,$urlRouterProvider){
         templateUrl:"./templates/brandAdminCategory.html",
         controller:"brandAdminCategoryController"
     }).state("categoryProduct",{
-        url:"brandcategoryproduct/:id",
+        url:"brandCategoryProduct/:id",
         templateUrl:"./templates/brandCategoryProduct.html",
         controller:"categoryProductController"
     }).state("outletAdmin",{
         url:"/outletadmin",
         templateUrl:"./templates/outletAdmin.html",
         controller:"outletAdminController"
+    }).state("updateOutletAdmin",{
+        url:"/updateOutletAdmin/:id",
+        templateUrl:"./templates/updateOutletAdmin.html",
+        controller:"updateOutletAdminController"
     })
 
-    $urlRouterProvider
-    .when('/brandcategoryproduct/:id', '/brandcategoryproduct/:id')
+    // $urlRouterProvider
+    // .when('/brandcategoryproduct/:id', '/brandcategoryproduct/:id')
     
 
     // $urlRouterProvider.otherwise('/signup');

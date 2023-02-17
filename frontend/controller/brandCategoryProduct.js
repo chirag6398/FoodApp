@@ -6,7 +6,7 @@ app.config(['$httpProvider', function($httpProvider) {
 }]);
 
 app.controller("categoryProductController",["$scope","$http","$location","apiHandler","$stateParams",function($scope,$http,$location,apiHandler,$stateParams){
-    // console.log($stateParams.id)
+    console.log($stateParams.id)
     apiHandler.getBrandAdminPage(function(result){
         if(result && result.status===200){
             $scope.brandName=result.data.brandName;
@@ -26,12 +26,24 @@ app.controller("categoryProductController",["$scope","$http","$location","apiHan
     $scope.product={};
     $scope.createProduct=function($event){
         $event.preventDefault();
-        var data={
-            ...$scope.product,
-            categoryId:$scope.categoryId,
-            brandId:$scope.brandId
+        var data=new FormData();
+        data.append("name", "chirag");
+        for(var key in $scope.product){
+            console.log(key)
+            data.append(key,$scope.product[key]);
         }
+        data.append('categoryId',$scope.categoryId);
+        data.append('brandId',$scope.brandId);
+        data.append('hello','hi')
+        // var data={
+        //     ...$scope.product,
+        //     categoryId:$scope.categoryId,
+        //     brandId:$scope.brandId
+        // }
         console.log(data);
+        apiHandler.addProduct(data,function(result){
+            console.log(result);
+        })
 
     }
 }])

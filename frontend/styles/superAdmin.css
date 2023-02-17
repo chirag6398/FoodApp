@@ -48,7 +48,7 @@
 }
 .spr__brandCard{
     display: flex;
-    min-width: 200px;
+    width: 200px;
     min-height: 130px;
     align-items: center;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;

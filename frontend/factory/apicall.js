@@ -155,5 +155,19 @@ app.factory("apiHandler",function($http){
         })
     }
 
+    obj.addProduct=function (data,cb){
+        $http.post("http://localhost:5000/api/product/addProduct",data,{
+            headers:{
+                'Content-Type':"multipart/*",
+                
+            }
+        }).then(function(response){
+            console.log(response);
+        }).catch(function(err){
+            console.log(err);
+            cb(err);
+        })
+    }
+
     return obj;
 })
