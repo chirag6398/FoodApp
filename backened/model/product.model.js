@@ -1,16 +1,16 @@
 var mongoose=require("mongoose");
 
 var productSchema=new mongoose.Schema({
-    productName:{
+    name:{
         type:String,
         trim:true,
         required:true
     },
-    productPrice:{
+    price:{
         type:Number,
         required:true
     },
-    productImg:{
+    img:{
         type:String,
         required:true
     },
@@ -24,7 +24,7 @@ var productSchema=new mongoose.Schema({
         ref:"brand",
         required:true
     },
-    productDescription:{
+    description:{
         type:String,
         trim:true
     },

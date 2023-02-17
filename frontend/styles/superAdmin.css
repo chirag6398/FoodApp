@@ -58,3 +58,12 @@
     flex-direction: column;
     justify-content: center;
 }
+.spr__productForm{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+
+    padding: 20px;
+}

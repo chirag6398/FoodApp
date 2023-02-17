@@ -33,10 +33,14 @@ app.config(function($stateProvider,$urlRouterProvider){
         url:"/brandadminoutlets",
         templateUrl:"./templates/brandAdminOutlets.html",
         controller:"brandAdminOutletsController"
-    }).state("brandAdminProducts",{
-        url:"/brandadminproducts",
-        templateUrl:"./templates/brandAdminProduct.html",
-        controller:"brandAdminProductController"
+    }).state("brandCategory",{
+        url:"/brandadmincategory",
+        templateUrl:"./templates/brandCategory.html",
+        controller:"brandCategoryController"
+    }).state("brandAdminCategory",{
+        url:"/brandadmincategory",
+        templateUrl:"./templates/brandAdminCategory.html",
+        controller:"brandAdminCategoryController"
     })
 
     // $urlRouterProvider

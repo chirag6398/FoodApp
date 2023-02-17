@@ -1,4 +1,4 @@
-<div class="spr__extDiv" ng-controller="brandAdminController">
+<div class="spr__extDiv" ng-controller="brandAdminCategoryController">
     <div style="height: 51px;">
         <nav class="spr__header">
             <div>
@@ -16,46 +16,48 @@
     <div class="spr__mainDiv">
 
     <div class="spr__nav">
-        <div ui-sref="brandadmin" style="background-color: rgb(106, 106, 244);" class="nav">
+        <div ui-sref="brandadmin"  class="nav">
             Home
         </div>
         <div  ui-sref="brandAdminOutlets" class="nav">
             Outlets
         </div>
         <div ui-sref="brandCategory" class="nav">
-          Categories
+            Categories
         </div>
-        <div ui-sref="brandAdminCategory" class="nav">
+        <div style="background-color: rgb(106, 106, 244);" ui-sref="brandAdminCategory" class="nav">
           Add Category
         </div>
     </div>
     <div class="spr__rightSide">
         <div>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Create Outlet</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add Category</button>
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Enter Brand Details</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">Enter Category Details</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
                     <div class="modal-body">
-                      <form name="OutletData" novalidate>
+                      <form name="categoryData" novalidate>
                         <div class="form-group">
-                          <label for="outletName" class="col-form-label">OutletName:</label>
-                          <input type="text" name="outletName" ng-required="true" ng-minlength="3" ng-model="outlet.name" class="form-control" >
-                          <span ng-show="OutletData.outletName.$dirty && OutletData.outletName.$error.minlength">Minimum 3 characters required</span>
+                          <label for="categoryName" class="col-form-label">CategoryName:</label>
+                          <input type="text" name="categoryName" ng-required="true" ng-minlength="3" ng-model="category.categoryName" class="form-control" >
+                          <span ng-show="categoryData.categoryName.$dirty && categoryData.categoryName.$error.minlength">Minimum 3 characters required</span>
                         </div>
                         <div class="form-group">
-                            <label for="outletPinCode" class="col-form-label">Outlet PinCode:</label>
-                            <input type="number" name="outletPinCode" ng-required="true" ng-minlength="6" ng-maxlength="6" ng-model="outlet.pincode" class="form-control" >
-                            <span ng-show="OutletData.outletPinCode.$dirty && OutletData.outletPinCode.$error.minlength && OutletData.outletPinCode.$error.maxlength">6 characters required</span>
+                            <label for="logo" class="col-form-label">Logo (optional):</label>
+                            <input type="file"  name="logo"  ng-model="category.categoryLogo" id="logo">
+                            
+                            <!-- <span ng-show="categoryDetail.logo.$dirty && categoryDetail.logo.$error.required">Please fill this field</span> -->
                           </div>
+                       
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" ng-disabled="OutletData.$invalid" ng-click="createOutlet($event)" class="btn btn-primary">{{btnText}}</button>
+                            <button type="button" ng-disabled="categoryData.$invalid" ng-click="addCategory($event)" class="btn btn-primary">{{btnText}}</button>
                           </div>
                        
                       </form>

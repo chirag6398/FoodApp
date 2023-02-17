@@ -111,5 +111,28 @@ app.factory("apiHandler",function($http){
 
     }
 
+    obj.getCategoryByBrandId=function(id,cb){
+        console.log(id);
+        $http.get("http://localhost:5000/api/brandAdmin/getCategory/"+id).then(function(response){
+            console.log(response);
+            cb(response);
+        }).catch(function(err){
+            console.log(err);
+        })
+    }
+
+    obj.addCategory=function(category,id,cb){
+        var data={
+            ...category,
+            id:id
+        }
+        $http.post("http://localhost:5000/api/brandAdmin/addCategory",data).then(function(response){
+            console.log(response);
+            cb(response);
+        }),function(err){
+            cb(err);
+        }
+    }
+
     return obj;
 })

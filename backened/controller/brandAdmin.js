@@ -1,7 +1,10 @@
 var brandModel=require("../model/brand.model");
 var outletModel=require("../model/outlet.model");
 var validation=require("../service/validation.service");
-var employeeModel=require("../model/employee.model")
+var employeeModel=require("../model/employee.model");
+// var category=require("../model/category.model");
+var categoryModel = require("../model/category.model");
+
 module.exports={
     getBrandAdminPage:function (req,res){
         if(req.user.userType=="brandAdmin"){
@@ -94,5 +97,29 @@ module.exports={
         }else{
             return res.status(404).send({error:"data not found",status:404})
         }
+    },
+    addCategory:function (req,res){
+        console.log(req.body);
+        var category=new categoryModel({
+            categoryName:req.body.categoryName,
+            brandId:req.body.id
+        });
+
+        category.save().then(function(result){
+            console.log("added category",result);
+            return res.status(200).send({message:"successfull",status:200});
+        }).catch(function(err){
+            console.log(err);
+            return res.status(500).send({error:"internal server error",status:500});
+        })
+    },
+    getCategory:function(req,res){
+        // console.log("",req.body);
+        categoryModel.find({brandId:req.params.id}).then(function(result){
+            console.log(result);
+            return res.status(200).send(result);
+        }).catch(function(err){
+            return res.status(500).send({error:err,status:500});
+        })
     }
 }
