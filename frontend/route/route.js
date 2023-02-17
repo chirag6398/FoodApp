@@ -9,10 +9,6 @@ app.config(function($stateProvider,$urlRouterProvider){
         url:'/superAdmin',
         templateUrl:'./templates/superAdmin.html',
         controller:"superAdminController"
-    }).state("changePassword",{
-        url:"/changepassword",
-        templateUrl:"./templates/changePassword.html",
-        controller:"changePasswordController"
     }).state("superAdminBrandNames",{
         url:'/superAdmin/BrandNames',
         templateUrl:'./templates/superAdminBrandNames.html',
@@ -46,7 +42,7 @@ app.config(function($stateProvider,$urlRouterProvider){
         templateUrl:"./templates/brandCategoryProduct.html",
         controller:"categoryProductController"
     }).state("outletAdmin",{
-        url:"/outletadmin",
+        url:"/outletAdmin",
         templateUrl:"./templates/outletAdmin.html",
         controller:"outletAdminController"
     }).state("updateOutletAdmin",{
@@ -57,6 +53,18 @@ app.config(function($stateProvider,$urlRouterProvider){
         url:"/setting/:id",
         templateUrl:"./templates/setting.html",
         controller:"settingController"
+    }).state("delete",{
+        url:"/delete/:id",
+        templateUrl:"./templates/delete.html",
+        controller:"deleteController"
+    }).state("changePassword",{
+        url:"/changePassword/:id",
+        templateUrl:"./templates/changePassword.html",
+        controller:"changePasswordController"
+    }).state("updateSelf",{
+        url:"/updateSelf/:id",
+        templateUrl:"./templates/updateSelf.html",
+        controller:"updateSelfController"
     })
 
     // $urlRouterProvider

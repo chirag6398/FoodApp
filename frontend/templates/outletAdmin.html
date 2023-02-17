@@ -1,3 +1,39 @@
-<div ng-controller="outletAdminController">
-    outlet Admin
+<div class="spr__extDiv" ng-controller="outletAdminController">
+    <div style="height: 51px;">
+        <nav class="spr__header">
+            <div>
+                <span>
+                    logo
+                </span>
+            </div>
+            <div>
+                <span>
+                    {{brandName}}
+                </span>
+            </div>
+        </nav>
+    </div>
+    <div class="spr__mainDiv">
+    <div class="spr__nav">
+        <div ui-sref="setting({id:adminId})" style="background-color: rgb(106, 106, 244);" class="nav">
+           Products
+        </div>
+        <div  ui-sref="updateSelf({id:adminId})" class="nav">
+           Add Products
+        </div>
+        <div ui-sref="changePassword({id:adminId})" class="nav">
+           Add Employee
+        </div>
+        <div ui-sref="delete({id:adminId})" class="nav">
+            Delete 
+        </div>
+    </div>
+    </div>
+<div class="spr__rightSide">
+    <div>
+        
+        
+    </div>
 </div>
+</div>
+    
