@@ -6,7 +6,7 @@ module.exports={
     getAdminPage:function (req,res){
         console.log(req.user);
         if(req.user.userType==="superAdmin"){
-            return res.status(200).send({message:"eligible"});
+            return res.status(200).send({message:"eligible",user:req.user});
         }else{
             return res.status(401).send({message:"unauthorized user"});
         }

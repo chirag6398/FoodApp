@@ -1,15 +1,18 @@
 ///<reference path="../module/module.js"/>
 ///<reference path="../factory/apicall.js"/>
 
-app.config(['$httpProvider', function($httpProvider) {
-    $httpProvider.defaults.headers.common['Authorization'] = (window.localStorage.getItem("Authorization"));
-}]);
+// app.config(['$httpProvider', function($httpProvider) {
+//     $httpProvider.defaults.headers.common['Authorization'] = (window.localStorage.getItem("Authorization"));
+// }]);
 
 app.controller("superAdminController",["$scope","$http","$location","apiHandler",function($scope,$http,$location,apiHandler){
     apiHandler.getAdminPage(function(result){
-        if(result && result.status===200){
+        if(result.status===200){
             $scope.btnText="Create";
+            console.log(result);
+            $scope.superAdminId=result.data.user._id;
         }else{
+            // window.location.reload();
             $location.path('login')
         }
     });

@@ -23,9 +23,10 @@
   </head>
 
   <body ng-controller="mainController">  
-      
-    <a ui-sref="login">login</a>
-    {{data}}
+  <div style="padding:20px">
+    <button class="btn btn-primary" ui-sref="login">login</button>
+  </div>  
+    
     <div> 
         <ui-view></ui-view>
     </div>
@@ -46,7 +47,7 @@
   <script src="./controller//brandCategoryProduct.js"></script>
   <script src="./controller/outletAdmin.js"></script>
   <script src="./controller/updateOutletAdmin.js"></script>
-
+  <script src="./controller/setting.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" 
   integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
   crossorigin="anonymous"></script>

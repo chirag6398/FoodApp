@@ -53,6 +53,10 @@ app.config(function($stateProvider,$urlRouterProvider){
         url:"/updateOutletAdmin/:id",
         templateUrl:"./templates/updateOutletAdmin.html",
         controller:"updateOutletAdminController"
+    }).state("setting",{
+        url:"/setting/:id",
+        templateUrl:"./templates/setting.html",
+        controller:"settingController"
     })
 
     // $urlRouterProvider
