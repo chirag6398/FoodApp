@@ -1,3 +1,68 @@
 <div ng-controller="categoryProductController">
-hiefyeiu
+    <div style="height: 51px;">
+        <nav class="spr__header">
+            <div>
+                <span>
+                    logo
+                </span>
+            </div>
+            <div>
+                <span>
+                    {{brandName}}
+                </span>
+            </div>
+        </nav>
+    </div>
+    <div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Create Product</button>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Enter Product Details</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                   
+                <form name="productDetail" novalidate>
+                    <div class="form-group">
+                    <label for="productName" class="col-form-label">ProductName :</label>
+                    <input type="text" name="productName" ng-required="true" ng-minlength="3" ng-model="product.productName" class="form-control" >
+                    <span ng-show="productDetail.productName.$dirty && productDetail.productName.$error.minlength">Minimum 3 characters required</span>
+                    <span ng-show="productDetail.productName.$dirty && productDetail.productName.$error.required">Please fill this field</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="col-form-label">Description :</label>
+                        <input type="text" name="description"  ng-minlength="0" ng-model="productdescription" class="form-control" >
+                        <!-- <span ng-show="productDetail.description.$dirty && productDetail.description.$error.minlength">Minimum 3 characters required</span> -->
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="price" class="col-form-label">Price :</label>
+                        <input type="number" name="price" ng-required="true" ng-pattern="/^([1-9]{1})([0-9]{1,4})?$/"  ng-model="product.price" class="form-control" >
+                        <span ng-show="productDetail.price.$dirty && !productDetail.price.$error.required && productDetail.price.$invalid">please enter correct price</span>
+                        <span ng-show="productDetail.price.$dirty && productDetail.price.$error.required">Please fill this field</span>
+                    </div>
+                    
+                    <div class="form-group">
+                    <label for="image" class="col-form-label">Image :</label>
+                    <input type="file" accept="image/*"  name="image" ng-required="true" ng-model="product.img" id="image">
+                    
+                    <span ng-show="productDetail.image.$dirty && productDetail.image.$error.required">Please fill this field</span>
+                    </div>
+                    <div class="form-group">
+                    <button type="button" ng-disabled="productDetail.$invalid" ng-click="createProduct($event)" class="btn btn-primary">{{btnText}}</button>
+        
+                    </div>
+                </form>
+                     
+                </div>
+                
+              </div>
+            </div>
+          </div>
+    </div>
+
 </div>

@@ -134,5 +134,26 @@ app.factory("apiHandler",function($http){
         }
     }
 
+    obj.getUserById=function(id,cb){
+        $http.get("http://localhost:5000/api/employee/getUserById/"+id).then(function(response){
+            console.log(response);
+            cb(response);
+        }),function(err){
+            console.log(err);
+            cb(err);
+        }
+    }
+
+    obj.updateAdmin=function (admin,id,cb){
+        var data={
+            ...admin,
+            id:id
+        }
+        $http.post("http://localhost:5000/api/employee/updateUser",data).then(function(response){
+            console.log(response);
+            cb(response);
+        })
+    }
+
     return obj;
 })

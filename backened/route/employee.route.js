@@ -8,6 +8,8 @@ passportLocal.initializer(passport);
 // passportJwt.initializer(passport);
 
 
+employeeRoute.get("/api/employee/getUserById/:id",employeeController.getUserById);
+employeeRoute.post("/api/employee/updateUser",employeeController.updateUser);
 
 employeeRoute.post("/api/employee/login",passport.authenticate('local',{session: false }),employeeController.logInHandler);
 

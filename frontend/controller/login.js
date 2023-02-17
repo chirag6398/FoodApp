@@ -24,6 +24,8 @@ app.controller("loginController",["$scope","$http","$location","apiHandler",func
                     
                 }else if(result.userType==="brandAdmin"){
                     $location.path("brandadmin");
+                }else if(result.userType==="outletAdmin"){
+                    $location.path("outletAdmin");
                 }
             }else{
                 $scope.buttonText="Retry";

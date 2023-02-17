@@ -22,6 +22,7 @@ app.use(morgan("dev"));
 app.use(require("./route/employee.route"));
 app.use(require("./route/superAdmin.route"));
 app.use(require("./route/brandAdmin.route"));
+app.use(require("./route/outletAdmin.route"));
 
 app.listen(port,function(err){
     if(err){

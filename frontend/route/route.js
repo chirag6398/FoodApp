@@ -6,7 +6,7 @@ app.config(function($stateProvider,$urlRouterProvider){
         templateUrl:'./templates/login.html',
         controller:"loginController"
     }).state('superAdmin',{
-        url:'/superadmin',
+        url:'/superAdmin',
         templateUrl:'./templates/superAdmin.html',
         controller:"superAdminController"
     }).state("changePassword",{
@@ -22,7 +22,7 @@ app.config(function($stateProvider,$urlRouterProvider){
         templateUrl:"./templates/superAdminAnalysis.html",
         controller:"superAdminAnalysisController"
     }).state("updatebrandadmin",{
-        url:"/superadmin/updatebrandadmin",
+        url:"/superadmin/updatebrandadmin/:id",
         templateUrl:"./templates/updateBrandAdmin.html",
         controller:"updatebrandadminController"
     }).state("brandadmin",{
@@ -45,10 +45,14 @@ app.config(function($stateProvider,$urlRouterProvider){
         url:"brandcategoryproduct/:id",
         templateUrl:"./templates/brandCategoryProduct.html",
         controller:"categoryProductController"
+    }).state("outletAdmin",{
+        url:"/outletadmin",
+        templateUrl:"./templates/outletAdmin.html",
+        controller:"outletAdminController"
     })
 
-    // $urlRouterProvider
-    // .when('/resetPassword/:resetToken', '/resetPassword/:resetToken')
+    $urlRouterProvider
+    .when('/brandcategoryproduct/:id', '/brandcategoryproduct/:id')
     
 
     // $urlRouterProvider.otherwise('/signup');
