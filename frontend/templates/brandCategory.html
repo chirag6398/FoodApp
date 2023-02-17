@@ -33,7 +33,7 @@
       <div>
         Categories
       </div>
-      <div class="spr__brandCard" ui-sref="categoryProduct" style="cursor: pointer;" ng-repeat="category in categories">
+      <div class="spr__brandCard" ui-sref="categoryProduct({id:category._id})" style="cursor: pointer;" ng-repeat="category in categories">
         <div>
             {{category.categoryName}}
             

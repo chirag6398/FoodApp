@@ -41,6 +41,10 @@ app.config(function($stateProvider,$urlRouterProvider){
         url:"/brandadmincategory",
         templateUrl:"./templates/brandAdminCategory.html",
         controller:"brandAdminCategoryController"
+    }).state("categoryProduct",{
+        url:"brandcategoryproduct/:id",
+        templateUrl:"./templates/brandCategoryProduct.html",
+        controller:"categoryProductController"
     })
 
     // $urlRouterProvider
