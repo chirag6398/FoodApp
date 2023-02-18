@@ -49,9 +49,9 @@
                     
                     <div class="form-group">
                     <label for="image" class="col-form-label">Image :</label>
-                    <input type="file" accept="image/*"  name="image" ng-required="true" file-model="product.image" id="image">
-                    
-                    <span ng-show="productDetail.image.$dirty && productDetail.image.$error.required">Please fill this field</span>
+                    <input type="file" accept="image/*"  name="image"  file-model="product.image" id="image">
+                    <!-- ng-required="true" -->
+                    <!-- <span ng-show="productDetail.image.$dirty && productDetail.image.$error.required">Please fill this field</span> -->
                     </div>
                     <div class="form-group">
                     <button type="button" ng-disabled="productDetail.$invalid" ng-click="createProduct($event)" class="btn btn-primary">{{btnText}}</button>
@@ -64,6 +64,28 @@
               </div>
             </div>
           </div>
+    </div>
+
+    <div ng-if="categories" class="products">
+        <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th scope="col">S.No</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="cursor:pointer" ng-repeat="category in categories" >
+                <th scope="row">{{$index}}</th>
+                <td>{{category.name}}</td>
+                <td>{{category.description}}</td>
+                <td>{{category.price}}</td>
+              </tr>
+              
+            </tbody>
+          </table>
     </div>
 
 </div>

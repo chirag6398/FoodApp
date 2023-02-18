@@ -1,7 +1,7 @@
 ///<reference path="../module/module.js"/>
 ///<reference path="../factory/apicall.js"/>
 
-app.controller("loginController",["$scope","$http","$location","apiHandler",function($scope,$http,$location,apiHandler){
+app.controller("loginController",["$scope","$http","$location","apiHandler","$rootScope",function($scope,$http,$location,apiHandler,$rootScope){
     $scope.disabledFlag=false;
     $scope.buttonText="submit";
 
@@ -18,6 +18,7 @@ app.controller("loginController",["$scope","$http","$location","apiHandler",func
             if(result && result.status===200){
                 $scope.buttonText="successfull";
                 window.localStorage.setItem("Authorization","Bearer "+result.token);
+                console.log(result);
                 if(result.userType==="superAdmin"){
                     
                     $location.path("superAdmin");
@@ -25,6 +26,7 @@ app.controller("loginController",["$scope","$http","$location","apiHandler",func
                 }else if(result.userType==="brandAdmin"){
                     $location.path("brandadmin");
                 }else if(result.userType==="outletAdmin"){
+                    $rootScope.admin=result.admin;
                     $location.path("outletAdmin");
                 }
             }else{

@@ -25,15 +25,19 @@ app.config(function($stateProvider,$urlRouterProvider){
         url:"/brandadmin",
         templateUrl:"./templates/brandAdmin.html",
         controller:"brandAdminController"
-    }).state("brandAdminOutlets",{
+    }).state("brandadmin.home",{
+        url:"/home",
+        templateUrl:"./templates/brandAdminHome.html",
+        controller:"brandAdminHomeController"
+    }).state("brandadmin.outlets",{
         url:"/brandadminoutlets",
         templateUrl:"./templates/brandAdminOutlets.html",
         controller:"brandAdminOutletsController"
-    }).state("brandCategory",{
+    }).state("brandadmin.brandCategory",{
         url:"/brandadmincategory",
         templateUrl:"./templates/brandCategory.html",
         controller:"brandCategoryController"
-    }).state("brandAdminCategory",{
+    }).state("brandadmin.brandAdminCategory",{
         url:"/brandadmincategory",
         templateUrl:"./templates/brandAdminCategory.html",
         controller:"brandAdminCategoryController"
@@ -49,10 +53,10 @@ app.config(function($stateProvider,$urlRouterProvider){
         url:"/updateOutletAdmin/:id",
         templateUrl:"./templates/updateOutletAdmin.html",
         controller:"updateOutletAdminController"
-    }).state("setting",{
+    }).state("brandadmin.setting",{
         url:"/setting/:id",
-        templateUrl:"./templates/setting.html",
-        controller:"settingController"
+        templateUrl:"./templates/brandSetting.html",
+        controller:"brandSettingController"
     }).state("delete",{
         url:"/delete/:id",
         templateUrl:"./templates/delete.html",
@@ -65,6 +69,14 @@ app.config(function($stateProvider,$urlRouterProvider){
         url:"/updateSelf/:id",
         templateUrl:"./templates/updateSelf.html",
         controller:"updateSelfController"
+    }).state("outletAdmin.products",{
+        url:"/products",
+        templateUrl:"./templates/products.html",
+        controller:"outletAdminProductsController"
+    }).state("outletAdmin.availableProducts",{
+        url:"/brandProducts/:id",
+        templateUrl:"./templates/brandProducts.html",
+        controller:"brandProductsController"
     })
 
     // $urlRouterProvider

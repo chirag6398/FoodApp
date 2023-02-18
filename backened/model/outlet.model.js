@@ -21,9 +21,23 @@ var outletSchema=new mongoose.Schema({
         required:true
     },
     products:[{
-        productId:{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:"product"
+        product:{
+            name:{
+                type:String,
+                trim:true,
+                required:true
+            },
+            price:{
+                type:Number,
+                required:true
+            },
+            img:{
+                type:String,
+                
+            },
+            description:{
+                type:String,
+            }
         }
     }
     ],

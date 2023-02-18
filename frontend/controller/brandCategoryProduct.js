@@ -10,10 +10,13 @@ app.controller("categoryProductController",["$scope","$http","$location","apiHan
             $scope.brandName=result.data.brandName;
             $scope.brandId=result.data._id;
             $scope.categoryId=$stateParams.id;
-            // apiHandler.getProductsByCategoryId(result.data._id,function(result){
-            //     console.log(result.data);
-            //     $scope.categories=result.data;
-            // })
+
+            apiHandler.getProductsInBrand({categoryId:$scope.categoryId,brandId:$scope.brandId},function(result){
+                console.log(result.data);
+                $scope.categories=result.data;
+            })
+
+            
 
             
         }else{

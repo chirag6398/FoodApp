@@ -3,7 +3,7 @@
 
 
 
-app.controller("brandAdminController",["$scope","$http","$location","apiHandler",function($scope,$http,$location,apiHandler){
+app.controller("brandAdminHomeController",["$scope","$http","$location","apiHandler",function($scope,$http,$location,apiHandler){
     apiHandler.getBrandAdminPage(function(result){
         if(result && result.status===200){
             $scope.brandName=result.data.brandName;

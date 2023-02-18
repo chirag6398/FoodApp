@@ -30,5 +30,6 @@ const uploadProductImg = multer({
 // var upload = multer({ storage: storage });
 
 productRoute.post("/api/product/addProduct",uploadProductImg.single("file"),productController.addProduct);
+productRoute.post("/api/product/getProducts",uploadProductImg.single("file"),productController.getProducts);
 
 module.exports=productRoute;

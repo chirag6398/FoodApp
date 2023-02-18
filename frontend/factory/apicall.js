@@ -6,7 +6,7 @@ app.factory("apiHandler",function($http){
     obj.postLogin=function(data,cb){
         $http.post("http://localhost:5000/api/employee/login",{username:data.userName,password:data.password}).then(function(response){
             console.log(response);
-            cb({token:response.data.token,userType:response.data.user.userType,status:200});
+            cb({token:response.data.token,userType:response.data.user.userType,admin:response.data.user,status:200});
         }).catch(function(err){
             
             console.log(err);
@@ -18,6 +18,20 @@ app.factory("apiHandler",function($http){
                 cb({message:"please try againg later",status:500});
     
             }
+        })
+    }
+
+    obj.getOutletAdminPage=function(cb){
+        $http.get("http://localhost:5000/api/outletAdmin/getAdminPage",{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            
+            cb(response);
+        }).catch(function(err){
+            console.log(err);
+            cb({status:401,message:"unauthorized user"});
         })
     }
 
@@ -198,21 +212,23 @@ app.factory("apiHandler",function($http){
         }).then(function(response){
             console.log(response);
             cb(response);
+        }).catch(function(err){
+            console.log(err);
         })
     }
 
-    // obj.addProduct=function (formData,cb){
-    //     console.log("called");
-    //     $http.post('http://localhost:5000/api/product/addProduct', formData, {
-          
-    //       headers: {'Content-Type': undefined}
-    //     }).then(function(response) {
-    //       console.log(response.data);
-    //       cb(response.data);
-    //     }, function(error) {
-    //       console.log(error);
-    //     });
-    // }
+    obj.getProductsInBrand=function(data,cb){
+        $http.post("http://localhost:5000/api/product/getProducts",data,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            console.log(response);
+            cb(response);
+        }).catch(function(err){
+            console.log(err);
+        })
+    }
 
     return obj;
 })

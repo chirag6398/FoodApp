@@ -1,48 +1,20 @@
-<div class="spr__extDiv" ng-controller="brandCategoryController">
-    <div style="height: 51px;">
-        <nav class="spr__header">
-            <div>
-                <span>
-                    logo
-                </span>
-            </div>
-            <div>
-                <span>
-                    {{brandName}}
-                </span>
-            </div>
-        </nav>
-    </div>
-    <div class="spr__mainDiv">
-
-    <div class="spr__nav">
-        <div ui-sref="brandadmin" class="nav">
-            Home
-        </div>
-        <div  ui-sref="brandAdminOutlets" class="nav">
-            Outlets
-        </div>
-        <div style="background-color: rgb(106, 106, 244);" ui-sref="brandCategory" class="nav">
-          Categories
-        </div>
-        <div  ui-sref="brandAdminCategory" class="nav">
-          Add Category
-        </div>
-    </div>
-    <div style="width:77%;flex-direction: column;" class="spr__rightSide">
+<div ng-controller="brandCategoryController" style="flex-direction: column;" class="spr__rightSide">
       <div>
         Categories
       </div>
-      <div class="spr__brandCard" ui-sref="categoryProduct({id:category._id})" style="cursor: pointer;" ng-repeat="category in categories">
-        <div>
-            {{category.categoryName}}
+      <div style="display:flex;flex-wrap: wrap;">
+        <div class="spr__brandCard" ui-sref="categoryProduct({id:category._id})" style="cursor: pointer;" ng-repeat="category in categories">
+            <div>
+                {{category.categoryName}}
+                
+            </div>
             
-        </div>
-        
+          </div>
       </div>
+      
       
       
         
     
-    </div>
-    </div>
+</div>
+   

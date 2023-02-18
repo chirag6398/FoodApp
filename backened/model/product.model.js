@@ -12,7 +12,7 @@ var productSchema=new mongoose.Schema({
     },
     img:{
         type:String,
-        required:true
+        
     },
     categoryId:{
         type:mongoose.Schema.Types.ObjectId,

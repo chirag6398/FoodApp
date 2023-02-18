@@ -7,7 +7,7 @@ passportJwt.initializer(passport);
 
 
 
-outletAdminRoute.get("/api/outletAdmin/getOutletPageByOutletId",passport.authenticate('jwt',{session: false }),outletAdminController.getOutletPageByOutletId);
+outletAdminRoute.get("/api/outletAdmin/getAdminPage",passport.authenticate('jwt',{session: false }),outletAdminController.getAdminPage);
 // outletAdminRoute.get("/api/outletAdmin/getOutlets/:id",passport.authenticate('jwt',{session: false }),outletAdminController.getOutlets);
 // outletAdminRoute.get("/api/outletAdmin/getCategory/:id",passport.authenticate('jwt',{session: false }),outletAdminController.getCategory);
 

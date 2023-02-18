@@ -1,35 +1,4 @@
-<div class="spr__extDiv" ng-controller="brandAdminCategoryController">
-    <div style="height: 51px;">
-        <nav class="spr__header">
-            <div>
-                <span>
-                    logo
-                </span>
-            </div>
-            <div>
-                <span>
-                    {{brandName}}
-                </span>
-            </div>
-        </nav>
-    </div>
-    <div class="spr__mainDiv">
-
-    <div class="spr__nav">
-        <div ui-sref="brandadmin"  class="nav">
-            Home
-        </div>
-        <div  ui-sref="brandAdminOutlets" class="nav">
-            Outlets
-        </div>
-        <div ui-sref="brandCategory" class="nav">
-            Categories
-        </div>
-        <div style="background-color: rgb(106, 106, 244);" ui-sref="brandAdminCategory" class="nav">
-          Add Category
-        </div>
-    </div>
-    <div class="spr__rightSide">
+<div  ng-controller="brandAdminCategoryController" class="spr__rightSide">
         <div>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add Category</button>
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -67,7 +36,5 @@
                 </div>
               </div>
         </div>
-    </div>
+  </div>
     
-</div>
-</div>

@@ -42,6 +42,7 @@
 .spr__rightSide{
     padding-left: 20px;
     display: flex;
+    height: 100%;
     height: fit-content;
     justify-content: flex-start;
     flex-wrap: wrap;
@@ -66,4 +67,7 @@
     box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
 
     padding: 20px;
+}
+.active{
+    background-color: rgb(106, 106, 244);
 }
