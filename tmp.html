@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <title>Upload File</title>
+</head>
+<body ng-controller="myCtrl">
+  <form ng-submit="submit($event)" enctype="multipart/form-data">
+    <input type="text" name="name" ng-model="name" placeholder="Enter Name">
+    <input type="file" name="file" file-model="myFile">
+    <button type="submit">Submit</button>
+  </form>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope, $http) {
+      $scope.submit = function($event) {
+        $event.preventDefault();
+        var file = $scope.myFile;
+        var formData = new FormData();
+        formData.append('name', $scope.name);
+        formData.append('file', file);
+        console.log(formData,$scope.name,file);
+        alert("hi");
+
+        $http.post('http://localhost:5000/api/product/addProduct', formData, {
+          transformRequest: angular.identity,
+          headers: {'Content-Type': undefined}
+        }).then(function(response) {
+          console.log(response.data);
+        }, function(error) {
+          console.log(error);
+        });
+      };
+    });
+
+    app.directive('fileModel', ['$parse', function ($parse) {
+      return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+          var model = $parse(attrs.fileModel);
+          var modelSetter = model.assign;
+
+          element.bind('change', function(){
+            scope.$apply(function(){
+              modelSetter(scope, element[0].files[0]);
+            });
+          });
+        }
+      };
+    }]);
+  </script>
+</body>
+</html>

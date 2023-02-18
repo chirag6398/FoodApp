@@ -1,9 +1,7 @@
 ///<reference path="../module/module.js"/>
 ///<reference path="../factory/apicall.js"/>
 
-// app.config(['$httpProvider', function($httpProvider) {
-//     $httpProvider.defaults.headers.common['Authorization'] = (window.localStorage.getItem("Authorization"));
-// }]);
+
 
 app.controller("categoryProductController",["$scope","$http","$location","apiHandler","$stateParams",function($scope,$http,$location,apiHandler,$stateParams){
     console.log($stateParams.id)
@@ -24,30 +22,29 @@ app.controller("categoryProductController",["$scope","$http","$location","apiHan
     });
     $scope.btnText="Add product";
     $scope.product={};
-    $scope.createProduct=function($event){
-        $event.preventDefault();
-        var data=new FormData();
-        data.append("name", "chirag");
-        for(var key in $scope.product){
-            console.log(key)
-            data.append(key,$scope.product[key]);
-        }
-        data.append('categoryId',$scope.categoryId);
-        data.append('brandId',$scope.brandId);
-        data.append('hello','hi')
-        // var data={
-        //     ...$scope.product,
-        //     categoryId:$scope.categoryId,
-        //     brandId:$scope.brandId
-        // }
-        console.log(data);
-        apiHandler.addProduct(data,function(result){
-            console.log(result);
-        })
 
-    }
+    $scope.createProduct = function($event) {
+        $event.preventDefault();
+        var formData=new FormData();
+        formData.append("name", $scope.product.productName);
+        formData.append("file",$scope.product.image);
+        formData.append('categoryId',$scope.categoryId);
+        formData.append('brandId',$scope.brandId);
+        formData.append('price',$scope.product.price);
+        formData.append('description',$scope.product.description);
+        alert("hi");
+        $http.post('http://localhost:5000/api/product/addProduct', formData, {
+          transformRequest: angular.identity,
+          headers: {'Content-Type': undefined}
+        }).then(function(response) {
+          console.log(response.data);
+        }, function(error) {
+          console.log(error);
+        });
+      };
+
+   
 }])
 
 
-// http://127.0.0.1:5501/frontend/index.html#/brandcategoryproduct/63ef2809fb24d4a0398d9a94
 

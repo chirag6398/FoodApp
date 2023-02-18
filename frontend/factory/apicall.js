@@ -201,20 +201,18 @@ app.factory("apiHandler",function($http){
         })
     }
 
-    obj.addProduct=function (data,cb){
-        $http.post("http://localhost:5000/api/product/addProduct",data,{
-            headers:{
-                "Authorization":window.localStorage.getItem("Authorization"),
-                'Content-Type':"multipart/*",
-                
-            }
-        }).then(function(response){
-            console.log(response);
-        }).catch(function(err){
-            console.log(err);
-            cb(err);
-        })
-    }
+    // obj.addProduct=function (formData,cb){
+    //     console.log("called");
+    //     $http.post('http://localhost:5000/api/product/addProduct', formData, {
+          
+    //       headers: {'Content-Type': undefined}
+    //     }).then(function(response) {
+    //       console.log(response.data);
+    //       cb(response.data);
+    //     }, function(error) {
+    //       console.log(error);
+    //     });
+    // }
 
     return obj;
 })
