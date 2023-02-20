@@ -13,6 +13,7 @@ app.controller("loginController",["$scope","$http","$location","apiHandler","$ro
         console.log($scope.lgn);
         $scope.disabledFlag=true;
         $scope.buttonText="processing";
+        
         apiHandler.postLogin($scope.lgn,function(result){
             
             if(result && result.status===200){

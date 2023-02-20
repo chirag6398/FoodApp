@@ -1,3 +1,26 @@
 <div ng-controller="outletAdminProductsController">
-    products
+    <div ng-if="products" class="products">
+        <table class="table table-bordered table-hover" ng-repeat="categoryProduct in products" >
+           
+            <thead>
+              <tr>
+                <th scope="col">S.No</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Price</th>
+                <th scope="col">Remove</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="cursor:pointer" ng-repeat="product in categoryProduct.products" >
+                <th  scope="row">{{$index}}</th>
+                <td>{{product.name}}</td>
+                <td>{{product.description}}</td>
+                <td>{{product.price}}</td>
+                <td><button type="button" ng-click="removeProduct(product)" class="btn btn-primary">Remove</button></td>
+              </tr>
+              
+            </tbody>
+          </table>
+    </div>
 </div>

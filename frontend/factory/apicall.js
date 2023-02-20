@@ -79,6 +79,7 @@ app.factory("apiHandler",function($http){
     }
     
     obj.postAddBrandAdmin=function(data,cb){
+        console.log(data)
         $http.post("http://localhost:5000/api/superAdmin/addBrandAdmin",data,{
             headers:{
                 "Authorization":window.localStorage.getItem("Authorization")
@@ -230,5 +231,79 @@ app.factory("apiHandler",function($http){
         })
     }
 
+    obj.getBrandOutletProducts=function(data,cb){
+        $http.post("http://localhost:5000/api/outlet/brandProducts",data).then(function(response){
+            cb(response);
+        }).catch(function(err){
+            
+            console.log(err);
+        })
+    }
+
+    obj.getProductByCategory=function(data,cb){
+        console.log(data)
+        $http.post("http://localhost:5000/api/outlet/categoryProduct",data).then(function(response){
+            cb(response);
+        }).catch(function(err){
+            
+            console.log(err);
+        })
+    }
+
+    obj.addProductToOutlet=function(product,outletId,cb){
+        var data={
+            ...product,
+            outletId
+        }
+        console.log(data);
+        $http.post("http://localhost:5000/api/outlet/addProductToOutlet",data).then(function(response){
+            cb(null,response);
+        }).catch(function(err){
+            
+            console.log(err,null);
+        })
+    }
+
+    obj.getOutletProducts=function(id,cb){
+        console.log(id);
+        $http.get("http://localhost:5000/api/outlet/getProduct/"+id).then(function(response){
+            cb(null,response);
+        }).catch(function(err){
+            cb(err,null);
+        })
+    }
+
+    obj.removeOutletProduct=function(product,outletId,cb){
+        var data={
+            ...product,
+            outletId
+        };
+
+        $http.post("http://localhost:5000/api/outlet/removeOutletProduct",data).then(function(response){
+            cb(null,response);
+        }).catch(function(err){
+            
+            console.log(err,null);
+        })
+
+
+    }
+
+    obj.deactivateBrand=function(brandId,cb){
+        $http.post("http://localhost:5000/api/superAdmin/deactivateBrand",{brandId}).then(function(response){
+            cb(null,response);
+        }).catch(function(err){
+            
+            console.log(err,null);
+        })
+    }
+    obj.activateBrand=function(brandId,cb){
+        $http.post("http://localhost:5000/api/superAdmin/activateBrand",{brandId}).then(function(response){
+            cb(null,response);
+        }).catch(function(err){
+            
+            console.log(err,null);
+        })
+    }
     return obj;
 })

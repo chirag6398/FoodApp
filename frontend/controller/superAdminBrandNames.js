@@ -31,12 +31,25 @@ app.controller("superAdminBrandNamesController",["$scope","$http","$location","a
         $event.preventDefault();
         // console.log($scope.firstName);
         $scope.brandId=id;
-        // console.log(id);
+        console.log(id);
         // console.log($scope.admin);
         apiHandler.postAddBrandAdmin({admin:$scope.admin,id:id},function(response){
             console.log(response);
         })
     }
 
+    $scope.deactivateBrand=function(brandId){
+        console.log(brandId);
+        apiHandler.deactivateBrand(brandId,function(result){
+            console.log(result);
+        })
+    }
+
+    $scope.activateBrand=function(brandId){
+        console.log(brandId);
+        apiHandler.activateBrand(brandId,function(result){
+            console.log(result);
+        })
+    }
     
 }])

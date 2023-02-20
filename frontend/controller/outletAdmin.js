@@ -6,11 +6,14 @@
 // }]);
 
 app.controller("outletAdminController",["$scope","$http","$location","apiHandler","$rootScope",function($scope,$http,$location,apiHandler,$rootScope){
-    
+    // $location.path("/outletAdmin/products")
     apiHandler.getOutletAdminPage(function(result){
         console.log(result);
         $scope.outletName=result.data.outletData.outletName;
+
+        $rootScope.outletId=result.data.outletData._id;
         $scope.brandId=result.data.brandId;
+        
     });
 
     

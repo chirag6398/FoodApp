@@ -48,7 +48,8 @@ app.config(function($stateProvider,$urlRouterProvider){
     }).state("outletAdmin",{
         url:"/outletAdmin",
         templateUrl:"./templates/outletAdmin.html",
-        controller:"outletAdminController"
+        controller:"outletAdminController",
+        // redirectTo:"outletAdmin.products"
     }).state("updateOutletAdmin",{
         url:"/updateOutletAdmin/:id",
         templateUrl:"./templates/updateOutletAdmin.html",
@@ -73,7 +74,7 @@ app.config(function($stateProvider,$urlRouterProvider){
         url:"/products",
         templateUrl:"./templates/products.html",
         controller:"outletAdminProductsController"
-    }).state("outletAdmin.availableProducts",{
+    }).state("outletAdmin.outletBrandProducts",{
         url:"/brandProducts/:id",
         templateUrl:"./templates/brandProducts.html",
         controller:"brandProductsController"

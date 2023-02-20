@@ -24,6 +24,7 @@
                             <th scope="col">Brand Name</th>
                             <th scope="col">Brand Admin</th>
                             <th scope="col">Deactivate</th>
+                            <th scope="col">Activate</th>
                             <th scope="col">Delete</th>
                           </tr>
                         </thead>
@@ -31,11 +32,11 @@
                           <tr style="cursor:pointer" ng-repeat="brand in brands" >
                             <th scope="row">{{$index}}</th>
                             <td>{{brand.brandName}}</td>
-                            <td> 
+                            <td > 
 
                                 <div ng-if="!brand.brandAdminId">
                         
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add admin</button>
+                                <button  ng-disabled="!brand.isActive" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add admin</button>
                                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                       <div class="modal-content">
@@ -105,12 +106,13 @@
                                   </div>
                             </div>
                             <div ng-if="brand.brandAdminId">
-                                <button ui-sref="updatebrandadmin({id:brand.brandAdminId})" class="btn btn-primary">
+                                <button  ng-disabled="!brand.isActive" ui-sref="updatebrandadmin({id:brand.brandAdminId})" class="btn btn-primary">
                                     Update Admin
                                 </button>
                             </div>
                         </td>
-                            <td><button type="button" class="btn btn-warning">Deactivate</button></td>
+                            <td><button ng-disabled="!brand.isActive" ng-click="deactivateBrand(brand._id)" type="button" class="btn btn-warning">Deactivate</button></td>
+                            <td><button ng-disabled="brand.isActive" ng-click="activateBrand(brand._id)" type="button" class="btn btn-warning">Activate</button></td>
                             <td><button type="button" class="btn btn-secondary">Delete</button></td>
 
                           </tr>

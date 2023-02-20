@@ -1,3 +1,39 @@
 <div ng-controller="brandProductsController">
-    brand products
+    <div>
+        Categories
+      </div>
+      <div style="display:flex;flex-wrap: wrap;">
+        <div ng-click="getProducts(category._id)" class="spr__brandCard" style="cursor: pointer;" ng-repeat="category in categories">
+            <div>
+                {{category.categoryName}}
+                
+            </div>
+            
+          </div>
+      </div>
+
+      <div ng-if="products" class="products">
+        <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th scope="col">S.No</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Price</th>
+                <th scope="col">Add</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="cursor:pointer" ng-repeat="product in products" >
+                <th scope="row">{{$index}}</th>
+                <td>{{product.name}}</td>
+                <td>{{product.description}}</td>
+                <td>{{product.price}}</td>
+                <td><button type="button" ng-click="addProduct(product)" class="btn btn-primary">Add</button></td>
+              </tr>
+              
+            </tbody>
+          </table>
+    </div>
+
 </div>

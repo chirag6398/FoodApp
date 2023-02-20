@@ -25,7 +25,8 @@ var outletSchema=new mongoose.Schema({
             name:{
                 type:String,
                 trim:true,
-                required:true
+                required:true,
+                unique:true
             },
             price:{
                 type:Number,
@@ -37,6 +38,9 @@ var outletSchema=new mongoose.Schema({
             },
             description:{
                 type:String,
+            },
+            categoryId:{
+                type:mongoose.Schema.Types.ObjectId
             }
         }
     }

@@ -8,11 +8,11 @@ passportJwt.initializer(passport);
 
 
 outletAdminRoute.get("/api/outletAdmin/getAdminPage",passport.authenticate('jwt',{session: false }),outletAdminController.getAdminPage);
-// outletAdminRoute.get("/api/outletAdmin/getOutlets/:id",passport.authenticate('jwt',{session: false }),outletAdminController.getOutlets);
+outletAdminRoute.get("/api/outlet/getProduct/:id",passport.authenticate('jwt',{session: false }),outletAdminController.getProduct);
 // outletAdminRoute.get("/api/outletAdmin/getCategory/:id",passport.authenticate('jwt',{session: false }),outletAdminController.getCategory);
 
-// outletAdminRoute.post("/api/outletAdmin/createOutlet",passport.authenticate('jwt',{session: false }),outletAdminController.createOutlet);
-// outletAdminRoute.post("/api/outletAdmin/createOutletAdmin",passport.authenticate('jwt',{session: false }),outletAdminController.createoutletAdmin);
-// outletAdminRoute.post("/api/outletAdmin/addCategory",passport.authenticate('jwt',{session: false }),outletAdminController.addCategory);
-
+outletAdminRoute.post("/api/outlet/brandProducts",passport.authenticate('jwt',{session: false }),outletAdminController.brandProducts);
+outletAdminRoute.post("/api/outlet/categoryProduct",passport.authenticate('jwt',{session: false }),outletAdminController.categoryProduct);
+outletAdminRoute.post("/api/outlet/addProductToOutlet",passport.authenticate('jwt',{session: false }),outletAdminController.addProductToOutlet);
+outletAdminRoute.post("/api/outlet/removeOutletProduct",passport.authenticate('jwt',{session: false }),outletAdminController.removeOutletProduct);
 module.exports=outletAdminRoute;

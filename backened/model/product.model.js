@@ -24,6 +24,13 @@ var productSchema=new mongoose.Schema({
         ref:"brand",
         required:true
     },
+    outletIds:[{
+        outletId:{
+            type:mongoose.Schema.Types.ObjectId,
+            
+        }
+    }
+    ],
     description:{
         type:String,
         trim:true
