@@ -25,12 +25,12 @@ var outletSchema=new mongoose.Schema({
             name:{
                 type:String,
                 trim:true,
-                required:true,
-                unique:true
+                // required:true,
+                // unique:true
             },
             price:{
                 type:Number,
-                required:true
+                // required:true
             },
             img:{
                 type:String,

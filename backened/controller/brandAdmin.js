@@ -31,7 +31,7 @@ module.exports={
             return res.status(200).send({message:"created successfully",status:200});
         }).catch(function(err)
         {
-            console.log(err);
+            console.log("fenfi",err);
             return res.status(400).send({message:"please enter valid and unique data",status:400});
         })
         

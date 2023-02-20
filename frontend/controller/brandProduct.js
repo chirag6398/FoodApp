@@ -9,6 +9,15 @@ app.controller("brandProductsController",["$scope","$http","$location","apiHandl
     
     $scope.brandId=$stateParams.id;
     console.log($rootScope.outletId);
+    apiHandler.getOutletAdminPage(function(result){
+        console.log(result);
+        $scope.outletName=result.data.outletData.outletName;
+
+        $rootScope.outletId=result.data.outletData._id;
+        $scope.brandId=result.data.brandId;
+
+        
+    });
 
     apiHandler.getBrandOutletProducts({brandId:$scope.brandId,outletId:$rootScope.outletId},function(result){
         $scope.categories=result.data;
@@ -16,7 +25,7 @@ app.controller("brandProductsController",["$scope","$http","$location","apiHandl
     })
 
     $scope.getProducts=function(id){
-        apiHandler.getProductByCategory({brandId:$scope.brandId,categoryId:id},function(result){
+        apiHandler.getProductByCategory({brandId:$scope.brandId,categoryId:id,outletId:$rootScope.outletId},function(result){
             console.log(result);
             $scope.products=result.data;
         })
