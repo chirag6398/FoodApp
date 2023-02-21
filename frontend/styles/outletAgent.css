@@ -1,0 +1,26 @@
+.agt__extDiv{
+    display: flex;
+    height: 100vh;
+    justify-content: space-between;
+    align-items: center;
+    /* width: 100vw; */
+    background: #16161a;
+}
+.agt__nav{
+    height: 70vh;
+    width: 5%;
+    border-top-left-radius: 0px;
+    /* border-radius: 85px; */
+    background: #3da9fc;
+    border-top-right-radius: 49px;
+    border-bottom-right-radius: 49px;
+}
+.agt__mainDiv{
+    display: flex;
+    background: whitesmoke;
+    height: 95vh;
+    width: 95%;
+    margin: 13px;
+    border-radius: 3px;
+    padding: 10px;
+}
