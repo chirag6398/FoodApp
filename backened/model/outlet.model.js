@@ -1,6 +1,6 @@
 var mongoose=require("mongoose");
 
-var outletSchema=new mongoose.Schema({
+var OutletSchema=new mongoose.Schema({
     outletName:{
         type:String,
         required:true,
@@ -54,4 +54,4 @@ var outletSchema=new mongoose.Schema({
         default:true
     }
 },{timestamps:true});
-module.exports=mongoose.model("outlet",outletSchema);
+module.exports=mongoose.model("outlet",OutletSchema);

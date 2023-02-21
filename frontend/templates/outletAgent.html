@@ -8,22 +8,59 @@
     <div class="agt__mainDiv">
         <div class="agt__leftSide">
             <div class="agt__header">
-
+                OrderNo
             </div>
             <div class="agt__searchField">
-    
+                <div class="mt-3 inputs">
+                    <i class="fa fa-search"></i>
+                    <input type="text" class="form-control " placeholder="Search Tasks...">
+                  
+                </div>
             </div>
             <p class="agt__itemsNumbering"></p>
             <div class="items">
-    
+                <!-- {{products}} -->
+                <div ng-if="products" class="products">
+                    <table class="table table-bordered table-hover" ng-repeat="categoryProduct in products" >
+                       
+                        <thead>
+                          <tr>
+                            <th scope="col">S.No</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Add Item</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr style="cursor:pointer" ng-repeat="product in categoryProduct.products" >
+                            <th  scope="row">{{$index}}</th>
+                            <td>{{product.name}}</td>
+                            <td>{{product.description}}</td>
+                            <td>{{product.price}}</td>
+                            <td><button type="button" ng-click="btn btn-primary" >add</button></td>
+                          </tr>
+                          
+                        </tbody>
+                      </table>
+                </div>
             </div>
             <div class="agt__category">
-    
+                displaying category cards
             </div>  
         </div>
 
         <div class="agt__rightSide">
-            
+            cart
+            <div>
+                items added
+            </div>
+            <div>
+                total
+            </div>
+            <div>
+                print bill
+            </div>
         </div>
        
     </div>

@@ -1,6 +1,6 @@
 var mongoose=require("mongoose");
 
-var categorySchema=new mongoose.Schema({
+var CategorySchema=new mongoose.Schema({
     categoryName:{
         type:String,
         required:true,
@@ -29,4 +29,4 @@ var categorySchema=new mongoose.Schema({
     }
 })
 
-module.exports=mongoose.model("category",categorySchema);
+module.exports=mongoose.model("category",CategorySchema);

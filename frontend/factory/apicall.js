@@ -349,5 +349,20 @@ app.factory("apiHandler",function($http){
             console.log(err,null);
         })
     }
+
+    obj.getOutletAgentPage=function(cb){
+        $http.get("http://localhost:5000/api/outletAgent/getOutletAgentPage",{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            console.log(response)
+            cb(null,response);
+        }).catch(function(err){
+            console.log(err);
+            cb(err,null);
+        })
+    }
+
     return obj;
 })

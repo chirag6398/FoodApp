@@ -1,6 +1,6 @@
 var mongoose=require("mongoose");
 
-var superCategorySchema=new mongoose.Schema({
+var SuperCategorySchema=new mongoose.Schema({
     name:{
         type:String,
         required:true,
@@ -25,4 +25,4 @@ var superCategorySchema=new mongoose.Schema({
     }
 })
 
-module.exports=mongoose.model("supercategory",superCategorySchema);
+module.exports=mongoose.model("supercategory",SuperCategorySchema);

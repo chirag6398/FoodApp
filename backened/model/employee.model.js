@@ -2,7 +2,7 @@ var mongoose=require("mongoose");
 var bcrypt=require("bcrypt");
 var crypt=require("crypto")
 
-var employeeSchema=new mongoose.Schema({
+var EmployeeSchema=new mongoose.Schema({
     firstName:{
         type:String,
         required:true,
@@ -70,7 +70,7 @@ var employeeSchema=new mongoose.Schema({
 
 
 
-employeeSchema.pre('save',function(next){
+EmployeeSchema.pre('save',function(next){
     const employee = this
 
     
@@ -93,7 +93,7 @@ employeeSchema.pre('save',function(next){
 
 
 
-employeeSchema.methods.generateResetToken=function(){
+EmployeeSchema.methods.generateResetToken=function(){
     console.log("resettokengenerator",this);
     crypt.randomBytes(32, (err, buffer) => {
         if (err) {
@@ -106,5 +106,5 @@ employeeSchema.methods.generateResetToken=function(){
 
 }
 
-module.exports=mongoose.model("employee",employeeSchema);
+module.exports=mongoose.model("employee",EmployeeSchema);
 

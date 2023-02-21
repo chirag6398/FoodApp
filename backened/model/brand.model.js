@@ -1,6 +1,6 @@
 var mongoose=require("mongoose");
 
-var brandSchema=new mongoose.Schema({
+var BrandSchema=new mongoose.Schema({
     brandName:{
         type:String,
         required:true,
@@ -27,4 +27,4 @@ var brandSchema=new mongoose.Schema({
     }
 },{timestamps:true});
 
-module.exports=mongoose.model("brand",brandSchema);
+module.exports=mongoose.model("brand",BrandSchema);

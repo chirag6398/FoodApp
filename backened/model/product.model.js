@@ -1,6 +1,6 @@
 var mongoose=require("mongoose");
 
-var productSchema=new mongoose.Schema({
+var ProductSchema=new mongoose.Schema({
     name:{
         type:String,
         trim:true,
@@ -48,4 +48,4 @@ var productSchema=new mongoose.Schema({
 
 },{timestamps:true});
 
-module.exports=mongoose.model("product",productSchema)
+module.exports=mongoose.model("product",ProductSchema)
