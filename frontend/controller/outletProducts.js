@@ -6,8 +6,8 @@
 
 app.controller("outletAdminProductsController",["$scope","$http","$location","apiHandler","$rootScope",function($scope,$http,$location,apiHandler,$rootScope){
 //    console.log($rootScope.outletId);
-   apiHandler.getOutletAdminPage(function(result){
-    // console.log(result);
+   apiHandler.getOutletAdminPage(function(err,result){
+    console.log(result);
     $scope.outletName=result.data.outletData.outletName;
 
     $rootScope.outletId=result.data.outletData._id;

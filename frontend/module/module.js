@@ -2,18 +2,9 @@
 
 var app=angular.module("myModule",["ui.router"]);
 
-app.config(['$httpProvider', function($httpProvider) {
-    $httpProvider.defaults.headers.common['Authorization'] = (window.localStorage.getItem("Authorization"));
-}]);
 
-app.controller("mainController",["$scope","$http",function($scope,$http){
+app.controller("mainController",["$scope","$http","$location",function($scope,$http,$location){
     
-    $scope.data="hello";
-    
-    // userHandler.getUser($http,function(data){
-
-        // $scope.data="hello"
-    // })
-
+    // $location.path('login')
 
 }])

@@ -7,7 +7,7 @@
 
 app.controller("outletAdminController",["$scope","$http","$location","apiHandler","$rootScope",function($scope,$http,$location,apiHandler,$rootScope){
     // $location.path("/outletAdmin/products")
-    apiHandler.getOutletAdminPage(function(result){
+    apiHandler.getOutletAdminPage(function(err,result){
         console.log(result);
         $scope.outletName=result.data.outletData.outletName;
 

@@ -14,6 +14,7 @@ var productSchema=new mongoose.Schema({
         type:String,
         
     },
+    //used to find products of perticular category under same brand 
     categoryId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"category",
@@ -24,6 +25,7 @@ var productSchema=new mongoose.Schema({
         ref:"brand",
         required:true
     },
+    //it is used only for displaying those products which are not added in outlets
     outletIds:[{
         outletId:{
             type:mongoose.Schema.Types.ObjectId,

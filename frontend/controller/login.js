@@ -4,22 +4,20 @@
 app.controller("loginController",["$scope","$http","$location","apiHandler","$rootScope",function($scope,$http,$location,apiHandler,$rootScope){
     $scope.disabledFlag=false;
     $scope.buttonText="submit";
-
-    
    
     $scope.submitHandler=function($event){
         $event.preventDefault();
-
-        console.log($scope.lgn);
         $scope.disabledFlag=true;
         $scope.buttonText="processing";
         
-        apiHandler.postLogin($scope.lgn,function(result){
-            
-            if(result && result.status===200){
+        apiHandler.postLogin($scope.lgn,function(err,result){
+            if(err){
+                $scope.buttonText="Retry";
+                $scope.disabledFlag=false;
+            }else{
                 $scope.buttonText="successfull";
                 window.localStorage.setItem("Authorization","Bearer "+result.token);
-                console.log(result);
+                
                 if(result.userType==="superAdmin"){
                     
                     $location.path("superAdmin");
@@ -29,11 +27,11 @@ app.controller("loginController",["$scope","$http","$location","apiHandler","$ro
                 }else if(result.userType==="outletAdmin"){
                     $rootScope.admin=result.admin;
                     $location.path("outletAdmin");
+                }else if(result.userType==="outletAgent"){
+                    $location.path("outletAgent");
                 }
-            }else{
-                $scope.buttonText="Retry";
-                $scope.disabledFlag=false
             }
+            
         })
        
     }

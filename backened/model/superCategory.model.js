@@ -1,25 +1,21 @@
 var mongoose=require("mongoose");
 
-var categorySchema=new mongoose.Schema({
-    categoryName:{
+var superCategorySchema=new mongoose.Schema({
+    name:{
         type:String,
         required:true,
         trim:true,
         
     },
-    categoryLogo:{
+    logo:{
         type:String,
 
-    },
-    superCategory:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"supercategory",
-        required:true
     },
     brandId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"brand"
-    },isDeleted:{
+    },
+    isDeleted:{
         type:Boolean,
         default:false
     },
@@ -29,4 +25,4 @@ var categorySchema=new mongoose.Schema({
     }
 })
 
-module.exports=mongoose.model("category",categorySchema);
+module.exports=mongoose.model("supercategory",superCategorySchema);

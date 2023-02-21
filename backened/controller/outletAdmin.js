@@ -3,10 +3,13 @@ var brandModel=require("../model/brand.model");
 var productModel=require("../model/product.model");
 var categoryModel=require("../model/category.model");
 var mongoose = require("mongoose");
+var validation=require("../service/validation.service");
+var employeeModel=require("../model/employee.model");
 
 module.exports={
     getAdminPage:function (req,res){
         if(req.user.userType==="outletAdmin"){
+
             outletModel.findById({_id:req.user.outletId}).then(function(result){
                
 
@@ -145,6 +148,35 @@ module.exports={
             console.log(err);
         });
 
+    },
+    createOutletAgent: function(req,res){
+        console.log(req.body);
+        var valid=validation.validateUserData(req,res);
+        console.log(valid);
+        if(valid ){
+            var outletAgent=new employeeModel({
+                userName:req.body.userName,
+                firstName:req.body.firstName,
+                lastName:req.body.lastName,
+                email:req.body.email,
+                number:req.body.number,
+                password:req.body.password,
+                outletId:req.body.outletId,
+                userType:"outletAgent",
+                brandId:req.body.brandId
+    
+            });
+
+            outletAgent.save().then(function(result){
+                    console.log(result);
+                    return res.status(200).send({message:"admin created successfully",status:200});
+                }).catch(function(err){
+                console.log(err);
+                return res.status(500).send({error:"internal server error",status:500});
+            })
+        }else{
+            return res.status(500).send({error:"try later",status:500});
+        }
     }
     
 }

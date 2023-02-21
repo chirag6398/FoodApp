@@ -9,7 +9,7 @@ app.controller("brandProductsController",["$scope","$http","$location","apiHandl
     
     $scope.brandId=$stateParams.id;
     console.log($rootScope.outletId);
-    apiHandler.getOutletAdminPage(function(result){
+    apiHandler.getOutletAdminPage(function(err,result){
         console.log(result);
         $scope.outletName=result.data.outletData.outletName;
 

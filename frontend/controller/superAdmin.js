@@ -14,6 +14,7 @@ app.controller("superAdminController",["$scope","$http","$location","apiHandler"
         }else{
             // window.location.reload();
             $location.path('login')
+            // console.log(result);
         }
     });
 

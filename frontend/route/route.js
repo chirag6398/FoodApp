@@ -78,11 +78,19 @@ app.config(function($stateProvider,$urlRouterProvider){
         url:"/brandProducts/:id",
         templateUrl:"./templates/brandProducts.html",
         controller:"brandProductsController"
+    }).state("outletAdmin.employee",{
+        url:"/addemployee",
+        templateUrl:"./templates/outletEmployeeForm.html",
+        controller:"outletEmployeeFormController"
+    }).state("outletAgent",{
+        url:"/outletAgent",
+        templateUrl:"./templates/outletAgent.html",
+        controller:"outletAgentController"
     })
 
     // $urlRouterProvider
     // .when('/brandcategoryproduct/:id', '/brandcategoryproduct/:id')
     
 
-    // $urlRouterProvider.otherwise('/signup');
+    // $urlRouterProvider.otherwise('/login');
 });

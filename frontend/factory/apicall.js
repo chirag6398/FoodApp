@@ -5,17 +5,17 @@ app.factory("apiHandler",function($http){
 
     obj.postLogin=function(data,cb){
         $http.post("http://localhost:5000/api/employee/login",{username:data.userName,password:data.password}).then(function(response){
-            console.log(response);
-            cb({token:response.data.token,userType:response.data.user.userType,admin:response.data.user,status:200});
+           
+            cb(null,{token:response.data.token,userType:response.data.user.userType,admin:response.data.user,status:200});
         }).catch(function(err){
             
-            console.log(err);
+            
             if(err.status===401){
                
-                cb({message:"please enter correct username and password",status:err.status})
+                cb({message:"please enter correct username and password",status:err.status},null)
             }else{
                 
-                cb({message:"please try againg later",status:500});
+                cb({message:"please try againg later",status:500},null);
     
             }
         })
@@ -28,10 +28,10 @@ app.factory("apiHandler",function($http){
             }
         }).then(function(response){
             
-            cb(response);
+            cb(null,response);
         }).catch(function(err){
             console.log(err);
-            cb({status:401,message:"unauthorized user"});
+            cb({status:401,message:"unauthorized user"},null);
         })
     }
 
@@ -232,7 +232,11 @@ app.factory("apiHandler",function($http){
     }
 
     obj.getBrandOutletProducts=function(data,cb){
-        $http.post("http://localhost:5000/api/outlet/brandProducts",data).then(function(response){
+        $http.post("http://localhost:5000/api/outlet/brandProducts",data,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
             cb(response);
         }).catch(function(err){
             
@@ -242,7 +246,11 @@ app.factory("apiHandler",function($http){
 
     obj.getProductByCategory=function(data,cb){
         console.log(data)
-        $http.post("http://localhost:5000/api/outlet/categoryProduct",data).then(function(response){
+        $http.post("http://localhost:5000/api/outlet/categoryProduct",data,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
             cb(response);
         }).catch(function(err){
             
@@ -256,7 +264,11 @@ app.factory("apiHandler",function($http){
             outletId
         }
         console.log(data);
-        $http.post("http://localhost:5000/api/outlet/addProductToOutlet",data).then(function(response){
+        $http.post("http://localhost:5000/api/outlet/addProductToOutlet",data,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
             cb(null,response);
         }).catch(function(err){
             
@@ -266,9 +278,15 @@ app.factory("apiHandler",function($http){
 
     obj.getOutletProducts=function(id,cb){
         console.log(id);
-        $http.get("http://localhost:5000/api/outlet/getProduct/"+id).then(function(response){
+        $http.get("http://localhost:5000/api/outlet/getProduct/"+id,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            console.log(response)
             cb(null,response);
         }).catch(function(err){
+            console.log(err);
             cb(err,null);
         })
     }
@@ -279,7 +297,11 @@ app.factory("apiHandler",function($http){
             outletId
         };
 
-        $http.post("http://localhost:5000/api/outlet/removeOutletProduct",data).then(function(response){
+        $http.post("http://localhost:5000/api/outlet/removeOutletProduct",data,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
             cb(null,response);
         }).catch(function(err){
             
@@ -290,7 +312,11 @@ app.factory("apiHandler",function($http){
     }
 
     obj.deactivateBrand=function(brandId,cb){
-        $http.post("http://localhost:5000/api/superAdmin/deactivateBrand",{brandId}).then(function(response){
+        $http.post("http://localhost:5000/api/superAdmin/deactivateBrand",{brandId},{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
             cb(null,response);
         }).catch(function(err){
             
@@ -298,7 +324,25 @@ app.factory("apiHandler",function($http){
         })
     }
     obj.activateBrand=function(brandId,cb){
-        $http.post("http://localhost:5000/api/superAdmin/activateBrand",{brandId}).then(function(response){
+        $http.post("http://localhost:5000/api/superAdmin/activateBrand",{brandId},{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            cb(null,response);
+        }).catch(function(err){
+            
+            console.log(err,null);
+        })
+    }
+
+    obj.createOutletAgent=function(data,cb){
+        console.log(data);
+        $http.post("http://localhost:5000/api/outletAdmin/createOutletAgent",data,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
             cb(null,response);
         }).catch(function(err){
             
