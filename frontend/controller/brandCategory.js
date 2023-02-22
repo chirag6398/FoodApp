@@ -10,9 +10,13 @@ app.controller("brandCategoryController",["$scope","$http","$location","apiHandl
         if(result && result.status===200){
             $scope.brandName=result.data.brandName;
 
-            apiHandler.getCategoryByBrandId(result.data._id,function(result){
-                console.log(result.data);
-                $scope.categories=result.data;
+            // apiHandler.getCategoryByBrandId(result.data._id,function(result){
+            //     console.log(result.data);
+            //     $scope.categories=result.data;
+            // })
+            apiHandler.getSuperCategoryByBrandId(result.data._id,function(err,result){
+                console.log(result);
+                $scope.superCategories=result.data;
             })
             
         }else{

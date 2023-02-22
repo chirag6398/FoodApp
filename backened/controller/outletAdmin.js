@@ -64,7 +64,8 @@ module.exports={
                     name:req.body.name,
                     price:req.body.price,
                     description:req.body.description,
-                    categoryId:req.body.categoryId
+                    categoryId:req.body.categoryId,
+                    categoryName:req.body.categoryName
                 }}
             }
             
@@ -93,20 +94,20 @@ module.exports={
         console.log("outletid",req.params.id)
         outletModel.aggregate([
             
-                {
-                    $match:{
-                        _id:outletId,
-                    }
-                },
-                {
-                    $unwind:"$products"
-                },
-                { 
-                    $group:{
-                        _id:"$products.product.categoryId",
-                        products:{$push:"$products.product"}
-                    }
+            {
+                $match:{
+                    _id:outletId,
                 }
+            },
+            {
+                $unwind:"$products"
+            },
+            { 
+                $group:{
+                    _id:"$products.product.categoryId",
+                    products:{$push:"$products.product"}
+                }
+            }
                 
             
         ]).exec(function(err,result){

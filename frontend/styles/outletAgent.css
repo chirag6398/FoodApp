@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Faustina:ital@0;1&family=Phudu:wght@300&family=Roboto+Condensed&display=swap');
-
+*::-webkit-scrollbar{
+    display: none;
+}
 .agt__extDiv{
     font-family: 'Faustina', serif;
     font-family: 'Phudu', cursive;
@@ -42,7 +44,7 @@
 
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
-.form-control {
+.form-control1 {
 text-indent: 15px;
 border: none;
 height: 45px;
@@ -51,7 +53,7 @@ border-radius: 0px;
 /* border-bottom: 1px solid black; */
 }
 
-.form-control:focus {
+.form-control1:focus {
 color: #495057;
 background-color: #fff;
 border-color: #eee;
@@ -73,6 +75,7 @@ color: #b8b9bc;
     border-radius: 3px;
     padding: 10px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    height: 65%;
 }
 .agt__rightSide{
     display: flex;
@@ -82,8 +85,61 @@ color: #b8b9bc;
     border-radius: 3px;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     border-top-right-radius: 35px;
     border-bottom-right-radius: 35px;
+}
+.agt__cart{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 50%;
+    overflow-y: scroll;
+    /* ::webkit-scrollbar-display:none */
+}
+.agt__itemCart{
+    display: flex;
+    justify-content: space-between;
+    
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+}
+.agt__bill{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+    margin-top: 7px;
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+
+}
+.agt__order{
+    display: flex;
+    width: 100%;
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    margin-top: 7px;
+}
+.agt__category{
+    display: flex;
+    background: #fffe;
+    margin-top: 10px;
+    height: 13%;
+    border: 3px;
+    border-bottom-left-radius: 31px;
+    padding: 10px;
+}
+.agt__categoryCard{
+    display: flex;
+    align-items: center;
+    padding: 19px;
+    border-bottom-left-radius: 16px;
+    cursor: pointer;
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+
 }

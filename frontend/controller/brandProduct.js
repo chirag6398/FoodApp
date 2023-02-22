@@ -32,7 +32,7 @@ app.controller("brandProductsController",["$scope","$http","$location","apiHandl
     }
 
     $scope.addProduct=function(product){
-
+        console.log(product);
         apiHandler.addProductToOutlet(product,$rootScope.outletId,function(err,result){
             console.log(result);
             console.log(err);

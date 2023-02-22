@@ -10,7 +10,7 @@
     integrity="sha512-HdDqpFK+5KwK5gZTuViiNt6aw/dBc3d0pUArax73z0fYN8UXiSozGNTo3MFx4pwbBPldf5gaMUq/EqposBQyWQ==" 
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
     crossorigin="anonymous">
@@ -18,8 +18,14 @@
     <link rel="stylesheet" href="./styles//login.css">
     <link rel="stylesheet" href="./styles/superAdmin.css">
     <link rel="stylesheet" href="./styles/outletAgent.css">
-    
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-dEhyyzQmIDoVlxiUHKyfTXVrzcViDpH7V0EGycZRYO7Z8z2OcKnV7txuGxPYkVXrOJr0Tal7A/YZ+PlfZt8Ycw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+    <link
 
+    rel="stylesheet"
+
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+
+  />
     <title>FoodApp</title>
   </head>
 
@@ -32,9 +38,12 @@
         <ui-view></ui-view>
     </div>
   </body>
+  
   <script src="./module/module.js"></script>
   <script src="./route/route.js"></script>
+  
   <script src="./directive/fileModel.js"></script>
+  <script src="./services/cart.service.js"></script>
   <script src="./factory/apicall.js"></script>
   <script src="./controller/login.js"></script>
   <script src="./controller/superAdmin.js"></script>
@@ -58,6 +67,8 @@
   <script src="./controller/outletEmployeeForm.js"></script>
   <script src="./controller/brandSetting.js"></script>
   <script src="./controller/outletAgent.js"></script>
+  <script src="./controller/outletSubCategory.js"></script>
+  
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" 
   integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
   crossorigin="anonymous"></script>

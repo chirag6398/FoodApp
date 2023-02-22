@@ -11,16 +11,29 @@ app.controller("brandAdminCategoryController",["$scope","$http","$location","api
             $scope.brandName=result.data.brandName;
             $scope.brandId=result.data._id;
 
+            
+
         }else{
             $location.path('login')
         }
     });
-    $scope.btnText="Add Category";
+    $scope.btnText="Add Super Category";
     $scope.addCategory=function($event){
         $event.preventDefault();
+        $scope.btnText="adding...";
+
         console.log($scope.category)
-        apiHandler.addCategory($scope.category,$scope.brandId,function(result){
-            console.log(result);
+        // apiHandler.addCategory($scope.category,$scope.brandId,function(result){
+        //     console.log(result);
+            
+        // })
+        apiHandler.addSuperCategory($scope.category,$scope.brandId,function(err,result){
+            
+            if(result){
+                $scope.btnText="added";
+            }else{
+                $scope.btnText="try later";
+            }
             
         })
     }

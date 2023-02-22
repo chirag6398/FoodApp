@@ -11,9 +11,11 @@ var CategorySchema=new mongoose.Schema({
         type:String,
 
     },
-    superCategory:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"supercategory",
+    superCategoryId:{
+        type:mongoose.Schema.Types.ObjectId
+    },
+    superCategoryName:{
+        type:String,
         required:true
     },
     brandId:{

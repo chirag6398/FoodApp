@@ -4,7 +4,7 @@
 
 
 app.controller("categoryProductController",["$scope","$http","$location","apiHandler","$stateParams",function($scope,$http,$location,apiHandler,$stateParams){
-    console.log($stateParams.id)
+    console.log($stateParams.id,$stateParams.name);
     apiHandler.getBrandAdminPage(function(result){
         if(result && result.status===200){
             $scope.brandName=result.data.brandName;
@@ -32,6 +32,7 @@ app.controller("categoryProductController",["$scope","$http","$location","apiHan
         formData.append("name", $scope.product.productName);
         formData.append("file",$scope.product.image);
         formData.append('categoryId',$scope.categoryId);
+        formData.append('categoryName',$stateParams.name);
         formData.append('brandId',$scope.brandId);
         formData.append('price',$scope.product.price);
         formData.append('description',$scope.product.description);

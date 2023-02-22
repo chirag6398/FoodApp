@@ -1,0 +1,55 @@
+<div ng-controller="subCategoryController">
+    <div ng-if="categories">
+        <div>
+            Categories
+          </div>
+          <div style="display:flex;flex-wrap: wrap;">
+            <div class="spr__brandCard" ui-sref="categoryProduct({id:category._id,name:category.categoryName})" style="cursor: pointer;" ng-repeat="category in categories">
+                <div>
+                    {{category.categoryName}}
+                    
+                </div>
+                
+              </div>
+          </div>
+
+    </div>
+    
+   <div>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add Sub Category</button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Enter Category Details</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form name="categoryData" novalidate>
+                <div class="form-group">
+                  <label for="categoryName" class="col-form-label">CategoryName:</label>
+                  <input type="text" name="categoryName" ng-required="true" ng-minlength="3" ng-model="category.categoryName" class="form-control" >
+                  <span ng-show="categoryData.categoryName.$dirty && categoryData.categoryName.$error.minlength">Minimum 3 characters required</span>
+                </div>
+                <div class="form-group">
+                    <label for="logo" class="col-form-label">Logo (optional):</label>
+                    <input type="file"  name="logo"  ng-model="category.categoryLogo" id="logo">
+                    
+                    
+                  </div>
+               
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" ng-disabled="categoryData.$invalid" ng-click="addCategory($event)" class="btn btn-primary">{{btnText}}</button>
+                  </div>
+               
+              </form>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+</div>
+</div>

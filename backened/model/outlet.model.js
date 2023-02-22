@@ -41,7 +41,14 @@ var OutletSchema=new mongoose.Schema({
             },
             categoryId:{
                 type:mongoose.Schema.Types.ObjectId
+            },
+            categoryName:{
+                type:String
+            },
+            _id:{
+                type:mongoose.Schema.Types.ObjectId
             }
+
         }
     }
     ],

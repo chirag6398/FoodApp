@@ -3,9 +3,9 @@
         Categories
       </div>
       <div style="display:flex;flex-wrap: wrap;">
-        <div class="spr__brandCard" ui-sref="categoryProduct({id:category._id})" style="cursor: pointer;" ng-repeat="category in categories">
+        <div class="spr__brandCard" ui-sref="subCategory({id:superCategory._id,name:superCategory.name})" style="cursor: pointer;" ng-repeat="superCategory in superCategories">
             <div>
-                {{category.categoryName}}
+                {{superCategory.name}}
                 
             </div>
             
@@ -18,3 +18,5 @@
     
 </div>
    
+
+<!-- ui-sref="categoryProduct({id:category._id})" -->

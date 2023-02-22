@@ -156,9 +156,12 @@ app.factory("apiHandler",function($http){
 
     }
 
-    obj.getCategoryByBrandId=function(id,cb){
-        console.log(id);
-        $http.get("http://localhost:5000/api/brandAdmin/getCategory/"+id,{
+    obj.getCategoryByBrandId=function(brandId,superCategoryId,cb){
+        var data={
+            brandId,
+            superCategoryId
+        }
+        $http.post("http://localhost:5000/api/brandAdmin/getCategory/",data,{
             headers:{
                 "Authorization":window.localStorage.getItem("Authorization")
             }
@@ -170,11 +173,14 @@ app.factory("apiHandler",function($http){
         })
     }
 
-    obj.addCategory=function(category,id,cb){
+    obj.addCategory=function(category,brandId,superCategoryId,superCategoryName,cb){
         var data={
             ...category,
-            id:id
+            brandId,
+            superCategoryId,
+            superCategoryName
         }
+        console.log(data)
         $http.post("http://localhost:5000/api/brandAdmin/addCategory",data,{
             headers:{
                 "Authorization":window.localStorage.getItem("Authorization")
@@ -361,6 +367,51 @@ app.factory("apiHandler",function($http){
         }).catch(function(err){
             console.log(err);
             cb(err,null);
+        })
+    }
+
+    obj.addSuperCategory=function(superCategory,brandId,cb){
+        var data={
+            ...superCategory,
+            brandId
+        }
+        $http.post("http://localhost:5000/api/brandAdmin/addSuperCategory",data,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            console.log(response);
+            cb(null,response);
+        }),function(err){
+            cb(err,null);
+        }
+    }
+
+    obj.getSuperCategoryByBrandId=function(id,cb){
+        // console.log(id)
+        $http.get("http://localhost:5000/api/brandAdmin/getSuperCategory/"+id,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            console.log(response);
+            cb(null,response);
+        }).catch(function(err){
+            console.log(err,null);
+        })
+    }
+
+    obj.getCategories=function(outletId,cb){
+        // console.log(outletId)
+        $http.get("http://localhost:5000/api/outletAgent/getCategories/"+outletId,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            console.log(response);
+            cb(null,response);
+        }).catch(function(err){
+            console.log(err,null);
         })
     }
 

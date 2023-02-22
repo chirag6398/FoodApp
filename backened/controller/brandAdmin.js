@@ -2,7 +2,7 @@ var brandModel=require("../model/brand.model");
 var outletModel=require("../model/outlet.model");
 var validation=require("../service/validation.service");
 var employeeModel=require("../model/employee.model");
-// var category=require("../model/category.model");
+var superCategoryModel=require("../model/superCategory.model");
 var categoryModel = require("../model/category.model");
 
 module.exports={
@@ -50,15 +50,7 @@ module.exports={
         })
 
     },
-    createProduct:function (req,res){
-
-    },
-    getProductsByBrandId:function (req,res){
-
-    },
-    getOutletProducts:function (req,res){
-
-    },
+    
     createBrandAdmin:function (req,res){
         // var id=req.body.id;
         // req.body=req.body.admin;
@@ -99,11 +91,16 @@ module.exports={
         }
     },
     addCategory:function (req,res){
-        console.log(req.body);
+       
         var category=new categoryModel({
             categoryName:req.body.categoryName,
-            brandId:req.body.id
+            brandId:req.body.brandId,
+            superCategoryId:req.body.superCategoryId,
+            superCategoryName:req.body.superCategoryName
+
         });
+
+        console.log(category);  
 
         category.save().then(function(result){
             console.log("added category",result);
@@ -114,12 +111,38 @@ module.exports={
         })
     },
     getCategory:function(req,res){
-        // console.log("",req.body);
-        categoryModel.find({brandId:req.params.id}).then(function(result){
+        console.log("",req.body);
+        categoryModel.find({brandId:req.body.brandId,superCategoryId:req.body.superCategoryId}).then(function(result){
             console.log(result);
             return res.status(200).send(result);
         }).catch(function(err){
             return res.status(500).send({error:err,status:500});
         })
+    },
+    addSuperCategory:function (req,res){
+        
+        var superCategory=new superCategoryModel({
+            name:req.body.categoryName,
+            brandId:req.body.brandId
+        });
+
+        return superCategory.save().then(function(result){
+            console.log(result);
+            return res.send(result);
+        }).catch(function(err){
+            return res.status(500).send(err);
+        })
+
+    },
+    getSuperCategory:function (req,res){
+        console.log(req.params.id)
+        superCategoryModel.find({brandId:req.params.id}).then(function(result){
+            console.log(result);
+            return res.send(result);
+        }).catch(function(err){
+            console.log(err);
+            return res.status(500).send({error:err});
+        })
+        //send super category
     }
 }

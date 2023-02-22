@@ -8,7 +8,8 @@ module.exports={
                 price:req.body.price,
                 categoryId:req.body.categoryId,
                 brandId:req.body.brandId,
-                description:req.body.description
+                description:req.body.description,
+                categoryName:req.body.categoryName
             });
             product.save().then(function(result){
                 return res.status(200).send({status:200,message:"product added successfuly"});

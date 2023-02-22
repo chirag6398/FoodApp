@@ -20,6 +20,9 @@ var ProductSchema=new mongoose.Schema({
         ref:"category",
         required:true
     },
+    categoryName:{
+        type:String
+    },
     brandId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"brand",

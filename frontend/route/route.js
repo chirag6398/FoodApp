@@ -42,7 +42,7 @@ app.config(function($stateProvider,$urlRouterProvider){
         templateUrl:"./templates/brandAdminCategory.html",
         controller:"brandAdminCategoryController"
     }).state("categoryProduct",{
-        url:"brandCategoryProduct/:id",
+        url:"brandCategoryProduct/:id/:name",
         templateUrl:"./templates/brandCategoryProduct.html",
         controller:"categoryProductController"
     }).state("outletAdmin",{
@@ -86,6 +86,10 @@ app.config(function($stateProvider,$urlRouterProvider){
         url:"/outletAgent",
         templateUrl:"./templates/outletAgent.html",
         controller:"outletAgentController"
+    }).state("subCategory",{
+        url:"/outletSubCategory/:id/:name",
+        templateUrl:"./templates/outletSubCategory.html",
+        controller:"subCategoryController"
     })
 
     // $urlRouterProvider
