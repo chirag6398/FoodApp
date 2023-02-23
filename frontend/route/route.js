@@ -8,7 +8,12 @@ app.config(function($stateProvider,$urlRouterProvider){
     }).state('superAdmin',{
         url:'/superAdmin',
         templateUrl:'./templates/superAdmin.html',
-        controller:"superAdminController"
+        controller:"superAdminController",
+        resolve:{
+            data: function() {
+                return 'parentController Loaded';
+            }
+        }
     }).state('superAdmin.createBrand',{
         url:'/createBrand',
         templateUrl:'./templates/superAdminCreateBrand.html',
@@ -20,7 +25,12 @@ app.config(function($stateProvider,$urlRouterProvider){
     }).state("superAdmin.setting",{
         url:'/setting/:id',
         templateUrl:'./templates/superAdminSetting.html',
-        controller:"superAdminSettingController"
+        controller:"superAdminSettingController",
+        resolve:{
+            data: function() {
+                return 'childController Loaded';
+            }
+        }
     }).state("superAdmin.analysis",{
         url:"/Analysis",
         templateUrl:"./templates/superAdminAnalysis.html",

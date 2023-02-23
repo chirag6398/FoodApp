@@ -7,7 +7,8 @@ app.controller("superAdminController",["$scope","$http","$location","apiHandler"
     apiHandler.getAdminPage(function(result){
         if(result.status===200){
             $scope.btnText="Create";
-            console.log(result);
+            // console.log(result);
+            $rootScope.superAdmin=result.data.user;
             $scope.superAdminId=result.data.user._id;
         }else{
            
@@ -20,7 +21,7 @@ app.controller("superAdminController",["$scope","$http","$location","apiHandler"
     $scope.createBrand=function($event){
         $event.preventDefault();
         $scope.btnText="creating...";
-        console.log($scope.brand);
+        // console.log($scope.brand);
         apiHandler.createBrand($scope.brand,function(result){
             console.log("result",result);
             if(result.status===200){

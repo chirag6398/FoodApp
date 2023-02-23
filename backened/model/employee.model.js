@@ -73,6 +73,9 @@ var EmployeeSchema=new mongoose.Schema({
 EmployeeSchema.pre('save',function(next){
     const employee = this
 
+    if (!employee.isModified('password')) {
+        return next();
+      }
     
         bcrypt.genSalt(10, function (saltError, salt) {
         if (saltError) {

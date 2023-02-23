@@ -1,5 +1,22 @@
 var employeeModel=require("../model/employee.model");
+var bcrypt=require("bcrypt")
+function hashPassword(password,next){
 
+    bcrypt.genSalt(10, function (saltError, salt) {
+        if (saltError) {
+            return next(saltError,null)
+        } else {
+            bcrypt.hash(password, salt, function(hashError, hash) {
+            
+            
+            return next(null,hash);
+           
+            })
+        }
+        })
+
+        
+}
 module.exports={
     logInHandler:function(req,res){
         console.log(req.user)
@@ -36,5 +53,24 @@ module.exports={
         });
 
     },
+    updatePassword:function(req,res){
+        
+        hashPassword(req.body.password,function(err,hashedPassword){
+            
+            if(err){
+                return res.status(500).send({message:"internal error"});
+            }else{
+                employeeModel.findOneAndUpdate({_id:req.body.id},{password:hashedPassword}).then(function(result){
+                    return res.send({message:"updated"});
+                }).catch(function(err){
+                    return res.status(500).send({error:err});
+                })
+            }
+        })
+        
+        
+    }
 
 }
+
+// $2b$10$XviNIq.g2zTz6qcQ1ht8KOcz8T5tzFCb7e69lzCiwaFTI3DaQET7i

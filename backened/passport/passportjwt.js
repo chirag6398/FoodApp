@@ -11,7 +11,7 @@ module.exports={
         },function(jwt_payload,cb){
             console.log("hello",jwt_payload);
 
-            employeeModel.findById({_id:jwt_payload._id}).then(function(user){
+            employeeModel.findById({_id:jwt_payload._id},{createdAt:0,password:0,updatedAt:0}).then(function(user){
                 if(user){
 
                     console.log("jwt passport",user)

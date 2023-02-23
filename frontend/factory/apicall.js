@@ -224,6 +224,23 @@ app.factory("apiHandler",function($http){
         })
     }
 
+    obj.updatePassword=function (admin,id,cb){
+        var data={
+            ...admin,
+            id:id
+        }
+        $http.post("http://localhost:5000/api/employee/updatePassword",data,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            console.log(null,response);
+            cb(response);
+        }).catch(function(err){
+            console.log(err,null);
+        })
+    }
+
     obj.getProductsInBrand=function(data,cb){
         $http.post("http://localhost:5000/api/product/getProducts",data,{
             headers:{
