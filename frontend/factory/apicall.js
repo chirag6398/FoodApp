@@ -415,5 +415,26 @@ app.factory("apiHandler",function($http){
         })
     }
 
+    obj.placeOrder=function(customer,cart,orderNo,outletId,cb){
+        var data={
+            ...customer,
+            item:cart,
+            orderId:orderNo,
+            outletId
+        }
+        
+        $http.post("http://localhost:5000/api/order/createOrder",data,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            console.log(response);
+            cb(null,response);
+        }),function(err){
+            cb(err,null);
+        }
+        
+    }
+
     return obj;
 })

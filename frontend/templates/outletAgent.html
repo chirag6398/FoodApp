@@ -1,17 +1,27 @@
 <div class="agt__extDiv" ng-controller="outletAgentController">
     <div class="agt__nav">
-        
-            nav
+        <div class="agt__navComponent" ui-sref="outletAgent">
+            Home
+        </div>
+        <div class="agt__navComponent" ui-sref="login">
+            Login
+        </div>
+        <div class="agt__navComponent" >
+            Profile
+        </div>
+
         
         
     </div>
     <div class="agt__mainDiv">
         <div class="agt__leftSide">
             <div class="agt__header">
-                <div>
+                <div  style="opacity: 0.6;font-weight: 600  ;">
                     {{orderNo}}
                 </div>
-                
+                <div style="opacity: 0.6;font-weight: 600 ;">
+                    {{currentTime | date:'mediumTime'}}
+                </div>
             </div>
             <div class="agt__searchField">
                 <div class="mt-3 inputs">
@@ -65,8 +75,11 @@
         <div class="agt__rightSide">
            
             <div class="agt__cart">
-                <h5>Cart</h5>
-                <div class="agt__itemCart" ng-repeat="item in object.cart">
+                <h5>
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Cart</span>
+                </h5>
+                <div ng-if="object.cart.length>0" class="agt__itemCart" ng-repeat="item in object.cart">
                     <div>
                         <p>{{item.name}}</p>
                         <p>{{item.price}}</p>
@@ -169,6 +182,20 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div 
+            style="position: absolute;
+            display: flex;
+            /* top: 0px; */
+            max-width: 198px;
+            align-items: center;
+            height: -webkit-fill-available;
+            font-weight: bold;
+            opacity: 0.5;"
+            ng-if="amount==0">
+                <span>
+                    "Looks like your cart is empty. Time to add some tasty items!"
+                </span>
             </div>
         </div>
        

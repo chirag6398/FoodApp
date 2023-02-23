@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Faustina:ital@0;1&family=Phudu:wght@300&family=Roboto+Condensed&display=swap');
 *::-webkit-scrollbar{
-    display: none;
+    /* display: none; */
+    width: 5px;
+    border-radius: 6px;
+    background: lightgray;
 }
 .agt__extDiv{
     font-family: 'Faustina', serif;
@@ -16,11 +19,24 @@
 .agt__nav{
     height: 70vh;
     width: 5%;
+    min-width:60px;
     border-top-left-radius: 0px;
     /* border-radius: 85px; */
     background: #3da9fc;
     border-top-right-radius: 49px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;  
     border-bottom-right-radius: 49px;
+}
+.agt__navComponent{
+    transform: rotate(-90deg);
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
 }
 .agt__mainDiv{
     display: flex;
@@ -49,16 +65,23 @@ text-indent: 15px;
 border: none;
 height: 45px;
 /* padding: 10px; */
-border-radius: 0px;
+padding-left: 30px;
+border-radius: 3px;
 /* border-bottom: 1px solid black; */
 }
 
+.agt__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .form-control1:focus {
 color: #495057;
 background-color: #fff;
 border-color: #eee;
 outline: 0;
 box-shadow: none;
+/* border-radius: ; */
 
 /* border-bottom: 1px solid black; */
 }
@@ -95,8 +118,9 @@ color: #b8b9bc;
     width: 100%;
     flex-direction: column;
     justify-content: flex-start;
-    height: 50%;
-    overflow-y: scroll;
+    height: 68%;
+    padding: 6px;
+    overflow-y: auto;
     /* ::webkit-scrollbar-display:none */
 }
 .agt__itemCart{
@@ -124,6 +148,7 @@ color: #b8b9bc;
     align-items: center;
     padding: 10px;
     margin-top: 7px;
+    border-bottom-right-radius: 18px;
 }
 .agt__category{
     display: flex;
@@ -142,4 +167,7 @@ color: #b8b9bc;
     cursor: pointer;
     box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
 
+}
+h5{
+    align-self: center;
 }

@@ -9,10 +9,13 @@ var OrederSchema=new mongoose.Schema({
         
     },
     items:[{
-        item:{
+        
             categoryId:{
                 type:mongoose.Schema.Types.ObjectId,
                 ref:"product"
+            },
+            _id:{
+
             },
             name:{
                 type:String,
@@ -27,7 +30,7 @@ var OrederSchema=new mongoose.Schema({
                 required:true
             }
 
-        }
+        
     }
     ],
     customerName:{
@@ -35,14 +38,16 @@ var OrederSchema=new mongoose.Schema({
         required:true,
         trim:true
     },
-    outletAgentId:{
+    outletId:{
         type:mongoose.Schema.Types.ObjectId,
-        required:true
-    },
+        required:true,
+        ref:"outlet"
+
+    },  
     customerPhoneNumber:{
         type:Number,
         required:true
     }
 },{timestamps:true});
 
-module.exports=mongoose.model("category",OrederSchema);
+module.exports=mongoose.model("order",OrederSchema);

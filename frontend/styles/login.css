@@ -8,10 +8,14 @@
     display: flex;
     flex-direction: column;
     min-width: 475px;
-    min-height: 500px;
+    height: 350px;
+    padding: 30px;
     justify-content: flex-start;
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    box-shadow: cornflowerblue 0px 0px 0px 1px;
     align-items: center;
+    background: cornflowerblue;
+    backdrop-filter: blur(6px);
+    border-radius: 4px;
 }
 .lgn__header{
     display: flex;
@@ -23,7 +27,7 @@
 .lgn__leftSide{
     display: flex;
     width: 100%;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-evenly;
     height: 430px;
 }

@@ -2,8 +2,14 @@
 ///<reference path="../factory/apicall.js"/>
 ///<reference path="../services/cart.service.js"/>
 
+function generateOrderId() {
+    const timestamp = new Date().getTime(); 
+    const randomNumber = Math.floor(Math.random() * 10000); 
+    const orderId = "ORDERID-"+timestamp+"-"+randomNumber; 
+    return orderId;
+}
 
-app.controller("outletAgentController",["$scope","$http","$location","apiHandler","cartService",function($scope,$http,$location,apiHandler,cartService){
+app.controller("outletAgentController",["$scope","$http","$location","apiHandler","cartService","$interval",function($scope,$http,$location,apiHandler,cartService,$interval){
     apiHandler.getOutletAgentPage(function(err,result){
         if(result){
             // console.log(result);
@@ -18,11 +24,18 @@ app.controller("outletAgentController",["$scope","$http","$location","apiHandler
                 // console.log(result.data);
                 $scope.categories=result.data;
             })
-            
+            $interval(function() {
+                $scope.getCurrentTime();
+              }, 1000);
+              
         }
     });
-
-    $scope.orderNo="OrderId:"+(new Date().getSeconds())
+    
+    $scope.getCurrentTime = function() {
+        $scope.currentTime = new Date();
+      };
+      
+    $scope.orderNo=generateOrderId();
     $scope.customer={}
     $scope.amount=0;
     $scope.btnText="Enter";
@@ -61,6 +74,17 @@ app.controller("outletAgentController",["$scope","$http","$location","apiHandler
     }
 
     $scope.orderHandler=function(){
+        $scope.orderBtn="placing..."
+        console.log($scope.customer,$scope.object.cart);
+        apiHandler.placeOrder($scope.customer,$scope.object.cart,$scope.orderNo,$scope.outletId,function(err,result){
+            if(result){
+                alert("order placed");
+                $scope.orderNo=generateOrderId();
+                $scope.object={cart:[]};
+                $scope.saved=false;
+                $scope.customer={};
+            }
+        });
 
     }
 }])
