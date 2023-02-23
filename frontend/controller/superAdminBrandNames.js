@@ -5,7 +5,7 @@
 //     $httpProvider.defaults.headers.common['Authorization'] = (window.localStorage.getItem("Authorization"));
 // }]);
 
-app.controller("superAdminBrandNamesController",["$scope","$http","$location","apiHandler",function($scope,$http,$location,apiHandler){
+app.controller("superAdminBrandNamesController",["$scope","$http","$location","apiHandler","$rootScope","$state",function($scope,$http,$location,apiHandler,$rootScope,$state){
     apiHandler.getAdminPage(function(result){
         if(result && result.status===200){
             // $scope.btnText="Create";
@@ -20,6 +20,8 @@ app.controller("superAdminBrandNamesController",["$scope","$http","$location","a
             $location.path('login')
         }
     });
+
+    // $rootScope.parentState=($state.current.name==="superAdmin")?true:false;
 
     $scope.btnText="Add Admin"
     

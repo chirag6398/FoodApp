@@ -3,19 +3,24 @@
 
 
 
-app.controller("superAdminController",["$scope","$http","$location","apiHandler","$state","$rootScope",function($scope,$http,$location,apiHandler,$state,$rootScope){
+app.controller("superAdminCreateBrandController",["$scope","$http","$location","apiHandler","$state","$rootScope",function($scope,$http,$location,apiHandler,$state,$rootScope){
     apiHandler.getAdminPage(function(result){
         if(result.status===200){
             $scope.btnText="Create";
             console.log(result);
             $scope.superAdminId=result.data.user._id;
         }else{
-           
+            // window.location.reload();
             $location.path('login')
-            
+            // console.log(result);
         }
     });
-   
+    // $scope.reloadParentState = function() {
+    //     $state.go('parent', {}, { reload: true });
+    //   };
+
+    // $rootScope.parentState=($state.current.name==="superAdmin")?true:false;
+    // console.log($state.current.name)
 
     $scope.createBrand=function($event){
         $event.preventDefault();
@@ -27,7 +32,7 @@ app.controller("superAdminController",["$scope","$http","$location","apiHandler"
                 $scope.btnText="created";
                 
             }
-          
+            // console.log("error",error);
         })
     }
 }])

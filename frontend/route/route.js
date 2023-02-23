@@ -9,12 +9,20 @@ app.config(function($stateProvider,$urlRouterProvider){
         url:'/superAdmin',
         templateUrl:'./templates/superAdmin.html',
         controller:"superAdminController"
-    }).state("superAdminBrandNames",{
-        url:'/superAdmin/BrandNames',
+    }).state('superAdmin.createBrand',{
+        url:'/createBrand',
+        templateUrl:'./templates/superAdminCreateBrand.html',
+        controller:"superAdminCreateBrandController"
+    }).state("superAdmin.brandNames",{
+        url:'/BrandNames',
         templateUrl:'./templates/superAdminBrandNames.html',
         controller:"superAdminBrandNamesController"
-    }).state("superAdminAnalysis",{
-        url:"/superAdmin/Analysis",
+    }).state("superAdmin.setting",{
+        url:'/setting/:id',
+        templateUrl:'./templates/superAdminSetting.html',
+        controller:"superAdminSettingController"
+    }).state("superAdmin.analysis",{
+        url:"/Analysis",
         templateUrl:"./templates/superAdminAnalysis.html",
         controller:"superAdminAnalysisController"
     }).state("updatebrandadmin",{
