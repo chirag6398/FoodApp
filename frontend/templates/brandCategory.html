@@ -1,16 +1,24 @@
 <div ng-controller="brandCategoryController" style="flex-direction: column;" class="spr__rightSide">
-      <div>
-        Categories
-      </div>
-      <div style="display:flex;flex-wrap: wrap;">
-        <div class="spr__brandCard" ui-sref="subCategory({id:superCategory._id,name:superCategory.name})" style="cursor: pointer;" ng-repeat="superCategory in superCategories">
-            <div>
-                {{superCategory.name}}
-                
-            </div>
-            
+  <div ng-if="!isLoading">
+    <div>
+      <h3>Super Categories</h3>
+    </div>
+    <div ng-if="superCategories" style="display:flex;flex-wrap: wrap;">
+      <div class="spr__brandCard" ui-sref="subCategory({id:superCategory._id,name:superCategory.name})" style="cursor: pointer;" ng-repeat="superCategory in superCategories">
+          <div>
+              {{superCategory.name}}
+              
           </div>
-      </div>
+          
+        </div>
+    </div>
+    <div ng-if="!superCategories">
+      No super category is present
+    </div>
+  </div>
+  <div ng-if="isLoading">
+      wait for few seconds
+  </div>
       
       
       

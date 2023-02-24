@@ -6,22 +6,32 @@
 // }]);
 
 app.controller("brandCategoryController",["$scope","$http","$location","apiHandler",function($scope,$http,$location,apiHandler){
+    $scope.isLoading=true;
     apiHandler.getBrandAdminPage(function(result){
+        
         if(result && result.status===200){
             $scope.brandName=result.data.brandName;
 
-            // apiHandler.getCategoryByBrandId(result.data._id,function(result){
-            //     console.log(result.data);
-            //     $scope.categories=result.data;
-            // })
             apiHandler.getSuperCategoryByBrandId(result.data._id,function(err,result){
-                console.log(result);
-                $scope.superCategories=result.data;
-            })
+                // console.log(result);
+                
+                if(result){
+                    $scope.superCategories=result.data;
+        
+                    $scope.isLoading=false; 
+                }else{
+                    alert("plz try later some error has occured")
+                }
+            });
+            
+            
             
         }else{
             $location.path('login')
         }
     });
+
+    
+
     $scope.btnText="Add product"
 }])

@@ -66,26 +66,81 @@
           </div>
     </div>
 
-    <div ng-if="categories" class="products">
+    <div ng-if="products" class="products">
         <table class="table table-bordered table-hover">
             <thead>
               <tr>
                 <th scope="col">S.No</th>
                 <th scope="col">Name</th>
+                <th scope="col">Category Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Price</th>
+                <th scope="col">Update Product</th>
               </tr>
             </thead>
             <tbody>
-              <tr style="cursor:pointer" ng-repeat="category in categories" >
+              <tr style="cursor:pointer" ng-repeat="product in products" >
                 <th scope="row">{{$index}}</th>
-                <td>{{category.name}}</td>
-                <td>{{category.description}}</td>
-                <td>{{category.price}}</td>
+                <td>{{product.name}}</td>
+                <td>{{product.categoryName}}</td>
+                <td>{{product.description}}</td>
+                <td>{{product.price}}</td>
+                <td><button type="button" ng-click="setProduct(product)" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1" data-whatever="@mdo">Update Product</button></td>
               </tr>
               
             </tbody>
           </table>
     </div>
+
+
+    
+        <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Enter Product Details</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                   
+                <form name="updateProductDetail" novalidate>
+                    <div class="form-group">
+                    <label for="productName" class="col-form-label">ProductName :</label>
+                    <input type="text" name="productName" ng-required="true" ng-minlength="3" ng-model="updateProduct.name" class="form-control" >
+                    <span ng-show="updateProductDetail.productName.$dirty && updateProductDetail.productName.$error.minlength">Minimum 3 characters required</span>
+                    <span ng-show="updateProductDetail.productName.$dirty && updateProductDetail.productName.$error.required">Please fill this field</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="col-form-label">Description :</label>
+                        <input type="text" name="description"  ng-minlength="0" ng-model="updateProduct.description" class="form-control" >
+                        <!-- <span ng-show="updateProductDetail.description.$dirty && updateProductDetail.description.$error.minlength">Minimum 3 characters required</span> -->
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="price" class="col-form-label">Price :</label>
+                        <input type="number" name="price" ng-required="true" ng-pattern="/^([1-9]{1})([0-9]{1,4})?$/"  ng-model="updateProduct.price" class="form-control" >
+                        <span ng-show="updateProductDetail.price.$dirty && !updateProductDetail.price.$error.required && updateProductDetail.price.$invalid">please enter correct price</span>
+                        <span ng-show="updateProductDetail.price.$dirty && updateProductDetail.price.$error.required">Please fill this field</span>
+                    </div>
+                    
+                    <div class="form-group">
+                    <label for="image" class="col-form-label">Image :</label>
+                    <input type="file" accept="image/*"  name="image"  file-model="updateProduct.image" id="image">
+                    <!-- ng-required="true" -->
+                    <!-- <span ng-show="updateProductDetail.image.$dirty && updateProductDetail.image.$error.required">Please fill this field</span> -->
+                    </div>
+                    <div class="form-group">
+                    <button type="button" ng-disabled="updateProductDetail.$invalid" ng-click="updateProductHandler($event)" class="btn btn-primary">update</button>
+        
+                    </div>
+                </form>
+                     
+                </div>
+                
+              </div>
+            </div>
+          </div>
 
 </div>

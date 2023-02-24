@@ -24,7 +24,7 @@ module.exports={
     getProducts:function (req,res){
         try{
             
-            productModel.find({categoryId:req.body.categoryId,brandId:req.body.brandId}).then(function(result){
+            productModel.find({categoryId:req.body.categoryId,brandId:req.body.brandId},{createdAt:0,isActive:0,isDeleted:0,outletIds:0,updatedAt:0}).then(function(result){
                 return res.status(200).send(result);
             }).catch(function(err){
                 return res.status(500).send({error:err,status:500});
@@ -33,5 +33,9 @@ module.exports={
             console.log(err);
             return res.status(500).send({error:err,status:500});
         }
+    },
+    updateProduct:function(req,res){
+        console.log(req.body);
+        console.log(req.file)
     }
 }
