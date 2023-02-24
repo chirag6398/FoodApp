@@ -14,7 +14,14 @@ app.controller("outletAgentController",["$scope","$http","$location","apiHandler
         if(result){
             // console.log(result);
             $scope.outletId=result.data.outletId;
-
+            $scope.admin={
+                userName:result.data.userName,
+                email:result.data.email,
+                firstName:result.data.firstName,
+                lastName:result.data.lastName,
+                number:result.data.number
+            }
+            $scope.adminId=result.data._id;
             apiHandler.getOutletProducts($scope.outletId,function(err,result){
                 // console.log(result);
                 $scope.products=result.data;
@@ -34,6 +41,22 @@ app.controller("outletAgentController",["$scope","$http","$location","apiHandler
     $scope.getCurrentTime = function() {
         $scope.currentTime = new Date();
       };
+
+    $scope.updateAdmin=function ($event,id){
+        console.log(id);
+        apiHandler.updateAdmin($scope.admin,id,function(result){
+            console.log(result);
+        })
+    }
+
+    $scope.changePassword=function($event,id){
+        console.log(id);
+        apiHandler.updatePassword($scope.admin,id,function(err,result){
+            if(result){
+                console.log(result)
+            }
+        })
+    }
       
     $scope.orderNo=generateOrderId();
     $scope.customer={}

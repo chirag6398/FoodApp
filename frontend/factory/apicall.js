@@ -212,6 +212,7 @@ app.factory("apiHandler",function($http){
             ...admin,
             id:id
         }
+        console.log(data);
         $http.post("http://localhost:5000/api/employee/updateUser",data,{
             headers:{
                 "Authorization":window.localStorage.getItem("Authorization")
@@ -235,7 +236,7 @@ app.factory("apiHandler",function($http){
             }
         }).then(function(response){
             console.log(null,response);
-            cb(response);
+            cb(null,response);
         }).catch(function(err){
             console.log(err,null);
         })
