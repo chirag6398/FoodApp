@@ -73,13 +73,14 @@ module.exports={
         }
     },
     addBrandAdmin:function (req,res){
-        var id=req.body.id;
-        req.body=req.body.admin;
-        console.log(id,req.body);
+        // var id=req.body.admin.id;
+        // req.body=req.body.admin;
+        // console.log(req.body);
+        // var id=req.body.brandId;
 
         var valid=validation.validateUserData(req,res);
 
-        if(valid && id){
+        if(valid && req.body.brandId){
             var brandAdmin=new employeeModel({
                 userName:req.body.userName,
                 firstName:req.body.firstName,
@@ -87,7 +88,7 @@ module.exports={
                 email:req.body.email,
                 number:req.body.number,
                 password:req.body.password,
-                brandId:id,
+                brandId:req.body.brandId,
                 userType:"brandAdmin"
     
             });
@@ -95,7 +96,7 @@ module.exports={
             brandAdmin.save().then(function(result){
                 console.log(result);
 
-                brandModel.findByIdAndUpdate({_id:id},{brandAdminId:result._id}).then(function(updated){
+                brandModel.findByIdAndUpdate({_id:req.body.brandId},{brandAdminId:result._id}).then(function(updated){
                     console.log(updated);
                     return res.status(200).send({message:"admin created successfully",status:200});
                 }).catch(function(err){

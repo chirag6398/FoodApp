@@ -16,11 +16,16 @@ app.service("cartService",function(){
             })
             console.log(exist);
             if(exist>=0){
-                cart[exist].quantity++;
+                // console.log(cart[exist])
+                cart[exist].quantity+=1;
             }else{
-                cart.push(product);
+                cart.push({
+                    ...product,
+                    quantity:1
+                });
             }
        }
+       console.log(cart)
 
         return cart;
     }

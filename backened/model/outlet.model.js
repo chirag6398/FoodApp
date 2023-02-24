@@ -40,13 +40,15 @@ var OutletSchema=new mongoose.Schema({
                 type:String,
             },
             categoryId:{
-                type:mongoose.Schema.Types.ObjectId
+                type:mongoose.Schema.Types.ObjectId,
+                ref:"category"
             },
             categoryName:{
                 type:String
             },
             _id:{
-                type:mongoose.Schema.Types.ObjectId
+                type:mongoose.Schema.Types.ObjectId,
+                ref:"product"
             }
 
         }

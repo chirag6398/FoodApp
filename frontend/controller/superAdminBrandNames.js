@@ -1,9 +1,7 @@
 ///<reference path="../module/module.js"/>
 ///<reference path="../factory/apicall.js"/>
 
-// app.config(['$httpProvider', function($httpProvider) {
-//     $httpProvider.defaults.headers.common['Authorization'] = (window.localStorage.getItem("Authorization"));
-// }]);
+
 
 app.controller("superAdminBrandNamesController",["$scope","$http","$location","apiHandler","$rootScope","$state",function($scope,$http,$location,apiHandler,$rootScope,$state){
     apiHandler.getAdminPage(function(result){
@@ -21,21 +19,23 @@ app.controller("superAdminBrandNamesController",["$scope","$http","$location","a
         }
     });
 
-    // $rootScope.parentState=($state.current.name==="superAdmin")?true:false;
-
+   
     $scope.btnText="Add Admin"
     
-    $scope.admin = {
+   
 
+    $scope.setBrandId=function(brandId){
+        $scope.admin = {
+            brandId:brandId,
+        }
     }
 
-    $scope.createBrandAdmin=function($event,id){
+    $scope.createBrandAdmin=function($event){
         $event.preventDefault();
-        // console.log($scope.firstName);
-        $scope.brandId=id;
-        // console.log(id);
-        // console.log($scope.admin);
-        apiHandler.postAddBrandAdmin({admin:$scope.admin,id:id},function(response){
+        
+        // $scope.brandId=id;
+        console.log($scope.admin);
+        apiHandler.postAddBrandAdmin($scope.admin,function(response){
             console.log(response);
         })
     }
@@ -53,5 +53,14 @@ app.controller("superAdminBrandNamesController",["$scope","$http","$location","a
             console.log(result);
         })
     }
-    
+    $scope.setData=function(brandName,brandId){
+        $scope.data={
+            brandName:brandName,
+            _id:brandId
+        }
+    }
+    $scope.editBrand=function($event){
+        $event.preventDefault();
+        console.log($scope.data);
+    }
 }])

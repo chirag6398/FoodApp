@@ -49,7 +49,7 @@ module.exports={
             return res.status(200).send(result);
         }).catch(function(err){
             console.log(err);
-            return res.status(500).send({message:"no user found"})
+            return res.status(400).send({message:"email id and username should be unique"})
         });
 
     },

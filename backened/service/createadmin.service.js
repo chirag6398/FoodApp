@@ -15,15 +15,15 @@ module.exports={
                     userType:"superAdmin"
                 });
                 admin.save().then(function(result){
-                    console.log(result);
+                    // console.log(result);
                 }).catch(function(err){
                     console.log(err);
                 });
 
             }else{
-                console.log(result)
+                // console.log(result)
 
-                console.log("admin is already created");
+                // console.log("admin is already created");
             }
         }).catch(function(err){
             console.log(err);

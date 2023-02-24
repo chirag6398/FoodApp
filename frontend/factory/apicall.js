@@ -79,7 +79,7 @@ app.factory("apiHandler",function($http){
     }
     
     obj.postAddBrandAdmin=function(data,cb){
-        console.log(data)
+        console.log(data);
         $http.post("http://localhost:5000/api/superAdmin/addBrandAdmin",data,{
             headers:{
                 "Authorization":window.localStorage.getItem("Authorization")

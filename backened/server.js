@@ -27,6 +27,7 @@ app.use(require("./route/product.route"));
 app.use(require("./route/outletAgent.route"));
 app.use(require("./route/order.route"));
 
+
 app.listen(port,function(err){
     if(err){
         console.log(err);

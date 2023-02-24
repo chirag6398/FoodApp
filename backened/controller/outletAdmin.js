@@ -55,7 +55,8 @@ module.exports={
        
     },
     addProductToOutlet:function(req,res){
-        console.log(req.body);
+        // console.log(req.body);
+        // console.log(req.body)
 
         outletModel.findByIdAndUpdate({_id:req.body.outletId},{
             $push:{
@@ -65,7 +66,8 @@ module.exports={
                     price:req.body.price,
                     description:req.body.description,
                     categoryId:req.body.categoryId,
-                    categoryName:req.body.categoryName
+                    categoryName:req.body.categoryName,
+                        _id:req.body._id
                 }}
             }
             
