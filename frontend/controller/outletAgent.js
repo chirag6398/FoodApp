@@ -57,6 +57,8 @@ app.controller("outletAgentController",["$scope","$http","$location","apiHandler
             }
         })
     }
+
+    // console.log($scope.search);
       
     $scope.orderNo=generateOrderId();
     $scope.customer={}

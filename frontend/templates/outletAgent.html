@@ -34,7 +34,7 @@
             <div class="agt__searchField">
                 <div class="mt-3 inputs">
                     <i class="fa fa-search"></i>
-                    <input type="text" class="form-control1 form-control" placeholder="Search Tasks...">
+                    <input type="text"  ng-model="search.name" class="form-control1 form-control" placeholder="Search Tasks...">
                   
                 </div>
             </div>
@@ -54,7 +54,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr style="cursor:pointer" ng-repeat="product in categoryProduct.products" >
+                          <tr style="cursor:pointer" ng-repeat="product in categoryProduct.products | filter:search" >
                             <th  scope="row">{{$index}}</th>
                             <td>{{product.name}}</td>
                             <td>{{product.description}}</td>
