@@ -467,5 +467,19 @@ app.factory("apiHandler",function($http){
         
     }
 
+    obj.togleOutlet=function(outletId,cb){
+
+        $http.post("http://localhost:5000/api/outlet/togleOutlet",{outletId},{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            // console.log(response);
+            cb(null,response);
+        }),function(err){
+            cb(err,null);
+        }
+    }
+
     return obj;
 })

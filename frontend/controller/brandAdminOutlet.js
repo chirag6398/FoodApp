@@ -15,7 +15,7 @@ app.controller("brandAdminOutletsController", [
     apiHandler.getBrandAdminPage(function (result) {
       if (result && result.status === 200) {
         $scope.brandName = result.data.brandName;
-        
+
         apiHandler.getOutletsByBrandId(result.data._id, function (result) {
           // console.log(result.data._id);
           $scope.outlets = result.data;
@@ -57,5 +57,17 @@ app.controller("brandAdminOutletsController", [
         console.log(result);
       });
     };
+
+    
+
+    $scope.togleOutlet=function(outletId){
+      console.log(outletId);
+      apiHandler.togleOutlet(outletId,function(err,result){
+        if(result){
+          console.log(result);
+          // $scope.isActive=result.data.isActive;
+        }
+      })
+    }
   },
 ]);

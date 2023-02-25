@@ -191,6 +191,23 @@ module.exports={
         }).catch(function(err){
             return res.status(500).send({error:err});
         })
+    },
+    togleOutlet:function(req,res){
+        console.log(req.body);
+
+        outletModel.findOne({_id:mongoose.Types.ObjectId(req.body.outletId)},{isActive:1}).then(function(user){
+            // console.log("user",user);
+            user.isActive=!user.isActive;
+
+            user.save().then(function(result){
+                // console.log(result);
+                return res.send(result);
+            }).catch(function(err){
+                return res.status(500).send(err);
+            })
+
+        })
+        
     }
     
 }

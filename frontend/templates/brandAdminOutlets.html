@@ -234,8 +234,8 @@
             <button type="button" class="btn btn-primary">Update Admin</button>
           </div>
         </td>
-        <td><button type="button" class="btn btn-warning">Disable</button></td>
-        <td><button type="button" class="btn btn-warning">Activate</button></td>
+        <td><button type="button" ng-disabled="!outlet.isActive" ng-click="togleOutlet(outlet._id)" class="btn btn-warning">Disable</button></td>
+        <td><button type="button" ng-disabled="outlet.isActive" ng-click="togleOutlet(outlet._id)" class="btn btn-warning">Activate</button></td>
         <td><button type="button" class="btn btn-secondary">Delete</button></td>
         <td>
           <button
