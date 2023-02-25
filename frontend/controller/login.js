@@ -19,7 +19,7 @@ app.controller("loginController",["$scope","$http","$location","apiHandler","$ro
                 window.localStorage.setItem("Authorization","Bearer "+result.token);
                 
                 if(result.userType==="superAdmin"){
-                    
+                    $rootScope.admin=result.admin;
                     $location.path("superAdmin");
                     
                 }else if(result.userType==="brandAdmin"){
@@ -28,6 +28,7 @@ app.controller("loginController",["$scope","$http","$location","apiHandler","$ro
                     $rootScope.admin=result.admin;
                     $location.path("outletAdmin");
                 }else if(result.userType==="outletAgent"){
+                    $rootScope.admin=result.admin;
                     $location.path("outletAgent");
                 }
             }

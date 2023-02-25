@@ -9,12 +9,12 @@ module.exports={
             secretOrKey:process.env.SECRET_KEY,
             jwtFromRequest:ExtractJWT.fromAuthHeaderAsBearerToken()
         },function(jwt_payload,cb){
-            console.log("hello",jwt_payload);
+            // console.log("hello",jwt_payload);
 
             employeeModel.findById({_id:jwt_payload._id},{createdAt:0,password:0,updatedAt:0}).then(function(user){
                 if(user){
 
-                    console.log("jwt passport",user)
+                    // console.log("jwt passport",user)
                     return cb(null,user)
                 }
                 else

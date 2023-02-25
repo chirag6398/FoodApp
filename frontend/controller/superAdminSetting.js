@@ -3,20 +3,28 @@
 
 
 app.controller("superAdminSettingController",["$scope","$http","$location","apiHandler","$stateParams","$rootScope",function($scope,$http,$location,apiHandler,$stateParams,$rootScope){
-    
-    apiHandler.getAdminPage(function(result){
-        if(result.status===200){
-            $scope.btnText="Create";
-            // console.log(result);
-            $scope.admin=result.data.user;
-            console.log($scope.admin)
-            $scope.superAdminId=result.data.user._id;
-        }else{
+    if($rootScope.admin!==undefined){
+        $scope.btnText="Create";
+        // console.log(result);
+        $scope.admin=$rootScope.admin;
+        console.log($scope.admin)
+        $scope.superAdminId=$rootScope.admin._id;
+    }else{
+        $location.path('login')
+    }
+    // apiHandler.getAdminPage(function(result){
+    //     if(result.status===200){
+    //         $scope.btnText="Create";
+    //         // console.log(result);
+    //         $scope.admin=result.data.user;
+    //         console.log($scope.admin)
+    //         $scope.superAdminId=result.data.user._id;
+    //     }else{
            
-            $location.path('login')
+    //         $location.path('login')
             
-        }
-    });
+    //     }
+    // });
 
     $scope.btnText1="update"
     $scope.updateAdmin=function($event,adminId){

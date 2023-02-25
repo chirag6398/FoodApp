@@ -7,7 +7,7 @@ const productModel = require("../model/product.model");
 var mongoose= require("mongoose");
 module.exports={
     getAdminPage:function (req,res){
-        console.log(req.user);
+        // console.log(req.user);
         if(req.user.userType==="superAdmin"){
             return res.status(200).send({message:"eligible",user:req.user});
         }else{
@@ -54,7 +54,7 @@ module.exports={
     },
     createBrand:function (req,res){
         if(req.user.userType==="superAdmin"){
-            console.log(req.body);
+            // console.log(req.body);
 
             var brand=new brandModel({
                 brandName:req.body.brandName
@@ -63,7 +63,7 @@ module.exports={
             brand.save().then(function(result){
                 return res.status(200).send({message:"brand created successfully",status:200});
             }).catch(function(err){
-                console.log("forw",err)
+                // console.log("forw",err)
                 return res.status(404).send({message:"brandName not available",status:500});
             })
 
@@ -94,18 +94,18 @@ module.exports={
             });
 
             brandAdmin.save().then(function(result){
-                console.log(result);
+                // console.log(result);
 
                 brandModel.findByIdAndUpdate({_id:req.body.brandId},{brandAdminId:result._id}).then(function(updated){
-                    console.log(updated);
+                    // console.log(updated);
                     return res.status(200).send({message:"admin created successfully",status:200});
                 }).catch(function(err){
-                    console.log(err);
+                    // console.log(err);
                     return res.status(500).send({error:"internal server error",status:500});
                 });
                
             }).catch(function(err){
-                console.log(err);
+                // console.log(err);
                 return res.status(500).send({error:"internal server error",status:500});
             })
         }else{
@@ -120,15 +120,15 @@ module.exports={
             req.body.brandId=mongoose.Types.ObjectId(req.body.brandId);
             brandModel.findByIdAndUpdate({_id:req.body.brandId},{isActive:false})
             .then(function(result){
-                console.log("result",result)
+                // console.log("result",result)
                 return res.status({message:"deactivated"});
                 
             }).catch(function(err){
-                console.log(err);
+                // console.log(err);
                 return res.status(500).send({error:"server error"})
             })
         }catch(err){
-            console.log(err);
+            // console.log(err);
             return res.status(500).send({error:"server error"})
         }
     },
@@ -138,15 +138,15 @@ module.exports={
             req.body.brandId=mongoose.Types.ObjectId(req.body.brandId);
             brandModel.findByIdAndUpdate({_id:req.body.brandId},{isActive:true})
             .then(function(result){
-                console.log("result",result)
+                // console.log("result",result)
                 return res.status({message:"deactivated"});
                 
             }).catch(function(err){
-                console.log(err);
+                // console.log(err);
                 return res.status(500).send({error:"server error"})
             })
         }catch(err){
-            console.log(err);
+            // console.log(err);
             return res.status(500).send({error:"server error"})
         }
     }
@@ -155,35 +155,35 @@ module.exports={
 
 
 // req.body.brandId=mongoose.Types.ObjectId(req.body.brandId);
-// // console.log(req.body);
+// console.log(req.body);
 // // brandModel.findById({_id:req.body.brandId}).then(result=>console.log(result));
 // brandModel.findByIdAndUpdate({_id:req.body.brandId},{isActive:false}).then(function(result){
-//     console.log("result",result)
+    // console.log("result",result)
 //     // return res.status({message:"deactivated"});
 //     outletModel.updateMany({brandId:req.body.brandId},{$set:{isActive:false}}).then(function(result){
 //         categoryModel.updateMany({brandId:req.body.brandId},{$set:{isActive:false}}).then(function(result){
 //             productModel.updateMany({brandId:req.body.brandId},{$set:{isActive:false}}).then(function(result){
 //                 employeeModel.updateMany({brandId:req.body.brandId},{$set:{isActive:false}}).then(function(result){
-//                     console.log(result);
+                    // console.log(result);
 //                     return res.status({message:"deactivated"});
 //                 }).catch(function(err){
-//                     console.log(err);
+                    // console.log(err);
 //                     return res.status(500).send({error:"server error"})
 //                 })
 //             }).catch(function(err){
-//                 console.log(err);
+                // console.log(err);
 //                 return res.status(500).send({error:"server error"})
 //             })
 //         }).catch(function(err){
-//             console.log(err);
+            // console.log(err);
 //             return res.status(500).send({error:"server error"})
 //         })
 //     }).catch(function(err){
-//         console.log(err);
+        // console.log(err);
 //         return res.status(500).send({error:"server error"})
 //     })
 // }).catch(function(err){
-//     console.log(err);
+    // console.log(err);
 //     return res.status(500).send({error:"server error"})
 // })
 // }catch(err){

@@ -255,6 +255,19 @@ app.factory("apiHandler",function($http){
         })
     }
 
+    obj.updateOutletData=function(data,cb){
+        $http.post("http://localhost:5000/api/outlet/updateOutletData",data,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            cb(response);
+        }).catch(function(err){
+            
+            console.log(err);
+        })
+    }
+
     obj.getBrandOutletProducts=function(data,cb){
         $http.post("http://localhost:5000/api/outlet/brandProducts",data,{
             headers:{

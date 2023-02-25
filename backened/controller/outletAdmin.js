@@ -180,6 +180,17 @@ module.exports={
         }else{
             return res.status(500).send({error:"try later",status:500});
         }
+    },
+    updateOutletData:function (req,res){
+        console.log(req.body)
+
+        outletModel.findOneAndUpdate({_id:req.body._id},{outletName:req.body.outletName,outletPinCode:req.body.outletPinCode})
+        .then(function(result){
+            console.log(result);
+            return res.send({message:"updated"});
+        }).catch(function(err){
+            return res.status(500).send({error:err});
+        })
     }
     
 }

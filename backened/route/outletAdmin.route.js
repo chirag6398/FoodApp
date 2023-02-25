@@ -16,4 +16,5 @@ outletAdminRoute.post("/api/outlet/categoryProduct",passport.authenticate('jwt',
 outletAdminRoute.post("/api/outlet/addProductToOutlet",passport.authenticate('jwt',{session: false }),outletAdminController.addProductToOutlet);
 outletAdminRoute.post("/api/outlet/removeOutletProduct",passport.authenticate('jwt',{session: false }),outletAdminController.removeOutletProduct);
 outletAdminRoute.post("/api/outletAdmin/createOutletAgent",passport.authenticate('jwt',{session: false }),outletAdminController.createOutletAgent);
+outletAdminRoute.post("/api/outlet/updateOutletData",passport.authenticate('jwt',{session: false }),outletAdminController.updateOutletData);
 module.exports=outletAdminRoute;

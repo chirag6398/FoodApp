@@ -4,20 +4,31 @@
 
 
 app.controller("superAdminBrandNamesController",["$scope","$http","$location","apiHandler","$rootScope","$state",function($scope,$http,$location,apiHandler,$rootScope,$state){
-    apiHandler.getAdminPage(function(result){
-        if(result && result.status===200){
-            // $scope.btnText="Create";
-            apiHandler.getBrands(function(result){
-                if(result && result.status===200){
-                    $scope.brands=result.data;
+    if($rootScope.admin!==undefined){
+        apiHandler.getBrands(function(result){
+            if(result && result.status===200){
+                $scope.brands=result.data;
 
-                }
-            });
+            }
+        });
+    }else{
+        $location.path('login')
+    }
+
+    // apiHandler.getAdminPage(function(result){
+    //     if(result && result.status===200){
+    //         // $scope.btnText="Create";
+    //         apiHandler.getBrands(function(result){
+    //             if(result && result.status===200){
+    //                 $scope.brands=result.data;
+
+    //             }
+    //         });
             
-        }else{
-            $location.path('login')
-        }
-    });
+    //     }else{
+            
+    //     }
+    // });
 
    
     $scope.btnText="Add Admin"
@@ -33,7 +44,7 @@ app.controller("superAdminBrandNamesController",["$scope","$http","$location","a
     $scope.createBrandAdmin=function($event){
         $event.preventDefault();
         
-        // $scope.brandId=id;
+       
         console.log($scope.admin);
         apiHandler.postAddBrandAdmin($scope.admin,function(response){
             console.log(response);

@@ -1,10 +1,12 @@
 ///<reference path="../module/module.js"/>
 ///<reference path="../factory/apicall.js"/>
 
-// app.config(['$httpProvider', function($httpProvider) {
-//     $httpProvider.defaults.headers.common['Authorization'] = (window.localStorage.getItem("Authorization"));
-// }]);
 
-app.controller("superAdminAnalysisController",["$scope","$http","$location","apiHandler",function($scope,$http,$location,apiHandler){
-    
+
+app.controller("superAdminAnalysisController",["$scope","$http","$location","apiHandler","$rootScope",function($scope,$http,$location,apiHandler,$rootScope){
+    if($rootScope.admin!==undefined){
+       
+    }else{
+        $location.path('login');
+    }
 }])

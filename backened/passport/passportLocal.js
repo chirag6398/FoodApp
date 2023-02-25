@@ -17,7 +17,7 @@ module.exports={
                 
                 if(user){
 
-                    console.log("check various level for successful login",user);
+                    // console.log("check various level for successful login",user);
                     //brandId and isActive self and isDeleted Self for brandAdmin
                     //outletId existence and above
                     
@@ -50,12 +50,12 @@ module.exports={
 
                             const token = jwt.sign({_id:user._id}, process.env.SECRET_KEY);
                             
-                            console.log(token)
+                            // console.log(token)
                             var nuser={
                                 ...user,
                                 token
                             }
-                            console.log("user login",nuser)
+                            // console.log("user login",nuser)
                             
                             next(null,nuser);
                            
@@ -68,7 +68,7 @@ module.exports={
                     }
                     })
                     .catch(function(err){
-                        console.log(err);
+                        // console.log(err);
                         next(null,{message:"internal server error",status:500});
                     });
                 }
