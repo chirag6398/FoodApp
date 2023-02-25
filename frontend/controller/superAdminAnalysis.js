@@ -4,9 +4,14 @@
 
 
 app.controller("superAdminAnalysisController",["$scope","$http","$location","apiHandler","$rootScope",function($scope,$http,$location,apiHandler,$rootScope){
-    if($rootScope.admin!==undefined){
-       
-    }else{
-        $location.path('login');
-    }
+    apiHandler.getAdminPage(function(result){
+        if(result.status===200){
+            $scope.btnText="Create";
+           
+        }else{
+            
+            $location.path('login')
+            
+        }
+    });
 }])

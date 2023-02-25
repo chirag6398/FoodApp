@@ -30,7 +30,7 @@ app.factory("apiHandler",function($http){
             
             cb(null,response);
         }).catch(function(err){
-            console.log(err);
+            // console.log(err);
             cb({status:401,message:"unauthorized user"},null);
         })
     }
@@ -44,7 +44,7 @@ app.factory("apiHandler",function($http){
             
             cb(response);
         }).catch(function(err){
-            console.log(err);
+            // console.log(err);
             cb({status:401,message:"unauthorized user"});
         })
     }
@@ -55,11 +55,11 @@ app.factory("apiHandler",function($http){
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            console.log(response.data)
+            // console.log(response.data)
             cb(response.data);
         }),function(err)
         {
-            console.log(err);
+            // console.log(err);
             cb({status:401,message:"unauthorized"});
         }
     }
@@ -71,7 +71,7 @@ app.factory("apiHandler",function($http){
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            console.log(response);
+            // console.log(response);
             cb(response);
         }),function(err){
             cb(err);
@@ -79,13 +79,13 @@ app.factory("apiHandler",function($http){
     }
     
     obj.postAddBrandAdmin=function(data,cb){
-        console.log(data);
+        // console.log(data);
         $http.post("http://localhost:5000/api/superAdmin/addBrandAdmin",data,{
             headers:{
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            console.log(response);
+            // console.log(response);
             cb(response);
         }),function(err){
             cb(err);
@@ -98,10 +98,10 @@ app.factory("apiHandler",function($http){
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            console.log(response)
+            // console.log(response)
             cb(response.data);
         }).catch(function(err){
-            console.log(err);
+            // console.log(err);
             cb({status:401,message:"unauthorized user"});
         })
     }
@@ -111,13 +111,13 @@ app.factory("apiHandler",function($http){
             ...outletData,
             id:brandId
         }
-        console.log(data);
+        // console.log(data);
         $http.post("http://localhost:5000/api/brandAdmin/createOutlet",data,{
             headers:{
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            console.log(response);
+            // console.log(response);
             cb(response);
         }),function(err){
             cb(err);
@@ -130,10 +130,10 @@ app.factory("apiHandler",function($http){
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            console.log(response);
+            // console.log(response);
             cb(response.data);
         }).catch(function(err){
-            console.log(err);
+            // console.log(err);
         })
     }
 
@@ -142,13 +142,13 @@ app.factory("apiHandler",function($http){
             ...outletAdminData,
             id:id
         };
-        console.log(data)
+        // console.log(data)
         $http.post("http://localhost:5000/api/brandAdmin/createOutletAdmin",data,{
             headers:{
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            console.log(response);
+            // console.log(response);
             cb(response);
         }),function(err){
             cb(err);
@@ -166,10 +166,10 @@ app.factory("apiHandler",function($http){
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            console.log(response);
+            // console.log(response);
             cb(response);
         }).catch(function(err){
-            console.log(err);
+            // console.log(err);
         })
     }
 
@@ -180,13 +180,13 @@ app.factory("apiHandler",function($http){
             superCategoryId,
             superCategoryName
         }
-        console.log(data)
+        // console.log(data)
         $http.post("http://localhost:5000/api/brandAdmin/addCategory",data,{
             headers:{
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            console.log(response);
+            // console.log(response);
             cb(response);
         }),function(err){
             cb(err);
@@ -199,10 +199,10 @@ app.factory("apiHandler",function($http){
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            console.log(response);
+            // console.log(response);
             cb(response);
         }),function(err){
-            console.log(err);
+            // console.log(err);
             cb(err);
         }
     }
@@ -212,16 +212,16 @@ app.factory("apiHandler",function($http){
             ...admin,
             id:id
         }
-        console.log(data);
+        // console.log(data);
         $http.post("http://localhost:5000/api/employee/updateUser",data,{
             headers:{
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            console.log(response);
+            // console.log(response);
             cb(response);
         }).catch(function(err){
-            console.log(err);
+            // console.log(err);
         })
     }
 
@@ -235,10 +235,10 @@ app.factory("apiHandler",function($http){
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            console.log(null,response);
+            // console.log(null,response);
             cb(null,response);
         }).catch(function(err){
-            console.log(err,null);
+            // console.log(err,null);
         })
     }
 
@@ -248,10 +248,10 @@ app.factory("apiHandler",function($http){
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            console.log(response);
+            // console.log(response);
             cb(response);
         }).catch(function(err){
-            console.log(err);
+            // console.log(err);
         })
     }
 
@@ -264,7 +264,7 @@ app.factory("apiHandler",function($http){
             cb(response);
         }).catch(function(err){
             
-            console.log(err);
+            // console.log(err);
         })
     }
 
@@ -277,12 +277,12 @@ app.factory("apiHandler",function($http){
             cb(response);
         }).catch(function(err){
             
-            console.log(err);
+            // console.log(err);
         })
     }
 
     obj.getProductByCategory=function(data,cb){
-        console.log(data)
+        // console.log(data)
         $http.post("http://localhost:5000/api/outlet/categoryProduct",data,{
             headers:{
                 "Authorization":window.localStorage.getItem("Authorization")
@@ -291,7 +291,7 @@ app.factory("apiHandler",function($http){
             cb(response);
         }).catch(function(err){
             
-            console.log(err);
+            // console.log(err);
         })
     }
 
@@ -300,7 +300,7 @@ app.factory("apiHandler",function($http){
             ...product,
             outletId
         }
-        console.log(data);
+        // console.log(data);
         $http.post("http://localhost:5000/api/outlet/addProductToOutlet",data,{
             headers:{
                 "Authorization":window.localStorage.getItem("Authorization")
@@ -309,21 +309,21 @@ app.factory("apiHandler",function($http){
             cb(null,response);
         }).catch(function(err){
             
-            console.log(err,null);
+            // console.log(err,null);
         })
     }
 
     obj.getOutletProducts=function(id,cb){
-        console.log(id);
+        // console.log(id);
         $http.get("http://localhost:5000/api/outlet/getProduct/"+id,{
             headers:{
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            console.log(response)
+            // console.log(response)
             cb(null,response);
         }).catch(function(err){
-            console.log(err);
+            // console.log(err);
             cb(err,null);
         })
     }
@@ -342,7 +342,7 @@ app.factory("apiHandler",function($http){
             cb(null,response);
         }).catch(function(err){
             
-            console.log(err,null);
+            // console.log(err,null);
         })
 
 
@@ -357,7 +357,7 @@ app.factory("apiHandler",function($http){
             cb(null,response);
         }).catch(function(err){
             
-            console.log(err,null);
+            // console.log(err,null);
         })
     }
     obj.activateBrand=function(brandId,cb){
@@ -369,12 +369,12 @@ app.factory("apiHandler",function($http){
             cb(null,response);
         }).catch(function(err){
             
-            console.log(err,null);
+            // console.log(err,null);
         })
     }
 
     obj.createOutletAgent=function(data,cb){
-        console.log(data);
+        // console.log(data);
         $http.post("http://localhost:5000/api/outletAdmin/createOutletAgent",data,{
             headers:{
                 "Authorization":window.localStorage.getItem("Authorization")
@@ -383,7 +383,7 @@ app.factory("apiHandler",function($http){
             cb(null,response);
         }).catch(function(err){
             
-            console.log(err,null);
+            // console.log(err,null);
         })
     }
 
@@ -393,10 +393,10 @@ app.factory("apiHandler",function($http){
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            console.log(response)
+            // console.log(response)
             cb(null,response);
         }).catch(function(err){
-            console.log(err);
+            // console.log(err);
             cb(err,null);
         })
     }
@@ -411,7 +411,7 @@ app.factory("apiHandler",function($http){
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            console.log(response);
+            // console.log(response);
             cb(null,response);
         }),function(err){
             cb(err,null);
@@ -419,30 +419,30 @@ app.factory("apiHandler",function($http){
     }
 
     obj.getSuperCategoryByBrandId=function(id,cb){
-        // console.log(id)
+        console.log(id)
         $http.get("http://localhost:5000/api/brandAdmin/getSuperCategory/"+id,{
             headers:{
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            console.log(response);
+            // console.log(response);
             cb(null,response);
         }).catch(function(err){
-            console.log(err,null);
+            // console.log(err,null);
         })
     }
 
     obj.getCategories=function(outletId,cb){
-        // console.log(outletId)
+        console.log(outletId)
         $http.get("http://localhost:5000/api/outletAgent/getCategories/"+outletId,{
             headers:{
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            console.log(response);
+            // console.log(response);
             cb(null,response);
         }).catch(function(err){
-            console.log(err,null);
+            // console.log(err,null);
         })
     }
 
@@ -459,7 +459,7 @@ app.factory("apiHandler",function($http){
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            console.log(response);
+            // console.log(response);
             cb(null,response);
         }),function(err){
             cb(err,null);

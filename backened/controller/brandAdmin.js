@@ -56,39 +56,39 @@ module.exports={
         // req.body=req.body.admin;
         console.log(req.body);
 
-        var valid=validation.validateUserData(req,res);
-        console.log(valid);
-        if(valid && req.body.id){
-            var outletAdmin=new employeeModel({
-                userName:req.body.userName,
-                firstName:req.body.firstName,
-                lastName:req.body.lastName,
-                email:req.body.email,
-                number:req.body.number,
-                password:req.body.password,
-                outletId:req.body.id,
-                userType:"outletAdmin"
+        // var valid=validation.validateUserData(req,res);
+        // console.log(valid);
+        // if(valid && req.body.id){
+        //     var outletAdmin=new employeeModel({
+        //         userName:req.body.userName,
+        //         firstName:req.body.firstName,
+        //         lastName:req.body.lastName,
+        //         email:req.body.email,
+        //         number:req.body.number,
+        //         password:req.body.password,
+        //         outletId:req.body.id,
+        //         userType:"outletAdmin"
     
-            });
+        //     });
 
-            outletAdmin.save().then(function(result){
-                console.log(result);
+        //     outletAdmin.save().then(function(result){
+        //         console.log(result);
 
-                outletModel.findByIdAndUpdate({_id:req.body.id},{outletAdminId:result._id}).then(function(updated){
-                    console.log(updated);
-                    return res.status(200).send({message:"admin created successfully",status:200});
-                }).catch(function(err){
-                    console.log(err);
-                    return res.status(500).send({error:"internal server error",status:500});
-                });
+        //         outletModel.findByIdAndUpdate({_id:req.body.id},{outletAdminId:result._id}).then(function(updated){
+        //             console.log(updated);
+        //             return res.status(200).send({message:"admin created successfully",status:200});
+        //         }).catch(function(err){
+        //             console.log(err);
+        //             return res.status(500).send({error:"internal server error",status:500});
+        //         });
                
-            }).catch(function(err){
-                console.log(err);
-                return res.status(500).send({error:"internal server error",status:500});
-            })
-        }else{
-            return res.status(404).send({error:"data not found",status:404})
-        }
+        //     }).catch(function(err){
+        //         console.log(err);
+        //         return res.status(500).send({error:"internal server error",status:500});
+        //     })
+        // }else{
+        //     return res.status(404).send({error:"data not found",status:404})
+        // }
     },
     addCategory:function (req,res){
        

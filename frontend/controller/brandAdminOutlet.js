@@ -11,10 +11,11 @@ app.controller("brandAdminOutletsController", [
   "$location",
   "apiHandler",
   function ($scope, $http, $location, apiHandler) {
+
     apiHandler.getBrandAdminPage(function (result) {
       if (result && result.status === 200) {
         $scope.brandName = result.data.brandName;
-
+        
         apiHandler.getOutletsByBrandId(result.data._id, function (result) {
           // console.log(result.data._id);
           $scope.outlets = result.data;

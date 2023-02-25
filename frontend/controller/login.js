@@ -4,7 +4,7 @@
 app.controller("loginController",["$scope","$http","$location","apiHandler","$rootScope",function($scope,$http,$location,apiHandler,$rootScope){
     $scope.disabledFlag=false;
     $scope.buttonText="submit";
-   
+    $scope.isSuccess=false;
     $scope.submitHandler=function($event){
         $event.preventDefault();
         $scope.disabledFlag=true;
@@ -17,7 +17,7 @@ app.controller("loginController",["$scope","$http","$location","apiHandler","$ro
             }else{
                 $scope.buttonText="successfull";
                 window.localStorage.setItem("Authorization","Bearer "+result.token);
-                
+                $scope.isSuccess=true;
                 if(result.userType==="superAdmin"){
                     $rootScope.admin=result.admin;
                     $location.path("superAdmin");

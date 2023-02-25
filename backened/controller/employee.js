@@ -19,7 +19,7 @@ function hashPassword(password,next){
 }
 module.exports={
     logInHandler:function(req,res){
-        // console.log(req.user)
+        // console.log(">>>>>>>>>",req.user)
         if(req.user._doc===undefined){
             return res.status(req.user.status).send(req.user);
         }else{
