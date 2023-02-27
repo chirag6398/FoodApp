@@ -9,7 +9,7 @@ app.controller("categoryProductController",["$scope","$http","$location","apiHan
 
     apiHandler.getBrandAdminPage(function(result){
         if(result && result.status===200){
-            $scope.brandName=result.data.brandName;
+            $scope.brandName=result.data.name;
             $scope.brandId=result.data._id;
             $scope.categoryId=$stateParams.id;
 

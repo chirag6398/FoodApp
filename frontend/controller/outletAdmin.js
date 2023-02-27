@@ -5,11 +5,11 @@
 //     $httpProvider.defaults.headers.common['Authorization'] = (window.localStorage.getItem("Authorization"));
 // }]);
 
-app.controller("outletAdminController",["$scope","$http","$location","apiHandler","$rootScope",function($scope,$http,$location,apiHandler,$rootScope){
+app.controller("outletAdminController",["$scope","$http","$location","outletApi","$rootScope",function($scope,$http,$location,outletApi,$rootScope){
     // $location.path("/outletAdmin/products")
-    apiHandler.getOutletAdminPage(function(err,result){
+    outletApi.getOutletAdminPage(function(err,result){
         console.log(result);
-        $scope.outletName=result.data.outletData.outletName;
+        $scope.outletName=result.data.outletData.name;
 
         $rootScope.outletId=result.data.outletData._id;
         $scope.brandId=result.data.brandId;

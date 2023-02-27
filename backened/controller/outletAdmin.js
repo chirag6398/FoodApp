@@ -10,11 +10,12 @@ module.exports={
     getAdminPage:function (req,res){
         if(req.user.userType==="outletAdmin"){
 
-            outletModel.findById({_id:req.user.outletId}).then(function(result){
+            console.log(req.user);
+            outletModel.findById({_id:req.user.outlet._id}).then(function(result){
                
 
 
-                return brandModel.findById({_id:result.brandId},{brandLogo:1}).then(function(brand){
+                return brandModel.findById({_id:result.brand._id},{brandLogo:1}).then(function(brand){
                     console.log("brand outletadmin id",brand);
                     return res.status(200).send({outletData:result,outletAdminData:req.user,brandLogo:brand.logo,brandId:brand._id});
                 }).catch(function(err){
@@ -164,9 +165,12 @@ module.exports={
                 email:req.body.email,
                 number:req.body.number,
                 password:req.body.password,
-                outletId:req.body.outletId,
+                outlet:req.body.outlet,
                 userType:"outletAgent",
-                brandId:req.body.brandId
+                brand:req.body.brand,
+                'location.address':req.body.address,
+                'location.pinCode':req.body.pinCode,
+                'location.city':req.body.city
     
             });
 
@@ -177,6 +181,7 @@ module.exports={
                 console.log(err);
                 return res.status(500).send({error:"internal server error",status:500});
             })
+            
         }else{
             return res.status(500).send({error:"try later",status:500});
         }
@@ -184,7 +189,14 @@ module.exports={
     updateOutletData:function (req,res){
         console.log(req.body)
 
-        outletModel.findOneAndUpdate({_id:req.body._id},{outletName:req.body.outletName,outletPinCode:req.body.outletPinCode})
+        outletModel.findOneAndUpdate({_id:req.body._id},{
+            name:req.body.name,
+            type:req.body.type,
+            description:req.body.description,
+            'contactInfo.number':req.body.number,
+            'contactInfo.email':req.body.email,
+            
+        })
         .then(function(result){
             console.log(result);
             return res.send({message:"updated"});

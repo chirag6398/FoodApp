@@ -47,10 +47,10 @@ app.config(function($stateProvider,$urlRouterProvider){
         url:"/home",
         templateUrl:"./templates/brandAdminHome.html",
         controller:"brandAdminHomeController"
-    }).state("brandadmin.outlets",{
-        url:"/brandadminoutlets",
-        templateUrl:"./templates/brandAdminOutlets.html",
-        controller:"brandAdminOutletsController"
+    }).state("brandadmin.users",{
+        url:"/brandadminusers",
+        templateUrl:"./templates/brandAdminUsers.html",
+        controller:"brandAdminUsersController"
     }).state("brandadmin.brandCategory",{
         url:"/brandadmincategory",
         templateUrl:"./templates/brandCategory.html",

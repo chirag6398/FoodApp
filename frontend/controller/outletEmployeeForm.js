@@ -3,14 +3,12 @@
 
 
 
-app.controller("outletEmployeeFormController",["$scope","$http","$location","apiHandler","$rootScope",function($scope,$http,$location,apiHandler,$rootScope){
+app.controller("outletEmployeeFormController",["$scope","$http","$location","apiHandler","outletApi","$rootScope",function($scope,$http,$location,apiHandler,outletApi,$rootScope){
     
-    apiHandler.getOutletAdminPage(function(err,result){
+    outletApi.getOutletAdminPage(function(err,result){
         if(result){
-            $scope.outletName=result.data.outletData.outletName;
-
-            $rootScope.outletId=result.data.outletData._id;
-            $scope.brandId=result.data.brandId;
+            console.log(result.data);
+            $scope.outletData=result.data.outletData;
         }
         
         
@@ -22,8 +20,8 @@ app.controller("outletEmployeeFormController",["$scope","$http","$location","api
     $scope.createOutletAgent=function($event,brandId){
         $event.preventDefault();
         $scope.btnText="creating...";
-        console.log(brandId,$rootScope.outletId,$scope.agent);
-        apiHandler.createOutletAgent({...$scope.agent,brandId,outletId:$rootScope.outletId},function(err,result){
+       
+        outletApi.createOutletAgent({...$scope.agent,brand:$scope.outletData.brand,outlet:{_id:$scope.outletData._id,type:$scope.outletData.type,name:$scope.outletData.name}},function(err,result){
             if(result){
                 console.log(result);
                 $scope.btnText="created";

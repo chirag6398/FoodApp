@@ -10,7 +10,7 @@ app.controller("brandCategoryController",["$scope","$http","$location","apiHandl
     apiHandler.getBrandAdminPage(function(result){
         
         if(result && result.status===200){
-            $scope.brandName=result.data.brandName;
+            $scope.brandName=result.data.name;
 
             apiHandler.getSuperCategoryByBrandId(result.data._id,function(err,result){
                 // console.log(result);

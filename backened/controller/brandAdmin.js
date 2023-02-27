@@ -9,7 +9,7 @@ module.exports={
     getBrandAdminPage:function (req,res){
         if(req.user.userType=="brandAdmin"){
             brandModel.findById({_id:req.user.brand._id}).then(function(result){
-                console.log("brandId",result);
+                // console.log("brandId",result);
                 return res.status(200).send({data:result,status:200});
             }).catch(function(err){
                 return res.status(500).send({error:"internal server error",status:500});
@@ -20,10 +20,19 @@ module.exports={
         }
     },
     createOutlet:function (req,res){
+        console.log(req.body);
+
         var outlet=new outletModel({
-            outletName:req.body.name,
-            outletPinCode:req.body.pincode,
-            brandId:req.body.id
+            name:req.body.name,
+            type:req.body.type,
+            description:req.body.description,
+            'location.address':req.body.address,
+            'location.city':req.body.city,
+            'location.pinCode':req.body.pinCode,
+            'contactInfo.number':req.body.number,
+            'contactInfo.email':req.body.email,
+            'brand._id':req.body.brandId,
+            'brand.name':req.body.brandName
         });
 
         outlet.save().then(function(result){
@@ -40,7 +49,7 @@ module.exports={
     getOutlets:function (req,res){
         console.log(req.params);
 
-        outletModel.find({brandId:req.params.id}).then(function(result){
+        outletModel.find({'brand._id':req.params.id}).then(function(result){
             console.log(result);
             return res.status(200).send({data:result,status:200});
         }).catch(function(err)
@@ -54,7 +63,7 @@ module.exports={
     createOutletAdmin:function (req,res){
         // var id=req.body.id;
         // req.body=req.body.admin;
-        // console.log(req.body);
+        console.log(req.body);
 
 
         //pending adding brandId
@@ -62,7 +71,7 @@ module.exports={
         var valid=validation.validateUserData(req,res);
 
         console.log(valid);
-        if(valid && req.body.id){
+        if(valid && req.body.outletId && req.body.brandId && req.body.outletName && req.body.brandName ){
             var outletAdmin=new employeeModel({
                 userName:req.body.userName,
                 firstName:req.body.firstName,
@@ -70,16 +79,23 @@ module.exports={
                 email:req.body.email,
                 number:req.body.number,
                 password:req.body.password,
-                outletId:req.body.id,
                 userType:"outletAdmin",
-                brandId:req.body.brandId
+                'outlet._id':req.body.outletId,
+                'outlet.name':req.body.outletName,
+                'outlet.location':req.body.location,
+                'brand._id':req.body.brandId,
+                'brand.name':req.body.brandName,
+                'outlet.type':req.body.outletType,
+                'location.address':req.body.address,
+                'location.city':req.body.city,
+                'location.pinCode':req.body.pinCode
     
             });
 
             return outletAdmin.save().then(function(result){
                 console.log(result);
 
-                outletModel.findByIdAndUpdate({_id:req.body.id},{outletAdminId:result._id}).then(function(updated){
+                outletModel.findByIdAndUpdate({_id:req.body.outletId},{outletAdminId:result._id}).then(function(updated){
                     // console.log(updated);
                     return res.status(200).send({message:"admin created successfully",status:200});
                 }).catch(function(err){

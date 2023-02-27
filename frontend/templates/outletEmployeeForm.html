@@ -44,6 +44,21 @@
                         <span ng-show="agentData.number.$dirty && agentData.number.$error.required">Please fill this field</span>
                     </div>
                     <div class="form-group">
+                      <label for="address" class="col-form-label">Address :</label>
+                      <input type="text" name="address" ng-required="true"  ng-model="agent.address" class="form-control" id="address">
+                      <span ng-show="agentData.address.$dirty && agentData.address.$error.required">Please fill this field</span>
+                    </div>
+                    <div class="form-group">
+                      <label for="city" class="col-form-label">City :</label>
+                      <input type="text" name="city" ng-required="true" ng-minlength="3" ng-model="agent.city" class="form-control" id="city">
+                      <span ng-show="agentData.city.$dirty && agentData.city.$error.minlength">Please fill this field</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="outletPinCode" class="col-form-label">Outlet PinCode:</label>
+                        <input type="number" name="outletPinCode" ng-required="true" ng-minlength="6" ng-maxlength="6" ng-model="agent.pinCode" class="form-control" >
+                        <span ng-show="agentData.outletPinCode.$dirty && agentData.outletPinCode.$error.minlength && agentData.outletPinCode.$error.maxlength">6 characters required</span>
+                      </div>
+                    <div class="form-group">
                         <label for="password" class="col-form-label">Password :</label>
                         <input type="password" name="password" ng-required="true" ng-minlength="5" ng-maxlength="8" ng-model="agent.password" class="form-control" >
                         <span ng-show="agentData.password.$dirty && (agentData.password.$error.minlength || agentData.password.$error.maxlength)">Minimum 5-8 characters required</span>
@@ -60,7 +75,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" ng-disabled="agentData.$invalid"  ng-click="createOutletAgent($event,brandId)" class="btn btn-primary">{{btnText}}</button>
+                        <button type="submit" ng-disabled="agentData.$invalid"  ng-click="createOutletAgent($event)" class="btn btn-primary">{{btnText}}</button>
                     </div>
                       
                   </form>

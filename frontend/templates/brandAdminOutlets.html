@@ -18,7 +18,7 @@
     <tbody>
       <tr style="cursor: pointer" ng-repeat="outlet in outlets">
         <td scope="row">{{$index}}</td>
-        <td>{{outlet.outletName}}</td>
+        <td>{{outlet.name}}</td>
         <td>
           <div ng-if="!outlet.outletAdminId">
             <button
@@ -332,4 +332,9 @@
       </div>
     </div>
   </div>
+</div>
+<div class="spr__rightSide"
+ng-controller="brandAdminOutletsController"
+ng-if="!outlets">
+<span>Empty</span>
 </div>

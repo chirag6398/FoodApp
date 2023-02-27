@@ -10,16 +10,22 @@ app.controller("brandAdminOutletsController", [
   "$http",
   "$location",
   "apiHandler",
-  function ($scope, $http, $location, apiHandler) {
+  "brandApi",
+  function ($scope, $http, $location, apiHandler,brandApi) {
 
-    apiHandler.getBrandAdminPage(function (result) {
+    brandApi.getBrandAdminPage(function (result) {
       if (result && result.status === 200) {
-        $scope.brandName = result.data.brandName;
+        $scope.brandName = result.data.name;
         $scope.brandId=result.data._id;
-        apiHandler.getOutletsByBrandId(result.data._id, function (result) {
-          // console.log(result.data._id);
-          $scope.outlets = result.data;
-          // $scope.id=result.data._id;
+
+        brandApi.getOutletsByBrandId(result.data._id, function (err,result) {
+         
+          if(result){
+            console.log(result);
+            $scope.outlets = result.data;
+
+          }
+         
         });
       } else {
         $location.path("login");
@@ -30,19 +36,17 @@ app.controller("brandAdminOutletsController", [
     $scope.admin = {};
     $scope.updateOutletData = {};
     $scope.setOutletData = function (outletData) {
-    //   console.log(outletData);
+   
       $scope.updateOutletData = {
         ...outletData,
       };
-    //   console.log("this is variable data", $scope.updateOutletData);
+  
     };
 
     $scope.updateOutlet = function ($event) {
       $event.preventDefault();
-    //   $scope.updateOutletData.outletName=$scope.newData.outletName;
-    //   $scope.updateOutletData.outletPinCode=$scope.newData.outletPinCode;
-      $scope.newData._id=$scope.updateOutletData._id
-    //   console.log($scope.newData);
+       $scope.newData._id=$scope.updateOutletData._id
+   
       apiHandler.updateOutletData($scope.newData,function(err,result){
           if(result){
               console.log(result);
@@ -52,7 +56,7 @@ app.controller("brandAdminOutletsController", [
 
     $scope.createOutletAdmin = function ($event, id) {
       $event.preventDefault();
-    //   console.log($scope.admin, id);
+    
       apiHandler.createOutletAdmin($scope.admin, id,$scope.brandId, function (result) {
         console.log(result);
       });
@@ -65,7 +69,7 @@ app.controller("brandAdminOutletsController", [
       apiHandler.togleOutlet(outletId,function(err,result){
         if(result){
           console.log(result);
-          // $scope.isActive=result.data.isActive;
+          
         }
       })
     }
