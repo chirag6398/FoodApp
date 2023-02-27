@@ -137,10 +137,11 @@ app.factory("apiHandler",function($http){
         })
     }
 
-    obj.createOutletAdmin=function(outletAdminData,id,cb){
+    obj.createOutletAdmin=function(outletAdminData,id,brandId,cb){
         var data={
             ...outletAdminData,
-            id:id
+            id:id,
+            brandId:brandId
         };
         // console.log(data)
         $http.post("http://localhost:5000/api/brandAdmin/createOutletAdmin",data,{
@@ -480,6 +481,29 @@ app.factory("apiHandler",function($http){
             cb(err,null);
         }
     }
+
+    obj.deleteBrand=function(brandId,cb){
+        console.log(brandId);
+        $http.post("http://localhost:5000/api/superAdmin/deleteBrand",{brandId},{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            
+            cb(null,response);
+        }),function(err){
+            cb(err,null);
+        }
+    }
+
+    obj.getUsers=function(cb){
+        $http.get("http://localhost:5000/api/employee/getUsers").then(function(response){
+            cb(null,response);
+        }).catch(function(err){
+            cb(err,null);
+        })
+    }
+    
 
     return obj;
 })

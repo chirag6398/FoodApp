@@ -15,24 +15,33 @@ var ProductSchema=new mongoose.Schema({
         
     },
     //used to find products of perticular category under same brand 
-    categoryId:{
+    category:{
+       _id:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"category",
         required:true
+       },
+       name:{
+         type:String,
+         required:true
+       }
     },
-    categoryName:{
-        type:String
-    },
-    brandId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"brand",
-        required:true
+    brand:{
+        _id:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"brand",
+            required:true
+        },
+        name:{
+            type:String,
+            required:true
+        }
     },
     //it is used only for displaying those products which are not added in outlets
-    outletIds:[{
-        outletId:{
+    outlet:[{
+        _id:{
             type:mongoose.Schema.Types.ObjectId,
-            
+            ref:"outlet"
         }
     }
     ],

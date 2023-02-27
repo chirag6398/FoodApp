@@ -11,9 +11,16 @@ var SuperCategorySchema=new mongoose.Schema({
         type:String,
 
     },
-    brandId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"brand"
+    brand:{
+        _id:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"brand",
+            required:true
+        },
+        name:{
+            type:String,
+            required:true
+        }
     },
     isDeleted:{
         type:Boolean,

@@ -18,10 +18,10 @@ app.config(function($stateProvider,$urlRouterProvider){
         url:'/createBrand',
         templateUrl:'./templates/superAdminCreateBrand.html',
         controller:"superAdminCreateBrandController"
-    }).state("superAdmin.brandNames",{
-        url:'/BrandNames',
-        templateUrl:'./templates/superAdminBrandNames.html',
-        controller:"superAdminBrandNamesController"
+    }).state("superAdmin.users",{
+        url:'/users',
+        templateUrl:'./templates/superAdminUsers.html',
+        controller:"superAdminUsersController"
     }).state("superAdmin.setting",{
         url:'/setting/:id',
         templateUrl:'./templates/superAdminSetting.html',

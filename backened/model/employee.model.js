@@ -32,31 +32,57 @@ var EmployeeSchema=new mongoose.Schema({
         type:Number,
         required:true,
     },
-    resetToken:{
-        type:String,
-        required:false
-    },
-    expireToken:{
-        type:Date,
-        required:false
-    },
     userType:{
         type:String,
         enum:["superAdmin","brandAdmin","outletAdmin","outletAgent"],
-        default:"user",
         required:true
     },
-    outletId:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:false,
-        ref:"outlet",
+    outlet:{
+        _id:{
+            type:mongoose.Schema.Types.ObjectId,
+            // required:false,
+            ref:"outlet",
+        },
+        name:{
+            type:String,
+            // required:true
+        },
+        location:{
+            type:String,
+            // required:true,
+        },
+        type:{
+            type:String,
+            // required:true
+        }
+
         
     },
-    brandId:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:false,
-        ref:"outlet",
+    brand:{
+        _id:{
+            type:mongoose.Schema.Types.ObjectId,
+            // required:false,
+            ref:"outlet",
+        },
+        name:{
+            type:String,
+            // required:true
+        }
         
+    },
+    location:{
+        address:{
+            type:String,
+            required:true,
+        },
+        pinCode:{
+            type:Number,
+            required:true
+        },
+        city:{
+            type:String,
+            required:true
+        }
     },
     isDeleted:{
         type:Boolean,

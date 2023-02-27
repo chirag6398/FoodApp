@@ -1,27 +1,38 @@
 var mongoose=require("mongoose");
 
 var CategorySchema=new mongoose.Schema({
-    categoryName:{
+    name:{
         type:String,
         required:true,
         trim:true,
         
     },
-    categoryLogo:{
+    logo:{
         type:String,
 
     },
-    superCategoryId:{
-        type:mongoose.Schema.Types.ObjectId
+    superCategory:{
+        _id:{
+            type:mongoose.Schema.Types.ObjectId,
+            required:true
+        },
+        name:{
+            type:String,
+            required:true
+        }
     },
-    superCategoryName:{
-        type:String,
-        required:true
+    brand:{
+        _id:{
+            type:mongoose.Schema.Types.ObjectId,
+            required:false,
+            ref:"outlet",
+        },
+        name:{
+            type:String,
+            required:true
+        }
     },
-    brandId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"brand"
-    },isDeleted:{
+    isDeleted:{
         type:Boolean,
         default:false
     },

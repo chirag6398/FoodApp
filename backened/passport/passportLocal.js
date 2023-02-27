@@ -16,7 +16,7 @@ module.exports={
             employeeModel.findOne({$or:[{email:username},{userName:username}]}).then(function(user){
                 
                 if(user){
-                    
+                    console.log(user)
                     // console.log("check various level for successful login",user);
                     //brandId and isActive self and isDeleted Self for brandAdmin
                     //outletId existence and above
@@ -26,27 +26,29 @@ module.exports={
                     
                     return bcrypt.compare(password,user.password).then(function(match){
                         if(match){
-                            // console.log(user);
+                            console.log("write password",user);
 
                             if(user.userType!=="superAdmin"){
                                 if(user.isActive==false || user.isDeleted==true){
+                                    console.log("user is deleted")  
                                     next(null,false);
                                 }
     
-                                brandModel.findOne({_id:user.brandId}).then(function(result){
+                                brandModel.findOne({_id:user.brand._id}).then(function(result){
                                     // console.log("brand data",result);
     
                                     if(result.isActive==false || result.isDeleted==true){
-                                        // console.log("should we printed")
+                                        console.log("brand deleted")
                                         return next(null,false);
     
                                     }else{
 
                                         if(user.userType=="outletAdmin" || user.userType=="outletAgent"){
                                             // console.log("outlet check");
-                                            outletModel.findOne({_id:user.outletId}).then(function(result){
+                                            outletModel.findOne({_id:user.outlet._id}).then(function(result){
                                                 console.log("result outlet",result);
                                                 if(result.isActive==false || result.isDeleted==true){
+                                                    console.log("outlet is deleted");
                                                     next(null,false);  
                                                 }
                                                 const token = jwt.sign({_id:user._id}, process.env.SECRET_KEY); 

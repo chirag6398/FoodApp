@@ -1,21 +1,51 @@
 var mongoose=require("mongoose");
 
 var BrandSchema=new mongoose.Schema({
-    brandName:{
+    name:{
         type:String,
         required:true,
         trim:true,
         minlength:2,
         unique:true
     },
-    brandLogo:{
+    logo:{
         type:String
     },
+    location:{
+        address:{
+            type:String,
+            required:true,
+        },
+        pinCode:{
+            type:Number,
+            required:true
+        },
+        city:{
+            type:String,
+            required:true
+        }
+    }, 
     //to check that its admin is created or not and also for updating user using its id
     brandAdminId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"employee",
         
+    },
+    contactInfo:{
+        number:{
+            type:Number,
+            unique:true
+        },
+        email:{
+            type:String,
+            unique:true,
+            trim:true
+        }
+    },
+    description:{
+        type:String,
+        trim:true,
+        required:true
     },
     isDeleted:{
         type:Boolean,

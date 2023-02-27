@@ -15,7 +15,7 @@ app.controller("brandAdminOutletsController", [
     apiHandler.getBrandAdminPage(function (result) {
       if (result && result.status === 200) {
         $scope.brandName = result.data.brandName;
-
+        $scope.brandId=result.data._id;
         apiHandler.getOutletsByBrandId(result.data._id, function (result) {
           // console.log(result.data._id);
           $scope.outlets = result.data;
@@ -53,7 +53,7 @@ app.controller("brandAdminOutletsController", [
     $scope.createOutletAdmin = function ($event, id) {
       $event.preventDefault();
     //   console.log($scope.admin, id);
-      apiHandler.createOutletAdmin($scope.admin, id, function (result) {
+      apiHandler.createOutletAdmin($scope.admin, id,$scope.brandId, function (result) {
         console.log(result);
       });
     };

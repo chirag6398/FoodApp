@@ -13,7 +13,7 @@ brandAdminRoute.post("/api/brandAdmin/getCategory",passport.authenticate('jwt',{
 brandAdminRoute.get("/api/brandAdmin/getSuperCategory/:id",passport.authenticate('jwt',{session: false }),brandAdminController.getSuperCategory);
 
 brandAdminRoute.post("/api/brandAdmin/createOutlet",passport.authenticate('jwt',{session: false }),brandAdminController.createOutlet);
-brandAdminRoute.post("/api/brandAdmin/createOutletAdmin",passport.authenticate('jwt',{session: false }),brandAdminController.createBrandAdmin);
+brandAdminRoute.post("/api/brandAdmin/createOutletAdmin",passport.authenticate('jwt',{session: false }),brandAdminController.createOutletAdmin);
 brandAdminRoute.post("/api/brandAdmin/addCategory",passport.authenticate('jwt',{session: false }),brandAdminController.addCategory);
 brandAdminRoute.post("/api/brandAdmin/addSuperCategory",passport.authenticate('jwt',{session: false }),brandAdminController.addSuperCategory);
 

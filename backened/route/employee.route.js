@@ -9,6 +9,9 @@ passportLocal.initializer(passport);
 
 
 employeeRoute.get("/api/employee/getUserById/:id",employeeController.getUserById);
+employeeRoute.get("/api/employee/getUsers",employeeController.getUsers);
+
+
 employeeRoute.post("/api/employee/updateUser",employeeController.updateUser);
 employeeRoute.post("/api/employee/updatePassword",employeeController.updatePassword);
 

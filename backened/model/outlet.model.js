@@ -1,36 +1,54 @@
 var mongoose=require("mongoose");
 
 var OutletSchema=new mongoose.Schema({
-    outletName:{
+    name:{
         type:String,
         required:true,
         trim:true,
         unique:true
     },
-    outletPinCode:{
-        type:Number,
-        required:true
-    },
+    location:{
+        address:{
+            type:String,
+            required:true,
+        },
+        pinCode:{
+            type:Number,
+            required:true
+        },
+        city:{
+            type:String,
+            required:true
+        }
+    }, 
     outletAdminId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"employee",
     },
-    brandId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"brand",
-        required:true
+    type:{
+        type:String,
+    },
+    brand:{
+        _id:{
+            type:mongoose.Schema.Types.ObjectId,
+            required:false,
+            ref:"outlet",
+        },
+        name:{
+            type:String,
+            required:true
+        }
     },
     products:[{
         product:{
             name:{
                 type:String,
                 trim:true,
-                // required:true,
-                // unique:true
+               
             },
             price:{
                 type:Number,
-                // required:true
+                required:true
             },
             img:{
                 type:String,
@@ -54,6 +72,22 @@ var OutletSchema=new mongoose.Schema({
         }
     }
     ],
+    description:{
+        type:String,
+        required:true,
+        trim:true
+    },
+    contactInfo:{
+        number:{
+            type:Number,
+            unique:true
+        },
+        email:{
+            type:String,
+            unique:true,
+            trim:true
+        }
+    },
     isDeleted:{
         type:Boolean,
         default:false

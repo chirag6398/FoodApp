@@ -33,21 +33,30 @@ var OrederSchema=new mongoose.Schema({
         
     }
     ],
-    customerName:{
-        type:String,
-        required:true,
-        trim:true
+    customer:{
+        name:{
+            type:String,
+            required:true,
+            trim:true
+        },
+        number:{
+            type:Number,
+            required:true
+        }
     },
-    outletId:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:true,
-        ref:"outlet"
+    outlet:{
+        _id:{
+            type:mongoose.Schema.Types.ObjectId,
+            required:true,
+            ref:"outlet"
+        },
+        name:{
+            type:String,
+            required:true
+        }
 
-    },  
-    customerPhoneNumber:{
-        type:Number,
-        required:true
     }
+    
 },{timestamps:true});
 
 module.exports=mongoose.model("order",OrederSchema);

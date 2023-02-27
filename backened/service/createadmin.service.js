@@ -12,7 +12,10 @@ module.exports={
                     userName:"admin1",
                     number:"7896541263",
                     email:"admin1@gmail.com",
-                    userType:"superAdmin"
+                    userType:"superAdmin",
+                    'location.city':"Delhi",
+                    'location.address':"Delhi Kirti Nagar",
+                    'location.pinCode':"200015",
                 });
                 admin.save().then(function(result){
                     // console.log(result);

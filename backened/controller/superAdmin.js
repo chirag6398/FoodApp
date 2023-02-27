@@ -46,21 +46,22 @@ module.exports={
             return res.status(401).send({message:"unauthorized user"});
         }
     },
-    getBrandProducts:function (req,res){
-
-    },
-    getOutletProducts:function (req,res){
-
-    },
     createBrand:function (req,res){
         if(req.user.userType==="superAdmin"){
             // console.log(req.body);
 
             var brand=new brandModel({
-                brandName:req.body.brandName
+                name:req.body.name,
+                'location.address':req.body.address,
+                'location.city':req.body.city,
+                'location.pinCode':req.body.pinCode,
+                'contactInfo.number':req.body.number,
+                'contactInfo.email':req.body.email,
+                description:req.body.description
             });
 
             brand.save().then(function(result){
+                // console.log(result);
                 return res.status(200).send({message:"brand created successfully",status:200});
             }).catch(function(err){
                 // console.log("forw",err)
@@ -78,7 +79,10 @@ module.exports={
         // console.log(req.body);
         // var id=req.body.brandId;
 
+        // console.log(req.body);
+
         var valid=validation.validateUserData(req,res);
+        console.log(valid,req.body);
 
         if(valid && req.body.brandId){
             var brandAdmin=new employeeModel({
@@ -88,24 +92,28 @@ module.exports={
                 email:req.body.email,
                 number:req.body.number,
                 password:req.body.password,
-                brandId:req.body.brandId,
-                userType:"brandAdmin"
+                'brand._id':req.body.brandId,
+                'brand.name':req.body.brandName,
+                userType:"brandAdmin",
+                'location.address':req.body.address,
+                'location.city':req.body.city,
+                'location.pinCode':req.body.pinCode
     
             });
 
-            brandAdmin.save().then(function(result){
+        return brandAdmin.save().then(function(result){
                 // console.log(result);
 
                 brandModel.findByIdAndUpdate({_id:req.body.brandId},{brandAdminId:result._id}).then(function(updated){
                     // console.log(updated);
                     return res.status(200).send({message:"admin created successfully",status:200});
                 }).catch(function(err){
-                    // console.log(err);
+                    console.log(err);
                     return res.status(500).send({error:"internal server error",status:500});
                 });
                
             }).catch(function(err){
-                // console.log(err);
+                console.log(err);
                 return res.status(500).send({error:"internal server error",status:500});
             })
         }else{
@@ -149,6 +157,15 @@ module.exports={
             // console.log(err);
             return res.status(500).send({error:"server error"})
         }
+    },
+    deleteBrand:function(req,res){
+        console.log(req.body);
+
+        brandModel.findByIdAndUpdate({_id:req.body.brandId},{isDeleted:true}).then(function(result){
+            return res.send({message:"deleted"});
+        }).catch(function(err){
+            return res.status(500).send({error:err});
+        })
     }
 }
 

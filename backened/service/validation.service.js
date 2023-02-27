@@ -7,23 +7,31 @@ module.exports={
         var cpassword=req.body.cpassword;
         var number=req.body.number;
         var email=req.body.email;
+        var address=req.body.address;
+        var pinCode=req.body.pinCode;
+        var city=req.body.city;
 
+        if(!userName  || !firstName || !password || !number || !cpassword || !address || !pinCode || !city){
+         return res.status(404).send({message:"please fill all fields"});
+          
+      }
         
 
         userName=userName.trim();
-        lastName=lastName.trim();
+        if(lastName)
+            lastName=lastName.trim();
         firstName=firstName.trim();
         password=password.trim();
         cpassword=cpassword.trim();
         email=email.trim();
         
 
-        if(!userName || !lastName || !firstName || !password || !number || !cpassword){
-           return res.status(404).send({message:"please fill all fields"});
-            
-        }
+      if(!userName  || !firstName || !password || !number || !cpassword || !address || !pinCode || !city){
+         return res.status(404).send({message:"please fill all fields"});
+          
+      }
 
-        if(userName.length<3){
+      if(userName.length<3){
            return res.status(403).send({message:"length of userName must be greater then 3"});
         }
 

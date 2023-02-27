@@ -19,5 +19,6 @@ superAdminRoute.post("/api/superAdmin/createBrand",passport.authenticate('jwt',{
 superAdminRoute.post("/api/superAdmin/addBrandAdmin",passport.authenticate('jwt',{session:false}),superAdminController.addBrandAdmin);
 superAdminRoute.post("/api/superAdmin/deactivateBrand",passport.authenticate('jwt',{session:false}),superAdminController.deactivateBrand)
 superAdminRoute.post("/api/superAdmin/activateBrand",passport.authenticate('jwt',{session:false}),superAdminController.activateBrand)
+superAdminRoute.post("/api/superAdmin/deleteBrand",passport.authenticate('jwt',{session:false}),superAdminController.deleteBrand)
 
 module.exports=superAdminRoute;
