@@ -9,10 +9,9 @@ app.factory("brandApi",function($http){
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            // console.log(response)
-            cb(null,response.data);
+                        cb(null,response.data);
         }).catch(function(err){
-            // console.log(err);
+            
             cb({status:401,message:"unauthorized user"},null);
         })
     }
@@ -29,7 +28,7 @@ app.factory("brandApi",function($http){
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            // console.log(response);
+            
             cb(null,response);
         }),function(err){
             cb(err,null);
@@ -46,7 +45,7 @@ app.factory("brandApi",function($http){
             console.log(response);
             cb(null,response.data);
         }).catch(function(err){
-            // console.log(err);
+            
             cb(err,null)
         })
     }
@@ -67,7 +66,7 @@ app.factory("brandApi",function($http){
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            // console.log(response);
+            
             cb(response);
         }),function(err){
             cb(err);
@@ -84,7 +83,81 @@ app.factory("brandApi",function($http){
             cb(response,null);
         }).catch(function(err){
             cb(err,null);
+            
+        })
+    }
+
+    obj.addSuperCategory=function(data,cb){
+        
+        $http.post("http://localhost:5000/api/brandAdmin/addSuperCategory",data,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            
+            cb(null,response);
+        }),function(err){
+            cb(err,null);
+        }
+    }
+
+     obj.getSuperCategoryByBrandId=function(brandId,cb){
+        console.log(brandId)
+        $http.get("http://localhost:5000/api/brandAdmin/getSuperCategory/"+brandId,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            
+            cb(null,response);
+        }).catch(function(err){
+            // console.log(err,null);
+        })
+    }
+
+      obj.getCategoryByBrandId=function(brandId,superCategoryId,cb){
+        var data={
+            brandId,
+            superCategoryId
+        }
+        $http.post("http://localhost:5000/api/brandAdmin/getCategory/",data,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            
+            cb(null,response);
+        }).catch(function(err){
+            
+            cb(err,null)
+        })
+    }
+
+     obj.addCategory=function(data,cb){
+       
+        $http.post("http://localhost:5000/api/brandAdmin/addCategory",data,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            
+            cb(null,response);
+        }),function(err){
+            cb(err,null);
+        }
+    }
+
+    obj.getProductsInBrand=function(data,cb){
+        $http.post("http://localhost:5000/api/product/getProducts",data,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            // console.log(response);
+            cb(null,response);
+        }).catch(function(err){
             // console.log(err);
+            cb(err,null)
         })
     }
 
@@ -115,7 +188,7 @@ app.factory("brandApi",function($http){
             
     //         cb(null,response);
     //     }).catch(function(err){
-    //         // console.log(err);
+    //         
     //         cb({status:401,message:"unauthorized user"},null);
     //     })
     // }
@@ -148,42 +221,9 @@ app.factory("brandApi",function($http){
 
   
 
-    // obj.getCategoryByBrandId=function(brandId,superCategoryId,cb){
-    //     var data={
-    //         brandId,
-    //         superCategoryId
-    //     }
-    //     $http.post("http://localhost:5000/api/brandAdmin/getCategory/",data,{
-    //         headers:{
-    //             "Authorization":window.localStorage.getItem("Authorization")
-    //         }
-    //     }).then(function(response){
-    //         // console.log(response);
-    //         cb(response);
-    //     }).catch(function(err){
-    //         // console.log(err);
-    //     })
-    // }
+  
 
-    // obj.addCategory=function(category,brandId,superCategoryId,superCategoryName,cb){
-    //     var data={
-    //         ...category,
-    //         brandId,
-    //         superCategoryId,
-    //         superCategoryName
-    //     }
-    //     // console.log(data)
-    //     $http.post("http://localhost:5000/api/brandAdmin/addCategory",data,{
-    //         headers:{
-    //             "Authorization":window.localStorage.getItem("Authorization")
-    //         }
-    //     }).then(function(response){
-    //         // console.log(response);
-    //         cb(response);
-    //     }),function(err){
-    //         cb(err);
-    //     }
-    // }
+   
 
    
 
@@ -206,18 +246,7 @@ app.factory("brandApi",function($http){
     //     })
     // }
 
-    // obj.getProductsInBrand=function(data,cb){
-    //     $http.post("http://localhost:5000/api/product/getProducts",data,{
-    //         headers:{
-    //             "Authorization":window.localStorage.getItem("Authorization")
-    //         }
-    //     }).then(function(response){
-    //         // console.log(response);
-    //         cb(response);
-    //     }).catch(function(err){
-    //         // console.log(err);
-    //     })
-    // }
+    
 
     
 
@@ -354,36 +383,9 @@ app.factory("brandApi",function($http){
     //     })
     // }
 
-    // obj.addSuperCategory=function(superCategory,brandId,cb){
-    //     var data={
-    //         ...superCategory,
-    //         brandId
-    //     }
-    //     $http.post("http://localhost:5000/api/brandAdmin/addSuperCategory",data,{
-    //         headers:{
-    //             "Authorization":window.localStorage.getItem("Authorization")
-    //         }
-    //     }).then(function(response){
-    //         // console.log(response);
-    //         cb(null,response);
-    //     }),function(err){
-    //         cb(err,null);
-    //     }
-    // }
+    
 
-    // obj.getSuperCategoryByBrandId=function(id,cb){
-    //     console.log(id)
-    //     $http.get("http://localhost:5000/api/brandAdmin/getSuperCategory/"+id,{
-    //         headers:{
-    //             "Authorization":window.localStorage.getItem("Authorization")
-    //         }
-    //     }).then(function(response){
-    //         // console.log(response);
-    //         cb(null,response);
-    //     }).catch(function(err){
-    //         // console.log(err,null);
-    //     })
-    // }
+   
 
     // obj.getCategories=function(outletId,cb){
     //     console.log(outletId)

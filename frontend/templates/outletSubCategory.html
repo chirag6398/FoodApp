@@ -1,12 +1,18 @@
-<div ng-controller="subCategoryController">
+<div style="display: flex;
+height: 100vh;
+width: 100vw;
+padding: 20px;
+flex-direction: column;
+justify-content: space-between;"
+ ng-controller="subCategoryController">
     <div ng-if="categories">
         <div>
-            Categories
+            <h3>Categories</h3>
           </div>
           <div style="display:flex;flex-wrap: wrap;">
-            <div class="spr__brandCard" ui-sref="categoryProduct({id:category._id,name:category.categoryName})" style="cursor: pointer;" ng-repeat="category in categories">
+            <div class="spr__brandCard" ui-sref="categoryProduct({id:category._id,name:category.name})" style="cursor: pointer;" ng-repeat="category in categories">
                 <div>
-                    {{category.categoryName}}
+                    {{category.name}}
                     
                 </div>
                 
@@ -30,7 +36,7 @@
               <form name="categoryData" novalidate>
                 <div class="form-group">
                   <label for="categoryName" class="col-form-label">CategoryName:</label>
-                  <input type="text" name="categoryName" ng-required="true" ng-minlength="3" ng-model="category.categoryName" class="form-control" >
+                  <input type="text" name="categoryName" ng-required="true" ng-minlength="3" ng-model="category.name" class="form-control" >
                   <span ng-show="categoryData.categoryName.$dirty && categoryData.categoryName.$error.minlength">Minimum 3 characters required</span>
                 </div>
                 <div class="form-group">

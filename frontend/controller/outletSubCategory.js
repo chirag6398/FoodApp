@@ -4,18 +4,22 @@
 
 
 
-app.controller("subCategoryController",["$scope","$http","$location","apiHandler","$rootScope","$stateParams",function($scope,$http,$location,apiHandler,$rootScope,$stateParams){
+app.controller("subCategoryController",["$scope","$http","$location","brandApi","$rootScope","$stateParams",function($scope,$http,$location,brandApi,$rootScope,$stateParams){
     //    console.log($rootScope.outletId);
 
-     apiHandler.getBrandAdminPage(function(result){
-        if(result && result.status===200){
-            $scope.brandName=result.data.brandName;
+     brandApi.getBrandAdminPage(function(err,result){
+        if(result){
+            $scope.brandName=result.data.name;
             $scope.brandId=result.data._id;
             console.log(result.data);
 
-            apiHandler.getCategoryByBrandId(result.data._id,$stateParams.id,function(result){
-                console.log(result.data);
-                $scope.categories=result.data;
+            brandApi.getCategoryByBrandId(result.data._id,$stateParams.id,function(err,result){
+                if(result){
+                    console.log(result);
+                    console.log(result.data);
+                    $scope.categories=result.data;
+                }
+                
             })
 
             
@@ -29,9 +33,12 @@ app.controller("subCategoryController",["$scope","$http","$location","apiHandler
         $event.preventDefault();
         $scope.btnText="adding...";
 
-        console.log($scope.category,$stateParams.id,$stateParams.name)
-        apiHandler.addCategory($scope.category,$scope.brandId,$stateParams.id,$stateParams.name,function(result){
+        // console.log($scope.category,$stateParams.id,$stateParams.name)
+        brandApi.addCategory({...$scope.category,brand:{_id:$scope.brandId,name:$scope.brandName},superCategory:{_id:$stateParams.id,name:$stateParams.name}},function(err,result){
             console.log(result);
+            if(result){
+                $scope.btnText="added";
+            }
             
         })
         

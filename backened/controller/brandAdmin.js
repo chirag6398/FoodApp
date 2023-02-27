@@ -4,6 +4,7 @@ var validation=require("../service/validation.service");
 var employeeModel=require("../model/employee.model");
 var superCategoryModel=require("../model/superCategory.model");
 var categoryModel = require("../model/category.model");
+var mongoose=require("mongoose");
 
 module.exports={
     getBrandAdminPage:function (req,res){
@@ -112,16 +113,14 @@ module.exports={
         }
     },
     addCategory:function (req,res){
-       
+   
         var category=new categoryModel({
-            categoryName:req.body.categoryName,
-            brandId:req.body.brandId,
-            superCategoryId:req.body.superCategoryId,
-            superCategoryName:req.body.superCategoryName
-
+            name:req.body.name,
+            brand:req.body.brand,
+            superCategory:req.body.superCategory,
         });
 
-        console.log(category);  
+       
 
         category.save().then(function(result){
             console.log("added category",result);
@@ -133,7 +132,7 @@ module.exports={
     },
     getCategory:function(req,res){
         console.log("",req.body);
-        categoryModel.find({brandId:req.body.brandId,superCategoryId:req.body.superCategoryId}).then(function(result){
+        categoryModel.find({'brand._id':req.body.brandId,'superCategory._id':req.body.superCategoryId}).then(function(result){
             console.log(result);
             return res.status(200).send(result);
         }).catch(function(err){
@@ -144,7 +143,7 @@ module.exports={
         
         var superCategory=new superCategoryModel({
             name:req.body.categoryName,
-            brandId:req.body.brandId
+            brand:req.body.brand
         });
 
         return superCategory.save().then(function(result){
@@ -156,8 +155,8 @@ module.exports={
 
     },
     getSuperCategory:function (req,res){
-        console.log(req.params.id)
-        superCategoryModel.find({brandId:req.params.id}).then(function(result){
+        // console.log(req.params.id)
+        superCategoryModel.find({'brand._id':mongoose.Types.ObjectId(req.params.id)}).then(function(result){
             console.log(result);
             return res.send(result);
         }).catch(function(err){

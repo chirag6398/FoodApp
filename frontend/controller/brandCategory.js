@@ -5,15 +5,15 @@
 //     $httpProvider.defaults.headers.common['Authorization'] = (window.localStorage.getItem("Authorization"));
 // }]);
 
-app.controller("brandCategoryController",["$scope","$http","$location","apiHandler",function($scope,$http,$location,apiHandler){
+app.controller("brandCategoryController",["$scope","$http","$location","brandApi",function($scope,$http,$location,brandApi){
     $scope.isLoading=true;
-    apiHandler.getBrandAdminPage(function(result){
+    brandApi.getBrandAdminPage(function(err,result){
         
-        if(result && result.status===200){
+        if(result ){
             $scope.brandName=result.data.name;
 
-            apiHandler.getSuperCategoryByBrandId(result.data._id,function(err,result){
-                // console.log(result);
+            brandApi.getSuperCategoryByBrandId(result.data._id,function(err,result){
+                console.log(result);
                 
                 if(result){
                     $scope.superCategories=result.data;

@@ -12,8 +12,8 @@ function generateOrderId() {
 app.controller("outletAgentController",["$scope","$http","$location","apiHandler","cartService","$interval",function($scope,$http,$location,apiHandler,cartService,$interval){
     apiHandler.getOutletAgentPage(function(err,result){
         if(result){
-            // console.log(result);
-            $scope.outletId=result.data.outletId;
+            console.log(result);
+            $scope.outletId=result.data.outlet._id;
             $scope.admin={
                 userName:result.data.userName,
                 email:result.data.email,

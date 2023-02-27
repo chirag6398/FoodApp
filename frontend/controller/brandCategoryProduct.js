@@ -3,19 +3,22 @@
 
 
 
-app.controller("categoryProductController",["$scope","$http","$location","apiHandler","$stateParams",function($scope,$http,$location,apiHandler,$stateParams){
+app.controller("categoryProductController",["$scope","$http","$location","brandApi","$stateParams",function($scope,$http,$location,brandApi,$stateParams){
     console.log($stateParams.id,$stateParams.name);
     $scope.categoryName=$stateParams.name;
 
-    apiHandler.getBrandAdminPage(function(result){
-        if(result && result.status===200){
+    brandApi.getBrandAdminPage(function(err,result){
+        if(result){
             $scope.brandName=result.data.name;
             $scope.brandId=result.data._id;
             $scope.categoryId=$stateParams.id;
 
-            apiHandler.getProductsInBrand({categoryId:$scope.categoryId,brandId:$scope.brandId},function(result){
+            brandApi.getProductsInBrand({categoryId:$scope.categoryId,brandId:$scope.brandId},function(err,result){
+              if(result){
                 console.log(result.data);
                 $scope.products=result.data;
+              }
+                
             })
 
             
@@ -67,9 +70,8 @@ app.controller("categoryProductController",["$scope","$http","$location","apiHan
         var formData=new FormData();
         formData.append("name", $scope.product.productName);
         formData.append("file",$scope.product.image);
-        formData.append('categoryId',$scope.categoryId);
-        formData.append('categoryName',$stateParams.name);
-        formData.append('brandId',$scope.brandId);
+        formData.append('category',{_id:$scope.categoryId,name:$scope.categoryName});
+        formData.append('brand',{_id:$scope.brandId,name:$scope.brandName});
         formData.append('price',$scope.product.price);
         formData.append('description',$scope.product.description);
         

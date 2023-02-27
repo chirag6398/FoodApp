@@ -5,9 +5,9 @@
 //     $httpProvider.defaults.headers.common['Authorization'] = (window.localStorage.getItem("Authorization"));
 // }]);
 
-app.controller("brandAdminCategoryController",["$scope","$http","$location","apiHandler",function($scope,$http,$location,apiHandler){
-    apiHandler.getBrandAdminPage(function(result){
-        if(result && result.status===200){
+app.controller("brandAdminCategoryController",["$scope","$http","$location","brandApi",function($scope,$http,$location,brandApi){
+    brandApi.getBrandAdminPage(function(err,result){
+        if(result){
             $scope.brandName=result.data.name;
             $scope.brandId=result.data._id;
 
@@ -22,14 +22,12 @@ app.controller("brandAdminCategoryController",["$scope","$http","$location","api
         $event.preventDefault();
         $scope.btnText="adding...";
 
-        console.log($scope.category)
-        // apiHandler.addCategory($scope.category,$scope.brandId,function(result){
-        //     console.log(result);
-            
-        // })
-        apiHandler.addSuperCategory($scope.category,$scope.brandId,function(err,result){
+        
+        
+        brandApi.addSuperCategory({...$scope.category,brand:{_id:$scope.brandId,name:$scope.brandName}},function(err,result){
             
             if(result){
+                console.log(result)
                 $scope.btnText="added";
             }else{
                 $scope.btnText="try later";
