@@ -2,7 +2,29 @@
     <div class="spr__extDiv">
        
             <div class="spr__rightSide">
-              {{users}}
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">UserName</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Type</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="user in users">
+                    <th scope="row">{{$index}}</th>
+                    <td>{{user.userName}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.number}}</td>
+                    <td>{{user.userType}}</td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+              
+             
             </div>
     </div>
        

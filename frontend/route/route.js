@@ -35,6 +35,14 @@ app.config(function($stateProvider,$urlRouterProvider){
         url:"/Analysis",
         templateUrl:"./templates/superAdminAnalysis.html",
         controller:"superAdminAnalysisController"
+    }).state("superAdmin.outlets",{
+        url:"/outlets",
+        templateUrl:"./templates/superAdminOutlets.html",
+        controller:"superAdminOutletsController"
+    }).state("superAdmin.superCategories",{
+        url:"/superCategories",
+        templateUrl:"./templates/superAdminSuperCategories.html",
+        controller:"superAdminSuperCategoriesController"
     }).state("updatebrandadmin",{
         url:"/superadmin/updatebrandadmin/:id",
         templateUrl:"./templates/updateBrandAdmin.html",

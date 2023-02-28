@@ -1,25 +1,35 @@
-const productModel = require("../model/product.model");
+var productModel = require("../model/product.model");
+var uploadToS3=require("../service/awsS3.service");
+
 
 module.exports={
     addProduct:function (req,res){
-        try{
-            var product=new productModel({
-                name:req.body.name,
-                price:req.body.price,
-                categoryId:req.body.categoryId,
-                brandId:req.body.brandId,
-                description:req.body.description,
-                categoryName:req.body.categoryName
-            });
-            product.save().then(function(result){
-                return res.status(200).send({status:200,message:"product added successfuly"});
+        console.log(req.body);
+        console.log(req.file)
+        console.log(req.file.mimetype);
+        if(req.file){
+            uploadToS3(req.file.buffer).then(function(data){
+                console.log(data);
+                req.body.image=data.location;
+
             }).catch(function(err){
-                return res.status(500).send({error:err,status:500});
+                console.log(err);
             })
-        }catch(err){
-            console.log(err);
-            return res.status(500).send({error:err,status:500});
         }
+            // var product=new productModel({
+            //     name:req.body.name,
+            //     price:req.body.price,
+            //     category:req.body.category,
+            //     brand:req.body.brand,
+            //     description:req.body.description,
+            //     
+            // });
+            // product.save().then(function(result){
+            //     return res.status(200).send({status:200,message:"product added successfuly"});
+            // }).catch(function(err){
+            //     return res.status(500).send({error:err,status:500});
+            // })
+       
     },
     getProducts:function (req,res){
         try{

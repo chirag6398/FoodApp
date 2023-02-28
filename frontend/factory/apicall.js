@@ -27,7 +27,7 @@ app.factory("apiHandler",function($http){
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            
+            console.log(response);
             cb(null,response);
         }).catch(function(err){
             // console.log(err);

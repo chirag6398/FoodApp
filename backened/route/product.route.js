@@ -5,11 +5,9 @@ const multer = require("multer");
 var passportJwt=require("../passport/passportjwt");
 
 passportJwt.initializer(passport);
-
+var upload=multer();
 const uploadProductImg = multer({
-    limits: {
-      fileSize: 1000000,
-    },
+    
     fileFilter(req, file, cb) {
       if (!file.originalname.match(/\.(png|jpg|jpeg)$/)) {
         return new Error("file not supported");
@@ -29,7 +27,7 @@ const uploadProductImg = multer({
 
 // var upload = multer({ storage: storage });
 
-productRoute.post("/api/product/addProduct",uploadProductImg.single("file"),productController.addProduct);
+productRoute.post("/api/product/addProduct",upload.single("file"),productController.addProduct);
 productRoute.post("/api/product/getProducts",productController.getProducts);
 
 productRoute.post("/api/product/updateProduct",uploadProductImg.single("file"),productController.updateProduct);

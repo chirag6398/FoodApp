@@ -21,7 +21,7 @@
     flex-wrap: wrap;
 }
 .spr__nav{
-    height: fit-content;
+    /* height: fit-content; */
     background: aliceblue;
 }
 .nav{

@@ -161,52 +161,9 @@ app.factory("brandApi",function($http){
         })
     }
 
-    // obj.postLogin=function(data,cb){
-    //     $http.post("http://localhost:5000/api/employee/login",{username:data.userName,password:data.password}).then(function(response){
-           
-    //         cb(null,{token:response.data.token,userType:response.data.user.userType,admin:response.data.user,status:200});
-    //     }).catch(function(err){
-            
-            
-    //         if(err.status===401){
-               
-    //             cb({message:"please enter correct username and password",status:err.status},null)
-    //         }else{
-                
-    //             cb({message:"please try againg later",status:500},null);
     
-    //         }
-    //     })
-    // }
-
-    // obj.getOutletAdminPage=function(cb){
-    //     $http.get("http://localhost:5000/api/outletAdmin/getAdminPage",{
-    //         headers:{
-    //             "Authorization":window.localStorage.getItem("Authorization")
-    //         }
-    //     }).then(function(response){
-            
-    //         cb(null,response);
-    //     }).catch(function(err){
-    //         
-    //         cb({status:401,message:"unauthorized user"},null);
-    //     })
-    // }
-
-    // obj.getAdminPage=function(cb){
-    //     $http.get("http://localhost:5000/api/superAdmin/getAdminPage",{
-    //         headers:{
-    //             "Authorization":window.localStorage.getItem("Authorization")
-    //         }
-    //     }).then(function(response){
-            
-    //         cb(response);
-    //     }).catch(function(err){
-    //         // console.log(err);
-    //         cb({status:401,message:"unauthorized user"});
-    //     })
-    // }
-
+    
+ 
     
 
    

@@ -3,7 +3,8 @@ var employeeModel=require("../model/employee.model");
 var validation=require("../service/validation.service");
 var outletModel=require("../model/outlet.model");
 var categoryModel=require("../model/category.model");
-const productModel = require("../model/product.model");
+// const productModel = require("../model/product.model");
+var superCategory=require("../model/superCategory.model");
 var mongoose= require("mongoose");
 module.exports={
     getAdminPage:function (req,res){
@@ -163,6 +164,22 @@ module.exports={
 
         brandModel.findByIdAndUpdate({_id:req.body.brandId},{isDeleted:true}).then(function(result){
             return res.send({message:"deleted"});
+        }).catch(function(err){
+            return res.status(500).send({error:err});
+        })
+    },
+    getSuperCategory:function(req,res){
+
+        superCategory.find({}).then(function(result){
+            return res.send(result);
+        }).catch(function(err){
+            return res.status(500).send({message:"internal server error"})
+        })
+
+    },
+    getOutlets:function(req,res){
+        outletModel.find({}).then(function(result){
+            return res.send(result);
         }).catch(function(err){
             return res.status(500).send({error:err});
         })

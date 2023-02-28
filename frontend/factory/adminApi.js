@@ -18,6 +18,20 @@ app.factory("adminApi",function($http){
         }
     }
 
+    obj.getAdminPage=function(cb){
+        $http.get("http://localhost:5000/api/superAdmin/getAdminPage",{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            
+            cb(null,response);
+        }).catch(function(err){
+            // console.log(err);
+            cb({status:401,message:"unauthorized user"},null);
+        })
+    }
+
     obj.getBrands=function(cb){
         $http.get("http://localhost:5000/api/superAdmin/getBrands",{
             headers:{
@@ -85,6 +99,51 @@ app.factory("adminApi",function($http){
         })
     }
 
+     obj.updatePassword=function (admin,id,cb){
+        var data={
+            ...admin,
+            id:id
+        }
+        $http.post("http://localhost:5000/api/employee/updatePassword",data,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            // console.log(null,response);
+            cb(null,response);
+        }).catch(function(err){
+            // console.log(err,null);
+        })
+    }
+
+    obj.getSuperCategories=function(cb){
+        $http.get("http://localhost:5000/api/superAdmin/getSuperCategory",{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            // console.log(response);
+            cb(null,response);
+        }),function(err){
+            // console.log(err);
+            cb(err,null);
+        }
+    }
+
+    obj.getOutlets=function(cb){
+        $http.get("http://localhost:5000/api/superAdmin/getOutlets",{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            // console.log(response);
+            cb(null,response);
+        }),function(err){
+            // console.log(err);
+            cb(err,null);
+        }
+    }
+
     // obj.postLogin=function(data,cb){
     //     $http.post("http://localhost:5000/api/employee/login",{username:data.userName,password:data.password}).then(function(response){
            
@@ -117,19 +176,7 @@ app.factory("adminApi",function($http){
     //     })
     // }
 
-    // obj.getAdminPage=function(cb){
-    //     $http.get("http://localhost:5000/api/superAdmin/getAdminPage",{
-    //         headers:{
-    //             "Authorization":window.localStorage.getItem("Authorization")
-    //         }
-    //     }).then(function(response){
-            
-    //         cb(response);
-    //     }).catch(function(err){
-    //         // console.log(err);
-    //         cb({status:401,message:"unauthorized user"});
-    //     })
-    // }
+    
 
     
 
@@ -243,22 +290,7 @@ app.factory("adminApi",function($http){
 
     
 
-    // obj.updatePassword=function (admin,id,cb){
-    //     var data={
-    //         ...admin,
-    //         id:id
-    //     }
-    //     $http.post("http://localhost:5000/api/employee/updatePassword",data,{
-    //         headers:{
-    //             "Authorization":window.localStorage.getItem("Authorization")
-    //         }
-    //     }).then(function(response){
-    //         // console.log(null,response);
-    //         cb(null,response);
-    //     }).catch(function(err){
-    //         // console.log(err,null);
-    //     })
-    // }
+   
 
     // obj.getProductsInBrand=function(data,cb){
     //     $http.post("http://localhost:5000/api/product/getProducts",data,{

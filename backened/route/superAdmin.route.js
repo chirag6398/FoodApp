@@ -12,8 +12,8 @@ passportJwt.initializer(passport);
 superAdminRoute.get("/api/superAdmin/getAdminPage",passport.authenticate('jwt',{session: false }),superAdminController.getAdminPage);
 superAdminRoute.get("/api/superAdmin/getBrands",passport.authenticate('jwt',{session: false }),superAdminController.getBrands);
 superAdminRoute.get("/api/superAdmin/getBrandOutlets",passport.authenticate('jwt',{session: false }),superAdminController.getBrandOutlets);
-// superAdminRoute.get("/api/superAdmin/getBrandProducts",passport.authenticate('jwt',{session: false }),superAdminController.getBrandProducts);
-// superAdminRoute.get("/api/superAdmin/getOutletProducts",passport.authenticate('jwt',{session: false }),superAdminController.getOutletProducts);
+superAdminRoute.get("/api/superAdmin/getSuperCategory",passport.authenticate('jwt',{session: false }),superAdminController.getSuperCategory);
+superAdminRoute.get("/api/superAdmin/getOutlets",passport.authenticate('jwt',{session: false }),superAdminController.getOutlets);
 
 superAdminRoute.post("/api/superAdmin/createBrand",passport.authenticate('jwt',{session:false}),superAdminController.createBrand);
 superAdminRoute.post("/api/superAdmin/addBrandAdmin",passport.authenticate('jwt',{session:false}),superAdminController.addBrandAdmin);

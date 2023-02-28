@@ -74,7 +74,7 @@ app.controller("categoryProductController",["$scope","$http","$location","brandA
         formData.append('brand',{_id:$scope.brandId,name:$scope.brandName});
         formData.append('price',$scope.product.price);
         formData.append('description',$scope.product.description);
-        
+        console.log($scope.product.image)
         $http.post('http://localhost:5000/api/product/addProduct', formData, {
           transformRequest: angular.identity,
           headers: {'Content-Type': undefined}
