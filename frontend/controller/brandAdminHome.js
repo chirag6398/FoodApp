@@ -26,7 +26,7 @@ app.controller("brandAdminHomeController",["$scope","$http","$location","brandAp
     $scope.btnText="Create Outlet";
     $scope.createOutlet=function($event){
         $event.preventDefault();
-        brandApi.createOutlet($scope.outlet,$scope.brandId,$scope.brandName,function(err,result){
+        brandApi.createOutlet($scope.outlet,$scope.brandId,$scope.brandName,$scope.brandLogo,function(err,result){
             console.log(result);
             
         })
@@ -54,7 +54,7 @@ app.controller("brandAdminHomeController",["$scope","$http","$location","brandAp
     $scope.createOutletAdmin = function ($event, outletId,outletName,outlateLocation,outletType) {
       $event.preventDefault();
       $scope.btnText0 = "processing";
-      brandApi.createOutletAdmin($scope.admin, outletId,outletName,outlateLocation,outletType,$scope.brandId,$scope.brandName,$scope.brandLogo, function (err,result) {
+      brandApi.createOutletAdmin($scope.admin, outletId,outletName,outlateLocation,outletType,$scope.brandId,$scope.brandName, function (err,result) {
          if(result){
             $scope.btnText0 = "successfull";
          }

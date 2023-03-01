@@ -1,4 +1,4 @@
-<div ng-controller="superAdminBrandNamesController">
+<div style="width:100%;padding:20px" ng-controller="superAdminBrandNamesController">
   <div class="spr__extDiv">
      
           <div class="spr__rightSide">
@@ -6,7 +6,7 @@
 
 
               <div ng-if="isAccess && brands">
-                  <table class="table table-bordered table-hover">
+                  <table style="max-width: 700px;" class="table table-bordered table-hover">
                       <thead>
                         <tr>
                           <th scope="col">S.No</th>
@@ -22,10 +22,10 @@
                       <tbody>
                         <tr style="cursor:pointer" ng-show="!brand.isDeleted" ng-repeat="brand in brands" >
                           <th scope="row">{{$index}}</th>
-                          <th><img style="object-fit: contain;
-                            height: 80px;"
+                          <td><img style="object-fit: contain;
+                            height: 50px;"
                              src={{brand.logo}}
-                              alt="..."></th>
+                              alt="..."></td>
                           <td>{{brand.name}}</td>
                           <td > 
 

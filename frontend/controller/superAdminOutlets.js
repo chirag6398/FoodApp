@@ -19,9 +19,9 @@ app.controller("superAdminOutletsController",["$scope","$http","$location","admi
     $rootScope.$on('passData',function(err,data){
         console.log(data);
         $scope.btnText="Create";
-        $scope.admin=data.user;
+        $scope.admin=data;
         console.log($scope.admin)
-        $scope.superAdminId=data.user._id;
+        $scope.superAdminId=data._id;
     });
 
     adminApi.getOutlets(function(err,result){

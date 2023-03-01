@@ -16,11 +16,12 @@ app.factory("brandApi",function($http){
         })
     }
 
-    obj.createOutlet=function(outletData,brandId,brandName,cb){
+    obj.createOutlet=function(outletData,brandId,brandName,brandLogo,cb){
         var data={
             ...outletData,
             brandId,
-            brandName
+            brandName,
+            brandLogo
         }
         console.log(data);
         $http.post("http://localhost:5000/api/brandAdmin/createOutlet",data,{

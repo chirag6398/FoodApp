@@ -1,10 +1,14 @@
-<div ng-controller="superAdminOutletsController">
+<div 
+style="display: flex;
+width: 100%;
+padding: 20px;"
+ng-controller="superAdminOutletsController">
     
-    <table  class="table table-bordered table-hover">
+    <table style="max-width: 700px;"  class="table table-bordered table-hover">
         <thead class="thead-dark">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">logo</th>
+            <th scope="col"> Brand logo</th>
             <th scope="col">name</th>
             <th scope="col">brand name(logo)</th>
 
@@ -14,7 +18,7 @@
           <tr ng-repeat="outlet in outlets">
             <th  scope="row">{{$index}}</th>
             <td><img  style="object-fit: contain;
-              height: 80px;" src={{outlet.logo}} alt="working"></td>
+              height: 80px;" src={{outlet.brand.logo}} alt="working"></td>
             <td>{{outlet.name}}</td>
             <td>{{outlet.brand.name}}</td>
           </tr>
