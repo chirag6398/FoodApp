@@ -6,16 +6,19 @@
 app.controller("superAdminBrandNamesController",["$scope","$http","$location","apiHandler","$rootScope","$state","adminApi",function($scope,$http,$location,apiHandler,$rootScope,$state,adminApi){
     
     $scope.isAccess=false;
-    apiHandler.getAdminPage(function(result){
-        if(result && result.status===200){
+    // apiHandler.getAdminPage(function(result){
+    //     if(result && result.status===200){
            
-            $scope.isAccess=true;
+    //         $scope.isAccess=true;
             
-        }else{
-            $location.path('login')
-        }
-    });
+    //     }else{
+    //         $location.path('login')
+    //     }
+    // });
 
+    $rootScope.$on('passData',function(err,data){
+        console.log(data);
+    });
    
     $scope.btnText="Add Admin"
     

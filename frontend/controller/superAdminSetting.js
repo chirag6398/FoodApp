@@ -4,18 +4,25 @@
 
 app.controller("superAdminSettingController",["$scope","$http","$location","adminApi","$stateParams","$rootScope",function($scope,$http,$location,adminApi,$stateParams,$rootScope){
     
-    adminApi.getAdminPage(function(err,result){
-        if(result){
-            $scope.btnText="Create";
-            // console.log(result);
-            $scope.admin=result.data.user;
-            console.log($scope.admin)
-            $scope.superAdminId=result.data.user._id;
-        }else{
+    // adminApi.getAdminPage(function(err,result){
+    //     if(result){
+    //         $scope.btnText="Create";
+    //         // console.log(result);
+    //         $scope.admin=result.data.user;
+    //         console.log($scope.admin)
+    //         $scope.superAdminId=result.data.user._id;
+    //     }else{
            
-            $location.path('login')
+    //         $location.path('login')
             
-        }
+    //     }
+    // });
+    $rootScope.$on('passData',function(err,data){
+        console.log(data);
+        $scope.btnText="Create";
+            $scope.admin=data.user;
+            console.log($scope.admin)
+            $scope.superAdminId=data.user._id;
     });
 
     $scope.btnText1="update"

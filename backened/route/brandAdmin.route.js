@@ -11,6 +11,7 @@ brandAdminRoute.get("/api/brandAdmin/getBrandAdminPage",passport.authenticate('j
 brandAdminRoute.get("/api/brandAdmin/getOutlets/:id",passport.authenticate('jwt',{session: false }),brandAdminController.getOutlets);
 brandAdminRoute.post("/api/brandAdmin/getCategory",passport.authenticate('jwt',{session: false }),brandAdminController.getCategory);
 brandAdminRoute.get("/api/brandAdmin/getSuperCategory/:id",passport.authenticate('jwt',{session: false }),brandAdminController.getSuperCategory);
+brandAdminRoute.get("/api/brandAdmin/getBrandUsers/:id",passport.authenticate('jwt',{session: false }),brandAdminController.getBrandUsers);
 
 brandAdminRoute.post("/api/brandAdmin/createOutlet",passport.authenticate('jwt',{session: false }),brandAdminController.createOutlet);
 brandAdminRoute.post("/api/brandAdmin/createOutletAdmin",passport.authenticate('jwt',{session: false }),brandAdminController.createOutletAdmin);

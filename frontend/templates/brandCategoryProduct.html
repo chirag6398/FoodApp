@@ -69,6 +69,7 @@
             <thead>
               <tr>
                 <th scope="col">S.No</th>
+                <th scope="col">Image</th>
                 <th scope="col">Name</th>
                 <th scope="col">Category Name</th>
                 <th scope="col">Description</th>
@@ -79,8 +80,13 @@
             <tbody>
               <tr style="cursor:pointer" ng-repeat="product in products" >
                 <th scope="row">{{$index}}</th>
+                <td><img style="object-fit: contain;
+                  height: 80px;"
+                   src={{product.img}} 
+                   alt="loading...">
+                  </td>
                 <td>{{product.name}}</td>
-                <td>{{product.categoryName}}</td>
+                <td>{{product.category.name}}</td>
                 <td>{{product.description}}</td>
                 <td>{{product.price}}</td>
                 <td><button type="button" ng-click="setProduct(product)" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1" data-whatever="@mdo">Update Product</button></td>

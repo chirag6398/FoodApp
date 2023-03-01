@@ -161,6 +161,20 @@ app.factory("brandApi",function($http){
         })
     }
 
+    obj.getBrandUsers=function(id,cb){
+        $http.get("http://localhost:5000/api/brandAdmin/getBrandUsers/"+id,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            // console.log(response);
+            cb(null,response);
+        }),function(err){
+            // console.log(err);
+            cb(err,null);
+        }
+    }
+
     
     
  

@@ -142,7 +142,7 @@ module.exports={
     addSuperCategory:function (req,res){
         
         var superCategory=new superCategoryModel({
-            name:req.body.categoryName,
+            name:req.body.name,
             brand:req.body.brand
         });
 
@@ -164,5 +164,14 @@ module.exports={
             return res.status(500).send({error:err});
         })
         //send super category
+    },
+    getBrandUsers:function (req,res){
+        console.log(req.params.id)
+        employeeModel.find({'brand._id':req.params.id,userType:{$nin:["superAdmin","brandAdmin"]}}).then(function(result){
+            return res.send(result);
+        }).catch(function(err){
+            console.log(err)
+            return res.status(500).send({error:err});
+        })
     }
 }

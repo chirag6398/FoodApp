@@ -7,14 +7,15 @@ var awsConfig={
   };
 
   var s3=new aws.S3(awsConfig);
-  console.log(awsConfig);
+  
 
-  var uploadToS3=function(fileData){
+  var uploadToS3=function(fileData,originalname,mimetype){
     return new Promise(function(resolve,reject){
        var params={ 
         Bucket:process.env.BUCKETNAME,
-        Key:(new Date().toString())+"jpg",
-        Body:fileData
+        Key:originalname,
+        Body:fileData,
+        ContentType:mimetype
        }
 
        s3.upload(params,function(err,data){
@@ -29,7 +30,28 @@ var awsConfig={
 
     })
   }
+var updateToS3=function(fileData,originalname,mimetype){
+    return new Promise(function(resolve,reject){
+       var params={ 
+        Bucket:process.env.BUCKETNAME,
+        Key:originalname,
+        Body:fileData,
+        ContentType:mimetype
+       }
 
-module.exports=uploadToS3;
+       s3.putObject(params,function(err,data){
+        if(err){
+            console.log(err);
+          return reject(err);
+        }else{
+            console.log(data);
+           return resolve(data);
+        }
+       })
+
+    })
+  }
+
+module.exports={uploadToS3,updateToS3};
 
 

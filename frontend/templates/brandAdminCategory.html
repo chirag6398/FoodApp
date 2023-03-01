@@ -13,13 +13,13 @@
                     <div class="modal-body">
                       <form name="categoryData" novalidate>
                         <div class="form-group">
-                          <label for="categoryName" class="col-form-label">Super Category Name:</label>
-                          <input type="text" name="categoryName" ng-required="true" ng-minlength="3" ng-model="category.categoryName" class="form-control" >
-                          <span ng-show="categoryData.categoryName.$dirty && categoryData.categoryName.$error.minlength">Minimum 3 characters required</span>
+                          <label for="name" class="col-form-label">Super Category Name:</label>
+                          <input type="text" name="name" ng-required="true" ng-minlength="3" ng-model="category.name" class="form-control" >
+                          <span ng-show="categoryData.name.$dirty && categoryData.name.$error.minlength">Minimum 3 characters required</span>
                         </div>
                         <div class="form-group">
                             <label for="logo" class="col-form-label">Logo (optional):</label>
-                            <input type="file"  name="logo"  ng-model="category.categoryLogo" id="logo">
+                            <input type="file"  name="logo"  file-model="category.logo" id="logo">
                             
                             <!-- <span ng-show="categoryDetail.logo.$dirty && categoryDetail.logo.$error.required">Please fill this field</span> -->
                           </div>

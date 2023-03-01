@@ -5,7 +5,7 @@ const multer = require("multer");
 var passportJwt=require("../passport/passportjwt");
 
 passportJwt.initializer(passport);
-var upload=multer();
+
 const uploadProductImg = multer({
     
     fileFilter(req, file, cb) {
@@ -16,18 +16,9 @@ const uploadProductImg = multer({
     },
   });
 
-// var storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//         cb(null, 'uploads/');
-//     },
-//     filename: function (req, file, cb) {
-//         cb(null, file.originalname);
-//     }
-// });
 
-// var upload = multer({ storage: storage });
 
-productRoute.post("/api/product/addProduct",upload.single("file"),productController.addProduct);
+productRoute.post("/api/product/addProduct",uploadProductImg.single("file"),productController.addProduct);
 productRoute.post("/api/product/getProducts",productController.getProducts);
 
 productRoute.post("/api/product/updateProduct",uploadProductImg.single("file"),productController.updateProduct);

@@ -1,3 +1,23 @@
 <div ng-controller="superAdminSuperCategoriesController">
-    {{superCategories}}
+    
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">logo</th>
+            <th scope="col">name</th>
+            <th scope="col">brand name(logo)</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="superCategory in superCategories">
+            <th  scope="row">{{$index}}</th>
+            <td><img src="..." alt="working"></td>
+            <td>{{superCategory.name}}</td>
+            <td>{{superCategory.brand.name}}</td>
+          </tr>
+          
+        </tbody>
+      </table>
 </div>

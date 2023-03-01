@@ -35,19 +35,19 @@ app.factory("apiHandler",function($http){
         })
     }
 
-    obj.getAdminPage=function(cb){
-        $http.get("http://localhost:5000/api/superAdmin/getAdminPage",{
-            headers:{
-                "Authorization":window.localStorage.getItem("Authorization")
-            }
-        }).then(function(response){
+    // obj.getAdminPage=function(cb){
+    //     $http.get("http://localhost:5000/api/superAdmin/getAdminPage",{
+    //         headers:{
+    //             "Authorization":window.localStorage.getItem("Authorization")
+    //         }
+    //     }).then(function(response){
             
-            cb(response);
-        }).catch(function(err){
-            // console.log(err);
-            cb({status:401,message:"unauthorized user"});
-        })
-    }
+    //         cb(response);
+    //     }).catch(function(err){
+    //         // console.log(err);
+    //         cb({status:401,message:"unauthorized user"});
+    //     })
+    // }
 
     obj.getBrands=function(cb){
         $http.get("http://localhost:5000/api/superAdmin/getBrands",{

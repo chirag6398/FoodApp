@@ -70,8 +70,10 @@ app.controller("categoryProductController",["$scope","$http","$location","brandA
         var formData=new FormData();
         formData.append("name", $scope.product.productName);
         formData.append("file",$scope.product.image);
-        formData.append('category',{_id:$scope.categoryId,name:$scope.categoryName});
-        formData.append('brand',{_id:$scope.brandId,name:$scope.brandName});
+        formData.append('categoryId',$scope.categoryId);
+        formData.append('categoryName',$stateParams.name);
+        formData.append('brandId',$scope.brandId);
+        formData.append('brandName',$scope.brandName);
         formData.append('price',$scope.product.price);
         formData.append('description',$scope.product.description);
         console.log($scope.product.image)

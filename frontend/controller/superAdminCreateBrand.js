@@ -7,16 +7,21 @@ app.controller("superAdminCreateBrandController",["$scope","$http","$location","
    
    
     
-    apiHandler.getAdminPage(function(result){
-        if(result.status===200){
-            $scope.btnText="Create";
-            console.log(result);
-            $scope.superAdminId=result.data.user._id;
-        }else{
+    // apiHandler.getAdminPage(function(result){
+    //     if(result.status===200){
+    //         $scope.btnText="Create";
+    //         console.log(result);
+    //         $scope.superAdminId=result.data.user._id;
+    //     }else{
            
-            $location.path('login')
+    //         $location.path('login')
             
-        }
+    //     }
+    // });
+
+    $rootScope.$on('passData',function(err,data){
+        console.log(data);
+        $scope.superAdminId=data.user._id;
     });
     // $scope.reloadParentState = function() {
     //     $state.go('parent', {}, { reload: true });

@@ -1,6 +1,6 @@
 ///<reference path="../module/module.js"/>
 
-app.factory("adminApi",function($http){
+app.factory("adminApi",function($http,$rootScope){
     var obj={};
 
     obj.createBrand=function(data,cb){
@@ -18,17 +18,20 @@ app.factory("adminApi",function($http){
         }
     }
 
-    obj.getAdminPage=function(cb){
+    obj.getAdminPage=function(){
         $http.get("http://localhost:5000/api/superAdmin/getAdminPage",{
             headers:{
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            
-            cb(null,response);
+
+            $rootScope.$emit('passData',response.data.user);
+            // cb(null,response);
+
         }).catch(function(err){
             // console.log(err);
-            cb({status:401,message:"unauthorized user"},null);
+            // cb({status:401,message:"unauthorized user"},null);
+            $rootScope.$emit('notEligible',false);
         })
     }
 
