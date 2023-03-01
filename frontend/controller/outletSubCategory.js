@@ -11,6 +11,7 @@ app.controller("subCategoryController",["$scope","$http","$location","brandApi",
         if(result){
             $scope.brandName=result.data.name;
             $scope.brandId=result.data._id;
+            $scope.brandLogo=result.data.logo;
             console.log(result.data);
 
             brandApi.getCategoryByBrandId(result.data._id,$stateParams.id,function(err,result){

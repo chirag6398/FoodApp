@@ -13,6 +13,7 @@ app.controller("outletAdminController",["$scope","$http","$location","outletApi"
 
         $rootScope.outletId=result.data.outletData._id;
         $scope.brandId=result.data.brandId;
+        $scope.brandLogo=result.data.outletData.brand.logo;
         
     });
 

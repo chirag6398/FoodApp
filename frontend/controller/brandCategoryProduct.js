@@ -11,6 +11,7 @@ app.controller("categoryProductController",["$scope","$http","$location","brandA
         if(result){
             $scope.brandName=result.data.name;
             $scope.brandId=result.data._id;
+            $scope.brandLogo=result.data.logo
             $scope.categoryId=$stateParams.id;
 
             brandApi.getProductsInBrand({categoryId:$scope.categoryId,brandId:$scope.brandId},function(err,result){
@@ -78,7 +79,7 @@ app.controller("categoryProductController",["$scope","$http","$location","brandA
         formData.append('price',$scope.product.price);
         formData.append('description',$scope.product.description);
         console.log($scope.product.image);
-        
+
         $http.post('http://localhost:5000/api/product/addProduct', formData, {
           transformRequest: angular.identity,
           headers: {'Content-Type': undefined}

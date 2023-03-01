@@ -1,11 +1,28 @@
 <div style="display: flex;
 height: 100vh;
 width: 100vw;
-padding: 20px;
+
 flex-direction: column;
-justify-content: space-between;"
+"
  ng-controller="subCategoryController">
-    <div ng-if="categories">
+ <div style="height: 51px;">
+  <nav class="spr__header">
+      <div>
+        <span>
+          <img style="object-fit: contain;
+              height: 36px;"
+              src={{brandLogo}}
+              alt="...">
+      </span>
+      </div>
+      <div>
+          <span>
+              {{brandName}}
+          </span>
+      </div>
+  </nav>
+</div>
+    <div style="padding: 20px;" ng-if="categories">
         <div>
             <h3>Categories</h3>
           </div>
@@ -80,7 +97,7 @@ justify-content: space-between;"
 
     </div>
     
-   <div>
+   <div style="padding: 20px;">
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add Sub Category</button>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

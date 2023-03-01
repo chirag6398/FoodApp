@@ -2,9 +2,12 @@
     <div style="height: 51px;">
         <nav class="spr__header">
             <div>
-                <span>
-                    logo
-                </span>
+              <span>
+                <img style="object-fit: contain;
+                    height: 36px;"
+                    src={{brandLogo}}
+                    alt="...">
+            </span>
             </div>
             <div>
                 <span>
@@ -132,9 +135,7 @@
                     <div class="form-group">
                     <label for="image" class="col-form-label">Image :</label>
                     <input type="file" accept="image/*"  name="image"  file-model="updateProduct.image" id="image">
-                    <!-- ng-required="true" -->
-                    <!-- <span ng-show="updateProductDetail.image.$dirty && updateProductDetail.image.$error.required">Please fill this field</span> -->
-                    </div>
+                     </div>
                     <div class="form-group">
                     <button type="button" ng-disabled="updateProductDetail.$invalid" ng-click="updateProductHandler($event)" class="btn btn-primary">update</button>
         

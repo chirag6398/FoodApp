@@ -7,7 +7,7 @@ module.exports={
     addProduct:function (req,res){
         
         if(req.file){
-            return s3Services.updateToS3(req.file.buffer,req.file.originalname,req.file.mimetype).then(function(data){
+            return s3Services.uploadToS3(req.file.buffer,req.file.originalname,req.file.mimetype).then(function(data){
                 console.log(data);
                 var image=data.Location;
 
@@ -60,7 +60,7 @@ module.exports={
         console.log(req.file.mimetype);
 
         if(req.file){
-            return s3Services.uploadToS3(req.file.buffer,req.file.originalname,req.file.mimetype).then(function(data){
+            return s3Services.updateToS3(req.file.buffer,req.file.originalname,req.file.mimetype).then(function(data){
                 console.log(data);
                 var image=data.Location;
 
