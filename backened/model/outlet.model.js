@@ -23,7 +23,7 @@ var OutletSchema=new mongoose.Schema({
     }, 
     outletAdminId:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"employee",
+        
     },
     type:{
         type:String,
@@ -32,9 +32,13 @@ var OutletSchema=new mongoose.Schema({
         _id:{
             type:mongoose.Schema.Types.ObjectId,
             required:false,
-            ref:"outlet",
+               
         },
         name:{
+            type:String,
+            required:true
+        },
+        logo:{
             type:String,
             required:true
         }
@@ -59,14 +63,14 @@ var OutletSchema=new mongoose.Schema({
             },
             categoryId:{
                 type:mongoose.Schema.Types.ObjectId,
-                ref:"category"
+                  
             },
             categoryName:{
                 type:String
             },
             _id:{
                 type:mongoose.Schema.Types.ObjectId,
-                ref:"product"
+                  
             }
 
         }

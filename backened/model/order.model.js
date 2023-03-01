@@ -12,7 +12,8 @@ var OrederSchema=new mongoose.Schema({
         
             categoryId:{
                 type:mongoose.Schema.Types.ObjectId,
-                ref:"product"
+               
+                
             },
             _id:{
 
@@ -48,7 +49,7 @@ var OrederSchema=new mongoose.Schema({
         _id:{
             type:mongoose.Schema.Types.ObjectId,
             required:true,
-            ref:"outlet"
+           
         },
         name:{
             type:String,

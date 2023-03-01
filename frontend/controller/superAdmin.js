@@ -3,8 +3,8 @@
 
 
 
-app.controller("superAdminController",["$scope","$http","$location","apiHandler","$state","$rootScope",function($scope,$http,$location,apiHandler,$state,$rootScope){
-    // apiHandler.getAdminPage();
+app.controller("superAdminController",["$scope","$http","$location","apiHandler","adminApi","$state","$rootScope",function($scope,$http,$location,apiHandler,adminApi,$state,$rootScope){
+    adminApi.getAdminPage();
 
     $rootScope.$on('passData',function(err,data){
         console.log(data);

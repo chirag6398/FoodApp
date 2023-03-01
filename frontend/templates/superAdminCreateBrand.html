@@ -10,6 +10,7 @@
                       <thead>
                         <tr>
                           <th scope="col">S.No</th>
+                          <th scope="col">Logo</th>
                           <th scope="col">Brand Name</th>
                           <th scope="col">Brand Admin</th>
                           <th scope="col">Deactivate</th>
@@ -21,6 +22,10 @@
                       <tbody>
                         <tr style="cursor:pointer" ng-show="!brand.isDeleted" ng-repeat="brand in brands" >
                           <th scope="row">{{$index}}</th>
+                          <th><img style="object-fit: contain;
+                            height: 80px;"
+                             src={{brand.logo}}
+                              alt="..."></th>
                           <td>{{brand.name}}</td>
                           <td > 
 
@@ -137,6 +142,10 @@
                                             <input type="text" name="brandName" ng-required="true" ng-minlength="3" ng-model="data.name" class="form-control" >
                                             <span ng-show="BrandData.brandName.$dirty && BrandData.brandName.$error.minlength">Minimum 3 characters required</span>
                                           </div>
+                                          <div class="form-group">
+                                            <label for="logo" class="col-form-label">Logo :</label>
+                                            <input type="file" accept="image/*"  name="logo"  file-model="data.logo" id="image">
+                                          </div>
                                           <div class="modal-footer">
                                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                               <button type="button" ng-disabled="BrandData.$invalid" ng-click="editBrand($event,brand.name,brand._id)" class="btn btn-primary">update</button>
@@ -215,11 +224,11 @@
                         <span ng-show="BrandData.pinCode.$dirty && BrandData.pinCode.$error.minlength ">6 characters required</span>
                        <span ng-show="BrandData.pinCode.$dirty && BrandData.pinCode.$error.maxlength">6 characters required</span>
                       </div>
-                      <!-- <div class="form-group">
+                      <div class="form-group">
                         <label for="logo" class="col-form-label">logo:</label>
-                        <input type="text" name="logo" ng-required="true" ng-minlength="3" ng-model="brand.name" class="form-control" id="logo">
+                        <input type="file" name="logo" ng-required="true" ng-minlength="3" file-model="brand.logo" class="form-control" id="logo">
                         <span ng-show="BrandData.logo.$dirty && BrandData.logo.$error.minlength">Minimum 3 characters required</span>
-                      </div> -->
+                      </div>
 
                       <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

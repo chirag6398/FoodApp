@@ -15,9 +15,11 @@ app.controller("superAdminBrandNamesController",["$scope","$http","$location","a
     //         $location.path('login')
     //     }
     // });
+    
 
     $rootScope.$on('passData',function(err,data){
         console.log(data);
+        $scope.isAccess=true;
     });
    
     $scope.btnText="Add Admin"
@@ -72,7 +74,24 @@ app.controller("superAdminBrandNamesController",["$scope","$http","$location","a
     $scope.editBrand=function($event){
         $event.preventDefault();
         console.log($scope.data);
-    }
+        var formData=new FormData();
+
+        formData.append("name", $scope.data.name);
+        formData.append("file",$scope.data.logo);
+        formData.append('_id',$scope.data._id);
+        
+        
+        $http.post('http://localhost:5000/api/superAdmin/updateBrand', formData, {
+          transformRequest: angular.identity,
+          headers: {'Content-Type': undefined}
+        }).then(function(response) {
+          console.log(response.data);
+        }, function(error) {
+          console.log(error);
+        });
+
+      };
+    
 
     $scope.deleteBrand=function(brandId){
         apiHandler.deleteBrand(brandId,function(err,result){

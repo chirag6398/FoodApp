@@ -8,6 +8,7 @@ app.controller("brandAdminController",["$scope","$http","$location","apiHandler"
         if(result && result.status===200){
             $scope.brandName=result.data.name;
             $scope.brandId=result.data._id;
+            $scope.brandLogo=result.data.logo
 
         }else{
             $location.path('login')

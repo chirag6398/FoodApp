@@ -18,7 +18,7 @@ var ProductSchema=new mongoose.Schema({
     category:{
        _id:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"category",
+       
         required:true
        },
        name:{
@@ -29,7 +29,7 @@ var ProductSchema=new mongoose.Schema({
     brand:{
         _id:{
             type:mongoose.Schema.Types.ObjectId,
-            ref:"brand",
+              
             required:true
         },
         name:{
@@ -41,7 +41,7 @@ var ProductSchema=new mongoose.Schema({
     outlet:[{
         _id:{
             type:mongoose.Schema.Types.ObjectId,
-            ref:"outlet"
+             
         }
     }
     ],

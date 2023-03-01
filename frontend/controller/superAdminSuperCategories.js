@@ -21,7 +21,7 @@ app.controller("superAdminSuperCategoriesController",["$scope","$http","$locatio
         $scope.btnText="Create";
             $scope.admin=data.user;
             console.log($scope.admin)
-            $scope.superAdminId=data.user._id;
+            $scope.superAdminId=data._id;
     });
 
     adminApi.getSuperCategories(function(err,result){

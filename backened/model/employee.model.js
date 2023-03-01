@@ -41,7 +41,7 @@ var EmployeeSchema=new mongoose.Schema({
         _id:{
             type:mongoose.Schema.Types.ObjectId,
             // required:false,
-            ref:"outlet",
+            
         },
         name:{
             type:String,
@@ -57,8 +57,7 @@ var EmployeeSchema=new mongoose.Schema({
     brand:{
         _id:{
             type:mongoose.Schema.Types.ObjectId,
-            // required:false,
-            ref:"outlet",
+            
         },
         name:{
             type:String,

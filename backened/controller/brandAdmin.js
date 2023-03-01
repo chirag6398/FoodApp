@@ -5,7 +5,7 @@ var employeeModel=require("../model/employee.model");
 var superCategoryModel=require("../model/superCategory.model");
 var categoryModel = require("../model/category.model");
 var mongoose=require("mongoose");
-
+var awsService=require("../service/awsS3.service");
 module.exports={
     getBrandAdminPage:function (req,res){
         if(req.user.userType=="brandAdmin"){
@@ -33,7 +33,8 @@ module.exports={
             'contactInfo.number':req.body.number,
             'contactInfo.email':req.body.email,
             'brand._id':req.body.brandId,
-            'brand.name':req.body.brandName
+            'brand.name':req.body.brandName,
+            'brand.logo':req.body.brandLogo
         });
 
         outlet.save().then(function(result){
@@ -173,5 +174,71 @@ module.exports={
             console.log(err)
             return res.status(500).send({error:err});
         })
+    },
+    updateSuperCategory:function(req,res){
+
+        if(req.file){
+            return awsService.updateToS3(req.file.buffer,req.file.originalname,req.file.mimetype).then(function(data){
+                console.log(data);
+                var image=data.Location;
+
+               
+                superCategoryModel.findByIdAndUpdate({_id:req.body._id},{
+                    name:req.body.name,
+                    logo:image
+                }).then(function(result){
+                    return res.send({message:"updated"});
+                }).catch(function(err){
+                    return res.status(401).send({error:err});
+                })
+
+
+            }).catch(function(err){
+                console.log(err);
+                return res.status(500).send({error:err,status:500});
+            })
+        }else{
+
+            superCategoryModel.findByIdAndUpdate({_id:req.body._id},{
+                name:req.body.name,
+            }).then(function(result){
+                return res.send({message:"updated"});
+            }).catch(function(err){
+                return res.status(401).send({error:err});
+            })
+        }
+
+    },
+    updateCategory:function(req,res){
+        if(req.file){
+            return awsService.updateToS3(req.file.buffer,req.file.originalname,req.file.mimetype).then(function(data){
+                console.log(data);
+                var image=data.Location;
+
+               
+                categoryModel.findByIdAndUpdate({_id:req.body._id},{
+                    name:req.body.name,
+                    logo:image
+                }).then(function(result){
+                    return res.send({message:"updated with image"});
+                }).catch(function(err){
+                    return res.status(401).send({error:err});
+                })
+
+
+            }).catch(function(err){
+                console.log(err);
+                return res.status(500).send({error:err,status:500});
+            })
+        }else{
+
+            categoryModel.findByIdAndUpdate({_id:req.body._id},{
+                name:req.body.name,
+            }).then(function(result){
+                return res.send({message:"updated"});
+            }).catch(function(err){
+                return res.status(401).send({error:err});
+            })
+        }
     }
 }

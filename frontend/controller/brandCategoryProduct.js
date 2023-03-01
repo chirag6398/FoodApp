@@ -51,6 +51,7 @@ app.controller("categoryProductController",["$scope","$http","$location","brandA
         updatedFormData.append('categoryId',$scope.categoryId);
         updatedFormData.append('categoryName',$stateParams.name);
         updatedFormData.append('brandId',$scope.brandId);
+        updatedFormData.append('brandName',$scope.brandName);
         updatedFormData.append('price',$scope.updateProduct.price);
         updatedFormData.append('description',$scope.updateProduct.description);
         updatedFormData.append("_id",$scope.updateProduct._id);
@@ -76,7 +77,8 @@ app.controller("categoryProductController",["$scope","$http","$location","brandA
         formData.append('brandName',$scope.brandName);
         formData.append('price',$scope.product.price);
         formData.append('description',$scope.product.description);
-        console.log($scope.product.image)
+        console.log($scope.product.image);
+        
         $http.post('http://localhost:5000/api/product/addProduct', formData, {
           transformRequest: angular.identity,
           headers: {'Content-Type': undefined}

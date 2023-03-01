@@ -18,10 +18,13 @@ app.controller("superAdminCreateBrandController",["$scope","$http","$location","
             
     //     }
     // });
+    $scope.isAccess=false;
 
     $rootScope.$on('passData',function(err,data){
         console.log(data);
-        $scope.superAdminId=data.user._id;
+        $scope.btnText="Create";
+        $scope.superAdminId=data._id;
+        $scope.isAccess=true;
     });
     // $scope.reloadParentState = function() {
     //     $state.go('parent', {}, { reload: true });

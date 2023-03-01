@@ -8,6 +8,7 @@ app.controller("brandAdminHomeController",["$scope","$http","$location","brandAp
         if(result){
             $scope.brandName=result.data.name;
             $scope.brandId=result.data._id;
+            $scope.brandLogo=result.data.logo
             brandApi.getOutletsByBrandId(result.data._id, function (err,result) {
          
                 if(result){
@@ -53,7 +54,7 @@ app.controller("brandAdminHomeController",["$scope","$http","$location","brandAp
     $scope.createOutletAdmin = function ($event, outletId,outletName,outlateLocation,outletType) {
       $event.preventDefault();
       $scope.btnText0 = "processing";
-      brandApi.createOutletAdmin($scope.admin, outletId,outletName,outlateLocation,outletType,$scope.brandId,$scope.brandName, function (err,result) {
+      brandApi.createOutletAdmin($scope.admin, outletId,outletName,outlateLocation,outletType,$scope.brandId,$scope.brandName,$scope.brandLogo, function (err,result) {
          if(result){
             $scope.btnText0 = "successfull";
          }

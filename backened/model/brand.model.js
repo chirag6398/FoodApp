@@ -28,8 +28,7 @@ var BrandSchema=new mongoose.Schema({
     //to check that its admin is created or not and also for updating user using its id
     brandAdminId:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"employee",
-        
+               
     },
     contactInfo:{
         number:{

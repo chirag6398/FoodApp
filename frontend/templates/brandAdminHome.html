@@ -1,6 +1,3 @@
-
-
-
 <div ng-controller="brandAdminHomeController">
   <div
   ng-if="outlets"
@@ -11,6 +8,7 @@
     <thead>
       <tr>
         <th scope="col">S.No</th>
+        <th scope="col">Brand Logo</th>
         <th scope="col">Outlet Name</th>
         <th scope="col">Outlet Admin</th>
         <th scope="col">Deactivate</th>
@@ -22,6 +20,10 @@
     <tbody>
       <tr style="cursor: pointer" ng-repeat="outlet in outlets">
         <td scope="row">{{$index}}</td>
+        <td><img style="object-fit: contain;
+          height: 80px;"
+           src={{outlet.brand.logo}}
+            alt="..."></td>
         <td>{{outlet.name}}</td>
         <td>
           <div ng-if="!outlet.outletAdminId">
@@ -317,6 +319,11 @@
               <span ng-show="updateOutletData.number.$dirty && updateOutletData.number.$invalid">please enter correct number</span>
               <span ng-show="updateOutletData.number.$dirty && updateOutletData.number.$error.required">Please fill this field</span>
           </div>
+          <!-- <div class="form-group">
+            <label for="logo" class="col-form-label">logo:</label>
+            <input type="file" name="logo" ng-required="true" ng-minlength="3" file-model="outlet.logo" class="form-control" id="logo">
+            <span ng-show="BrandData.logo.$dirty && BrandData.logo.$error.minlength">Minimum 3 characters required</span>
+          </div> -->
             <div class="modal-footer">
               <button
                 type="button"
@@ -407,6 +414,11 @@ ng-if="!outlets">
                     <input type="number" name="outletPinCode" ng-required="true" ng-minlength="6" ng-maxlength="6" ng-model="outlet.pinCode" class="form-control" >
                     <span ng-show="OutletData.outletPinCode.$dirty && OutletData.outletPinCode.$error.minlength && OutletData.outletPinCode.$error.maxlength">6 characters required</span>
                   </div>
+                  <!-- <div class="form-group">
+                    <label for="logo" class="col-form-label">logo:</label>
+                    <input type="text" name="logo" ng-required="true" ng-minlength="3" file-model="outlet.logo" class="form-control" id="logo">
+                    <span ng-show="BrandData.logo.$dirty && BrandData.logo.$error.minlength">Minimum 3 characters required</span>
+                  </div> -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" ng-disabled="OutletData.$invalid" ng-click="createOutlet($event)" class="btn btn-primary">{{btnText}}</button>

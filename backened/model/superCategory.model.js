@@ -14,7 +14,7 @@ var SuperCategorySchema=new mongoose.Schema({
     brand:{
         _id:{
             type:mongoose.Schema.Types.ObjectId,
-            ref:"brand",
+            
             required:true
         },
         name:{

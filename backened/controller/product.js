@@ -9,7 +9,7 @@ module.exports={
         if(req.file){
             return s3Services.updateToS3(req.file.buffer,req.file.originalname,req.file.mimetype).then(function(data){
                 console.log(data);
-                req.body.image=data.Location;
+                var image=data.Location;
 
                 var product=new productModel({
                     name:req.body.name,
@@ -19,7 +19,7 @@ module.exports={
                     'brand._id':req.body.brandId,
                     'category._id':req.body.categoryId,
                     description:req.body.description,
-                    img:req.body.image
+                    img:image
                     
                 });
                 product.save().then(function(result){
@@ -62,7 +62,7 @@ module.exports={
         if(req.file){
             return s3Services.uploadToS3(req.file.buffer,req.file.originalname,req.file.mimetype).then(function(data){
                 console.log(data);
-                req.body.image=data.Location;
+                var image=data.Location;
 
                 
                 productModel.findByIdAndUpdate({_id:req.body._id},{
@@ -73,12 +73,13 @@ module.exports={
                     'brand._id':req.body.brandId,
                     'category._id':req.body.categoryId,
                     description:req.body.description,
-                    img:req.body.image
+                    img:image
                 }).then(function(result){
-                    return res.status(200).send(result);
+                    return res.status(200).send({message:"updated with image"});
                 }).catch(function(err){
                     return res.status(500).send({error:err,status:500});
                 })
+
             }).catch(function(err){
                 console.log(err);
                 return res.status(500).send({error:err,status:500});
@@ -88,7 +89,20 @@ module.exports={
 
            
         }else{
-            return res.status(500).send({message:"internal error",status:500});
+            productModel.findByIdAndUpdate({_id:req.body._id},{
+                    name:req.body.name,
+                    price:req.body.price,
+                    'category.name':req.body.categoryName,
+                    'brand.name':req.body.brandName,
+                    'brand._id':req.body.brandId,
+                    'category._id':req.body.categoryId,
+                    description:req.body.description,
+                   
+                }).then(function(result){
+                    return res.status(200).send({message:"updated"});
+                }).catch(function(err){
+                    return res.status(500).send({error:err,status:500});
+                })
         }
         // console.log(req.file)
 

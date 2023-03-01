@@ -3,7 +3,7 @@ var employeeModel=require("../model/employee.model");
 var validation=require("../service/validation.service");
 var outletModel=require("../model/outlet.model");
 var categoryModel=require("../model/category.model");
-// const productModel = require("../model/product.model");
+var awsService=require("../service/awsS3.service");
 var superCategory=require("../model/superCategory.model");
 var mongoose= require("mongoose");
 module.exports={
@@ -75,12 +75,7 @@ module.exports={
         }
     },
     addBrandAdmin:function (req,res){
-        // var id=req.body.admin.id;
-        // req.body=req.body.admin;
-        // console.log(req.body);
-        // var id=req.body.brandId;
-
-        // console.log(req.body);
+        
 
         var valid=validation.validateUserData(req,res);
         console.log(valid,req.body);
@@ -183,43 +178,40 @@ module.exports={
         }).catch(function(err){
             return res.status(500).send({error:err});
         })
+    },
+    updateBrand:function(req,res){
+       //checking is pending....
+        if(req.file){
+            return awsService.updateToS3(req.file.buffer,req.file.originalname,req.file.mimetype).then(function(data){
+                console.log(data);
+                var image=data.Location;
+
+               
+                brandModel.findByIdAndUpdate({_id:req.body._id},{
+                    name:req.body.name,
+                    logo:image
+                }).then(function(result){
+                    return res.send({message:"updated with image"});
+                }).catch(function(err){
+                    return res.status(401).send({error:err});
+                })
+
+
+            }).catch(function(err){
+                console.log(err);
+                return res.status(500).send({error:err,status:500});
+            })
+        }else{
+
+            brandModel.findByIdAndUpdate({_id:req.body._id},{
+                name:req.body.name,
+            }).then(function(result){
+                return res.send({message:"updated"});
+            }).catch(function(err){
+                return res.status(401).send({error:err});
+            })
+        }
     }
 }
 
 
-
-// req.body.brandId=mongoose.Types.ObjectId(req.body.brandId);
-// console.log(req.body);
-// // brandModel.findById({_id:req.body.brandId}).then(result=>console.log(result));
-// brandModel.findByIdAndUpdate({_id:req.body.brandId},{isActive:false}).then(function(result){
-    // console.log("result",result)
-//     // return res.status({message:"deactivated"});
-//     outletModel.updateMany({brandId:req.body.brandId},{$set:{isActive:false}}).then(function(result){
-//         categoryModel.updateMany({brandId:req.body.brandId},{$set:{isActive:false}}).then(function(result){
-//             productModel.updateMany({brandId:req.body.brandId},{$set:{isActive:false}}).then(function(result){
-//                 employeeModel.updateMany({brandId:req.body.brandId},{$set:{isActive:false}}).then(function(result){
-                    // console.log(result);
-//                     return res.status({message:"deactivated"});
-//                 }).catch(function(err){
-                    // console.log(err);
-//                     return res.status(500).send({error:"server error"})
-//                 })
-//             }).catch(function(err){
-                // console.log(err);
-//                 return res.status(500).send({error:"server error"})
-//             })
-//         }).catch(function(err){
-            // console.log(err);
-//             return res.status(500).send({error:"server error"})
-//         })
-//     }).catch(function(err){
-        // console.log(err);
-//         return res.status(500).send({error:"server error"})
-//     })
-// }).catch(function(err){
-    // console.log(err);
-//     return res.status(500).send({error:"server error"})
-// })
-// }catch(err){
-// console.log(err);
-// }

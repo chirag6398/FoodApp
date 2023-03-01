@@ -49,7 +49,7 @@
 }
 .spr__brandCard{
     display: flex;
-    width: 200px;
+    width: 300px;
     min-height: 130px;
     align-items: center;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
@@ -58,6 +58,7 @@
     font-weight: 600;
     flex-direction: column;
     justify-content: center;
+    padding: 10px;
 }
 .spr__productForm{
     width: 100%;
