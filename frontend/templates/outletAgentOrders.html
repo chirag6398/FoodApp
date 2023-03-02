@@ -4,35 +4,91 @@
     </div>
     <div class="order__mainDiv">
         <div class="order__card" ng-repeat="order in orders |filter:filter">
+            
             <div>
                 <div style="display: flex; justify-content: space-between;width: 285px;">
                     <div>
                         <span style="font-weight: 600;">OrderId : </span>{{order.orderId}}
                     </div>
                     <div 
+                    class="order__infoIcon"
                     title="view details"
-                    style="width: 22px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    background: aliceblue;
-                    border-radius: 20px;
-                    cursor: pointer;"
                     data-toggle="modal"
                     data-target=".bd-example-modal-lg"
+                    ng-click="setData(order.items,order.customer,order.totalPrice)"
                     >
                     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
-                          <div class="modal-content">
+                          <div  
+                          class="modal-content order__modalContainer">
+                          <div class="order__modalLeft">
                             <div>
-                                Cart
+                                <span style="font-weight: 900; opacity: 0.7;">
+                                    Customer Details
+                                </span>
                             </div>
                             <div>
-                                products
+                                <i class="fas fa-user"></i><span>
+                                    {{customer.name}}
+                                </span>
+                            </div>
+                           
+                            <div>
+                                <i class="fas fa-phone"></i><span>
+                                    {{customer.number}}
+                                </span>
+                            </div>
+                          </div>
+                          <div class="order__modalRight">
+                            <div>
+                                <h5>
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span>Cart</span>
+                                </h5>
+                            </div>
+                           
+                            <div class="order__modalProduct"
+                             ng-repeat="product in items">
+                                
+                                <div style="display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                width: 100%;">
+                                <div style="margin-right: 10px;">
+                                    <img style="object-fit: contain;
+                                    height: 100px;"
+                                    src={{product.img}} 
+                                    alt="...">
+                                </div>
+                                <div>
+                                    <div>
+                                        <span style="font-weight: 900;
+                                        font-size: 24px;">
+                                            {{product.name}}
+                                        </span>
+                                    </div>
+                                    <div style="    display: flex;
+                                    width: 100%;
+                                    
+                                    opacity: 0.7;">
+                                    <h5 style="font-weight: bolder;">
+                                        Rs. {{product.price}}
+                                    </h5>
+                                    
+                                    </div>
+                                    <div>
+                                        <span style="font-weight: 900;opacity: 0.5;">Quant.{{product.quantity}}</span>
+                                    </div>
+                                
+                                </div>
+                            
+                        </div> 
                             </div>
                             <div>
-                                total
+                                Pay: {{amount}}
                             </div>
+                          </div>
+                          
                           </div>
                         </div>
                     </div>
@@ -54,13 +110,13 @@
                 <button ng-if="order.status==='pending'" class="btn btn1">
                     preparing
                 </button>
-                <button ng-if="order.status!=='served || order.status!=='cancelled" class="btn btn1">
+                <button ng-if="order.status!=='served' || order.status!=='cancelled'" class="btn btn1">
                     cancelled
                 </button>
                 <button ng-if="order.status==='pending' || order.status==='preparing' " class="btn btn1">
                     serving
                 </button>
-                <button ng-if="order.status==='serving" class="btn btn1">
+                <button ng-if="order.status==='serving'" class="btn btn1">
                     served
                 </button>
 

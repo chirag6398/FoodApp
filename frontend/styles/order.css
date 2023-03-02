@@ -33,3 +33,44 @@
     margin: 3px;
     min-width: 95px;
 }
+.order__infoIcon{
+    width: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: aliceblue;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.order__modalContainer{
+    padding:10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.order__modalProduct{
+    display: flex;
+    padding: 15px;
+    border: 1px solid black;
+    border-radius: 3px;
+    box-shadow: black 0px 0px 0px 1px;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+.order__modalRight{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.order__modalLeft{
+    display: flex;
+    flex-direction: column;
+    width: 240px;
+    height: 204px;
+    align-items: flex-start;
+    padding: 30px;  
+}
+.order__modalLeft div{
+    margin: 5px;
+}
