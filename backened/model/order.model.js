@@ -9,14 +9,15 @@ var OrederSchema=new mongoose.Schema({
         
     },
     items:[{
-        
-            categoryId:{
-                type:mongoose.Schema.Types.ObjectId,
-               
-                
-            },
-            _id:{
-
+            category:{
+                _id:{
+                    type:mongoose.Schema.Types.ObjectId,
+                    required:true
+                },
+                name:{
+                    type:String,
+                    required:true
+                }
             },
             name:{
                 type:String,
@@ -29,9 +30,11 @@ var OrederSchema=new mongoose.Schema({
             price:{
                 type:Number,
                 required:true
-            }
-
-        
+            },
+            img:{
+                type:String,
+                required:true,
+            }        
     }
     ],
     customer:{
@@ -59,7 +62,18 @@ var OrederSchema=new mongoose.Schema({
     },
     status:{
         type:String,
-        enum:["preparing","cancelled","prepared","served"]
+        enum:["preparing","pending","cancelled","serving","served"],
+        required:true
+    },
+    brand:{
+        _id:{
+            type:mongoose.Schema.Types.ObjectId,
+            required:true,
+        },
+        name:{
+            type:String,
+            required:true,
+        }
     }
     
 },{timestamps:true});

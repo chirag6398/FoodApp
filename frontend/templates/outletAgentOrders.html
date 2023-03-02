@@ -1,0 +1,70 @@
+<div class="order__extDiv">
+    <div>
+        <input type="text" placeholder="pending" ng-model="filter.status">
+    </div>
+    <div class="order__mainDiv">
+        <div class="order__card" ng-repeat="order in orders |filter:filter">
+            <div>
+                <div style="display: flex; justify-content: space-between;width: 285px;">
+                    <div>
+                        <span style="font-weight: 600;">OrderId : </span>{{order.orderId}}
+                    </div>
+                    <div 
+                    title="view details"
+                    style="width: 22px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: aliceblue;
+                    border-radius: 20px;
+                    cursor: pointer;"
+                    data-toggle="modal"
+                    data-target=".bd-example-modal-lg"
+                    >
+                    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+                            <div>
+                                Cart
+                            </div>
+                            <div>
+                                products
+                            </div>
+                            <div>
+                                total
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                        <i class="fa-solid fa-info"></i>
+                    </div>
+                </div>
+                <div>
+                    <span style="font-weight: 900;opacity: 0.6;">Quantity :{{order.totalQuantity}}</span>
+                </div>
+            </div>
+            <div>
+                <span>
+                     Rs.{{order.totalPrice}}
+                </span>
+            </div>
+            <div style="display: flex;
+            align-items: center;
+            flex-wrap: wrap;">
+                <button ng-if="order.status==='pending'" class="btn btn1">
+                    preparing
+                </button>
+                <button ng-if="order.status!=='served || order.status!=='cancelled" class="btn btn1">
+                    cancelled
+                </button>
+                <button ng-if="order.status==='pending' || order.status==='preparing' " class="btn btn1">
+                    serving
+                </button>
+                <button ng-if="order.status==='serving" class="btn btn1">
+                    served
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>

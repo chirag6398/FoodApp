@@ -65,13 +65,8 @@ app.service("outletAgentApi",function($http,$rootScope){
         })
     }
 
-    this.placeOrder=function(customer,cart,orderNo,outletId,cb){
-        var data={
-            ...customer,
-            item:cart,
-            orderId:orderNo,
-            outletId
-        }
+    this.placeOrder=function(data,cb){
+        console.log(data)
         
         $http.post("http://localhost:5000/api/order/createOrder",data,{
             headers:{
@@ -86,19 +81,31 @@ app.service("outletAgentApi",function($http,$rootScope){
         
     }
 
-     this.getCategories=function(outletId,cb){
-        
-        $http.get("http://localhost:5000/api/outletAgent/getCategories/"+outletId,{
+    this.getOrders=function(outletId,cb){
+        $http.post("http://localhost:5000/api/order/getOrders",{outletId},{
             headers:{
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
             
             cb(null,response);
-        }).catch(function(err){
-            
-        })
+        }),function(err){
+            cb(err,null);
+        }
     }
+    //  this.getCategories=function(outletId,cb){
+        
+    //     $http.get("http://localhost:5000/api/outletAgent/getCategories/"+outletId,{
+    //         headers:{
+    //             "Authorization":window.localStorage.getItem("Authorization")
+    //         }
+    //     }).then(function(response){
+            
+    //         cb(null,response);
+    //     }).catch(function(err){
+            
+    //     })
+    // }
 
     
 

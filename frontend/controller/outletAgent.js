@@ -11,10 +11,13 @@ function generateOrderId() {
 
 app.controller("outletAgentController",["$scope","$http","$location","outletAgentApi","cartService","$interval","$rootScope",function($scope,$http,$location,outletAgentApi,cartService,$interval,$rootScope){
     outletAgentApi.getOutletAgentPage();
-    $scope.categories=[];
+    
     $rootScope.$on('passData',function(err,result){
         if(result){
-            
+
+            console.log(result)
+            $scope.brand=result.data.brand;
+            $scope.outlet=result.data.outlet;
             $scope.outletId=result.data.outlet._id;
             $scope.admin={
                 userName:result.data.userName,
@@ -43,7 +46,7 @@ app.controller("outletAgentController",["$scope","$http","$location","outletAgen
     
     $rootScope.$on('agentProducts',function(err,result){
         console.log(result);
-
+        $scope.categories=[];
         if(result.data && result.data.length>0){
             result.data.forEach(function(value){
             
@@ -74,7 +77,7 @@ app.controller("outletAgentController",["$scope","$http","$location","outletAgen
     
     $scope.getCurrentTime = function() {
         $scope.currentTime = new Date();
-      };
+    };
 
     $scope.updateAdmin=function ($event,id){
         console.log(id);
@@ -135,11 +138,28 @@ app.controller("outletAgentController",["$scope","$http","$location","outletAgen
     $scope.orderHandler=function(){
         $scope.orderBtn="placing..."
         console.log($scope.customer,$scope.object.cart);
-        outletAgentApi.placeOrder($scope.customer,$scope.object.cart,$scope.orderNo,$scope.outletId,function(err,result){
+        var data={
+            customer:{
+                name:$scope.customer.name,
+                number:$scope.customer.number
+            },
+            orderId:$scope.orderNo,
+            brand:{
+                _id:$scope.brand._id,
+                name:$scope.brand.name
+            },
+            item:$scope.object.cart,
+            outlet:{
+                _id:$scope.outlet._id,
+                name:$scope.outlet.name
+            }
+        }
+        outletAgentApi.placeOrder(data,function(err,result){
             if(result){
                 alert("order placed");
                 $scope.orderNo=generateOrderId();
                 $scope.object={cart:[]};
+                $scope.amount=0;
                 $scope.saved=false;
                 $scope.customer={};
             }

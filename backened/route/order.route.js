@@ -9,6 +9,6 @@ passportJwt.initializer(passport);
 
 // orderRoute.get("/api/employee/getUserById/:id",orderController.getUserById);
 orderRoute.post("/api/order/createOrder",passport.authenticate('jwt',{session: false }),orderController.createOrder);
-
+orderRoute.post("/api/order/getOrders",passport.authenticate('jwt',{session: false }),orderController.getOrders);
 
 module.exports=orderRoute;

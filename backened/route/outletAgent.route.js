@@ -8,7 +8,7 @@ passportJwt.initializer(passport);
 
 
 outletAgentRoute.get("/api/outletAgent/getOutletAgentPage",passport.authenticate('jwt',{session: false }),outletAgentController.getOutletAgentPage);
-outletAgentRoute.get("/api/outletAgent/getCategories/:id",passport.authenticate('jwt',{session: false }),outletAgentController.getCategories);
+// outletAgentRoute.get("/api/outletAgent/getCategories/:id",passport.authenticate('jwt',{session: false }),outletAgentController.getCategories);
 // outletAgentRoute.get("/api/outletAgent/getCategory/:id",passport.authenticate('jwt',{session: false }),outletAgentController.getCategory);
 
 // outletAgentRoute.post("/api/outlet/brandProducts",passport.authenticate('jwt',{session: false }),outletAgentController.brandProducts);

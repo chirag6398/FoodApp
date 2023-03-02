@@ -112,6 +112,10 @@ app.config(function($stateProvider,$urlRouterProvider){
         url:"/outletAgent",
         templateUrl:"./templates/outletAgent.html",
         controller:"outletAgentController"
+    }).state("outletAgentOrders",{
+        url:"/orders",
+        templateUrl:"./templates/outletAgentOrders.html",
+        controller:"outletAgentOrdersController"
     }).state("subCategory",{
         url:"/outletSubCategory/:id/:name",
         templateUrl:"./templates/outletSubCategory.html",
