@@ -56,6 +56,10 @@ var OrederSchema=new mongoose.Schema({
             required:true
         }
 
+    },
+    status:{
+        type:String,
+        enum:["preparing","cancelled","prepared","served"]
     }
     
 },{timestamps:true});

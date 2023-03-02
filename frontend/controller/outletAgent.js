@@ -9,10 +9,12 @@ function generateOrderId() {
     return orderId;
 }
 
-app.controller("outletAgentController",["$scope","$http","$location","apiHandler","cartService","$interval",function($scope,$http,$location,apiHandler,cartService,$interval){
-    apiHandler.getOutletAgentPage(function(err,result){
+app.controller("outletAgentController",["$scope","$http","$location","outletAgentApi","cartService","$interval","$rootScope",function($scope,$http,$location,outletAgentApi,cartService,$interval,$rootScope){
+    outletAgentApi.getOutletAgentPage();
+    $scope.categories=[];
+    $rootScope.$on('passData',function(err,result){
         if(result){
-            console.log(result);
+            
             $scope.outletId=result.data.outlet._id;
             $scope.admin={
                 userName:result.data.userName,
@@ -22,21 +24,53 @@ app.controller("outletAgentController",["$scope","$http","$location","apiHandler
                 number:result.data.number
             }
             $scope.adminId=result.data._id;
-            apiHandler.getOutletProducts($scope.outletId,function(err,result){
-                // console.log(result);
-                $scope.products=result.data;
-            });
+            
+          
+           
 
-            apiHandler.getCategories($scope.outletId,function(err,result){
-                // console.log(result.data);
-                $scope.categories=result.data;
-            })
-            $interval(function() {
-                $scope.getCurrentTime();
-              }, 1000);
-              
+            outletAgentApi.getOutletProducts($scope.outletId);
+            
+            
         }
     });
+
+    $interval(function() {
+        $scope.getCurrentTime();
+      }, 1000);
+
+   
+
+    
+    $rootScope.$on('agentProducts',function(err,result){
+        console.log(result);
+
+        if(result.data && result.data.length>0){
+            result.data.forEach(function(value){
+            
+                $scope.categoryProducts={[value.name]:value.products};
+                $scope.categories.push(value.name);
+    
+            })
+            console.log($scope.categories);
+            $scope.isSelected=0;
+            $scope.products=$scope.categoryProducts[$scope.categories[$scope.isSelected]];
+        }
+        
+        
+
+    });
+
+    $rootScope.$on('agentProductsError',function(err,result){
+        console.log(result);  
+    });
+
+    $rootScope.$on('notEligible',function(err,isEligible){
+        if(!isEligible){
+            $location.path('login')
+        }
+    })
+
+   
     
     $scope.getCurrentTime = function() {
         $scope.currentTime = new Date();
@@ -44,22 +78,21 @@ app.controller("outletAgentController",["$scope","$http","$location","apiHandler
 
     $scope.updateAdmin=function ($event,id){
         console.log(id);
-        apiHandler.updateAdmin($scope.admin,id,function(result){
+        outletAgentApi.updateAdmin($scope.admin,id,function(result){
             console.log(result);
         })
     }
 
     $scope.changePassword=function($event,id){
         console.log(id);
-        apiHandler.updatePassword($scope.admin,id,function(err,result){
+        outletAgentApi.updatePassword($scope.admin,id,function(err,result){
             if(result){
                 console.log(result)
             }
         })
     }
 
-    // console.log($scope.search);
-      
+     
     $scope.orderNo=generateOrderId();
     $scope.customer={}
     $scope.amount=0;
@@ -81,6 +114,7 @@ app.controller("outletAgentController",["$scope","$http","$location","apiHandler
 
         $scope.amount=cartService.totalPrice($scope.object.cart);
         
+        console.log($scope.object.cart)
         
         
     }
@@ -101,7 +135,7 @@ app.controller("outletAgentController",["$scope","$http","$location","apiHandler
     $scope.orderHandler=function(){
         $scope.orderBtn="placing..."
         console.log($scope.customer,$scope.object.cart);
-        apiHandler.placeOrder($scope.customer,$scope.object.cart,$scope.orderNo,$scope.outletId,function(err,result){
+        outletAgentApi.placeOrder($scope.customer,$scope.object.cart,$scope.orderNo,$scope.outletId,function(err,result){
             if(result){
                 alert("order placed");
                 $scope.orderNo=generateOrderId();

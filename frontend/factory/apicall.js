@@ -301,7 +301,7 @@ app.factory("apiHandler",function($http){
             ...product,
             outletId
         }
-        // console.log(data);
+        console.log(data);
         $http.post("http://localhost:5000/api/outlet/addProductToOutlet",data,{
             headers:{
                 "Authorization":window.localStorage.getItem("Authorization")

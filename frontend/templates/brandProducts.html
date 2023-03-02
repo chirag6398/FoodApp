@@ -1,15 +1,37 @@
 <div ng-controller="brandProductsController">
-    <div>
-        Categories
+    <div style="padding:10px">
+        <h4>Sub Categories</h4>
       </div>
-      <div style="display:flex;flex-wrap: wrap;">
-        <div ng-click="getProducts(category._id)" class="spr__brandCard" style="cursor: pointer;" ng-repeat="category in categories">
+      <div  style="display:flex;flex-wrap: wrap;margin-bottom: 20px;margin-top: 10px;">
+        
+        <div  class="spr__brandCard"  ng-repeat="category in categories">
+          <div     style="display: flex;
+          justify-content: space-evenly;
+          align-items: center;
+          width: 100%;">
             <div>
-                {{category.categoryName}}
-                
+              <img src={{category.logo}} style="object-fit: contain;
+              height: 80px;"
+               alt="...">
+            </div>
+            <div>
+              {{category.name}}
             </div>
             
+            
           </div>
+          <div ng-click="getProducts(category._id)"
+          style="cursor: pointer;
+          padding: 5px;
+          margin-top: 6px;
+          opacity: 0.8;
+          border: 1px solid lightgray;
+          border-radius: 4px;
+          box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;"
+          >
+          Show Products
+          </div>
+        </div>
       </div>
 
       <div ng-if="products" class="products">
@@ -17,6 +39,7 @@
             <thead>
               <tr>
                 <th scope="col">S.No</th>
+                <th scope="col">Image</th>
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Price</th>
@@ -26,6 +49,12 @@
             <tbody>
               <tr style="cursor:pointer" ng-repeat="product in products" >
                 <th scope="row">{{$index}}</th>
+                <td>
+                  <img style="object-fit: contain;
+                  height: 50px;"
+                  src={{product.img}}
+                  alt="...">
+                </td>
                 <td>{{product.name}}</td>
                 <td>{{product.description}}</td>
                 <td>{{product.price}}</td>

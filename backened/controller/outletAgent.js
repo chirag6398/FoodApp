@@ -11,7 +11,7 @@ module.exports={
     },
     getCategories:function (req,res){
         console.log(req.params.id)
-        outletModel.distinct('products.product.categoryName',{_id:req.params.id}).then(function(result){
+        outletModel.distinct('products.product.category.name',{_id:req.params.id}).then(function(result){
             console.log(result);
             return res.send(result);
         }).catch(function(err){

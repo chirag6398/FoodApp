@@ -33,7 +33,7 @@ module.exports={
     categoryProduct:function (req,res){
         console.log(req.body);
 
-        return productModel.find({brandId:req.body.brandId,categoryId:req.body.categoryId,'outletIds.outletId':{$ne:req.body.outletId}}).then(function(result){
+        return productModel.find({'brand._id':req.body.brandId,'category._id':req.body.categoryId,'outlet._id':{$ne:req.body.outletId}}).then(function(result){
             console.log(result);
             return res.send(result);
         }).catch(function(err){
@@ -45,7 +45,7 @@ module.exports={
     brandProducts: function (req,res){
         console.log(req.body);
 
-        return categoryModel.find({brandId:req.body.brandId}).then(function(result){
+        return categoryModel.find({'brand._id':req.body.brandId}).then(function(result){
             console.log(result);
             return res.send(result)
         }).catch(function(err){
@@ -56,7 +56,7 @@ module.exports={
        
     },
     addProductToOutlet:function(req,res){
-        // console.log(req.body);
+        console.log(req.body);
         // console.log(req.body)
 
         outletModel.findByIdAndUpdate({_id:req.body.outletId},{
@@ -66,9 +66,10 @@ module.exports={
                     name:req.body.name,
                     price:req.body.price,
                     description:req.body.description,
-                    categoryId:req.body.categoryId,
-                    categoryName:req.body.categoryName,
-                        _id:req.body._id
+                    'category._id':req.body.category._id,
+                    'category.name':req.body.category.name,
+                    _id:req.body._id,
+                    img:req.body.img
                 }}
             }
             
@@ -80,12 +81,18 @@ module.exports={
                 {
                     $push:
                     {
-                        outletIds:{
-                            outletId:req.body.outletId
+                        outlet:{
+                            _id:req.body.outletId
                         }
                     }
                 })
-            .then(result=>console.log(result)).catch(err=>console.log(err));
+            .then(function(result){
+                console.log(result)
+                return res.send({message:"added successfully"})
+            }).catch(function(err){
+                console.log(err)
+                return res.status(500).send({error:err});
+            });
         }).catch(function(err){
             console.log(err);
         })
@@ -107,7 +114,8 @@ module.exports={
             },
             { 
                 $group:{
-                    _id:"$products.product.categoryId",
+                    _id:"$products.product.category._id",
+                    name:{$first:"$products.product.category.name"},
                     products:{$push:"$products.product"}
                 }
             }

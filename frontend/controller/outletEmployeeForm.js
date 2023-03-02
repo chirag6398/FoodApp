@@ -5,13 +5,19 @@
 
 app.controller("outletEmployeeFormController",["$scope","$http","$location","apiHandler","outletApi","$rootScope",function($scope,$http,$location,apiHandler,outletApi,$rootScope){
     
-    outletApi.getOutletAdminPage(function(err,result){
-        if(result){
-            console.log(result.data);
-            $scope.outletData=result.data.outletData;
+    // outletApi.getOutletAdminPage(function(err,result){
+    //     if(result){
+    //         console.log(result.data);
+    //         $scope.outletData=result.data.outletData;
+    //     }
+        
+        
+    // });
+    $rootScope.$on('passData',function(err,data){
+        if(data){
+            $scope.outletData=data.data.outletData;
+                
         }
-        
-        
     });
 
     $scope.btnText="create agent";

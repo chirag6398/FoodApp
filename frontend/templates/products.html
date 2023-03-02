@@ -5,8 +5,9 @@
             <thead>
               <tr>
                 <th scope="col">S.No</th>
+                <th scope="col">Image</th>
                 <th scope="col">Name</th>
-                <th scope="col">Category</th>
+                <th scope="col">Sub Category</th>
                 <th scope="col">Description</th>
                 <th scope="col">Price</th>
                 <th scope="col">Remove</th>
@@ -15,8 +16,14 @@
             <tbody>
               <tr style="cursor:pointer" ng-repeat="product in categoryProduct.products" >
                 <th  scope="row">{{$index}}</th>
+                <td>
+                    <img style="object-fit: contain;
+                    height: 50px;"
+                    src={{product.img}}
+                    alt="...">
+                  </td>
                 <td>{{product.name}}</td>
-                <td>{{product.categoryName}}</td>
+                <td>{{product.category.name}}</td>
                 <td>{{product.description}}</td>
                 <td>{{product.price}}</td>
                 <td><button type="button" ng-click="removeProduct(product)" class="btn btn-primary">Remove</button></td>

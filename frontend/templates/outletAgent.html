@@ -1,4 +1,4 @@
-<div class="agt__extDiv" ng-controller="outletAgentController">
+<div class="agt__extDiv" >
     <div class="agt__nav">
         <div class="agt__navComponent" 
         style="background: #3573de;
@@ -40,37 +40,78 @@
             <div class="items">
                 <!-- {{products}} -->
                 <div ng-if="products" class="products">
-                    <table class="table table-bordered table-hover" ng-repeat="categoryProduct in products" >
-                       
-                        <thead>
-                          <tr>
-                            <th scope="col">S.No</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Add Item</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr style="cursor:pointer" ng-repeat="product in categoryProduct.products | filter:search" >
-                            <th  scope="row">{{$index}}</th>
-                            <td>{{product.name}}</td>
-                            <td>{{product.description}}</td>
-                            <td>{{product.price}}</td>
-                            <td><button type="button" ng-click="addToCart(product)" class="btn " >add</button></td>
-                          </tr>
-                          
-                        </tbody>
-                      </table>
+                    <div class="agt__product" ng-repeat="product in products | filter:search">
+                        <div style="display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        width: 100%;">
+                            <div style="margin-right: 10px;">
+                                <img style="object-fit: contain;
+                                height: 100px;"
+                                 src={{product.img}} 
+                                 alt="...">
+                            </div>
+                            <div>
+                                <div>
+                                    <span style="font-weight: 900;
+                                    font-size: 24px;">
+                                        {{product.name}}
+                                    </span>
+                                </div>
+                                <div style="    display: flex;
+                                width: 100%;
+                                
+                                opacity: 0.7;">
+                                    <h5 style="font-weight: bolder;">
+                                    Rs. {{product.price}}
+                                    </h5>
+                                </div>
+                                <div 
+                                ng-click="addToCart(product)"
+                                style="display: flex;
+                                width: 100%;
+                                justify-content: center;
+                                padding: 4px 4px;
+                                cursor: pointer;
+                                /* opacity: 0.6; */
+                                border: 2px solid lightgray;
+                                /* box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px; */
+                                border-radius: 3px;">
+                                    
+                                    <div  >
+                                       <span style="font-weight: bolder;" >
+                                        Add
+                                       </span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        
+                        
+                    </div>
                 </div>
             </div>
             <div class="agt__category">
-                <div ng-if="products" class="agt__categoryCard">
+             
+                <div  class="agt__categoryCard">
                     <div>
-                       <!-- {{categories}} -->
-                        <div ng-repeat="category in categories">
-
-                            {{category}}
+                     
+                        <div 
+                            ng-class="{'agt__active': isSelected==$index}" 
+                            style="min-width: 145px;
+                            min-height: 64px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;" 
+                            ng-repeat="category in categories"
+                        >
+                            
+                            <div  style="font-weight: bold;">
+                                {{category}}
+                            </div>
+                           
                         </div>
                          
                     </div>

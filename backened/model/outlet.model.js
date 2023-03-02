@@ -61,12 +61,14 @@ var OutletSchema=new mongoose.Schema({
             description:{
                 type:String,
             },
-            categoryId:{
-                type:mongoose.Schema.Types.ObjectId,
-                  
-            },
-            categoryName:{
-                type:String
+            category:{
+                _id:{
+                    type:mongoose.Schema.Types.ObjectId,
+                      
+                },
+                name:{
+                    type:String
+                },
             },
             _id:{
                 type:mongoose.Schema.Types.ObjectId,

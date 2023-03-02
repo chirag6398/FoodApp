@@ -1,35 +1,108 @@
 ///<reference path="../module/module.js"/>
 
-app.factory("outletApi",function($http,$rootScope){
-    var obj={};
+app.service("outletAgentApi",function($http,$rootScope){
 
-     obj.getOutletAdminPage=function(){
-        $http.get("http://localhost:5000/api/outletAdmin/getAdminPage",{
+
+    this.getOutletProducts=function(id){
+        // console.log(id);
+        $http.get("http://localhost:5000/api/outlet/getProduct/"+id,{
             headers:{
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            $rootScope.$emit('passData',response);
-            
+            $rootScope.$emit('agentProducts',response);
         }).catch(function(err){
-            $rootScope.$emit('notEligible',false);
+            $rootScope.$emit('agentProductsError',err);
+        })
+    }
+    
+      this.getOutletAgentPage=function(){
+        $http.get("http://localhost:5000/api/outletAgent/getOutletAgentPage",{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            
+            $rootScope.$emit('passData',response);
+
+        }).catch(function(err){
+           $rootScope.$emit('notEligible',false);
         })
     }
 
-    obj.createOutletAgent=function(data,cb){
-        console.log(data);
-        $http.post("http://localhost:5000/api/outletAdmin/createOutletAgent",data,{
+    this.updateAdmin=function (admin,id,cb){
+        var data={
+            ...admin,
+            id:id
+        }
+        
+        $http.post("http://localhost:5000/api/employee/updateUser",data,{
             headers:{
                 "Authorization":window.localStorage.getItem("Authorization")
             }
         }).then(function(response){
-            cb(null,response);
+            
+            cb(response);
         }).catch(function(err){
             
-            // console.log(err,null);
+        })
+    }
+
+     this.updatePassword=function (admin,id,cb){
+        var data={
+            ...admin,
+            id:id
+        }
+        $http.post("http://localhost:5000/api/employee/updatePassword",data,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            
+            cb(null,response);
+        }).catch(function(err){
             cb(err,null)
         })
     }
+
+    this.placeOrder=function(customer,cart,orderNo,outletId,cb){
+        var data={
+            ...customer,
+            item:cart,
+            orderId:orderNo,
+            outletId
+        }
+        
+        $http.post("http://localhost:5000/api/order/createOrder",data,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            
+            cb(null,response);
+        }),function(err){
+            cb(err,null);
+        }
+        
+    }
+
+     this.getCategories=function(outletId,cb){
+        
+        $http.get("http://localhost:5000/api/outletAgent/getCategories/"+outletId,{
+            headers:{
+                "Authorization":window.localStorage.getItem("Authorization")
+            }
+        }).then(function(response){
+            
+            cb(null,response);
+        }).catch(function(err){
+            
+        })
+    }
+
+    
+
+    // var obj={};
 
     // obj.postLogin=function(data,cb){
     //     $http.post("http://localhost:5000/api/employee/login",{username:data.userName,password:data.password}).then(function(response){
@@ -49,35 +122,141 @@ app.factory("outletApi",function($http,$rootScope){
     //     })
     // }
 
-   
-
-    // obj.getAdminPage=function(cb){
-    //     $http.get("http://localhost:5000/api/superAdmin/getAdminPage",{
+    // obj.getOutletAdminPage=function(cb){
+    //     $http.get("http://localhost:5000/api/outletAdmin/getAdminPage",{
     //         headers:{
     //             "Authorization":window.localStorage.getItem("Authorization")
     //         }
     //     }).then(function(response){
+    //         console.log(response);
+    //         cb(null,response);
+    //     }).catch(function(err){
+    //         // console.log(err);
+    //         cb({status:401,message:"unauthorized user"},null);
+    //     })
+    // }
+
+    // // obj.getAdminPage=function(cb){
+    // //     $http.get("http://localhost:5000/api/superAdmin/getAdminPage",{
+    // //         headers:{
+    // //             "Authorization":window.localStorage.getItem("Authorization")
+    // //         }
+    // //     }).then(function(response){
             
+    // //         cb(response);
+    // //     }).catch(function(err){
+    // //         // console.log(err);
+    // //         cb({status:401,message:"unauthorized user"});
+    // //     })
+    // // }
+
+    // obj.getBrands=function(cb){
+    //     $http.get("http://localhost:5000/api/superAdmin/getBrands",{
+    //         headers:{
+    //             "Authorization":window.localStorage.getItem("Authorization")
+    //         }
+    //     }).then(function(response){
+    //         // console.log(response.data)
+    //         cb(response.data);
+    //     }),function(err)
+    //     {
+    //         // console.log(err);
+    //         cb({status:401,message:"unauthorized"});
+    //     }
+    // }
+
+    // obj.createBrand=function(data,cb){
+        
+    //     $http.post("http://localhost:5000/api/superAdmin/createBrand",{brandName:data.name},{
+    //         headers:{
+    //             "Authorization":window.localStorage.getItem("Authorization")
+    //         }
+    //     }).then(function(response){
+    //         // console.log(response);
     //         cb(response);
+    //     }),function(err){
+    //         cb(err);
+    //     }
+    // }
+    
+    // obj.postAddBrandAdmin=function(data,cb){
+    //     // console.log(data);
+    //     $http.post("http://localhost:5000/api/superAdmin/addBrandAdmin",data,{
+    //         headers:{
+    //             "Authorization":window.localStorage.getItem("Authorization")
+    //         }
+    //     }).then(function(response){
+    //         // console.log(response);
+    //         cb(response);
+    //     }),function(err){
+    //         cb(err);
+    //     }
+    // }
+
+    // obj.getBrandAdminPage=function(cb){
+    //     $http.get("http://localhost:5000/api/brandAdmin/getBrandAdminPage",{
+    //         headers:{
+    //             "Authorization":window.localStorage.getItem("Authorization")
+    //         }
+    //     }).then(function(response){
+    //         // console.log(response)
+    //         cb(response.data);
     //     }).catch(function(err){
     //         // console.log(err);
     //         cb({status:401,message:"unauthorized user"});
     //     })
     // }
 
-    
+    // obj.createOutlet=function(outletData,brandId,cb){
+    //     var data={
+    //         ...outletData,
+    //         id:brandId
+    //     }
+    //     // console.log(data);
+    //     $http.post("http://localhost:5000/api/brandAdmin/createOutlet",data,{
+    //         headers:{
+    //             "Authorization":window.localStorage.getItem("Authorization")
+    //         }
+    //     }).then(function(response){
+    //         // console.log(response);
+    //         cb(response);
+    //     }),function(err){
+    //         cb(err);
+    //     }
+    // }
 
-   
-    
-  
+    // obj.getOutletsByBrandId=function(id,cb){
+    //     $http.get("http://localhost:5000/api/brandAdmin/getOutlets/"+id,{
+    //         headers:{
+    //             "Authorization":window.localStorage.getItem("Authorization")
+    //         }
+    //     }).then(function(response){
+    //         // console.log(response);
+    //         cb(response.data);
+    //     }).catch(function(err){
+    //         // console.log(err);
+    //     })
+    // }
 
-    
+    // obj.createOutletAdmin=function(outletAdminData,id,brandId,cb){
+    //     var data={
+    //         ...outletAdminData,
+    //         id:id,
+    //         brandId:brandId
+    //     };
+    //     // console.log(data)
+    //     $http.post("http://localhost:5000/api/brandAdmin/createOutletAdmin",data,{
+    //         headers:{
+    //             "Authorization":window.localStorage.getItem("Authorization")
+    //         }
+    //     }).then(function(response){
+    //         // console.log(response);
+    //         cb(response);
+    //     }),function(err){
+    //         cb(err);
+    //     }
 
-    
-
-    
-
-  
+    // }
 
     // obj.getCategoryByBrandId=function(brandId,superCategoryId,cb){
     //     var data={
@@ -116,26 +295,23 @@ app.factory("outletApi",function($http,$rootScope){
     //     }
     // }
 
-   
-
-    
-
-    // obj.updatePassword=function (admin,id,cb){
-    //     var data={
-    //         ...admin,
-    //         id:id
-    //     }
-    //     $http.post("http://localhost:5000/api/employee/updatePassword",data,{
+    // obj.getUserById=function(id,cb){
+    //     $http.get("http://localhost:5000/api/employee/getUserById/"+id,{
     //         headers:{
     //             "Authorization":window.localStorage.getItem("Authorization")
     //         }
     //     }).then(function(response){
-    //         // console.log(null,response);
-    //         cb(null,response);
-    //     }).catch(function(err){
-    //         // console.log(err,null);
-    //     })
+    //         // console.log(response);
+    //         cb(response);
+    //     }),function(err){
+    //         // console.log(err);
+    //         cb(err);
+    //     }
     // }
+
+    
+
+   
 
     // obj.getProductsInBrand=function(data,cb){
     //     $http.post("http://localhost:5000/api/product/getProducts",data,{
@@ -150,7 +326,18 @@ app.factory("outletApi",function($http,$rootScope){
     //     })
     // }
 
-    
+    // obj.updateOutletData=function(data,cb){
+    //     $http.post("http://localhost:5000/api/outlet/updateOutletData",data,{
+    //         headers:{
+    //             "Authorization":window.localStorage.getItem("Authorization")
+    //         }
+    //     }).then(function(response){
+    //         cb(response);
+    //     }).catch(function(err){
+            
+    //         // console.log(err);
+    //     })
+    // }
 
     // obj.getBrandOutletProducts=function(data,cb){
     //     $http.post("http://localhost:5000/api/outlet/brandProducts",data,{
@@ -184,7 +371,7 @@ app.factory("outletApi",function($http,$rootScope){
     //         ...product,
     //         outletId
     //     }
-    //     // console.log(data);
+    //     console.log(data);
     //     $http.post("http://localhost:5000/api/outlet/addProductToOutlet",data,{
     //         headers:{
     //             "Authorization":window.localStorage.getItem("Authorization")
@@ -197,20 +384,7 @@ app.factory("outletApi",function($http,$rootScope){
     //     })
     // }
 
-    // obj.getOutletProducts=function(id,cb){
-    //     // console.log(id);
-    //     $http.get("http://localhost:5000/api/outlet/getProduct/"+id,{
-    //         headers:{
-    //             "Authorization":window.localStorage.getItem("Authorization")
-    //         }
-    //     }).then(function(response){
-    //         // console.log(response)
-    //         cb(null,response);
-    //     }).catch(function(err){
-    //         // console.log(err);
-    //         cb(err,null);
-    //     })
-    // }
+    
 
     // obj.removeOutletProduct=function(product,outletId,cb){
     //     var data={
@@ -271,19 +445,7 @@ app.factory("outletApi",function($http,$rootScope){
     //     })
     // }
 
-    // obj.getOutletAgentPage=function(cb){
-    //     $http.get("http://localhost:5000/api/outletAgent/getOutletAgentPage",{
-    //         headers:{
-    //             "Authorization":window.localStorage.getItem("Authorization")
-    //         }
-    //     }).then(function(response){
-    //         // console.log(response)
-    //         cb(null,response);
-    //     }).catch(function(err){
-    //         // console.log(err);
-    //         cb(err,null);
-    //     })
-    // }
+  
 
     // obj.addSuperCategory=function(superCategory,brandId,cb){
     //     var data={
@@ -316,40 +478,9 @@ app.factory("outletApi",function($http,$rootScope){
     //     })
     // }
 
-    // obj.getCategories=function(outletId,cb){
-    //     console.log(outletId)
-    //     $http.get("http://localhost:5000/api/outletAgent/getCategories/"+outletId,{
-    //         headers:{
-    //             "Authorization":window.localStorage.getItem("Authorization")
-    //         }
-    //     }).then(function(response){
-    //         // console.log(response);
-    //         cb(null,response);
-    //     }).catch(function(err){
-    //         // console.log(err,null);
-    //     })
-    // }
+   
 
-    // obj.placeOrder=function(customer,cart,orderNo,outletId,cb){
-    //     var data={
-    //         ...customer,
-    //         item:cart,
-    //         orderId:orderNo,
-    //         outletId
-    //     }
-        
-    //     $http.post("http://localhost:5000/api/order/createOrder",data,{
-    //         headers:{
-    //             "Authorization":window.localStorage.getItem("Authorization")
-    //         }
-    //     }).then(function(response){
-    //         // console.log(response);
-    //         cb(null,response);
-    //     }),function(err){
-    //         cb(err,null);
-    //     }
-        
-    // }
+    
 
     // obj.togleOutlet=function(outletId,cb){
 
@@ -388,5 +519,5 @@ app.factory("outletApi",function($http,$rootScope){
     // }
     
 
-    return obj;
+    // return obj;
 })

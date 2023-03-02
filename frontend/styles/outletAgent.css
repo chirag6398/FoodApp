@@ -154,10 +154,11 @@ color: #b8b9bc;
     display: flex;
     background: #fffe;
     margin-top: 10px;
-    height: 13%;
+    height: 19%;
     border: 3px;
     border-bottom-left-radius: 31px;
     padding: 10px;
+    min-height: 129px;
 }
 .agt__categoryCard{
     display: flex;
@@ -165,9 +166,41 @@ color: #b8b9bc;
     padding: 19px;
     border-bottom-left-radius: 16px;
     cursor: pointer;
-    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+    border: 1px solid lightsteelblue;
+    min-height: 100px;
+    border-radius: 3px;
+
 
 }
 h5{
     align-self: center;
+}
+.agt__active{
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+    background: #bcbcbc40;
+    opacity: 0.9;
+    border-radius: 3px;
+    /* font-weight: bolder; */
+}
+.agt__product{
+    display: flex;
+    flex-direction: column;
+    width:262px;
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+    align-items: center;
+    padding: 10px;
+}
+.ihover{
+    transition: .9s ease-in;
+    width: 30px;
+    height: 30px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+.ihover:hover{
+    color: red  ;
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+    border-radius: 3px;
+
 }
