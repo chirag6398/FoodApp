@@ -1,40 +1,71 @@
-<div class="spr__extDiv" ng-controller="outletAdminController">
-    <div style="height: 51px;">
-        <nav class="spr__header">
-            <div>
-                <span>
-                    <img style="object-fit: contain;
-                        height: 36px;"
-                        src={{brandLogo}}
-                        alt="...">
-                </span>
-            </div>
-            <div>
-                <span>
-                    {{outletName}}
-                </span>
-            </div>
-        </nav>
+<div class="sidebar close">
+<div class="logo-details">
+    <img style="object-fit: contain;
+    height: 36px;"
+    src={{brandLogo}}
+    alt="...">
+    <span class="logo_name">{{outletName}}</span>
+</div>
+<ul class="nav-links">
+    <li>
+    <a ui-sref="" >
+        <i title="Dashboard" class='bx bx-grid-alt' ></i>
+        <span class="link_name">Dashboard</span>
+    </a>
+    
+    <li>
+    <li>
+    <a ui-sref="outletAdmin.products">
+        <i title="products in outlets" class='bx bxl-product-hunt' ></i>
+        <span class="link_name">Products</span>
+    </a>
+    <li>
+    <li>
+    <a ui-sref="outletAdmin.outletBrandProducts">
+        <i title="Global Available Products" class='bx bx-globe' ></i>
+        <span class="link_name">Global Products</span>
+    </a>
+    <li>
+    <li>
+        <a ui-sref="outletAdmin.employee">
+        <i title="create agent" class='bx bxs-user' ></i>
+        <span class="link_name"> Create Agent</span>
+        </a>
+        
+    <li>
+    
+    <a ui-sref="outletAdmin.setting" >
+        <i   class='bx bx-cog' ></i>
+        <span class="link_name">Setting</span>
+    </a>
+    <ul class="sub-menu blank">
+        <li><a class="link_name" href="#">Setting</a></li>
+    </ul>
+    </li>
+    <li>
+    <a ng-click="logOutHandler()">
+        <i title="LogOut" class='bx bx-log-out-circle' ></i>
+        <span class="link_name">Logout</span>
+    </a>
+    
+    <li>
+    <li>
+    <a ui-sref="login">
+        <i title="LogIn" class='bx bx-log-in-circle' ></i>
+        <span class="link_name">Login</span>
+    </a>
+    
+    <li>
+    
+</ul>
+</div>
+<section class="home-section">
+<div class="home-content">
+    <div>
+    <i class='bx bx-menu' ></i>
     </div>
-    <div class="spr__mainDiv">
-    <div class="spr__nav">
-        <div ui-sref="outletAdmin.products" ui-sref-active="active"  class="nav">
-           Products
-        </div>
-        <div ui-sref-active="active" ui-sref="outletAdmin.outletBrandProducts({id:brandId})" class="nav">
-           Add Products
-        </div>
-        <div ui-sref-active="active" ui-sref="outletAdmin.employee" class="nav">
-           Add Employee
-        </div>
-        <div ui-sref-active="active" ui-sref="outletAdmin.setting" class="nav">
-            setting 
-        </div>
-    </div>
-    <div class="spr__rightSide">
-        <ui-view></ui-view>
-    </div>
-    </div>
+    
+    <div ui-view></div>
     
 </div>
-    
+</section>

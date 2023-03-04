@@ -1,10 +1,10 @@
-<div ng-controller="brandProductsController">
+<div >
     <div style="padding:10px">
         <h4>Sub Categories</h4>
       </div>
       <div  style="display:flex;flex-wrap: wrap;margin-bottom: 20px;margin-top: 10px;">
         
-        <div  class="spr__brandCard"  ng-repeat="category in categories">
+        <div ng-if="category" class="spr__brandCard"  ng-repeat="category in categories">
           <div     style="display: flex;
           justify-content: space-evenly;
           align-items: center;
@@ -47,7 +47,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr style="cursor:pointer" ng-repeat="product in products" >
+              <tr ng-if="product" style="cursor:pointer" ng-repeat="product in products" >
                 <th scope="row">{{$index}}</th>
                 <td>
                   <img style="object-fit: contain;

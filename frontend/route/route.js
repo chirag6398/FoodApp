@@ -119,8 +119,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       controller: "outletAdminProductsController",
     })
     .state("outletAdmin.outletBrandProducts", {
-      url: "/brandProducts/:id",
-      templateUrl: "./templates/brandProducts.html",
+      url: "/brandProducts",
+      templateUrl: "./templates/outletBrandProducts.html",
       controller: "brandProductsController",
     })
     .state("outletAdmin.employee", {
