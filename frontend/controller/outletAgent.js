@@ -47,14 +47,18 @@ app.controller("outletAgentController",["$scope","$http","$location","outletAgen
     $rootScope.$on('agentProducts',function(err,result){
         console.log(result);
         $scope.categories=[];
+        $scope.brandLogo="";
         if(result.data && result.data.length>0){
+            if($scope.brandLogo==""){
+                $scope.brandLogo=result.data[0].brandLogo;
+            }
             result.data.forEach(function(value){
             
                 $scope.categoryProducts={[value.name]:value.products};
                 $scope.categories.push(value.name);
     
             })
-            console.log($scope.categories);
+            console.log($scope.categories,$scope.brandLogo);
             $scope.isSelected=0;
             $scope.products=$scope.categoryProducts[$scope.categories[$scope.isSelected]];
         }

@@ -1,59 +1,65 @@
-var mongoose=require("mongoose");
+var mongoose = require("mongoose");
 
-var BrandSchema=new mongoose.Schema({
-    name:{
-        type:String,
-        required:true,
-        trim:true,
-        minlength:2,
-        unique:true
+var BrandSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 2,
+      unique: true,
     },
-    logo:{
-        type:String
+    logo: {
+      type: String,
     },
-    location:{
-        address:{
-            type:String,
-            required:true,
-        },
-        pinCode:{
-            type:Number,
-            required:true
-        },
-        city:{
-            type:String,
-            required:true
-        }
-    }, 
-    //to check that its admin is created or not and also for updating user using its id
-    brandAdminId:{
-        type:mongoose.Schema.Types.ObjectId,
-               
+    location: {
+      address: {
+        type: String,
+        required: true,
+        lowercase: true,
+      },
+      pinCode: {
+        type: Number,
+        required: true,
+      },
+      city: {
+        type: String,
+        required: true,
+        lowercase: true,
+      },
     },
-    contactInfo:{
-        number:{
-            type:Number,
-            unique:true
-        },
-        email:{
-            type:String,
-            unique:true,
-            trim:true
-        }
+    brandAdminId: {
+      type: mongoose.Schema.Types.ObjectId,
     },
-    description:{
-        type:String,
-        trim:true,
-        required:true
+    contactInfo: {
+      number: {
+        type: Number,
+        unique: true,
+        required: true,
+      },
+      email: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+      },
     },
-    isDeleted:{
-        type:Boolean,
-        default:false
+    description: {
+      type: String,
+      trim: true,
+      required: true,
+      lowercase: true,
     },
-    isActive:{
-        type:Boolean,
-        default:true
-    }
-},{timestamps:true});
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  { timestamps: true }
+);
 
-module.exports=mongoose.model("brand",BrandSchema);
+module.exports = mongoose.model("brand", BrandSchema);

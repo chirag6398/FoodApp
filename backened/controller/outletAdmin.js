@@ -116,6 +116,7 @@ module.exports={
                 $group:{
                     _id:"$products.product.category._id",
                     name:{$first:"$products.product.category.name"},
+                    brandLogo:{$first:"$brand.logo"},
                     products:{$push:"$products.product"}
                 }
             }

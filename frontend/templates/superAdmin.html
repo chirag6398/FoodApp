@@ -1,4 +1,4 @@
-<div class="spr__extDiv" ng-controller="superAdminController">
+<!-- <div class="spr__extDiv" >
 <div class="spr__mainDiv">
 <div class="spr__nav">
     <div ui-sref="superAdmin.createBrand" ui-sref-active="active"  class="nav">
@@ -21,7 +21,7 @@
       Setting
     </div>
 </div>
-<!-- {{parentState}} -->
+
 
   <div ui-view class="spr__rightSide">
     
@@ -29,4 +29,75 @@
   </div>
 
 </div>
+</div> -->
+
+
+
+<div class="sidebar close">
+  <div class="logo-details">
+    <i class='bx bx-food-tag'></i>
+    <span class="logo_name">Food App</span>
+  </div>
+  <ul class="nav-links">
+    <li>
+      <a ui-sref="superAdmin.analysis" >
+        <i title="Dashboard" class='bx bx-grid-alt' ></i>
+        <span class="link_name">Dashboard</span>
+      </a>
+    
+    <li>
+    <li>
+      <a ui-sref="superAdmin.createBrand">
+        <i title="home" class='bx bx-home' ></i>
+        <span class="link_name">Home</span>
+      </a>
+      
+    <li>
+    <li>
+      <a ui-sref="superAdmin.users">
+        <i title="users" class='bx bxs-user-detail' ></i>
+        <span class="link_name">Users</span>
+      </a>
+      
+    <li>
+      <li>
+        <a ui-sref="superAdmin.outlets" >
+          <i title="outlets" class='bx bx-buildings' ></i>
+          <span class="link_name">Outlets</span>
+        </a>
+        
+      <li>
+      <li>
+        <a ui-sref="superAdmin.superCategories">
+          <i title="food categories" class='bx bx-category' ></i>
+          <span class="link_name">Categories</span>
+        </a>
+        
+      <li>
+      
+      <a ui-sref="superAdmin.setting({id:superAdmin._id})" >
+        <i   class='bx bx-cog' ></i>
+        <span class="link_name">Setting</span>
+      </a>
+      <ul class="sub-menu blank">
+        <li><a class="link_name" href="#">Setting</a></li>
+      </ul>
+    </li>
+   
+</ul>
 </div>
+<section class="home-section">
+  <div class="home-content">
+    <div>
+      <i class='bx bx-menu' ></i>
+    </div>
+    
+    <div ui-view></div>
+    
+  </div>
+</section>
+
+
+
+
+

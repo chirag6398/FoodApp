@@ -23,6 +23,13 @@
             border: 0px;
             color: white;" data-toggle="modal" data-target="#exampleModal2" data-whatever="@mdo">Profile</button>
         </div>
+        <div  ng-if="brandLogo">
+            <img 
+                title={{brand.name}}
+                style="object-fit: contain;
+                height: 32px;"
+                src={{brandLogo}} alt="...">
+        </div>
 
     
     </div>
@@ -93,10 +100,7 @@
                                 </div>
                             </div>
                             
-                        </div>
-                        
-                        
-                        
+                        </div>  
                     </div>
                 </div>
             </div>

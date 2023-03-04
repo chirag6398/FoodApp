@@ -1,45 +1,45 @@
-var mongoose=require("mongoose");
+var mongoose = require("mongoose");
 
-var CategorySchema=new mongoose.Schema({
-    name:{
-        type:String,
-        required:true,
-        trim:true,
-        
+var CategorySchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+    lowercase: true,
+  },
+  logo: {
+    type: String,
+    required: true,
+  },
+  superCategory: {
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
     },
-    logo:{
-        type:String,
+    name: {
+      type: String,
+      required: true,
+      lowercase: true,
+    },
+  },
+  brand: {
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+  },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
+});
 
-    },
-    superCategory:{
-        _id:{
-            type:mongoose.Schema.Types.ObjectId,
-            required:true
-        },
-        name:{
-            type:String,
-            required:true
-        }
-    },
-    brand:{
-        _id:{
-            type:mongoose.Schema.Types.ObjectId,
-            required:false,
-            ref:"outlet",
-        },
-        name:{
-            type:String,
-            required:true
-        }
-    },
-    isDeleted:{
-        type:Boolean,
-        default:false
-    },
-    isActive:{
-        type:Boolean,
-        default:true
-    }
-})
-
-module.exports=mongoose.model("category",CategorySchema);
+module.exports = mongoose.model("category", CategorySchema);

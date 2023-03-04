@@ -1,106 +1,125 @@
-var mongoose=require("mongoose");
+var mongoose = require("mongoose");
 
-var OutletSchema=new mongoose.Schema({
-    name:{
-        type:String,
-        required:true,
-        trim:true,
-        unique:true
+var OutletSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+      unique: true,
     },
-    location:{
-        address:{
-            type:String,
-            required:true,
-        },
-        pinCode:{
-            type:Number,
-            required:true
-        },
-        city:{
-            type:String,
-            required:true
-        }
-    }, 
-    outletAdminId:{
-        type:mongoose.Schema.Types.ObjectId,
-        
+    location: {
+      address: {
+        type: String,
+        required: true,
+        lowercase: true,
+      },
+      pinCode: {
+        type: Number,
+        required: true,
+      },
+      city: {
+        type: String,
+        required: true,
+        lowercase: true,
+      },
     },
-    type:{
-        type:String,
+    outletAdminId: {
+      type: mongoose.Schema.Types.ObjectId,
     },
-    brand:{
-        _id:{
-            type:mongoose.Schema.Types.ObjectId,
-            required:false,
-               
-        },
-        name:{
-            type:String,
-            required:true
-        },
-        logo:{
-            type:String,
-            required:true
-        }
+    type: {
+      type: String,
+      required: true,
+      lowercase: true,
     },
-    products:[{
-        product:{
-            name:{
-                type:String,
-                trim:true,
-               
+    brand: {
+      _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+      },
+      name: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+      logo: {
+        type: String,
+        required: true,
+      },
+    },
+    products: [
+      {
+        product: {
+          name: {
+            type: String,
+            trim: true,
+            lowercase: true,
+          },
+          price: {
+            type: Number,
+            required: true,
+          },
+          img: {
+            type: String,
+          },
+          description: {
+            type: String,
+            lowercase: true,
+          },
+          category: {
+            _id: {
+              type: mongoose.Schema.Types.ObjectId,
             },
-            price:{
-                type:Number,
-                required:true
+            name: {
+              type: String,
+              trim: true,
+              lowercase: true,
             },
-            img:{
-                type:String,
-                
+          },
+          superCategory: {
+            _id: {
+              type: mongoose.Schema.Types.ObjectId,
             },
-            description:{
-                type:String,
+            name: {
+              type: String,
+              trim: true,
+              lowercase: true,
             },
-            category:{
-                _id:{
-                    type:mongoose.Schema.Types.ObjectId,
-                      
-                },
-                name:{
-                    type:String
-                },
-            },
-            _id:{
-                type:mongoose.Schema.Types.ObjectId,
-                  
-            }
-
-        }
-    }
+          },
+          _id: {
+            type: mongoose.Schema.Types.ObjectId,
+          },
+        },
+      },
     ],
-    description:{
-        type:String,
-        required:true,
-        trim:true
+    description: {
+      type: String,
+      required: true,
+      trim: true,
+      lowercase: true,
     },
-    contactInfo:{
-        number:{
-            type:Number,
-            unique:true
-        },
-        email:{
-            type:String,
-            unique:true,
-            trim:true
-        }
+    contactInfo: {
+      number: {
+        type: Number,
+        unique: true,
+        required: true,
+      },
+      email: {
+        type: String,
+        unique: true,
+        trim: true,
+        required: true,
+      },
     },
-    isDeleted:{
-        type:Boolean,
-        default:false
+    isDeleted: {
+      type: Boolean,
+      default: false,
     },
-    isActive:{
-        type:Boolean,
-        default:true
-    }
-},{timestamps:true});
-module.exports=mongoose.model("outlet",OutletSchema);
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  { timestamps: true }
+);
+module.exports = mongoose.model("outlet", OutletSchema);

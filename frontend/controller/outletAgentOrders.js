@@ -26,7 +26,7 @@ app.controller("outletAgentOrdersController",["$scope","$http","$location","outl
 
     $scope.setData=function(items,customer,amount){
         $scope.items=items;
-        $scope.amount=amount
+        $scope.amount=amount;
         $scope.customer=customer;
     }
     
