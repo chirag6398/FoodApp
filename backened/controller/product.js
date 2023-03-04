@@ -1,4 +1,5 @@
 var productModel = require("../model/product.model");
+var categoryModal = require("../model/category.model");
 var s3Services = require("../service/awsS3.service");
 // var uploadToS3=require("../service/awsS3.service");
 
@@ -26,9 +27,7 @@ module.exports = {
           product
             .save()
             .then(function (result) {
-              return res
-                .status(200)
-                .send({ status: 200, message: "product added successfuly" });
+              return res.status(200).send(result);
             })
             .catch(function (err) {
               console.log(err);
@@ -128,9 +127,19 @@ module.exports = {
           return res.status(500).send({ error: err, status: 500 });
         });
     }
-    // console.log(req.file)
-
-    //update product
-    //update outlets product
+  },
+  getSuperCategory: function (req, res) {
+    console.log(req.params.id);
+    categoryModal
+      .findById({ _id: req.params.id })
+      .then(function (result) {
+        console.log(result);
+        return res.send(result);
+      })
+      .catch(function (err) {
+        return res
+          .status(500)
+          .send({ message: "not able to fetch super category" });
+      });
   },
 };

@@ -203,6 +203,37 @@ app.factory("brandApi", function ($http) {
       };
   };
 
+  obj.getSuperCategory = function (id, cb) {
+    console.log(id);
+    $http
+      .get("http://localhost:5000/api/product/getSuperCategory/" + id, {
+        headers: {
+          Authorization: window.localStorage.getItem("Authorization"),
+        },
+      })
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb(err, null);
+      });
+  };
+
+  obj.addProduct = function (data, cb) {
+    $http
+      .post("http://localhost:5000/api/product/addProduct", data, {
+        transformRequest: angular.identity,
+        headers: { "Content-Type": undefined },
+      })
+      .then(function (result) {
+        cb(null, result);
+      })
+      .catch(function (error) {
+        console.log(error);
+        cb(error, null);
+      });
+  };
+
   // obj.updatePassword=function (admin,id,cb){
   //     var data={
   //         ...admin,

@@ -67,7 +67,7 @@
           </div>
     </div>
 
-    <div ng-if="products" class="products">
+    <div ng-if="object.products.length" class="products">
         <table class="table table-bordered table-hover">
             <thead>
               <tr>
@@ -81,7 +81,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr style="cursor:pointer" ng-repeat="product in products" >
+              <tr style="cursor:pointer" ng-repeat="product in object.products" >
                 <th scope="row">{{$index}}</th>
                 <td><img style="object-fit: contain;
                   height: 80px;"
