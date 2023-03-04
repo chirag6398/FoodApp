@@ -3,8 +3,7 @@ height: 100vh;
 width: 100vw;
 
 flex-direction: column;
-"
- ng-controller="subCategoryController">
+">
  <div style="height: 51px;">
   <nav class="spr__header">
       <div>
@@ -22,12 +21,12 @@ flex-direction: column;
       </div>
   </nav>
 </div>
-    <div style="padding: 20px;" ng-if="categories">
+    <div style="padding: 20px;" ng-if="object.categories.length">
         <div>
             <h3>Categories</h3>
           </div>
           <div style="display:flex;flex-wrap: wrap;">
-            <div class="spr__brandCard"  ng-repeat="category in categories">
+            <div class="spr__brandCard"  ng-repeat="category in object.categories">
               <div     style="display: flex;
               justify-content: space-evenly;
               align-items: center;
@@ -117,9 +116,7 @@ flex-direction: column;
                 </div>
                 <div class="form-group">
                     <label for="logo" class="col-form-label">Logo (optional):</label>
-                    <input type="file"  name="logo"  ng-model="category.categoryLogo" id="logo">
-                    
-                    
+                    <input type="file"  name="logo"  file-model="category.logo" id="logo">
                   </div>
                
                 <div class="modal-footer">

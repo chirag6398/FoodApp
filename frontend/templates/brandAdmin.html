@@ -1,4 +1,4 @@
-<div class="spr__extDiv" ng-controller="brandAdminController">
+<!-- <div class="spr__extDiv" ng-controller="brandAdminController">
     <div style="height: 51px;">
         <nav class="spr__header">
             <div>
@@ -38,4 +38,92 @@
     <div class="spr__rightSide" ui-view >
         
 </div>
-</div>
+</div> -->
+
+
+<div class="sidebar close">
+    <div class="logo-details">
+        <img style="object-fit: contain;
+        height: 36px;"
+        src={{brandLogo}}
+        alt="...">
+      <span class="logo_name">{{brandName}}</span>
+    </div>
+    <ul class="nav-links">
+      <li>
+        <a ui-sref="" >
+          <i title="Dashboard" class='bx bx-grid-alt' ></i>
+          <span class="link_name">Dashboard</span>
+        </a>
+      
+      <li>
+      <li>
+        <a ui-sref="brandadmin.home">
+        <i title=" create outlets" class='bx bx-buildings' ></i>
+          <span class="link_name">Create Outlet</span>
+        </a>
+        
+      <li>
+      <li>
+        <a ui-sref="brandadmin.users">
+          <i title="users" class='bx bxs-user-detail' ></i>
+          <span class="link_name">Users</span>
+        </a>
+        
+      <li>
+        <!-- <li>
+          <a ui-sref="" >
+            <i title="outlets" class='bx bx-buildings' ></i>
+            <span class="link_name">Outlets</span>
+          </a>
+          
+        <li> -->
+        <li>
+          <a ui-sref="brandadmin.brandAdminCategory">
+            <i title="food super categories" class='bx bx-category' ></i>
+            <span class="link_name"> Create Super Categories</span>
+          </a>
+          
+        <li>
+        
+        <a ui-sref="brandadmin.setting({id:brandId})" >
+          <i   class='bx bx-cog' ></i>
+          <span class="link_name">Setting</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Setting</a></li>
+        </ul>
+      </li>
+      <li>
+        <a ng-click="logOutHandler()">
+          <i title="LogOut" class='bx bx-log-out-circle' ></i>
+          <span class="link_name">Logout</span>
+        </a>
+        
+      <li>
+      <li>
+        <a ui-sref="login">
+          <i title="LogIn" class='bx bx-log-in-circle' ></i>
+          <span class="link_name">Login</span>
+        </a>
+        
+      <li>
+     
+  </ul>
+  </div>
+  <section class="home-section">
+    <div class="home-content">
+      <div>
+        <i class='bx bx-menu' ></i>
+      </div>
+      
+      <div ui-view></div>
+      
+    </div>
+  </section>
+  
+  
+  
+  
+  
+  

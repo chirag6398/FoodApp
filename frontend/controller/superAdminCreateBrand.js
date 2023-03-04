@@ -31,7 +31,8 @@ app.controller("superAdminCreateBrandController", [
 
     adminApi.getBrands(function (err, result) {
       if (result) {
-        $scope.brands = result.data;
+        $scope.object = { brands: [] };
+        $scope.object.brands = result.data;
         console.log($scope.brands);
       }
     });
@@ -52,6 +53,10 @@ app.controller("superAdminCreateBrandController", [
           if (result) {
             console.log(result);
             $scope.btnText = "successful";
+            $("#exampleModal").modal("hide");
+          } else {
+            $scope.btnText = "successful";
+            console.log(err);
           }
         }
       );
@@ -107,6 +112,7 @@ app.controller("superAdminCreateBrandController", [
         .then(
           function (response) {
             console.log(response.data);
+            $("#exampleModal1").modal("hide");
           },
           function (error) {
             console.log(error);
@@ -138,34 +144,16 @@ app.controller("superAdminCreateBrandController", [
       brandData.append("description", $scope.brand.description);
       brandData.append("pinCode", $scope.brand.pinCode);
 
-      // console.log(brandData);
-      // for(var value of brandData.values()){
-      //     console.log(value);
-      // }
-
-      //   $http({
-      //     method: "POST",
-      //     url: "http://localhost:5000/api/superAdmin/createBrand",
-      //     data: $scope.brand,
-      //     headers: {
-      //       "Access-Control-Allow-Origin": "*",
-      //       "Content-Type": undefined,
-      //     },
-      //   }).then(function (response) {
-      //     console.log(response);
-      //     // cb(null,response);
-      //   }),
-      //     function (err) {
-      //       // cb(err,null);
-      //       console.log(err);
-      //     };
-
       adminApi.createBrand(brandData, function (err, result) {
         console.log("result", result);
-        $scope.brands.push(result.data);
+
         console.log($scope.brands);
         if (result) {
           $scope.btnText = "created";
+          $scope.object.brands.push(result.data);
+          $("#createBrand").modal("hide");
+        } else {
+          $scope.btnText = "failed";
         }
       });
     };

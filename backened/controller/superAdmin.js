@@ -20,6 +20,7 @@ module.exports = {
       brandModel
         .find({})
         .then(function (result) {
+          console.log(result);
           return res.status(200).send({ data: result, status: 200 });
         })
         .catch(function (err) {
@@ -63,7 +64,7 @@ module.exports = {
 
           var brand = new brandModel({
             name: req.body.name,
-            logo: "https://food-app-imgs.s3.ap-south-1.amazonaws.com/McDonalds.jpg",
+            logo: image,
             "contactInfo.email": req.body.email,
             "contactInfo.number": req.body.number,
             "location.city": req.body.city,

@@ -1,6 +1,6 @@
-<div ng-controller="brandAdminHomeController">
+<div >
   <div
-  ng-if="outlets"
+  ng-if="object.outlets.length"
   class="spr__rightSide"
  
 >
@@ -18,7 +18,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr style="cursor: pointer" ng-repeat="outlet in outlets">
+      <tr style="cursor: pointer" ng-repeat="outlet in object.outlets">
         <td scope="row">{{$index}}</td>
         <td><img style="object-fit: contain;
           height: 80px;"
@@ -31,14 +31,14 @@
               type="button"
               class="btn btn-primary"
               data-toggle="modal"
-              data-target="#exampleModal"
+              data-target="#exampleModal1"
               data-whatever="@mdo"
             >
               Add admin
             </button>
             <div
               class="modal fade"
-              id="exampleModal"
+              id="exampleModal1"
               tabindex="-1"
               role="dialog"
               aria-labelledby="exampleModalLabel"
@@ -173,7 +173,7 @@
                         <span ng-show="adminData.city.$dirty && adminData.city.$error.minlength">Please fill this field</span>
                       </div>
                       <div class="form-group">
-                          <label for="pinCode" class="col-form-label">Outlet PinCode:</label>
+                          <label for="pinCode" class="col-form-label">PinCode:</label>
                           <input type="number" name="pinCode" ng-required="true" ng-minlength="6" ng-maxlength="6" ng-model="admin.pinCode" class="form-control" >
                           <span ng-show="adminData.pinCode.$dirty && adminData.pinCode.$error.minlength && adminData.pinCode.$error.maxlength">6 characters required</span>
                         </div>
@@ -299,12 +299,12 @@
             </div>
             <div class="form-group">
               <label for="type" class="col-form-label">Type :</label>
-              <input type="text" name="type" ng-required="true" ng-model="outlet.type" class="form-control" id="type">
+              <input type="text" name="type" ng-required="true" ng-model="outlet.type" class="form-control" >
               <span ng-show="updateOutletData.type.$dirty && updateOutletData.type.$error.required">Please fill this field</span>
             </div>
             <div class="form-group">
               <label for="description" class="col-form-label">Description :</label>
-              <input type="text" name="description" ng-required="true" ng-model="outlet.description" class="form-control" id="description">
+              <input type="text" name="description" ng-required="true" ng-model="outlet.description" class="form-control" >
               <span ng-show="updateOutletData.description.$dirty && updateOutletData.description.$error.required">Please fill this field</span>
             </div>
             <div class="form-group">
@@ -353,11 +353,9 @@
 
   
 </div>
-  <div class="spr__rightSide"
-
-ng-if="!outlets">
-<span>Empty</span>
-</div>
+  <div class="spr__rightSide" ng-if="!object.outlets">
+    <span>loading...</span>
+  </div>
 <div>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Create Outlet</button>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -378,12 +376,12 @@ ng-if="!outlets">
                 </div>
                 <div class="form-group">
                   <label for="type" class="col-form-label">Type :</label>
-                  <input type="text" name="type" ng-required="true" ng-model="outlet.type" class="form-control" id="type">
+                  <input type="text" name="type" ng-required="true" ng-model="outlet.type" class="form-control" >
                   <span ng-show="OutletData.type.$dirty && OutletData.type.$error.required">Please fill this field</span>
                 </div>
                 <div class="form-group">
                   <label for="description" class="col-form-label">Description :</label>
-                  <input type="text" name="description" ng-required="true" ng-model="outlet.description" class="form-control" id="description">
+                  <input type="text" name="description" ng-required="true" ng-model="outlet.description" class="form-control" >
                   <span ng-show="OutletData.description.$dirty && OutletData.description.$error.required">Please fill this field</span>
                 </div>
                 <div class="form-group">
@@ -406,7 +404,7 @@ ng-if="!outlets">
                 </div>
                 <div class="form-group">
                   <label for="city" class="col-form-label">City :</label>
-                  <input type="text" name="city" ng-required="true" ng-minlength="3" ng-model="outlet.city" class="form-control" id="city">
+                  <input type="text" name="city" ng-required="true" ng-minlength="3" ng-model="outlet.city" class="form-control" >
                   <span ng-show="OutletData.city.$dirty && OutletData.city.$error.minlength">Please fill this field</span>
                 </div>
                 <div class="form-group">
