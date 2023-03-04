@@ -99,6 +99,7 @@ color: #b8b9bc;
     padding: 10px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     height: 65%;
+    overflow: auto;
 }
 .agt__rightSide{
     display: flex;
@@ -185,9 +186,13 @@ h5{
 .agt__product{
     display: flex;
     flex-direction: column;
-    width:262px;
+    width: 290px;
+    height: 181px;
+    border: 1px solid black;
+    margin: 10px;
     box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
     align-items: center;
+    justify-content: center;
     padding: 10px;
 }
 .ihover{
@@ -203,4 +208,10 @@ h5{
     box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
     border-radius: 3px;
 
+}
+.agt__products1{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }

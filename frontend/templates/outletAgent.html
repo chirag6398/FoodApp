@@ -53,7 +53,7 @@
             <p class="agt__itemsNumbering"></p>
             <div class="items">
                 <!-- {{products}} -->
-                <div ng-if="products" class="products">
+                <div ng-if="products" class="agt__products1">
                     <div class="agt__product" ng-repeat="product in products | filter:search">
                         <div style="display: flex;
                         align-items: center;
@@ -105,9 +105,9 @@
                 </div>
             </div>
             <div class="agt__category">
-             
+             <!-- {{isSelected}} -->
                 <div  class="agt__categoryCard">
-                    <div>
+                    
                      
                         <div 
                             ng-class="{'agt__active': isSelected==$index}" 
@@ -117,6 +117,7 @@
                             align-items: center;
                             justify-content: center;" 
                             ng-repeat="category in categories"
+                            ng-click="setIndexing($index)"
                         >
                             
                             <div  style="font-weight: bold;">
@@ -125,7 +126,7 @@
                            
                         </div>
                          
-                    </div>
+                    
                 </div>  
             </div>
             </div>
