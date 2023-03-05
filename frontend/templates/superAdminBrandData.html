@@ -41,13 +41,13 @@
                         <div class="form-group">
                           <label class="col-form-label">Brand Name:</label>
                           <div class="data__input">
-                            <input type="text" name="brandName" ng-required="true" ng-minlength="3" ng-model="brand.name" class="form-control" >
+                            <input type="text" name="brandName" ng-required="true" ng-minlength="3" ng-model="data.name" class="form-control" >
                             
                           </div>
                           
                           <span ng-show="BrandData.brandName.$dirty && BrandData.brandName.$error.minlength">Minimum 3 characters required</span>
                         </div>
-                        <i  class="fas fa-pencil-alt"></i>
+                        <i ng-click="updateName(brand._id)"  class="fas fa-pencil-alt"></i>
                     </form>
                 </div>
                 <div class="data__form">

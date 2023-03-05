@@ -20,12 +20,13 @@ app.controller("superAdminBrandDataController", [
     adminApi.getBrand($stateParams.id, function (err, result) {
       if (result) {
         $scope.brand = result;
+        $scope.data = $scope.brand;
         // console.log(result);
       } else {
         $location.path("superAdmin");
       }
     });
-    $scope.data = {};
+
     $scope.changeLogo = function ($event, brandId) {
       console.log(brandId);
       var formData = new FormData();
@@ -39,6 +40,17 @@ app.controller("superAdminBrandDataController", [
           console.log(err);
         }
       });
+    };
+
+    $scope.updateName = function (brandId) {
+      adminApi.updateBrandName(
+        { _id: brandId, name: $scope.data.name },
+        function (err, result) {
+          if (result) {
+            console.log(result);
+          }
+        }
+      );
     };
   },
 ]);

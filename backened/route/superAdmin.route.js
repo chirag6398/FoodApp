@@ -66,11 +66,11 @@ superAdminRoute.post(
   superAdminController.addBrandAdmin
 );
 
-// superAdminRoute.post(
-//   "/api/superAdmin/updateBrand",
-//   uploadProductImg.single("file"),
-//   superAdminController.updateBrand
-// );
+superAdminRoute.post(
+  "/api/superAdmin/updateBrandName",
+  passport.authenticate("jwt", { session: false }),
+  superAdminController.updateBrandName
+);
 
 superAdminRoute.post(
   "/api/superAdmin/deactivateBrand",

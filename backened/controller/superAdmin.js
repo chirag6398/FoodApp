@@ -6,6 +6,7 @@ var categoryModel = require("../model/category.model");
 var awsService = require("../service/awsS3.service");
 var superCategory = require("../model/superCategory.model");
 var mongoose = require("mongoose");
+var productModel = require("../model/product.model");
 module.exports = {
   getAdminPage: function (req, res) {
     // console.log(req.user);
@@ -308,7 +309,7 @@ module.exports = {
                   session,
                 }
               ),
-              outletModel.findOneAndUpdate(
+              outletModel.updateMany(
                 { "brand._id": req.body._id },
                 {
                   "brand.logo": image,
@@ -349,5 +350,44 @@ module.exports = {
     } else {
       return res.status(401).send({ message: "plz try later" });
     }
+  },
+  updateBrandName: function (req, res) {
+    mongoose.startSession().then(function (session) {
+      session
+        .withTransaction(function () {
+          var up1 = brandModel.findByIdAndUpdate(
+            { _id: req.body._id },
+            { name: req.body.name },
+            { session }
+          );
+          var bulkUpdateOpt = [
+            {
+              updateMany: {
+                filter: {
+                  "brand._id": req.body._id,
+                },
+                update: { $set: { "brand.name": req.body.name } },
+              },
+            },
+          ];
+          var up2 = categoryModel.bulkWrite(bulkUpdateOpt, { session });
+          var up3 = employeeModel.bulkWrite(bulkUpdateOpt, { session });
+          var up4 = outletModel.bulkWrite(bulkUpdateOpt, { session });
+          var up5 = productModel.bulkWrite(bulkUpdateOpt, { session });
+          var up6 = superCategory.bulkWrite(bulkUpdateOpt, { session });
+
+          return Promise.all([up1, up2, up3, up4, up5, up6]);
+        })
+        .then(function (result) {
+          console.log("commited", result);
+          session.endSession();
+          return res.send(result);
+        })
+        .catch(function (err) {
+          console.log("aborted", err);
+          session.endSession();
+          return res.status(500).send({ message: "not updated" });
+        });
+    });
   },
 };
