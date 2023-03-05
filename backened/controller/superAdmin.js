@@ -218,62 +218,62 @@ module.exports = {
       });
   },
 
-  updateBrand: function (req, res) {
-    console.log(req.body);
-    if (req.file) {
-      return awsService
-        .updateToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
-        .then(function (data) {
-          console.log(data);
-          var image = data.Location;
+  // updateBrand: function (req, res) {
+  //   console.log(req.body);
+  //   if (req.file) {
+  //     return awsService
+  //       .updateToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
+  //       .then(function (data) {
+  //         console.log(data);
+  //         var image = data.Location;
 
-          brandModel
-            .findByIdAndUpdate(
-              { _id: req.body._id },
-              {
-                name: req.body.name,
-                logo: image,
-                "contactInfo.email": req.body.email,
-                "contactInfo.number": req.body.number,
-                "location.city": req.body.city,
-                "location.pinCode": req.body.pinCode,
-                "location.address": req.body.address,
-                description: req.body.description,
-              }
-            )
-            .then(function (result) {
-              return res.send({ message: "updated with image" });
-            })
-            .catch(function (err) {
-              return res.status(401).send({ error: err });
-            });
-        })
-        .catch(function (err) {
-          console.log(err);
-          return res.status(500).send({ error: err, status: 500 });
-        });
-    } else {
-      brandModel
-        .findByIdAndUpdate(
-          { _id: req.body._id },
-          {
-            name: req.body.name,
-            "contactInfo.email": req.body.email,
-            "contactInfo.number": req.body.number,
-            "location.city": req.body.city,
-            "location.pinCode": req.body.pinCode,
-            "location.address": req.body.address,
-            description: req.body.description,
-          }
-        )
-        .then(function (result) {
-          return res.send({ message: "updated" });
-        })
-        .catch(function (err) {
-          return res.status(401).send({ error: err });
-        });
-    }
-  },
+  //         brandModel
+  //           .findByIdAndUpdate(
+  //             { _id: req.body._id },
+  //             {
+  //               name: req.body.name,
+  //               logo: image,
+  //               "contactInfo.email": req.body.email,
+  //               "contactInfo.number": req.body.number,
+  //               "location.city": req.body.city,
+  //               "location.pinCode": req.body.pinCode,
+  //               "location.address": req.body.address,
+  //               description: req.body.description,
+  //             }
+  //           )
+  //           .then(function (result) {
+  //             return res.send({ message: "updated with image" });
+  //           })
+  //           .catch(function (err) {
+  //             return res.status(401).send({ error: err });
+  //           });
+  //       })
+  //       .catch(function (err) {
+  //         console.log(err);
+  //         return res.status(500).send({ error: err, status: 500 });
+  //       });
+  //   } else {
+  //     brandModel
+  //       .findByIdAndUpdate(
+  //         { _id: req.body._id },
+  //         {
+  //           name: req.body.name,
+  //           "contactInfo.email": req.body.email,
+  //           "contactInfo.number": req.body.number,
+  //           "location.city": req.body.city,
+  //           "location.pinCode": req.body.pinCode,
+  //           "location.address": req.body.address,
+  //           description: req.body.description,
+  //         }
+  //       )
+  //       .then(function (result) {
+  //         return res.send({ message: "updated" });
+  //       })
+  //       .catch(function (err) {
+  //         return res.status(401).send({ error: err });
+  //       });
+  //   }
+  // },
   getBrand: function (req, res) {
     brandModel
       .findById({ _id: req.params.id })
@@ -284,5 +284,70 @@ module.exports = {
         console.log(err);
         return res.status(401).send(err);
       });
+  },
+  changeLogo: function (req, res) {
+    console.log(req.file);
+    console.log(req.body);
+
+    if (req.file) {
+      return awsService
+        .uploadToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
+        .then(function (data) {
+          console.log(data);
+          var image = data.Location;
+
+          mongoose.startSession().then(function (session) {
+            session.startTransaction();
+            Promise.all([
+              brandModel.findByIdAndUpdate(
+                { _id: req.body._id },
+                {
+                  logo: image,
+                },
+                {
+                  session,
+                }
+              ),
+              outletModel.findOneAndUpdate(
+                { "brand._id": req.body._id },
+                {
+                  "brand.logo": image,
+                }
+              ),
+            ])
+              .then(function (result) {
+                console.log("parallel processing", result);
+                session
+                  .commitTransaction()
+                  .then(function () {
+                    session.endSession();
+                    return res.status(result);
+                  })
+                  .catch(function (err) {
+                    console.log(err);
+                  });
+              })
+              .catch(function (error) {
+                console.log("error in parallel processing", error);
+                session
+                  .abortTransaction()
+                  .then(function () {
+                    console.log("transaction aborted");
+                    session.endSession();
+                  })
+                  .catch(function (err) {
+                    console.log(err);
+                    return res.status(500).send({ error: error });
+                  });
+              });
+          });
+        })
+        .catch(function (err) {
+          console.log(err);
+          return res.status(500).send({ error: err, status: 500 });
+        });
+    } else {
+      return res.status(401).send({ message: "plz try later" });
+    }
   },
 };

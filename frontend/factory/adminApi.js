@@ -17,7 +17,20 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb({ status: 401, message: "unauthorized" }, null);
       };
   };
-
+  obj.changeLogo = function (data, cb) {
+    $http
+      .post("http://localhost:5000/api/superAdmin/changeLogo", data, {
+        transformRequest: angular.identity,
+        headers: { "Content-Type": undefined },
+      })
+      .then(function (response) {
+        // console.log(response);
+        cb(null, response.data);
+      }),
+      function (err) {
+        cb(err, null);
+      };
+  };
   obj.createBrand = function (data, cb) {
     // console.log(data);
 

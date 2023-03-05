@@ -74,9 +74,7 @@ module.exports = {
     // console.log(req.body)
     mongoose.startSession().then(function (session) {
       session.startTransaction();
-      //   var up1 =
 
-      //   var up2 = ;
       Promise.all([
         outletModel.findByIdAndUpdate(
           { _id: req.body.outletId },

@@ -54,6 +54,11 @@ superAdminRoute.post(
   uploadProductImg.single("file"),
   superAdminController.createBrand
 );
+superAdminRoute.post(
+  "/api/superAdmin/changeLogo",
+  uploadProductImg.single("file"),
+  superAdminController.changeLogo
+);
 
 superAdminRoute.post(
   "/api/superAdmin/addBrandAdmin",
@@ -61,11 +66,11 @@ superAdminRoute.post(
   superAdminController.addBrandAdmin
 );
 
-superAdminRoute.post(
-  "/api/superAdmin/updateBrand",
-  uploadProductImg.single("file"),
-  superAdminController.updateBrand
-);
+// superAdminRoute.post(
+//   "/api/superAdmin/updateBrand",
+//   uploadProductImg.single("file"),
+//   superAdminController.updateBrand
+// );
 
 superAdminRoute.post(
   "/api/superAdmin/deactivateBrand",
