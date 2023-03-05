@@ -92,6 +92,7 @@ app.controller("superAdminCreateBrandController", [
     $scope.editBrand = function ($event) {
       $event.preventDefault();
       console.log($scope.data);
+
       var formData = new FormData();
 
       formData.append("name", $scope.data.name);

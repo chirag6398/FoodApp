@@ -117,14 +117,15 @@ app.controller("outletAgentController", [
     $scope.saveCustomerData = function () {
       $scope.btnText = "saved";
       $scope.saved = true;
-      console.log($scope.customer);
+      // console.log($scope.customer);
+      $("#exampleModal").modal("hide");
     };
     $scope.addToCart = function (product) {
       $scope.object.cart = cartService.addToCart($scope.object.cart, product);
 
       $scope.amount = cartService.totalPrice($scope.object.cart);
 
-      console.log($scope.object.cart);
+      // console.log($scope.object.cart);
     };
     $scope.plus = function (product) {
       $scope.object.cart = cartService.addToCart($scope.object.cart, product);
@@ -143,7 +144,7 @@ app.controller("outletAgentController", [
 
     $scope.orderHandler = function () {
       $scope.orderBtn = "placing...";
-      console.log($scope.customer, $scope.object.cart);
+      // console.log($scope.customer, $scope.object.cart);
       var data = {
         customer: {
           name: $scope.customer.name,
@@ -160,6 +161,7 @@ app.controller("outletAgentController", [
           name: $scope.outlet.name,
         },
       };
+      // console.log(data);
       outletAgentApi.placeOrder(data, function (err, result) {
         if (result) {
           alert("order placed");

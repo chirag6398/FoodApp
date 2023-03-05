@@ -57,6 +57,10 @@
     box-shadow: black 0px 0px 0px 1px;
     flex-wrap: wrap;
     flex-direction: column;
+    margin: 10px;
+    height: 200px;
+    width: 317px;
+    justify-content: center;
 }
 .order__modalRight{
     display: flex;

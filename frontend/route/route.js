@@ -142,6 +142,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       url: "/outletSubCategory/:id/:name",
       templateUrl: "./templates/subCategory.html",
       controller: "subCategoryController",
+    })
+    .state("superAdmin.brandData", {
+      url: "/brandData/:id",
+      templateUrl: "./templates/superAdminBrandData.html",
+      controller: "superAdminBrandDataController",
     });
 
   // $urlRouterProvider

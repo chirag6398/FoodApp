@@ -235,6 +235,7 @@
     height: 60px;
     display: flex;
     flex-direction: column;
+    height: inherit;
     padding: 10px;
     align-items: flex-start;
 }

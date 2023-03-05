@@ -16,7 +16,8 @@
             <th scope="col">Deactivate</th>
             <th scope="col">Activate</th>
             <th scope="col">Delete</th>
-            <th scope="col">Edit Brand</th>
+            <th scope="col">Brand data</th>
+            <!-- <th scope="col">Edit Brand</th> -->
           </tr>
         </thead>
         <tbody>
@@ -124,9 +125,9 @@
             <td><button ng-disabled="brand.isActive" ng-click="activateBrand(brand._id)" type="button" class="btn btn-warning">Activate</button></td>
             <td><button type="button" ng-click="deleteBrand(brand._id)" class="btn btn-secondary">Delete</button></td>
             <td  >
-              
-              <button type="button" class="btn btn-primary" data-toggle="modal" ng-click="setData(brand)"  data-target="#exampleModal1" data-whatever="@mdo"> <i class="fas fa-pencil-alt"></i></button>
-              <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <button ui-sref="superAdmin.brandData({id:brand._id})" class="btn">Show</button>
+              <!-- <button type="button" class="btn btn-primary" data-toggle="modal" ng-click="setData(brand)"  data-target="#exampleModal1" data-whatever="@mdo"> <i class="fas fa-pencil-alt"></i></button> -->
+              <!-- <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -189,7 +190,7 @@
                       
                     </div>
                 </div>
-              </div>
+              </div> -->
               
             </td>
 

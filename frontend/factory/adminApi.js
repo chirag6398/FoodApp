@@ -3,6 +3,21 @@
 app.factory("adminApi", function ($http, $rootScope) {
   var obj = {};
 
+  obj.getBrand = function (id, cb) {
+    $http
+      .get("http://localhost:5000/api/superAdmin/getBrand/" + id, {
+        headers: {
+          Authorization: window.localStorage.getItem("Authorization"),
+        },
+      })
+      .then(function (response) {
+        cb(null, response.data);
+      }),
+      function (err) {
+        cb({ status: 401, message: "unauthorized" }, null);
+      };
+  };
+
   obj.createBrand = function (data, cb) {
     // console.log(data);
 
@@ -32,7 +47,6 @@ app.factory("adminApi", function ($http, $rootScope) {
         // cb(null,response);
       })
       .catch(function (err) {
-        // console.log(err);
         // cb({status:401,message:"unauthorized user"},null);
         $rootScope.$emit("notEligible", false);
       });
@@ -46,7 +60,6 @@ app.factory("adminApi", function ($http, $rootScope) {
         },
       })
       .then(function (response) {
-        // console.log(response.data)
         cb(null, response.data);
       }),
       function (err) {
