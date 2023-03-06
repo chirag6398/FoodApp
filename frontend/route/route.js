@@ -62,6 +62,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       templateUrl: "./templates/brandAdmin.html",
       controller: "brandAdminController",
     })
+    .state("brandadmin.dashboard", {
+      url: "/home",
+      templateUrl: "./templates/brandAdminDashboard.html",
+      controller: "brandAdminDashboardController",
+    })
     .state("brandadmin.home", {
       url: "/home",
       templateUrl: "./templates/brandAdminHome.html",
@@ -77,7 +82,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       templateUrl: "./templates/brandAdminCreateSuperCategory.html",
       controller: "brandAdminCategoryController",
     })
-    .state("categoryProduct", {
+    .state("brandadmin.categoryProduct", {
       url: "brandCategoryProduct/:id/:name",
       templateUrl: "./templates/brandCategoryProduct.html",
       controller: "categoryProductController",
@@ -143,7 +148,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       templateUrl: "./templates/outletAgentOrders.html",
       controller: "outletAgentOrdersController",
     })
-    .state("subCategory", {
+    .state("brandadmin.subCategory", {
       url: "/outletSubCategory/:id/:name",
       templateUrl: "./templates/subCategory.html",
       controller: "subCategoryController",

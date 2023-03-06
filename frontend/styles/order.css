@@ -11,6 +11,8 @@
     height: 85%;
     flex-wrap: wrap;
     /* align-items: center; */
+    gap: 10px;
+
     justify-content: flex-start;
     padding: 20px;
     width: 100%;

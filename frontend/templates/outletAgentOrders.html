@@ -107,16 +107,16 @@
             <div style="display: flex;
             align-items: center;
             flex-wrap: wrap;">
-                <button ng-if="order.status==='pending'" class="btn btn1">
+                <button ng-if="order.status==='pending'" ng-click="updateStatus('preparing',order._id,$index)" class="btn btn1">
                     preparing
                 </button>
-                <button ng-if="order.status!=='served' || order.status!=='cancelled'" class="btn btn1">
+                <button ng-if="order.status!=='served' || order.status!=='cancelled'" ng-click="updateStatus('cancelled',order._id,$index)" class="btn btn1">
                     cancelled
                 </button>
-                <button ng-if="order.status==='pending' || order.status==='preparing' " class="btn btn1">
+                <button ng-if="order.status==='pending' || order.status==='preparing' " ng-click="updateStatus('serving',order._id,$index)" class="btn btn1">
                     serving
                 </button>
-                <button ng-if="order.status==='serving'" class="btn btn1">
+                <button ng-if="order.status==='serving'" ng-click="updateStatus('served',order._id,$index)" class="btn btn1">
                     served
                 </button>
 

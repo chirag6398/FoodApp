@@ -73,153 +73,88 @@ module.exports = {
     }
   },
   updateProduct: function (req, res) {
-    console.log(req.body);
     if (req.file) {
       return s3Services
         .updateToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
         .then(function (data) {
-          console.log(data);
           var image = data.Location;
 
-          mongoose
-            .startSession()
-            .then(function (session) {
-              session
-                .withTransaction(function () {
-                  var up1 = productModel.findByIdAndUpdate(
-                    { _id: req.body._id },
-                    {
-                      name: req.body.name,
-                      price: req.body.price,
-                      description: req.body.description,
-                      img: image,
-                    },
-                    { session }
-                  );
+          var up1 = productModel.findByIdAndUpdate(
+            { _id: req.body._id },
+            {
+              name: req.body.name,
+              price: req.body.price,
+              description: req.body.description,
+              img: image,
+            }
+          );
 
-                  var bulkUpdateOpt = [
-                    {
-                      updateMany: {
-                        filter: {
-                          "brand._id": req.body.brandId,
-                          "products.product._id": req.body._id,
-                        },
-                        update: {
-                          $set: {
-                            "products.product.name": req.body.name,
-                            "products.product.price": req.body.price,
-                            "products.product.description":
-                              req.body.description,
-                            "products.product.img": image,
-                          },
-                        },
-                      },
-                    },
-                  ];
+          var up2 = outletModel.updateMany(
+            {
+              $and: [
+                { "brand._id": req.body.brandId },
+                { "products.product._id": req.body._id },
+              ],
+            },
+            {
+              $set: {
+                "products.$[el].product.price": req.body.price,
+                "products.$[el].product.name": req.body.name,
+                "products.$[el].product.description": req.body.description,
+                "products.$[el].product.img": image,
+              },
+            },
+            { arrayFilters: [{ "el.product._id": req.body._id }] }
+          );
 
-                  var up2 = outletModel.bulkWrite(bulkUpdateOpt, { session });
-                  return Promise.all([up1, up2]);
-                })
-                .then(function (result) {
-                  console.log("commited", result);
-                  return res.send(result);
-                })
-                .catch(function (err) {
-                  console.log("product update aborted", err);
-                  return res.status(404).send(err);
-                });
-            })
-            .catch(function (err) {
-              console.log("session start error", err);
-              return res.status(500).send(err);
-            });
-
-          //   productModel
-          //     .findByIdAndUpdate(
-          //       { _id: req.body._id },
-          //       {
-          //         name: req.body.name,
-          //         price: req.body.price,
-          //         description: req.body.description,
-          //         img: image,
-          //       }
-          //     )
-          //     .then(function (result) {
-          //       return res.status(200).send({ message: "updated with image" });
-          //     })
-          //     .catch(function (err) {
-          //       return res.status(500).send({ error: err, status: 500 });
-          //     });
-        })
-        .catch(function (err) {
-          console.log(err);
-          return res.status(500).send({ error: err, status: 500 });
-        });
-    } else {
-      mongoose
-        .startSession()
-        .then(function (session) {
-          session
-            .withTransaction(function () {
-              var up1 = productModel.findByIdAndUpdate(
-                { _id: req.body._id },
-                {
-                  name: req.body.name,
-                  price: req.body.price,
-                  description: req.body.description,
-                },
-                { session }
-              );
-
-              // var bulkUpdateOpt = [
-              //   {
-              //     updateMany: {
-              //       filter: {
-              //         "brand._id": req.body.brandId,
-              //         "products.product": { $exists: true },
-              //         "products.product._id": req.body._id,
-              //       },
-              //       update: {
-              //         $set: {
-              //           "products.product.name": req.body.name,
-              //           "products.product.price": req.body.price,
-              //           "products.product.description": req.body.description,
-              //         },
-              //       },
-              //     },
-              //   },
-              // ];
-
-              // var up2 = outletModel.bulkWrite(bulkUpdateOpt, { session });
-              var up2 = outletModel.findOneAndUpdate(
-                {
-                  "brand._id": req.body.brandId,
-                  products: { $exists: true },
-                },
-                {
-                  $set: {
-                    "products.$.product.name": req.body.name,
-                    "products.$.product.price": req.body.price,
-                    "products.$.product.description": req.body.description,
-                  },
-                },
-                { session }
-              );
-
-              return Promise.all([up1, up2]);
-            })
+          Promise.all([up1, up2])
             .then(function (result) {
-              console.log("commited", result);
+              console.log(result);
+
               return res.send(result);
             })
             .catch(function (err) {
-              console.log("product update aborted", err);
               return res.status(404).send(err);
             });
         })
         .catch(function (err) {
-          console.log("session start error", err);
-          return res.status(500).send(err);
+          return res.status(404).send(err);
+        });
+    } else {
+      var up1 = productModel.findByIdAndUpdate(
+        { _id: req.body._id },
+        {
+          name: req.body.name,
+          price: req.body.price,
+          description: req.body.description,
+        }
+      );
+
+      var up2 = outletModel.updateMany(
+        {
+          $and: [
+            { "brand._id": req.body.brandId },
+            { "products.product._id": req.body._id },
+          ],
+        },
+        {
+          $set: {
+            "products.$[el].product.price": req.body.price,
+            "products.$[el].product.name": req.body.name,
+            "products.$[el].product.description": req.body.description,
+          },
+        },
+        { arrayFilters: [{ "el.product._id": req.body._id }] }
+      );
+
+      Promise.all([up1, up2])
+        .then(function (result) {
+          console.log(result);
+
+          return res.send(result);
+        })
+        .catch(function (err) {
+          return res.status(404).send(err);
         });
     }
   },

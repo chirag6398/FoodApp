@@ -4,23 +4,7 @@ width: 100vw;
 
 flex-direction: column;
 ">
- <div style="height: 51px;">
-  <nav class="spr__header">
-      <div>
-        <span>
-          <img style="object-fit: contain;
-              height: 36px;"
-              src={{brandLogo}}
-              alt="...">
-      </span>
-      </div>
-      <div>
-          <span>
-              {{brandName}}
-          </span>
-      </div>
-  </nav>
-</div>
+
     <div style="padding: 20px;" ng-if="object.categories.length">
         <div>
             <h3>Categories</h3>
@@ -86,7 +70,7 @@ flex-direction: column;
                 border-radius: 4px;
                 box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;"
 
-                ui-sref="categoryProduct({id:category._id,name:category.name})" style="cursor: pointer;"
+                ui-sref="brandadmin.categoryProduct({id:category._id,name:category.name})" style="cursor: pointer;"
                 >
                   <span>Add/show products</span>
                 </div>
