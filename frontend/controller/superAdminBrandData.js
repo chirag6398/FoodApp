@@ -52,5 +52,18 @@ app.controller("superAdminBrandDataController", [
         }
       );
     };
+
+    $scope.updateLocation = function (brandId) {
+      adminApi.updateLocation(
+        { location: $scope.data.location, _id: brandId },
+        function (err, result) {
+          if (result) {
+            console.log(result);
+          } else {
+            console.log(err);
+          }
+        }
+      );
+    };
   },
 ]);

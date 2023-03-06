@@ -134,53 +134,6 @@ module.exports = {
             });
         });
     });
-    // outletModel
-    //   .findByIdAndUpdate(
-    //     { _id: req.body.outletId },
-    //     {
-    //       $push: {
-    //         products: {
-    //           product: {
-    //             name: req.body.name,
-    //             price: req.body.price,
-    //             description: req.body.description,
-    //             "category._id": req.body.category._id,
-    //             "category.name": req.body.category.name,
-    //             "superCategory._id": req.body.superCategory._id,
-    //             "superCategory.name": req.body.superCategory.name,
-    //             _id: req.body._id,
-    //             img: req.body.img,
-    //           },
-    //         },
-    //       },
-    //     }
-    //   )
-    //   .then(function (result) {
-    //     console.log(result);
-
-    //     productModel
-    //       .findByIdAndUpdate(
-    //         { _id: req.body._id },
-    //         {
-    //           $push: {
-    //             outlet: {
-    //               _id: req.body.outletId,
-    //             },
-    //           },
-    //         }
-    //       )
-    //       .then(function (result) {
-    //         console.log(result);
-    //         return res.send({ message: "added successfully" });
-    //       })
-    //       .catch(function (err) {
-    //         console.log(err);
-    //         return res.status(500).send({ error: err });
-    //       });
-    //   })
-    //   .catch(function (err) {
-    //     console.log(err);
-    //   });
   },
   getProduct: function (req, res) {
     var outletId = mongoose.Types.ObjectId(req.params.id);

@@ -375,8 +375,9 @@ module.exports = {
           var up4 = outletModel.bulkWrite(bulkUpdateOpt, { session });
           var up5 = productModel.bulkWrite(bulkUpdateOpt, { session });
           var up6 = superCategory.bulkWrite(bulkUpdateOpt, { session });
+          var up7 = employeeModel.bulkWrite(bulkUpdateOpt, { session });
 
-          return Promise.all([up1, up2, up3, up4, up5, up6]);
+          return Promise.all([up1, up2, up3, up4, up5, up6, up7]);
         })
         .then(function (result) {
           console.log("commited", result);
@@ -389,5 +390,21 @@ module.exports = {
           return res.status(500).send({ message: "not updated" });
         });
     });
+  },
+  updateLocation: function (req, res) {
+    brandModel
+      .findByIdAndUpdate(
+        { _id: req.body._id },
+        {
+          location: req.body.location,
+        }
+      )
+      .then(function (result) {
+        return res.send(result);
+      })
+      .catch(function (err) {
+        console.log(err);
+        return res.status(404).send(err);
+      });
   },
 };
