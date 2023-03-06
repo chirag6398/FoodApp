@@ -12,7 +12,8 @@
         <th scope="col">Deactivate</th>
         <th scope="col">Activate</th>
         <th scope="col">Delete</th>
-        <th scope="col">Update</th>
+        <!-- <th scope="col">Update</th> -->
+        <th scope="col">Outlet Display</th>
       </tr>
     </thead>
     <tbody>
@@ -238,7 +239,7 @@
         <td><button type="button" ng-disabled="outlet.isActive" ng-click="togleOutlet(outlet._id)" class="btn btn-warning">Activate</button></td>
         <td><button type="button" class="btn btn-secondary">Delete</button></td>
         <td>
-          <button
+          <!-- <button
             type="button"
             class="btn btn-primary"
             data-toggle="modal"
@@ -247,13 +248,16 @@
             data-whatever="@mdo"
           >
             Update Outlet
+          </button> -->
+          <button ui-sref="brandAdmin.outletData({id:outlet._id})" class="btn">
+            Show
           </button>
         </td>
       </tr>
     </tbody>
   </table>
 
-  <div
+  <!-- <div
     class="modal fade"
     id="exampleModal1"
     tabindex="-1"
@@ -278,7 +282,7 @@
           <form name="OutletData" novalidate>
             <div class="form-group">
               <label for="outletName" class="col-form-label">OutletName:</label>
-              <!-- {{updateOutletData}} -->
+             
               <input
                 type="text"
                 name="outletName"
@@ -331,7 +335,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
 <div class="spr__rightSide"
 ng-controller="brandAdminOutletsController"

@@ -40,6 +40,12 @@ brandAdminRoute.get(
   brandAdminController.getBrandUsers
 );
 
+brandAdminRoute.get(
+  "/api/brandAdmin/getOutlet/:id",
+  passport.authenticate("jwt", { session: false }),
+  brandAdminController.getOutlet
+);
+
 brandAdminRoute.post(
   "/api/brandAdmin/createOutlet",
   passport.authenticate("jwt", { session: false }),
@@ -69,6 +75,24 @@ brandAdminRoute.post(
   "/api/brandAdmin/addSuperCategory",
   uploadProductImg.single("file"),
   brandAdminController.addSuperCategory
+);
+
+brandAdminRoute.post(
+  "/api/brandAdmin/updateLocation",
+  passport.authenticate("jwt", { session: false }),
+  brandAdminController.updateLocation
+);
+
+brandAdminRoute.post(
+  "/api/brandAdmin/updateContactInfo",
+  passport.authenticate("jwt", { session: false }),
+  brandAdminController.updateContactInfo
+);
+
+brandAdminRoute.post(
+  "/api/brandAdmin/updateOutletName",
+  passport.authenticate("jwt", { session: false }),
+  brandAdminController.updateOutletName
 );
 
 module.exports = brandAdminRoute;

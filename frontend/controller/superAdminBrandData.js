@@ -65,5 +65,17 @@ app.controller("superAdminBrandDataController", [
         }
       );
     };
+    $scope.updateContactInfo = function (brandId) {
+      adminApi.updateContactInfo(
+        { contactInfo: $scope.data.contactInfo, _id: brandId },
+        function (err, result) {
+          if (result) {
+            console.log(result);
+          } else {
+            console.log(err);
+          }
+        }
+      );
+    };
   },
 ]);

@@ -17,6 +17,20 @@ app.factory("brandApi", function ($http) {
         cb({ status: 401, message: "unauthorized user" }, null);
       });
   };
+  obj.getOutlet = function (data, cb) {
+    $http
+      .get("http://localhost:5000/api/brandAdmin/getOutlet/" + data._id, {
+        headers: {
+          Authorization: window.localStorage.getItem("Authorization"),
+        },
+      })
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb({ status: 401, message: "unauthorized user" }, null);
+      });
+  };
 
   obj.createOutlet = function (outletData, brandId, brandName, brandLogo, cb) {
     var data = {
@@ -231,6 +245,55 @@ app.factory("brandApi", function ($http) {
       .catch(function (error) {
         console.log(error);
         cb(error, null);
+      });
+  };
+
+  obj.updateOutletName = function (data, cb) {
+    console.log(data);
+    $http
+      .post("http://localhost:5000/api/brandAdmin/updateOutletName", data, {
+        headers: {
+          Authorization: window.localStorage.getItem("Authorization"),
+        },
+      })
+      .then(function (response) {
+        // console.log(null,response);
+        cb(null, response);
+      })
+      .catch(function (err) {
+        // console.log(err,null);
+      });
+  };
+
+  obj.updateLocation = function (data, cb) {
+    $http
+      .post("http://localhost:5000/api/brandAdmin/updateLocation", data, {
+        headers: {
+          Authorization: window.localStorage.getItem("Authorization"),
+        },
+      })
+      .then(function (response) {
+        // console.log(null,response);
+        cb(null, response);
+      })
+      .catch(function (err) {
+        // console.log(err,null);
+      });
+  };
+
+  obj.updateContactInfo = function (data, cb) {
+    $http
+      .post("http://localhost:5000/api/brandAdmin/updateContactInfo", data, {
+        headers: {
+          Authorization: window.localStorage.getItem("Authorization"),
+        },
+      })
+      .then(function (response) {
+        // console.log(null,response);
+        cb(null, response);
+      })
+      .catch(function (err) {
+        // console.log(err,null);
       });
   };
 

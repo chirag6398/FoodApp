@@ -407,4 +407,18 @@ module.exports = {
         return res.status(404).send(err);
       });
   },
+  updateContactInfo: function (req, res) {
+    brandModel
+      .findByIdAndUpdate(
+        { _id: req.body._id },
+        { contactInfo: req.body.contactInfo }
+      )
+      .then(function (result) {
+        return res.send(result);
+      })
+      .catch(function (err) {
+        console.log(err);
+        return res.status(404).send(err);
+      });
+  },
 };

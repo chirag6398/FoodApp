@@ -229,6 +229,22 @@ app.factory("adminApi", function ($http, $rootScope) {
       });
   };
 
+  obj.updateContactInfo = function (data, cb) {
+    $http
+      .post("http://localhost:5000/api/superAdmin/updateContactInfo", data, {
+        headers: {
+          Authorization: window.localStorage.getItem("Authorization"),
+        },
+      })
+      .then(function (response) {
+        // console.log(null,response);
+        cb(null, response);
+      })
+      .catch(function (err) {
+        // console.log(err,null);
+      });
+  };
+
   // obj.postLogin=function(data,cb){
   //     $http.post("http://localhost:5000/api/employee/login",{username:data.userName,password:data.password}).then(function(response){
 

@@ -347,4 +347,80 @@ module.exports = {
         });
     }
   },
+  getOutlet: function (req, res) {
+    outletModel
+      .findById({ _id: req.params.id })
+      .then(function (result) {
+        return res.send(result);
+      })
+      .catch(function (err) {
+        console.log(err);
+        return res.status(500).send(err);
+      });
+  },
+  updateOutletName: function (req, res) {
+    mongoose.startSession().then(function (session) {
+      session
+        .withTransaction(function () {
+          var up1 = outletModel.findByIdAndUpdate(
+            { _id: req.body._id },
+            { name: req.body.name },
+            { session }
+          );
+          var bulkUpdateOpt = [
+            {
+              updateMany: {
+                filter: {
+                  "outlet._id": req.body._id,
+                },
+                update: { $set: { "outlet.name": req.body.name } },
+              },
+            },
+          ];
+          var up2 = employeeModel.bulkWrite(bulkUpdateOpt, { session });
+
+          return Promise.all([up1, up2]);
+        })
+        .then(function (result) {
+          console.log("commited", result);
+          session.endSession();
+          return res.send(result);
+        })
+        .catch(function (err) {
+          console.log("aborted", err);
+          session.endSession();
+          return res.status(500).send({ message: "not updated" });
+        });
+    });
+  },
+  updateLocation: function (req, res) {
+    outletModel
+      .findByIdAndUpdate(
+        { _id: req.body._id },
+        {
+          location: req.body.location,
+        }
+      )
+      .then(function (result) {
+        return res.send(result);
+      })
+      .catch(function (err) {
+        console.log(err);
+        return res.status(404).send(err);
+      });
+  },
+  updateContactInfo: function (req, res) {
+    outletModel
+      .findByIdAndUpdate(
+        { _id: req.body._id },
+        { contactInfo: req.body.contactInfo }
+      )
+      .then(function (result) {
+        return res.send(result);
+      })
+      .catch(function (err) {
+        console.log(err);
+        return res.status(404).send(err);
+      });
+  },
 };

@@ -70,7 +70,7 @@
                             <span ng-show="BrandData.number.$dirty && BrandData.number.$invalid">please enter correct number</span>
                             <span ng-show="BrandData.number.$dirty && BrandData.number.$error.required">Please fill this field</span>
                         </div>
-                        <i  class="fas fa-pencil-alt"></i>
+                        <i ng-click="updateContactInfo(brand._id)" class="fas fa-pencil-alt"></i>
                     </form>
                 </div>
                 <div class="data__form">

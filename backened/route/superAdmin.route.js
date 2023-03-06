@@ -73,6 +73,12 @@ superAdminRoute.post(
 );
 
 superAdminRoute.post(
+  "/api/superAdmin/updateContactInfo",
+  passport.authenticate("jwt", { session: false }),
+  superAdminController.updateContactInfo
+);
+
+superAdminRoute.post(
   "/api/superAdmin/updateBrandName",
   passport.authenticate("jwt", { session: false }),
   superAdminController.updateBrandName

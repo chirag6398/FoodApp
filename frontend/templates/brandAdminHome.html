@@ -14,7 +14,7 @@
         <th scope="col">Deactivate</th>
         <th scope="col">Activate</th>
         <th scope="col">Delete</th>
-        <th scope="col">Update</th>
+        <th scope="col">Display Outlet</th>
       </tr>
     </thead>
     <tbody>
@@ -259,15 +259,10 @@
         <td><button type="button" ng-disabled="outlet.isActive" ng-click="togleOutlet(outlet._id)" class="btn btn-warning">Activate</button></td>
         <td><button type="button" class="btn btn-secondary">Delete</button></td>
         <td>
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-toggle="modal"
-            data-target="#exampleModal10"
          
-            data-whatever="@mdo"
-          >
-            Update Outlet
+          <!-- {{outlet._id}} -->
+          <button ui-sref="brandadmin.outletData({id:outlet._id})" class="btn">
+            Show 
           </button>
           <div
     class="modal fade"

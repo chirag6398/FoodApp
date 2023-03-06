@@ -1,0 +1,81 @@
+<div class="data__extDiv">
+    <div class="data__mainDiv">
+         <div class="data__heading">
+             <h4>Outlet Details</h4>
+         </div>
+         <div class="data__container">
+             <div class="data__leftHeader">
+                 <img title={{outlet.brand.name}} style="cursor:pointer" class="data__logo" src={{outlet.brand.logo}} alt="...">
+             </div>
+             <div class="data__rightHeader">
+                 <div class="data__form">
+                     <form name="outletData" novalidate>
+                         <div class="form-group">
+                           <label class="col-form-label">Outlet Name:</label>
+                           <div class="data__input">
+                             <input type="text" name="outletName" ng-required="true" ng-minlength="3" ng-model="data.name" class="form-control" >
+                             
+                           </div>
+                           
+                           <span ng-show="outletData.outletName.$dirty && outletData.outletName.$error.minlength">Minimum 3 characters required</span>
+                         </div>
+                         <i ng-click="updateName(outlet._id)"  class="fas fa-pencil-alt"></i>
+                     </form>
+                 </div>
+                 <div class="data__form">
+                     <form name="outletData" novalidate>
+                         <div class="form-group">
+                             <label for="email" class="col-form-label">Email :</label>
+                             <div class="data__input">
+                                 <input type="email" name="email" ng-required="true" ng-pattern="/^([a-z A-Z 0-9\.-]+)@([0-9 a-z A-Z -]+).([a-z]{2,8})(.[a-z{2,4}])?$/" ng-model="data.contactInfo.email" class="form-control" >
+                                 
+                             </div>
+                             <span ng-show="outletData.email.$dirty && !outletData.email.$error.required && outletData.email.$invalid">Please enter correct email</span>
+                             <span ng-show="outletData.email.$dirty && outletData.email.$error.required">Please fill this field</span>
+                         </div>
+                         <div class="form-group">
+                             <label for="number" class="col-form-label">Phone Number :</label>
+                             <div class="data__input">
+                                 <input type="number" name="number" ng-required="true" ng-pattern="/^\d{10}$/"  ng-model="data.contactInfo.number" class="form-control" >
+                                 
+                             </div>
+                             <span ng-show="outletData.number.$dirty && outletData.number.$invalid">please enter correct number</span>
+                             <span ng-show="outletData.number.$dirty && outletData.number.$error.required">Please fill this field</span>
+                         </div>
+                         <i ng-click="updateContactInfo(outlet._id)" class="fas fa-pencil-alt"></i>
+                     </form>
+                 </div>
+                 <div class="data__form">
+                     <form name="outletData" novalidate>
+                         <div class="form-group">
+                             <label for="address" class="col-form-label">Address :</label>
+                             <input type="text" name="address" ng-required="true"  ng-model="data.location.address" class="form-control" >
+                             <span ng-show="outletData.address.$dirty && outletData.address.$error.required">Please fill this field</span>
+                           </div>
+                           <div class="form-group">
+                             <label for="city" class="col-form-label">City :</label>
+                             <input type="text" name="city" ng-required="true" ng-minlength="3" ng-model="data.location.city" class="form-control" >
+                             <span ng-show="outletData.city.$dirty && outletData.city.$error.minlength">Please fill this field</span>
+                           </div>
+                           <div class="form-group">
+                             <label for="pinCode" class="col-form-label">Pin Code :</label>
+                             <input type="number" name="pinCode" ng-required="true" ng-minlength="6" ng-maxlength="6" ng-model="data.location.pinCode" class="form-control" >
+                             <span ng-show="outletData.pinCode.$dirty && outletData.pinCode.$error.minlength ">6 characters required</span>
+                            <span ng-show="outletData.pinCode.$dirty && outletData.pinCode.$error.maxlength">6 characters required</span>
+                           </div>
+                         <i ng-click="updateLocation(outlet._id)"  class="fas fa-pencil-alt"></i>
+                     </form>
+                 </div>
+                 
+             </div>
+ 
+         </div>
+         <!-- <div class="data__description">
+             <div>
+                 <span>
+                     {{brand.description}}
+                 </span>
+             </div>
+         </div> -->
+    </div>
+ </div>
