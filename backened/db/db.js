@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var createAdminService = require("../service/createadmin.service");
+var analysis = require("../controller/superAdminDashboard");
 mongoose.set("strictQuery", false);
 
 mongoose
