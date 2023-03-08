@@ -101,7 +101,7 @@ module.exports = {
         $limit: 10,
       },
     ];
-
+    //top ten products
     var pipeline4 = [
       {
         $match: {
@@ -122,6 +122,7 @@ module.exports = {
       {
         $group: {
           _id: "$items.name",
+          img: { $first: "$items.img" },
           totalQuantity: { $sum: "$items.quantity" },
         },
       },

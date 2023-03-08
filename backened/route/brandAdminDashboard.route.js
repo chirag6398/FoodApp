@@ -14,4 +14,10 @@ brandAdminDashboardRoute.get(
   brandAdminDashboardController.getBasicData
 );
 
+brandAdminDashboardRoute.get(
+  "/api/brandAdmin/getOutletGraphData/:id",
+  passport.authenticate("jwt", { session: false }),
+  brandAdminDashboardController.getOutletGraphData
+);
+
 module.exports = brandAdminDashboardRoute;
