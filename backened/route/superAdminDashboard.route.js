@@ -19,9 +19,16 @@ superAdminDashboardRoute.get(
   passport.authenticate("jwt", { session: false }),
   superAdminDashboardController.getBrandData
 );
+
 superAdminDashboardRoute.get(
   "/api/superAdmin/getBrandGraphData/:id",
   passport.authenticate("jwt", { session: false }),
   superAdminDashboardController.getBrandGraphData
+);
+
+superAdminDashboardRoute.get(
+  "/api/superAdmin/getOutletGraphData/:id",
+  passport.authenticate("jwt", { session: false }),
+  superAdminDashboardController.getOutletGraphData
 );
 module.exports = superAdminDashboardRoute;

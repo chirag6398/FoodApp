@@ -57,7 +57,7 @@
                     <div class="dropdown-menu">
                         <div class="analysis__outletLists">
                             <ul class="list-group">
-                                <li  class="list-group-item" ng-repeat="outlet in outlets">
+                                <li style="cursor:pointer" ng-click="fetchOutletGraphData(outlet._id)"  class="list-group-item" ng-repeat="outlet in outlets">
                                     {{outlet.name}}
                                 </li>
                             </ul>
@@ -73,6 +73,18 @@
           </div>
         </div>
         
+      </div>
+      <div ng-show="brandDates">
+        <h3>
+            Brand: Last Month Revenue Analysis
+        </h3>
+        <canvas id="myChart1" area-label="chart" ></canvas>
+      </div>
+      <div ng-show="outletDates">
+        <h3>
+            Outlet Last Month Revenue Analysis
+        </h3>
+        <canvas id="myChart2" area-label="chart" ></canvas>
       </div>
 
 

@@ -118,6 +118,51 @@ module.exports = {
           },
         },
       },
+      {
+        $sort: { _id: 1 },
+      },
+    ];
+    orderModel
+      .aggregate(pipeline)
+      .then(function (result) {
+        console.log(result);
+        return res.send(result);
+      })
+      .catch(function (err) {
+        console.log(err);
+        return res.status(500).send(err);
+      });
+  },
+  getOutletGraphData: function (req, res) {
+    console.log(req.params.id);
+    var pipeline = [
+      {
+        $match: {
+          "outlet._id": mongoose.Types.ObjectId(req.params.id),
+        },
+      },
+      {
+        $match: {
+          createdAt: {
+            $gte: startDate,
+            $lt: endDate,
+          },
+        },
+      },
+      {
+        $unwind: "$items",
+      },
+      {
+        $group: {
+          _id: { $dateToString: { format: "%d-%m-%Y", date: "$createdAt" } },
+          totalRevenue: {
+            $sum: { $multiply: ["$items.quantity", "$items.price"] },
+          },
+        },
+      },
+      {
+        $sort: { _id: 1 },
+      },
     ];
     orderModel
       .aggregate(pipeline)

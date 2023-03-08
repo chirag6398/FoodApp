@@ -31,13 +31,71 @@ app.controller("superAdminAnalysisController", [
         function (err, result) {
           console.log(err, result);
           if (result.data.length) {
-            $scope.brandDates = [];
-            $scope.brandRevenue = [];
+            $scope.brandDates = [0];
+            $scope.brandRevenue = [0];
             result.data.forEach(function (element) {
               $scope.brandDates.push(element._id);
               $scope.brandRevenue.push(element.totalRevenue);
             });
             console.log($scope.brandDates, $scope.brandRevenue);
+            var ctx1 = document.getElementById("myChart1").getContext("2d");
+            var myChart1 = new Chart(ctx1, {
+              type: "line",
+              data: {
+                labels: $scope.brandDates,
+                datasets: [
+                  {
+                    data: $scope.brandRevenue,
+                    label: "Dataset",
+                    fill: true,
+                    backgroundColor: "rgba(220,220,220,0.5)",
+                    borderColor: "rgba(220,220,220,1)",
+                    pointBackgroundColor: "rgba(220,220,220,1)",
+                    pointBorderColor: "#fff",
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "rgba(220,220,220,1)",
+                  },
+                ],
+              },
+            });
+          }
+        }
+      );
+    };
+
+    $scope.fetchOutletGraphData = function (outletId) {
+      superAdminDashBoardApi.fetchOutletGraphData(
+        outletId,
+        function (err, result) {
+          console.log(err, result);
+          if (result.data.length) {
+            $scope.outletDates = [0];
+            $scope.outletRevenue = [0];
+            result.data.forEach(function (element) {
+              $scope.outletDates.push(element._id);
+              $scope.outletRevenue.push(element.totalRevenue);
+            });
+            console.log($scope.outletDates, $scope.outletRevenue);
+            var ctx2 = document.getElementById("myChart2").getContext("2d");
+            var myChart2 = new Chart(ctx2, {
+              type: "line",
+              data: {
+                labels: $scope.outletDates,
+                datasets: [
+                  {
+                    data: $scope.outletRevenue,
+                    label: "Dataset",
+                    fill: true,
+                    backgroundColor: "rgba(220,220,220,0.5)",
+                    borderColor: "rgba(220,220,220,1)",
+                    pointBackgroundColor: "rgba(220,220,220,1)",
+                    pointBorderColor: "#fff",
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "rgba(220,220,220,1)",
+                  },
+                ],
+              },
+            });
           }
         }
       );
