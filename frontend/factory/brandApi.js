@@ -32,14 +32,12 @@ app.factory("brandApi", function ($http) {
       });
   };
 
-  obj.createOutlet = function (outletData, brandId, brandName, brandLogo, cb) {
+  obj.createOutlet = function (outletData, brandId, cb) {
     var data = {
       ...outletData,
-      brandId,
-      brandName,
-      brandLogo,
+      id: brandId,
     };
-    console.log(data);
+
     $http
       .post("http://localhost:5000/api/brandAdmin/createOutlet", data, {
         headers: {
@@ -47,6 +45,7 @@ app.factory("brandApi", function ($http) {
         },
       })
       .then(function (response) {
+        // console.log(response);
         cb(null, response);
       }),
       function (err) {

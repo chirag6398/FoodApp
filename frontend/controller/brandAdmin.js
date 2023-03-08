@@ -19,9 +19,13 @@ app.controller("brandAdminController", [
     $scope.btnText = "Create Outlet";
     $scope.createOutlet = function ($event) {
       $event.preventDefault();
-      apiHandler.createOutlet($scope.outlet, $scope.brandId, function (result) {
-        console.log(result);
-      });
+      apiHandler.createOutlet(
+        $scope.outlet,
+        $scope.brandId,
+        function (err, result) {
+          console.log(result);
+        }
+      );
     };
 
     let sidebar = document.querySelector(".sidebar");

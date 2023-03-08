@@ -1,3 +1,93 @@
-<div>
-    Dashboard
+<div >
+    <div id="container1">
+        <div class="box">
+            <div class="subBox">
+                <p><i title="outlets" class="bx bx-building" ></i>
+                </p>
+                <span>
+                    Total Outlets 
+                </span>
+                <p id="upComingData">{{}}</p>
+            </div>
+            
+        </div>
+        <div class="box">
+            <div class="subBox">
+                <p><i title="employees" class="fa fa-users" aria-hidden="true"></i>
+                </p>
+                <span>
+                    Total Employees 
+                </span>
+                <p id="noOfCustomer">{{}}</p>
+            </div>
+        </div>
+        <div class="box">
+            <div class="subBox">
+                <p><i title="Total Revenue" class='bx bx-cart'></i>
+                </p>
+                <span>
+                    Total Revenue
+                </span>
+                <p id="totalPay">{{}}</p>
+            </div>
+        </div>
+    
+    </div>
+
+
+    <!-- <div class="row">
+        <div class="col-4">
+          <div class="list-group" id="list-tab" role="tablist">
+            <input type="text" style="margin-bottom: 10px;" ng-model="search.name" placeholder="type outlet name" class="form-control">
+            <a class="list-group-item list-group-item-action" style="min-width:200px" ng-repeat="brand in brands | filter:search" >
+                <div class="dropright analysis__brandList ">
+                   
+                    <div ng-click="fechGraphData(outlet._id)" style="display: flex;cursor:pointer;flex-wrap:wrap;align-items: center;" >
+                        <div >
+                            <img  style="object-fit: contain;
+                            height: 50px;" src={{brand.logo}} slt="...">
+                        </div>
+                        <div>
+                            {{brand.name}}
+                        </div>
+                    </div>
+                    <button ng-click="setOutletData(brand.outlets)" type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="sr-only">Toggle Dropright</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <div class="analysis__outletLists">
+                            <ul class="list-group">
+                                <li style="cursor:pointer" ng-click="fetchOutletGraphData(outlet._id)"  class="list-group-item" ng-repeat="outlet in outlets">
+                                    {{outlet.name}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+
+               
+                
+            </a>
+            
+          </div>
+        </div>
+        
+    </div>
+      <div ng-show="brandDates">
+        <h3>
+            Brand: Last Month Revenue Analysis
+        </h3>
+        <canvas id="myChart1" area-label="chart" ></canvas>
+      </div>
+      <div ng-show="outletDates">
+        <h3>
+            Outlet Last Month Revenue Analysis
+        </h3>
+        <canvas id="myChart2" area-label="chart" ></canvas>
+      </div> -->
+
+
+    
+   
 </div>

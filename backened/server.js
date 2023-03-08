@@ -24,6 +24,7 @@ app.use(require("./route/product.route"));
 app.use(require("./route/outletAgent.route"));
 app.use(require("./route/order.route"));
 app.use(require("./route/superAdminDashboard.route"));
+app.use(require("./route/brandAdminDashboard.route"));
 
 app.listen(port, function (err) {
   if (err) {
