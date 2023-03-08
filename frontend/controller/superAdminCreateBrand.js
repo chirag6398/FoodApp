@@ -75,51 +75,6 @@ app.controller("superAdminCreateBrandController", [
         console.log(result);
       });
     };
-    // $scope.setData = function (brand) {
-    //   console.log(brand);
-    //   $scope.data = {
-    //     name: brand.name,
-    //     email: brand.contactInfo.email,
-    //     number: brand.contactInfo.number,
-    //     city: brand.location.city,
-    //     pinCode: brand.location.pinCode,
-    //     address: brand.location.address,
-    //     description: brand.description,
-    //     _id: brand._id,
-    //   };
-    // };
-
-    // $scope.editBrand = function ($event) {
-    //   $event.preventDefault();
-    //   console.log($scope.data);
-
-    //   var formData = new FormData();
-
-    //   formData.append("name", $scope.data.name);
-    //   formData.append("file", $scope.data.logo);
-    //   formData.append("_id", $scope.data._id);
-    //   formData.append("number", $scope.data.number);
-    //   formData.append("email", $scope.data.email);
-    //   formData.append("address", $scope.data.address);
-    //   formData.append("city", $scope.data.city);
-    //   formData.append("description", $scope.data.description);
-    //   formData.append("pinCode", $scope.data.pinCode);
-
-    //   $http
-    //     .post("http://localhost:5000/api/superAdmin/updateBrand", formData, {
-    //       transformRequest: angular.identity,
-    //       headers: { "Content-Type": undefined },
-    //     })
-    //     .then(
-    //       function (response) {
-    //         console.log(response.data);
-    //         $("#exampleModal1").modal("hide");
-    //       },
-    //       function (error) {
-    //         console.log(error);
-    //       }
-    //     );
-    // };
 
     $scope.deleteBrand = function (brandId) {
       apiHandler.deleteBrand(brandId, function (err, result) {

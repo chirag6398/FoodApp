@@ -27,7 +27,7 @@
     flex-wrap: wrap;
 }
 .box{
-    height: 100px;
+    height: fit-content;
     min-width: 200px;
     border: 1px solid gray;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -59,4 +59,18 @@
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     padding: 20px;
     border-radius: 10px;
+}
+.analysis__brandList{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap:wrap;
+}
+.analysis__outletLists{
+    padding: 10px;
+    display: flex;
+    justify-content: flex-start;
+}
+ul{
+    list-style: none;
 }
