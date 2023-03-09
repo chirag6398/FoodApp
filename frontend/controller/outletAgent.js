@@ -169,6 +169,8 @@ app.controller("outletAgentController", [
           $scope.object = { cart: [] };
           $scope.amount = 0;
           $scope.saved = false;
+          $scope.orderBtn = "placed order";
+          $scope.btnText = "Enter";
           $scope.customer = {};
         }
       });

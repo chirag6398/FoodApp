@@ -3,11 +3,12 @@
 
 app.controller("brandProductsController", [
   "$scope",
-  "$http",
+  "outletAgentApi",
   "$location",
   "apiHandler",
   "$rootScope",
-  function ($scope, $http, $location, apiHandler, $rootScope) {
+  function ($scope, outletAgentApi, $location, apiHandler, $rootScope) {
+    // outletAgentApi.getOutletAgentPage();
     $rootScope.$on("passData", function (err, data) {
       if (data) {
         console.log(data);
@@ -19,6 +20,7 @@ app.controller("brandProductsController", [
         apiHandler.getBrandOutletProducts(
           { brandId: $scope.brandId, outletId: $scope.outletId },
           function (result) {
+            console.log(result);
             $scope.categories = result.data;
           }
         );
@@ -26,6 +28,7 @@ app.controller("brandProductsController", [
     });
 
     $scope.getProducts = function (id) {
+      console.log(id);
       apiHandler.getProductByCategory(
         {
           brandId: $scope.brandId,
@@ -34,7 +37,11 @@ app.controller("brandProductsController", [
         },
         function (result) {
           console.log(result);
-          $scope.products = result.data;
+          if (result.data.length) {
+            $scope.products = result.data;
+          } else if (result) {
+            alert("all products of this category already added");
+          }
         }
       );
     };

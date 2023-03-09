@@ -34,7 +34,7 @@ app.controller("loginController", [
             $state.go("brandadmin.dashboard");
           } else if (result.userType === "outletAdmin") {
             $rootScope.admin = result.admin;
-            $location.path("outletAdmin");
+            $state.go("outletAdmin.outletAdminDashboard");
           } else if (result.userType === "outletAgent") {
             $rootScope.admin = result.admin;
             $location.path("outletAgent");
