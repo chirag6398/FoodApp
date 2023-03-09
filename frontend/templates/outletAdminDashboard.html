@@ -1,0 +1,50 @@
+<div style="display:flex;flex-wrap: wrap;" >
+    <div>
+        <div id="container1">
+            <div class="box">
+                <div class="subBox">
+                    <p><i title="outlets" class="bx bx-building" ></i>
+                    </p>
+                    <span>
+                        Total Outlets 
+                    </span>
+                    <p id="upComingData">{{totalOutlets}}</p>
+                </div>
+                
+            </div>
+            <div class="box">
+                <div class="subBox">
+                    <p><i title="employees" class="fa fa-users" aria-hidden="true"></i>
+                    </p>
+                    <span>
+                        Total Employees 
+                    </span>
+                    <p id="noOfCustomer">{{totalEmployees}}</p>
+                </div>
+            </div>
+            <div class="box">
+                <div class="subBox">
+                    <p><i title="Total Revenue" class='bx bx-cart'></i>
+                    </p>
+                    <span>
+                        Total Revenue
+                    </span>
+                    <p id="totalPay">Rs. {{totalRevenue}}</p>
+                </div>
+            </div>
+        
+        </div>
+    
+    </div>
+
+    <div ng-show="outletDates">
+        <h3>
+            Outlet Last Month Revenue Analysis
+        </h3>
+        <canvas id="myChart1" area-label="chart" ></canvas>
+      </div>
+    
+       
+  
+   
+</div>

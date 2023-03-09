@@ -32,16 +32,16 @@ app.controller("subCategoryController", [
         $location.path("login");
       }
     });
-    $scope.category = {};
+    $scope.category1 = {};
     $scope.btnText = "Add Sub Category";
 
     $scope.addCategory = function ($event) {
       $event.preventDefault();
       $scope.btnText = "adding...";
-      console.log($scope.category);
+      console.log($scope.category1);
       var formData = new FormData();
-      formData.append("name", $scope.category.name);
-      formData.append("file", $scope.category.logo);
+      formData.append("name", $scope.category1.name);
+      formData.append("file", $scope.category1.logo);
       formData.append("superCategoryName", $stateParams.name);
       formData.append("superCategoryId", $stateParams.id);
       formData.append("brandName", $scope.brandName);

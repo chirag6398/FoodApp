@@ -80,7 +80,6 @@
         <div  class="row">
             <div class="col-4">
               <div class="list-group" id="list-tab" role="tablist">
-                <!-- <input type="text" style="margin-bottom: 10px;" ng-model="search.name" placeholder="type outlet name" class="form-control"> -->
                  <span style="width:300px;font-weight: bolder; opacity: 0.6;margin-bottom: 10px;">Top List Of Products</span>
                 <a class="list-group-item list-group-item-action" style="min-width:300px" ng-repeat="product in topTenProducts | filter:search" >
                     
@@ -110,20 +109,16 @@
         <div class="row">
             <div class="col-4">
               <div class="list-group" id="list-tab" role="tablist">
-                <!-- <input type="text" style="margin-bottom: 10px;" ng-model="search.name" placeholder="type outlet name" class="form-control"> -->
                 <span style="width:300px;font-weight: bolder; opacity: 0.6;margin-bottom: 10px;">Top List Of Categories</span>
                 <a class="list-group-item list-group-item-action" style="min-width:300px" ng-repeat="category in topTenCategories | filter:search" >
                    
                     <div class="analysis__brandList ">
                       
                         <div ng-click="fetchOutletGraphData(outlet._id)" style="display: flex;cursor:pointer;flex-wrap:wrap;align-items: center;" >
-                            <!-- <div >
-                                <img  style="object-fit: contain;
-                                height: 50px;" src={{product.img}} slt="...">
-                            </div> -->
+                           
 
                             <div>
-                                <!-- {{category}} -->
+                               
                                 {{category._id}}
                             </div>
                         </div>

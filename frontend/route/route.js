@@ -138,6 +138,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       templateUrl: "./templates/outletEmployeeForm.html",
       controller: "outletEmployeeFormController",
     })
+    .state("outletAdmin.outletAdminDashboard", {
+      url: "/dashboard",
+      templateUrl: "./templates/outletAdminDashboard.html",
+      controller: "outletAdminDashboardController",
+    })
     .state("outletAgent", {
       url: "/outletAgent",
       templateUrl: "./templates/outletAgent.html",
