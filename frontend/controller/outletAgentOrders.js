@@ -18,15 +18,20 @@ app.controller("outletAgentOrdersController", [
     $rootScope
   ) {
     outletAgentApi.getOutletAgentPage();
+    $scope.object = {
+      orders: [],
+    };
     $rootScope.$on("passData", function (err, result) {
       //   consolelog(result);
       if (result) {
         outletAgentApi.getOrders(
           result.data.outlet._id,
+
           function (err, result) {
             console.log(result);
-            $scope.orders = result.data;
-            $scope.orders.forEach(function (value) {
+
+            $scope.object.orders = result.data;
+            $scope.object.orders.forEach(function (value) {
               value.totalQuantity = value.items.reduce(function (accum, value) {
                 return accum + value.quantity;
               }, 0);
@@ -34,7 +39,7 @@ app.controller("outletAgentOrdersController", [
                 return accum + value.quantity * value.price;
               }, 0);
             });
-            console.log($scope.orders);
+            console.log($scope.object.orders);
           }
         );
       }
@@ -49,6 +54,12 @@ app.controller("outletAgentOrdersController", [
       $scope.amount = amount;
       $scope.customer = customer;
     };
+    $scope.filter = {
+      status: "pending",
+    };
+    $scope.setFilter = function (value) {
+      $scope.filter.status = value;
+    };
     $scope.updateStatus = function (status, orderId, indx) {
       console.log(status);
       outletAgentApi.updateStatus(
@@ -56,7 +67,7 @@ app.controller("outletAgentOrdersController", [
         function (err, result) {
           if (result) {
             console.log(result);
-            $scope.orders[indx].status = status;
+            $scope.object.orders[indx].status = status;
           }
         }
       );

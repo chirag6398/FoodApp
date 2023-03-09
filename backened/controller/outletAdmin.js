@@ -156,6 +156,9 @@ module.exports = {
             products: { $push: "$products.product" },
           },
         },
+        {
+          $sort: { name: 1 },
+        },
       ])
       .exec(function (err, result) {
         if (err) {

@@ -8,6 +8,6 @@ app.controller("mainController", [
   "$state",
   function ($scope, $http, $state) {
     // $location.path('login')
-    $state.go("login");
+    // $state.go("login");
   },
 ]);

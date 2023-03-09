@@ -1,9 +1,33 @@
 <div class="order__extDiv">
-    <div>
+    <!-- <div>
         <input type="text" placeholder="pending" ng-model="filter.status">
-    </div>
-    <div class="order__mainDiv">
-        <div class="order__card" ng-repeat="order in orders |filter:filter">
+    </div> -->
+<div style="display: flex;">
+
+    <ul class="nav justify-content-center" style="display: contents;" >
+        <li class="nav-item">
+          <a class="nav-link " ng-class="{'active':filter.status==='pending'}" ng-click="setFilter('pending')" >Pending</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" ng-class="{'active':filter.status==='preparing'}" ng-click="setFilter('preparing')" >Preparing</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" ng-class="{'active':filter.status==='serving'}" ng-click="setFilter('serving')" >Serving</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " ng-class="{'active':filter.status==='served'}" ng-click="setFilter('served')" >Seved</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " ng-class="{'active':filter.status==='cancelled'}" ng-click="setFilter('cancelled')" >Cancelled</a>
+          </li>
+      </ul>
+
+</div>
+    
+
+
+    <div ng-if="object.orders" class="order__mainDiv">
+        <div class="order__card" ng-repeat="order in object.orders |filter:filter.status">
             
             <div>
                 <div style="display: flex; justify-content: space-between;width: 285px;">
@@ -104,13 +128,16 @@
                      Rs.{{order.totalPrice}}
                 </span>
             </div>
+            <div>
+                <span ng-class="{'badge badge-success':order.status==='served','badge badge-warning':order.status==='preparing','badge badge-primary':order.status==='serving','badge badge-secondary':order.status==='pending','badge badge-danger':order.status==='cancelled'}">{{order.status}}</span>
+            </div>
             <div style="display: flex;
             align-items: center;
             flex-wrap: wrap;">
                 <button ng-if="order.status==='pending'" ng-click="updateStatus('preparing',order._id,$index)" class="btn btn1">
                     preparing
                 </button>
-                <button ng-if="order.status!=='served' || order.status!=='cancelled'" ng-click="updateStatus('cancelled',order._id,$index)" class="btn btn1">
+                <button ng-if="order.status!=='served' && order.status!=='cancelled'" ng-click="updateStatus('cancelled',order._id,$index)" class="btn btn1">
                     cancelled
                 </button>
                 <button ng-if="order.status==='pending' || order.status==='preparing' " ng-click="updateStatus('serving',order._id,$index)" class="btn btn1">

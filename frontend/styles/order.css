@@ -80,3 +80,8 @@
 .order__modalLeft div{
     margin: 5px;
 }
+.active{
+    border-radius: 3px;
+    background-color: lightgray;
+    box-shadow: lightgray 0px 0px 0px 1px;
+}

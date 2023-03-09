@@ -3,10 +3,10 @@
 
 app.controller("brandAdminController", [
   "$scope",
-  "$http",
+  "$state",
   "$location",
   "apiHandler",
-  function ($scope, $http, $location, apiHandler) {
+  function ($scope, $state, $location, apiHandler) {
     apiHandler.getBrandAdminPage(function (result) {
       if (result && result.status === 200) {
         $scope.brandName = result.data.name;
@@ -22,6 +22,11 @@ app.controller("brandAdminController", [
       apiHandler.createOutlet($scope.outlet, $scope.brandId, function (result) {
         console.log(result);
       });
+    };
+
+    $scope.logOutHandler = function () {
+      window.localStorage.removeItem("Authorization");
+      $state.go("login");
     };
 
     let sidebar = document.querySelector(".sidebar");

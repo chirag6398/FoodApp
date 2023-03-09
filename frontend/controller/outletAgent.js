@@ -50,11 +50,11 @@ app.controller("outletAgentController", [
     $interval(function () {
       $scope.getCurrentTime();
     }, 1000);
-
+    $scope.brandLogo = "";
     $rootScope.$on("agentProducts", function (err, result) {
       console.log(result);
       $scope.categories = [];
-      $scope.brandLogo = "";
+
       if (result.data && result.data.length > 0) {
         if ($scope.brandLogo == "") {
           $scope.brandLogo = result.data[0].brandLogo;

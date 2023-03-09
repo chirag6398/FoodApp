@@ -23,7 +23,7 @@
             border: 0px;
             color: white;" data-toggle="modal" data-target="#exampleModal2" data-whatever="@mdo">Profile</button>
         </div>
-        <div  ng-if="brandLogo">
+        <div  ng-show="brandLogo">
             <img 
                 title={{brand.name}}
                 style="object-fit: contain;
@@ -54,12 +54,12 @@
             <div class="items">
                 <!-- {{products}} -->
                 <div ng-if="products" class="agt__products1">
-                    <div class="agt__product" ng-repeat="product in products | filter:search">
+                    <div class="agt__product"ng-repeat="product in products | filter:search">
                         <div style="display: flex;
                         align-items: center;
                         justify-content: space-between;
                         width: 100%;">
-                            <div style="margin-right: 10px;">
+                            <div  style="margin-right: 10px;">
                                 <img style="object-fit: contain;
                                 height: 100px;"
                                  src={{product.img}} 
