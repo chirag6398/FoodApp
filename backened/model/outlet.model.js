@@ -92,6 +92,35 @@ var OutletSchema = new mongoose.Schema(
         },
       },
     ],
+    taxes: [
+      {
+        name: {
+          type: String,
+          unique: true,
+          trim: true,
+        },
+        percent: {
+          type: Number,
+        },
+      },
+    ],
+    table: [
+      {
+        number: {
+          type: Number,
+          required: true,
+          unique: true,
+        },
+        capacity: {
+          type: Number,
+          required: true,
+        },
+        isAvailable: {
+          type: Boolean,
+          default: true,
+        },
+      },
+    ],
     description: {
       type: String,
       required: true,

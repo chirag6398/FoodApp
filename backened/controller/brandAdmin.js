@@ -12,7 +12,6 @@ module.exports = {
       brandModel
         .findById({ _id: req.user.brand._id })
         .then(function (result) {
-          // console.log("brandId",result);
           return res.status(200).send({ data: result, status: 200 });
         })
         .catch(function (err) {

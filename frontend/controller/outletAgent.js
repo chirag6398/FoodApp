@@ -9,6 +9,31 @@ function generateOrderId() {
   return orderId;
 }
 
+function isTableAvailable(count, tables) {
+  // console.log(count);
+  var allotedTables = [];
+
+  for (var x of tables) {
+    // console.log(x, count);
+    if (x.isAvailable) {
+      if (count >= x.capacity) {
+        count = count - x.capacity;
+      } else {
+        count = 0;
+      }
+      allotedTables.push(x.number);
+    }
+
+    if (count == 0) {
+      break;
+    }
+  }
+
+  console.log(count, allotedTables);
+
+  return count === 0 ? allotedTables : false;
+}
+
 app.controller("outletAgentController", [
   "$scope",
   "$http",
@@ -44,6 +69,11 @@ app.controller("outletAgentController", [
         $scope.adminId = result.data._id;
 
         outletAgentApi.getOutletProducts($scope.outletId);
+        outletAgentApi.getOutlet($scope.outletId, function (err, result) {
+          console.log(err, result);
+          $scope.taxes = result.data.taxes;
+          $scope.tables = result.data.table;
+        });
       }
     });
 
@@ -60,19 +90,16 @@ app.controller("outletAgentController", [
           $scope.brandLogo = result.data[0].brandLogo;
         }
         result.data.forEach(function (value) {
-          //   console.log(value.name);
           $scope.categoryProducts = {
             ...$scope.categoryProducts,
             [value.name]: value.products,
           };
           $scope.categories.push(value.name);
         });
-        // console.log($scope.categories,$scope.brandLogo);
+
         $scope.isSelected = 0;
         $scope.products =
           $scope.categoryProducts[$scope.categories[$scope.isSelected]];
-        // console.log($scope.categoryProducts);
-        // console.log($scope.categories[$scope.isSelected], $scope.products);
       }
     });
 
@@ -113,11 +140,30 @@ app.controller("outletAgentController", [
     $scope.orderBtn = "placed order";
     $scope.saved = false;
     $scope.object = { cart: [] };
+    $scope.type = null;
 
+    $scope.setOrderType = function (type) {
+      if (type === "Dine-in") {
+        var value = isTableAvailable(
+          $scope.customer.personCount,
+          $scope.tables
+        );
+        console.log(value);
+        if (!value) {
+          alert("sorry dine in not possible at this time");
+        } else {
+          $scope.type = "dine-in";
+          $scope.allotedTables = value;
+          $("#dineIn").modal("hide");
+        }
+      } else {
+        $scope.type = "take-away";
+      }
+    };
     $scope.saveCustomerData = function () {
       $scope.btnText = "saved";
       $scope.saved = true;
-      // console.log($scope.customer);
+
       $("#exampleModal").modal("hide");
     };
     $scope.addToCart = function (product) {
@@ -150,6 +196,7 @@ app.controller("outletAgentController", [
           name: $scope.customer.name,
           number: $scope.customer.number,
         },
+        type: $scope.type,
         orderId: $scope.orderNo,
         brand: {
           _id: $scope.brand._id,
@@ -160,8 +207,9 @@ app.controller("outletAgentController", [
           _id: $scope.outlet._id,
           name: $scope.outlet.name,
         },
+        allotedTables: $scope.allotedTables,
       };
-      // console.log(data);
+
       outletAgentApi.placeOrder(data, function (err, result) {
         if (result) {
           alert("order placed");

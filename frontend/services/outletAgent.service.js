@@ -31,7 +31,21 @@ app.service("outletAgentApi", function ($http, $rootScope) {
         $rootScope.$emit("notEligible", false);
       });
   };
-
+  this.getOutlet = function (id, cb) {
+    // console.log(id);
+    $http
+      .get("http://localhost:5000/api/outlet/getOutlet/" + id, {
+        headers: {
+          Authorization: window.localStorage.getItem("Authorization"),
+        },
+      })
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb(err, null);
+      });
+  };
   this.updateAdmin = function (admin, id, cb) {
     var data = {
       ...admin,

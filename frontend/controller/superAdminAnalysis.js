@@ -62,12 +62,15 @@ app.controller("superAdminAnalysisController", [
         }
       );
     };
-
+    var myChart2 = undefined;
     $scope.fetchOutletGraphData = function (outletId) {
       superAdminDashBoardApi.fetchOutletGraphData(
         outletId,
         function (err, result) {
           console.log(err, result);
+          if (myChart2 !== undefined) {
+            myChart2.destroy();
+          }
           if (result.data.length) {
             $scope.outletDates = [0];
             $scope.outletRevenue = [0];
@@ -77,7 +80,7 @@ app.controller("superAdminAnalysisController", [
             });
             console.log($scope.outletDates, $scope.outletRevenue);
             var ctx2 = document.getElementById("myChart2").getContext("2d");
-            var myChart2 = new Chart(ctx2, {
+            myChart2 = new Chart(ctx2, {
               type: "line",
               data: {
                 labels: $scope.outletDates,

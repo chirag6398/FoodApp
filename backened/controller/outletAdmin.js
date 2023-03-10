@@ -291,4 +291,31 @@ module.exports = {
           });
       });
   },
+  addTax: function (req, res) {
+    console.log(req.body);
+    outletModel
+      .findOneAndUpdate(
+        { _id: req.body._id },
+        { $push: { taxes: req.body.tax } },
+        { new: true, projection: { taxes: 1 } }
+      )
+      .then(function (result) {
+        console.log(result);
+        return res.send(result);
+      })
+      .catch(function (err) {
+        return res.status(404).send(err);
+      });
+  },
+  getTaxes: function (req, res) {
+    outletModel
+      .findById({ _id: req.params.id }, { taxes: 1 })
+      .then(function (result) {
+        console.log(result);
+        return res.send(result);
+      })
+      .catch(function (err) {
+        return res.status(404).send(err);
+      });
+  },
 };

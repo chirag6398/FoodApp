@@ -15,7 +15,7 @@ app.controller("outletAdminDashboardController", [
           function (err, result) {
             console.log(result);
             $scope.totalProduct = result.data[0][0].productCount;
-            $scope.totalEmployee = result.data[1][0].employeeCount;
+            $scope.totalEmployees = result.data[1][0].employeeCount;
             $scope.totalRevenue = result.data[2][0].totalRevenue;
             $scope.topTenCategories = result.data[3];
             $scope.topTenProducts = result.data[4];

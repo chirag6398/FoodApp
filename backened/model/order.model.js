@@ -8,6 +8,19 @@ var OrederSchema = new mongoose.Schema(
       trim: true,
       unique: true,
     },
+    type: {
+      type: String,
+      required: true,
+      enum: ["dine-in", "take-away"],
+    },
+    tableNumber: [
+      {
+        type: Number,
+        required: function () {
+          return this.type === "dine-in";
+        },
+      },
+    ],
     items: [
       {
         superCategory: {

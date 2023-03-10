@@ -26,6 +26,7 @@ app.use(require("./route/order.route"));
 app.use(require("./route/superAdminDashboard.route"));
 app.use(require("./route/brandAdminDashboard.route"));
 app.use(require("./route/outletAdminDashboard.route"));
+app.use(require("./route/outlet.route"));
 
 app.listen(port, function (err) {
   if (err) {
