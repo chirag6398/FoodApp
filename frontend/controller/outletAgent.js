@@ -36,7 +36,7 @@ function isTableAvailable(count, tables) {
 
 app.controller("outletAgentController", [
   "$scope",
-  "$http",
+  "$timeout",
   "$location",
   "outletAgentApi",
   "cartService",
@@ -44,13 +44,30 @@ app.controller("outletAgentController", [
   "$rootScope",
   function (
     $scope,
-    $http,
+    $timeout,
     $location,
     outletAgentApi,
     cartService,
     $interval,
     $rootScope
   ) {
+    var timeout = null;
+    $scope.searchTextHandler = function () {
+      // console.log("called");
+      if (timeout) {
+        $timeout.cancel(timeout);
+      }
+      timeout = $timeout(function () {
+        // console.log("called");
+        outletAgentApi.getProductByName(
+          $scope.searchText,
+          $scope.outletId,
+          function (err, result) {
+            console.log(err, result);
+          }
+        );
+      }, 500);
+    };
     outletAgentApi.getOutletAgentPage();
 
     $rootScope.$on("passData", function (err, result) {

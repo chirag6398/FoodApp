@@ -38,9 +38,9 @@
             <div class="agt__searchField">
                 <div class="mt-3 inputs">
                     <i class="fa fa-search"></i>
-                    <input type="text" ng-model="search.name" class="form-control1 form-control"
+                    <input type="text" ng-model="searchText" ng-change="searchTextHandler()" class="form-control1 form-control"
                         placeholder="Search Tasks...">
-
+                        
                 </div>
             </div>
             <p class="agt__itemsNumbering"></p>

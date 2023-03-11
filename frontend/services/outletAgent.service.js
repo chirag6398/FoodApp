@@ -134,6 +134,28 @@ app.service("outletAgentApi", function ($http, $rootScope) {
         cb(err, null);
       };
   };
+
+  this.getProductByName = function (searchText, outletId, cb) {
+    $http
+      .get(
+        "http://localhost:5000/api/outletAgent/getProductByName/" +
+          outletId +
+          "/" +
+          searchText,
+
+        {
+          headers: {
+            Authorization: window.localStorage.getItem("Authorization"),
+          },
+        }
+      )
+      .then(function (response) {
+        cb(null, response);
+      }),
+      function (err) {
+        cb(err, null);
+      };
+  };
   //  this.getCategories=function(outletId,cb){
 
   //     $http.get("http://localhost:5000/api/outletAgent/getCategories/"+outletId,{
