@@ -38,31 +38,5 @@ module.exports = {
       if (result) return res.send(result);
       return res.status(404).send(err);
     });
-    // outletModel
-    //   .find(
-    //     {
-    //       $and: [
-    //         { _id: req.params._id },
-    //         {
-    //           products: {
-    //             $elemMatch: {
-    //               "product.name": "coca-cola",
-    //             },
-    //           },
-    //         },
-    //       ],
-    //     },
-    //     {
-    //       products: 1,
-    //     }
-    //   )
-    //   .then(function (result) {
-    //     console.log(result);
-    //     return res.send(result);
-    //   })
-    //   .catch(function (err) {
-    //     console.log(err);
-    //     return res.status(404).send(err);
-    //   });
   },
 };

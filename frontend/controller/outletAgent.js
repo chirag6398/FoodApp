@@ -237,6 +237,7 @@ app.controller("outletAgentController", [
           $scope.orderBtn = "placed order";
           $scope.btnText = "Enter";
           $scope.customer = {};
+          $scope.type = null;
         }
       });
     };

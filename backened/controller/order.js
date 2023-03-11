@@ -42,6 +42,8 @@ module.exports = {
     //   }
 
     // ]
+    // req.params.allotedTables = [1, 13, 14];
+    console.log(req.body.allotedTables);
     console.log(order);
     var data1 = order.save();
     var data2 = outletModel.updateMany(
@@ -52,6 +54,25 @@ module.exports = {
         arrayFilters: [{ "elem.number": { $in: req.body.allotedTables } }],
       }
     );
+
+    // var data2 = outletModel.aggregate([
+    //   {
+    //     $match: {
+    //       _id: mongoose.Types.ObjectId(req.body.outlet._id),
+    //     },
+    //   },
+    //   {
+    //     $unwind: "$table",
+    //   },
+    //   {
+    //     $project: { table: 1 },
+    //   },
+    //   {
+    //     $match: {
+    //       "table.number": { $in: req.params.allotedTables },
+    //     },
+    //   },
+    // ]);
 
     Promise.all([data1, data2])
       .then(function (result) {
