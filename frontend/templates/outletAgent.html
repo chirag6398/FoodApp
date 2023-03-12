@@ -7,6 +7,29 @@
         <div class="agt__navComponent" ui-sref="outletAgentOrders">
             Orders
         </div>
+        <div data-toggle="modal" data-target="#tables" data-whatever="@mdo" class="agt__navComponent">
+            Tables 
+        </div>
+        <div class="modal fade" id="tables" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Table Booking View</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div style="display: flex;gap: 5px;flex-wrap: wrap;" class="modal-body">
+                               <div class="agt__tableDiv" title="{{table.isAvailable?'available':'booked'}}" ng-class="{'agt__tableGreen':table.isAvailable}" ng-repeat="table in object.tables"> 
+                                    <p style="font-weight: 900;">{{table.number}}</p>
+                                    <p style="text-align: center;width: -webkit-fill-available;">{{table.capacity}}</p>
+                               </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
         <div class="agt__navComponent" ui-sref="login">
             Login
         </div>

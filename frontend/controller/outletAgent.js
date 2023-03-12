@@ -52,6 +52,9 @@ app.controller("outletAgentController", [
     $rootScope
   ) {
     var timeout = null;
+    $scope.object = {
+      tables: [],
+    };
     $scope.searchTextHandler = function () {
       // console.log("called");
       if (timeout) {
@@ -89,7 +92,7 @@ app.controller("outletAgentController", [
         outletAgentApi.getOutlet($scope.outletId, function (err, result) {
           console.log(err, result);
           $scope.taxes = result.data.taxes;
-          $scope.tables = result.data.table;
+          $scope.object.tables = result.data.table;
         });
       }
     });
@@ -163,7 +166,7 @@ app.controller("outletAgentController", [
       if (type === "Dine-in") {
         var value = isTableAvailable(
           $scope.customer.personCount,
-          $scope.tables
+          $scope.object.tables
         );
         console.log(value);
         if (!value) {
