@@ -1,26 +1,28 @@
-<div ng-controller="superAdminSuperCategoriesController">
-    
-    <table  class="table table-bordered table-hover">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">logo</th>
-            <th scope="col">name</th>
-            <th scope="col">brand name</th>
-            <!-- <th scope="col">Logo</th> -->
-
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="superCategory in superCategories">
-            <th  scope="row">{{$index}}</th>
-            <td><img  style="object-fit: contain;
-              height: 80px;" src={{superCategory.logo}} alt="working"></td>
-            <td>{{superCategory.name}}</td>
-            <td>{{superCategory.brand.name}}</td>
-            <!-- <td></td> -->
-          </tr>
-          
-        </tbody>
-      </table>
+<div>
+  <table class="table table-bordered table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">logo</th>
+        <th scope="col">name</th>
+        <th scope="col">brand name</th>
+        <!-- <th scope="col">Logo</th> -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="superCategory in superCategories">
+        <th scope="row">{{$index}}</th>
+        <td>
+          <img
+            style="object-fit: contain; height: 80px"
+            src="{{superCategory.logo}}"
+            alt="working"
+          />
+        </td>
+        <td>{{superCategory.name}}</td>
+        <td>{{superCategory.brand.name}}</td>
+        <!-- <td></td> -->
+      </tr>
+    </tbody>
+  </table>
 </div>

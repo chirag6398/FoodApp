@@ -422,4 +422,24 @@ module.exports = {
         return res.status(404).send(err);
       });
   },
+  getAdmin: function (req, res) {
+    employeeModel
+      .findById(
+        { _id: req.params.id },
+        {
+          password: 0,
+          updatedAt: 0,
+          createdAt: 0,
+          isDeleted: 0,
+          isActive: 0,
+          userType: 0,
+        }
+      )
+      .then(function (result) {
+        return res.send(result);
+      })
+      .catch(function (err) {
+        return res.status(404).send(err);
+      });
+  },
 };

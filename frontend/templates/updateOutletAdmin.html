@@ -1,50 +1,122 @@
-<div ng-controller="updateOutletAdminController">
+<div>
+  <div
+    style="
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-    <div style="display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    height: 90vh;">
-        <form style="box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;padding:50px" name="adminData" novalidate>
-            <div class="form-group">
-              <label for="userName" class="col-form-label">UserName :</label>
-              <input type="text" name="userName" ng-required="true" ng-minlength="3" ng-model="admin.userName" class="form-control" >
-              <span ng-show="adminData.userName.$dirty && adminData.userName.$error.minlength">Minimum 3 characters required</span>
-              <span ng-show="adminData.userName.$dirty && adminData.userName.$error.required">Please fill this field</span>
-            </div>
-            <div class="form-group">
-                <label for="firstName" class="col-form-label">FirstName :</label>
-                <input type="text" name="firstName" ng-required="true" ng-minlength="3" ng-model="admin.firstName" class="form-control" >
-                <span ng-show="adminData.firstName.$dirty && adminData.firstName.$error.minlength">Minimum 3 characters required</span>
-                <span ng-show="adminData.firstName.$dirty && adminData.firstName.$error.required">Please fill this field</span>
-            </div>
-            <div class="form-group">
-                <label for="lastName" class="col-form-label">LastName :</label>
-                <input type="text" name="lastName"  ng-minlength="0" ng-model="admin.lastName" class="form-control" >
-                <span ng-show="adminData.lastName.$dirty && adminData.lastName.$error.minlength">Minimum 3 characters required</span>
-                <!-- <span ng-show="adminData.lastName.$dirty && adminData.lastName.$error.required">Please fill this field</span> -->
-            </div>
-            <div class="form-group">
-                <label for="email" class="col-form-label">Email :</label>
-                <input type="email" name="email" ng-required="true" ng-pattern="/^([a-z A-Z 0-9\.-]+)@([0-9 a-z A-Z -]+).([a-z]{2,8})(.[a-z{2,4}])?$/" ng-model="admin.email" class="form-control" >
-                <span ng-show="adminData.email.$dirty && !adminData.email.$error.required && adminData.email.$invalid">Please enter correct email</span>
-                <span ng-show="adminData.email.$dirty && adminData.email.$error.required">Please fill this field</span>
-            </div>
-            <div class="form-group">
-                <label for="number" class="col-form-label">Phone Number :</label>
-                <input type="number" name="number" ng-required="true" ng-pattern="/^\d{10}$/"  ng-model="admin.number" class="form-control" >
-                <span ng-show="adminData.number.$dirty && adminData.number.$invalid">please enter correct number</span>
-                <span ng-show="adminData.number.$dirty && adminData.number.$error.required">Please fill this field</span>
-            </div>
-            
-    
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" ng-disabled="adminData.$invalid"  ng-click="updateAdmin($event)" class="btn btn-primary">{{btnText}}</button>
-            </div>
-              
-          </form>
+      height: 90vh;
+    "
+  >
+    <form
+      style="box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px; padding: 50px"
+      name="adminData"
+      novalidate
+    >
+      <div class="form-group">
+        <label for="userName" class="col-form-label">UserName :</label>
+        <input
+          type="text"
+          name="userName"
+          ng-required="true"
+          ng-minlength="3"
+          ng-model="admin.userName"
+          class="form-control"
+        />
+        <span
+          ng-show="adminData.userName.$dirty && adminData.userName.$error.minlength"
+          >Minimum 3 characters required</span
+        >
+        <span
+          ng-show="adminData.userName.$dirty && adminData.userName.$error.required"
+          >Please fill this field</span
+        >
+      </div>
+      <div class="form-group">
+        <label for="firstName" class="col-form-label">FirstName :</label>
+        <input
+          type="text"
+          name="firstName"
+          ng-required="true"
+          ng-minlength="3"
+          ng-model="admin.firstName"
+          class="form-control"
+        />
+        <span
+          ng-show="adminData.firstName.$dirty && adminData.firstName.$error.minlength"
+          >Minimum 3 characters required</span
+        >
+        <span
+          ng-show="adminData.firstName.$dirty && adminData.firstName.$error.required"
+          >Please fill this field</span
+        >
+      </div>
+      <div class="form-group">
+        <label for="lastName" class="col-form-label">LastName :</label>
+        <input
+          type="text"
+          name="lastName"
+          ng-minlength="0"
+          ng-model="admin.lastName"
+          class="form-control"
+        />
+        <span
+          ng-show="adminData.lastName.$dirty && adminData.lastName.$error.minlength"
+          >Minimum 3 characters required</span
+        >
+        <!-- <span ng-show="adminData.lastName.$dirty && adminData.lastName.$error.required">Please fill this field</span> -->
+      </div>
+      <div class="form-group">
+        <label for="email" class="col-form-label">Email :</label>
+        <input
+          type="email"
+          name="email"
+          ng-required="true"
+          ng-pattern="/^([a-z A-Z 0-9\.-]+)@([0-9 a-z A-Z -]+).([a-z]{2,8})(.[a-z{2,4}])?$/"
+          ng-model="admin.email"
+          class="form-control"
+        />
+        <span
+          ng-show="adminData.email.$dirty && !adminData.email.$error.required && adminData.email.$invalid"
+          >Please enter correct email</span
+        >
+        <span
+          ng-show="adminData.email.$dirty && adminData.email.$error.required"
+          >Please fill this field</span
+        >
+      </div>
+      <div class="form-group">
+        <label for="number" class="col-form-label">Phone Number :</label>
+        <input
+          type="number"
+          name="number"
+          ng-required="true"
+          ng-pattern="/^\d{10}$/"
+          ng-model="admin.number"
+          class="form-control"
+        />
+        <span ng-show="adminData.number.$dirty && adminData.number.$invalid"
+          >please enter correct number</span
+        >
+        <span
+          ng-show="adminData.number.$dirty && adminData.number.$error.required"
+          >Please fill this field</span
+        >
+      </div>
 
-    </div>
-    
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="submit"
+          ng-disabled="adminData.$invalid"
+          ng-click="updateAdmin($event)"
+          class="btn btn-primary"
+        >
+          {{btnText}}
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

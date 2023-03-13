@@ -46,6 +46,12 @@ brandAdminRoute.get(
   brandAdminController.getOutlet
 );
 
+brandAdminRoute.get(
+  "/api/brandAdmin/getAdmin/:id",
+  passport.authenticate("jwt", { session: false }),
+  brandAdminController.getAdmin
+);
+
 brandAdminRoute.post(
   "/api/brandAdmin/createOutlet",
   passport.authenticate("jwt", { session: false }),

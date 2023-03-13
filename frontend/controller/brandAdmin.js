@@ -11,6 +11,7 @@ app.controller("brandAdminController", [
       if (result && result.status === 200) {
         $scope.brandName = result.data.name;
         $scope.brandId = result.data._id;
+        $scope.brandAdminId = result.data.brandAdminId;
         $scope.brandLogo = result.data.logo;
       } else {
         $location.path("login");
