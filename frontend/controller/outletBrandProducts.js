@@ -3,12 +3,12 @@
 
 app.controller("brandProductsController", [
   "$scope",
-  "outletAgentApi",
+  "outletApi",
   "$location",
   "apiHandler",
   "$rootScope",
-  function ($scope, outletAgentApi, $location, apiHandler, $rootScope) {
-    // outletAgentApi.getOutletAgentPage();
+  function ($scope, outletApi, $location, apiHandler, $rootScope) {
+    outletApi.getOutletAdminPage();
     $rootScope.$on("passData", function (err, data) {
       if (data) {
         console.log(data);

@@ -8,6 +8,7 @@ app.controller("brandAdminController", [
   "apiHandler",
   function ($scope, $state, $location, apiHandler) {
     apiHandler.getBrandAdminPage(function (result) {
+      // console.log(result);
       if (result && result.status === 200) {
         $scope.brandName = result.data.name;
         $scope.brandId = result.data._id;

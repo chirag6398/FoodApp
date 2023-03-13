@@ -17,6 +17,7 @@ app.controller("outletAdminSettingController", [
       taxes: [],
       tables: [],
     };
+    outletApi.getOutletAdminPage();
 
     $rootScope.$on("passData", function (err, data) {
       if (data) {

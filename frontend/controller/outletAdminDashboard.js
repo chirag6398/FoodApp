@@ -2,12 +2,14 @@
 
 app.controller("outletAdminDashboardController", [
   "$scope",
-  "$http",
   "$location",
   "outletAdminDashBoardApi",
   "$rootScope",
-  function ($scope, $http, $location, outletAdminDashBoardApi, $rootScope) {
+  "outletApi",
+  function ($scope, $location, outletAdminDashBoardApi, $rootScope, outletApi) {
+    outletApi.getOutletAdminPage();
     $rootScope.$on("passData", function (err, data) {
+      console.log(data);
       if (data) {
         $rootScope.outletId = data.data.outletData._id;
         outletAdminDashBoardApi.getBasicData(
@@ -26,8 +28,8 @@ app.controller("outletAdminDashboardController", [
               $scope.outletRevenue.push(element.totalRevenue);
             });
             console.log($scope.outletDates, $scope.outletRevenue);
-            var ctx2 = document.getElementById("myChart1").getContext("2d");
-            myChart1 = new Chart(ctx2, {
+            var ctx2 = document.getElementById("myChart").getContext("2d");
+            var myChart1 = new Chart(ctx2, {
               type: "line",
               data: {
                 labels: $scope.outletDates,
