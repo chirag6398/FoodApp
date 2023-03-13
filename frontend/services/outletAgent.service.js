@@ -151,10 +151,10 @@ app.service("outletAgentApi", function ($http, $rootScope) {
       )
       .then(function (response) {
         cb(null, response);
-      }),
-      function (err) {
+      })
+      .catch(function (err) {
         cb(err, null);
-      };
+      });
   };
   //  this.getCategories=function(outletId,cb){
 

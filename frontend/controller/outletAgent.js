@@ -9,6 +9,14 @@ function generateOrderId() {
   return orderId;
 }
 
+function addTaxes(taxes, amount) {
+  var extraAmount = 0;
+  taxes.forEach(function (value) {
+    extraAmount += (amount * value.percent) / 100;
+  });
+  return extraAmount;
+}
+
 function isTableAvailable(count, tables) {
   // console.log(count);
   var allotedTables = [];
@@ -62,11 +70,18 @@ app.controller("outletAgentController", [
       }
       timeout = $timeout(function () {
         // console.log("called");
+        // console.log($scope.searchText);
+
         outletAgentApi.getProductByName(
           $scope.searchText,
           $scope.outletId,
           function (err, result) {
             console.log(err, result);
+            if (result) {
+              $scope.searchTextResult = result.data;
+            } else {
+              $scope.searchTextResult = [];
+            }
           }
         );
       }, 500);
@@ -190,7 +205,8 @@ app.controller("outletAgentController", [
       $scope.object.cart = cartService.addToCart($scope.object.cart, product);
 
       $scope.amount = cartService.totalPrice($scope.object.cart);
-
+      $scope.payableAmount =
+        $scope.amount + addTaxes($scope.taxes, $scope.amount);
       // console.log($scope.object.cart);
     };
     $scope.plus = function (product) {

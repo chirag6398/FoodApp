@@ -1,136 +1,160 @@
-<div style="display:flex;flex-wrap: wrap;" >
-    <div>
-        <div id="container1">
-            <div class="box">
-                <div class="subBox">
-                    <p><i title="outlets" class="bx bx-building" ></i>
-                    </p>
-                    <span>
-                        Total Outlets 
-                    </span>
-                    <p id="upComingData">{{totalOutlets}}</p>
-                </div>
-                
-            </div>
-            <div class="box">
-                <div class="subBox">
-                    <p><i title="employees" class="fa fa-users" aria-hidden="true"></i>
-                    </p>
-                    <span>
-                        Total Employees 
-                    </span>
-                    <p id="noOfCustomer">{{totalEmployees}}</p>
-                </div>
-            </div>
-            <div class="box">
-                <div class="subBox">
-                    <p><i title="Total Revenue" class='bx bx-cart'></i>
-                    </p>
-                    <span>
-                        Total Revenue
-                    </span>
-                    <p id="totalPay">Rs. {{totalRevenue}}</p>
-                </div>
-            </div>
-        
+<div style="display: flex; flex-wrap: wrap">
+  <div>
+    <div id="container1">
+      <div class="box">
+        <div class="subBox">
+          <p><i title="outlets" class="bx bx-building"></i></p>
+          <span> Total Outlets </span>
+          <p id="upComingData">{{totalOutlets}}</p>
         </div>
-    
-    
-        <div class="row">
-            <div class="col-4">
-              <div class="list-group" id="list-tab" role="tablist">
-                <input type="text" style="margin-bottom: 10px;" ng-model="search.name" placeholder="type outlet name" class="form-control">
-                <a class="list-group-item list-group-item-action" style="min-width:200px" ng-repeat="outlet in outlets | filter:search" >
-                    <div class="analysis__brandList ">
-                       
-                        <div ng-click="fetchOutletGraphData(outlet._id)" style="display: flex;cursor:pointer;flex-wrap:wrap;align-items: center;" >
-                            <div >
-                                <img  style="object-fit: contain;
-                                height: 50px;" src={{brand.logo}} slt="...">
-                            </div>
-                            <div>
-                                {{outlet.name}}
-                            </div>
-                        </div>
-                        
-                    </div>
-                    
-    
-                   
-                    
-                </a>
-                
-              </div>
-            </div>
-            
+      </div>
+      <div class="box">
+        <div class="subBox">
+          <p>
+            <i title="employees" class="fa fa-users" aria-hidden="true"></i>
+          </p>
+          <span> Total Employees </span>
+          <p id="noOfCustomer">{{totalEmployees}}</p>
         </div>
-          
-          <div ng-show="outletDates">
-            <h3>
-                Outlet Last Month Revenue Analysis
-            </h3>
-            <canvas id="myChart2" area-label="chart" ></canvas>
-          </div>
-    
-    
-        
+      </div>
+      <div class="box">
+        <div class="subBox">
+          <p><i title="Total Revenue" class="bx bx-cart"></i></p>
+          <span> Last Month Revenue </span>
+          <p id="totalPay">Rs. {{totalRevenue}}</p>
+        </div>
+      </div>
     </div>
 
-    <div style="margin-right: 10px;">
-        <div  class="row">
-            <div class="col-4">
-              <div class="list-group" id="list-tab" role="tablist">
-                 <span style="width:300px;font-weight: bolder; opacity: 0.6;margin-bottom: 10px;">Top List Of Products</span>
-                <a class="list-group-item list-group-item-action" style="min-width:300px" ng-repeat="product in topTenProducts | filter:search" >
-                    
-                    <div class="analysis__brandList ">
-                       
-
-                        <div ng-click="fetchOutletGraphData(outlet._id)" style="display: flex;cursor:pointer;flex-wrap:wrap;align-items: center;" >
-                            <div >
-                                <img  style="object-fit: contain;
-                                height: 50px;" src={{product.img}} slt="...">
-                            </div>
-                            <div>
-                                {{product._id}}
-                            </div>
-                        </div>
-                        
-                    </div>
-                </a>
-                
-              </div>
-            </div>
-            
-        </div>
+    <div ng-show="brandDates">
+      <h3>Brand Last Month Revenue Analysis</h3>
+      <canvas id="myChart1" area-label="chart"></canvas>
     </div>
 
-    <div>
-        <div class="row">
-            <div class="col-4">
-              <div class="list-group" id="list-tab" role="tablist">
-                <span style="width:300px;font-weight: bolder; opacity: 0.6;margin-bottom: 10px;">Top List Of Categories</span>
-                <a class="list-group-item list-group-item-action" style="min-width:300px" ng-repeat="category in topTenCategories | filter:search" >
-                   
-                    <div class="analysis__brandList ">
-                      
-                        <div ng-click="fetchOutletGraphData(outlet._id)" style="display: flex;cursor:pointer;flex-wrap:wrap;align-items: center;" >
-                           
-
-                            <div>
-                               
-                                {{category._id}}
-                            </div>
-                        </div>
-                        
-                    </div>
-                </a>
-                
+    <div class="row">
+      <div class="col-4">
+        <div class="list-group" id="list-tab" role="tablist">
+          <input
+            type="text"
+            style="margin-bottom: 10px"
+            ng-model="search.name"
+            placeholder="type outlet name"
+            class="form-control"
+          />
+          <a
+            class="list-group-item list-group-item-action"
+            style="min-width: 200px"
+            ng-repeat="outlet in outlets | filter:search"
+          >
+            <div class="analysis__brandList">
+              <div
+                ng-click="fetchOutletGraphData(outlet._id)"
+                style="
+                  display: flex;
+                  cursor: pointer;
+                  flex-wrap: wrap;
+                  align-items: center;
+                "
+              >
+                <div>
+                  <img
+                    style="object-fit: contain; height: 50px"
+                    src="{{brand.logo}}"
+                    slt="..."
+                  />
+                </div>
+                <div>{{outlet.name}}</div>
               </div>
             </div>
-            
+          </a>
         </div>
+      </div>
     </div>
-  
-   
+
+    <div ng-show="outletDates">
+      <h3>Outlet Last Month Revenue Analysis</h3>
+      <canvas id="myChart2" area-label="chart"></canvas>
+    </div>
+  </div>
+
+  <div style="margin-right: 10px">
+    <div class="row">
+      <div class="col-4">
+        <div class="list-group" id="list-tab" role="tablist">
+          <span
+            style="
+              width: 300px;
+              font-weight: bolder;
+              opacity: 0.6;
+              margin-bottom: 10px;
+            "
+            >Top List Of Products</span
+          >
+          <a
+            class="list-group-item list-group-item-action"
+            style="min-width: 300px"
+            ng-repeat="product in topTenProducts | filter:search"
+          >
+            <div class="analysis__brandList">
+              <div
+                ng-click="fetchOutletGraphData(outlet._id)"
+                style="
+                  display: flex;
+                  cursor: pointer;
+                  flex-wrap: wrap;
+                  align-items: center;
+                "
+              >
+                <div>
+                  <img
+                    style="object-fit: contain; height: 50px"
+                    src="{{product.img}}"
+                    slt="..."
+                  />
+                </div>
+                <div>{{product._id}}</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="row">
+      <div class="col-4">
+        <div class="list-group" id="list-tab" role="tablist">
+          <span
+            style="
+              width: 300px;
+              font-weight: bolder;
+              opacity: 0.6;
+              margin-bottom: 10px;
+            "
+            >Top List Of Categories</span
+          >
+          <a
+            class="list-group-item list-group-item-action"
+            style="min-width: 300px"
+            ng-repeat="category in topTenCategories | filter:search"
+          >
+            <div class="analysis__brandList">
+              <div
+                ng-click="fetchOutletGraphData(outlet._id)"
+                style="
+                  display: flex;
+                  cursor: pointer;
+                  flex-wrap: wrap;
+                  align-items: center;
+                "
+              >
+                <div>{{category._id}}</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

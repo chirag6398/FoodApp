@@ -65,6 +65,14 @@
                         placeholder="Search Tasks...">
                         
                 </div>
+                <div>
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="res in searchTextResult">
+                            {{res.products.product.name}}
+                        </li>
+                       
+                      </ul>
+                </div>
             </div>
             <p class="agt__itemsNumbering"></p>
             <div class="items">
@@ -272,7 +280,7 @@
                                 Total
                             </div>
                             <div>
-                                {{amount+5}}
+                                {{payableAmount}}
                             </div>
                         </div>
                         <div ng-if="saved">

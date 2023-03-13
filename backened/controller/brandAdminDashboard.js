@@ -134,13 +134,43 @@ module.exports = {
       },
     ];
 
+    var pipeline5 = [
+      {
+        $match: {
+          "brand._id": mongoose.Types.ObjectId(req.params.id),
+        },
+      },
+      {
+        $match: {
+          createdAt: {
+            $gte: startDate,
+            $lt: endDate,
+          },
+        },
+      },
+      {
+        $unwind: "$items",
+      },
+      {
+        $group: {
+          _id: { $dateToString: { format: "%d-%m-%Y", date: "$createdAt" } },
+          totalRevenue: {
+            $sum: { $multiply: ["$items.quantity", "$items.price"] },
+          },
+        },
+      },
+      {
+        $sort: { _id: 1 },
+      },
+    ];
+
     var data1 = outletModel.aggregate(pipeline);
     var data2 = employeeModel.aggregate(pipeline1);
     var data3 = orderModel.aggregate(pipeline2);
     var data4 = orderModel.aggregate(pipeline3);
     var data5 = orderModel.aggregate(pipeline4);
-
-    Promise.all([data1, data2, data3, data4, data5])
+    var data6 = orderModel.aggregate(pipeline5);
+    Promise.all([data1, data2, data3, data4, data5, data6])
       .then(function (result) {
         console.log(result);
         return res.send(result);
