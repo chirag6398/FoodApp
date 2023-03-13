@@ -3,11 +3,8 @@
 
 app.controller("superAdminAnalysisController", [
   "$scope",
-  "$http",
-  "$location",
   "superAdminDashBoardApi",
-  "$rootScope",
-  function ($scope, $http, $location, superAdminDashBoardApi, $rootScope) {
+  function ($scope, superAdminDashBoardApi) {
     superAdminDashBoardApi.getBasicData(function (err, result) {
       if (result) {
         console.log(result);
@@ -15,7 +12,6 @@ app.controller("superAdminAnalysisController", [
         $scope.outletCnt = result.data[1][0].count;
         $scope.userCnt = result.data[2][0].count;
         $scope.brands = result.data[3];
-        // console.log($scope.brandCnt);
       }
     });
 

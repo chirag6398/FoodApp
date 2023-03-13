@@ -2,26 +2,14 @@
 
 app.controller("superAdminBrandDataController", [
   "$scope",
-  "$http",
   "$location",
   "adminApi",
-  "apiHandler",
   "$stateParams",
-  "$rootScope",
-  function (
-    $scope,
-    $http,
-    $location,
-    adminApi,
-    apiHandler,
-    $stateParams,
-    $rootScope
-  ) {
+  function ($scope, $location, adminApi, $stateParams) {
     adminApi.getBrand($stateParams.id, function (err, result) {
       if (result) {
         $scope.brand = result;
         $scope.data = $scope.brand;
-        // console.log(result);
       } else {
         $location.path("superAdmin");
       }

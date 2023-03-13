@@ -3,28 +3,19 @@
 
 app.controller("superAdminCreateBrandController", [
   "$scope",
-  "$http",
-  "$location",
   "adminApi",
-  "apiHandler",
-  "$state",
   "$rootScope",
-  function (
-    $scope,
-    $http,
-    $location,
-    adminApi,
-    apiHandler,
-    $state,
-    $rootScope
-  ) {
+  function ($scope, adminApi, $rootScope) {
     $scope.isAccess = false;
     adminApi.getAdminPage();
     $rootScope.$on("passData", function (err, data) {
       console.log(data);
-      $scope.btnText = "Create";
-      $scope.superAdminId = data._id;
-      $scope.isAccess = true;
+      if (data) {
+        $scope.btnText = "Create";
+        $scope.superAdminId = data._id;
+        $scope.isAccess = true;
+      } else {
+      }
     });
 
     $scope.btnText = "Add Admin";
@@ -64,20 +55,20 @@ app.controller("superAdminCreateBrandController", [
 
     $scope.deactivateBrand = function (brandId) {
       console.log(brandId);
-      apiHandler.deactivateBrand(brandId, function (result) {
+      adminApi.deactivateBrand(brandId, function (result) {
         console.log(result);
       });
     };
 
     $scope.activateBrand = function (brandId) {
       console.log(brandId);
-      apiHandler.activateBrand(brandId, function (result) {
+      adminApi.activateBrand(brandId, function (result) {
         console.log(result);
       });
     };
 
     $scope.deleteBrand = function (brandId) {
-      apiHandler.deleteBrand(brandId, function (err, result) {
+      adminApi.deleteBrand(brandId, function (err, result) {
         if (result) {
           console.log(result);
         }
@@ -87,7 +78,6 @@ app.controller("superAdminCreateBrandController", [
     $scope.createBrand = function ($event) {
       $event.preventDefault();
       $scope.btnText = "creating...";
-      console.log($scope.brand);
 
       var brandData = new FormData();
 

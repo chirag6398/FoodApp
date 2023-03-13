@@ -32,7 +32,7 @@ app.factory("adminApi", function ($http, $rootScope) {
       };
   };
   obj.createBrand = function (data, cb) {
-    // console.log(data);
+    console.log(data);
 
     $http
       .post("http://localhost:5000/api/superAdmin/createBrand", data, {
@@ -245,6 +245,72 @@ app.factory("adminApi", function ($http, $rootScope) {
       });
   };
 
+  obj.deactivateBrand = function (brandId, cb) {
+    $http
+      .post(
+        "http://localhost:5000/api/superAdmin/deactivateBrand",
+        { brandId },
+        {
+          headers: {
+            Authorization: window.localStorage.getItem("Authorization"),
+          },
+        }
+      )
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        // console.log(err,null);
+      });
+  };
+  obj.activateBrand = function (brandId, cb) {
+    $http
+      .post(
+        "http://localhost:5000/api/superAdmin/activateBrand",
+        { brandId },
+        {
+          headers: {
+            Authorization: window.localStorage.getItem("Authorization"),
+          },
+        }
+      )
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        // console.log(err,null);
+      });
+  };
+
+  obj.deleteBrand = function (brandId, cb) {
+    console.log(brandId);
+    $http
+      .post(
+        "http://localhost:5000/api/superAdmin/deleteBrand",
+        { brandId },
+        {
+          headers: {
+            Authorization: window.localStorage.getItem("Authorization"),
+          },
+        }
+      )
+      .then(function (response) {
+        cb(null, response);
+      }),
+      function (err) {
+        cb(err, null);
+      };
+  };
+  obj.getUsers = function (cb) {
+    $http
+      .get("http://localhost:5000/api/employee/getUsers")
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb(err, null);
+      });
+  };
   // obj.postLogin=function(data,cb){
   //     $http.post("http://localhost:5000/api/employee/login",{username:data.userName,password:data.password}).then(function(response){
 
@@ -483,31 +549,6 @@ app.factory("adminApi", function ($http, $rootScope) {
 
   // }
 
-  // obj.deactivateBrand=function(brandId,cb){
-  //     $http.post("http://localhost:5000/api/superAdmin/deactivateBrand",{brandId},{
-  //         headers:{
-  //             "Authorization":window.localStorage.getItem("Authorization")
-  //         }
-  //     }).then(function(response){
-  //         cb(null,response);
-  //     }).catch(function(err){
-
-  //         // console.log(err,null);
-  //     })
-  // }
-  // obj.activateBrand=function(brandId,cb){
-  //     $http.post("http://localhost:5000/api/superAdmin/activateBrand",{brandId},{
-  //         headers:{
-  //             "Authorization":window.localStorage.getItem("Authorization")
-  //         }
-  //     }).then(function(response){
-  //         cb(null,response);
-  //     }).catch(function(err){
-
-  //         // console.log(err,null);
-  //     })
-  // }
-
   // obj.createOutletAgent=function(data,cb){
   //     // console.log(data);
   //     $http.post("http://localhost:5000/api/outletAdmin/createOutletAgent",data,{
@@ -614,28 +655,6 @@ app.factory("adminApi", function ($http, $rootScope) {
   //     }),function(err){
   //         cb(err,null);
   //     }
-  // }
-
-  // obj.deleteBrand=function(brandId,cb){
-  //     console.log(brandId);
-  //     $http.post("http://localhost:5000/api/superAdmin/deleteBrand",{brandId},{
-  //         headers:{
-  //             "Authorization":window.localStorage.getItem("Authorization")
-  //         }
-  //     }).then(function(response){
-
-  //         cb(null,response);
-  //     }),function(err){
-  //         cb(err,null);
-  //     }
-  // }
-
-  // obj.getUsers=function(cb){
-  //     $http.get("http://localhost:5000/api/employee/getUsers").then(function(response){
-  //         cb(null,response);
-  //     }).catch(function(err){
-  //         cb(err,null);
-  //     })
   // }
 
   return obj;

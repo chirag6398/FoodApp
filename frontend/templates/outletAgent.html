@@ -67,8 +67,19 @@
                 </div>
                 <div>
                     <ul class="list-group">
-                        <li class="list-group-item" ng-repeat="res in searchTextResult">
-                            {{res.products.product.name}}
+                        <li style="display: flex;
+                        gap: 12px;
+                        align-items: center;" class="list-group-item" ng-repeat="res in searchTextResult">
+                            <div style="width:120px;justify-content: center;display: flex;">
+                                <img
+                                  style="object-fit: contain; height: 50px"
+                                  src="{{res.products.product.img}}"
+                                  slt="..."
+                                />
+                              </div>
+                            <div>
+                                {{res.products.product.name}}
+                            </div>
                         </li>
                        
                       </ul>
