@@ -31,7 +31,7 @@ module.exports = {
     console.log(req.body.allotedTables);
     console.log(order);
     var data1 = order.save();
-    var data2 = outletModel.updateMany(
+    var data2 = outletModel.updateOne(
       { _id: req.body.outlet._id },
       { $set: { "table.$[elem].isAvailable": false } },
       {
@@ -65,16 +65,43 @@ module.exports = {
       });
   },
   updateStatus: function (req, res) {
-    orderModel
-      .findByIdAndUpdate(
+    console.log(req.body);
+
+    if (req.body.status === "completed") {
+      var data1 = outletModel.updateOne(
+        { _id: req.body.outletId },
+        { $set: { "table.$[elem].isAvailable": true } },
+        {
+          new: true,
+          arrayFilters: [{ "elem.number": { $in: req.body.tableNumbers } }],
+        }
+      );
+
+      var data2 = orderModel.findByIdAndUpdate(
         { _id: req.body._id },
         { $set: { status: req.body.status } }
-      )
-      .then(function (result) {
-        return res.send(result);
-      })
-      .catch(function (err) {
-        return res.status(404).send(err);
-      });
+      );
+
+      Promise.all([data1, data2])
+        .then(function (result) {
+          console.log(result);
+          return res.send(result);
+        })
+        .catch(function (err) {
+          return res.status(404).send(err);
+        });
+    } else {
+      orderModel
+        .findByIdAndUpdate(
+          { _id: req.body._id },
+          { $set: { status: req.body.status } }
+        )
+        .then(function (result) {
+          return res.send(result);
+        })
+        .catch(function (err) {
+          return res.status(404).send(err);
+        });
+    }
   },
 };

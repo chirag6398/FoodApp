@@ -89,7 +89,14 @@ var OrederSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["preparing", "pending", "cancelled", "serving", "served"],
+      enum: [
+        "preparing",
+        "pending",
+        "cancelled",
+        "serving",
+        "served",
+        "completed",
+      ],
       required: true,
       trim: true,
     },

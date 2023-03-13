@@ -1,153 +1,217 @@
 <div class="order__extDiv">
-    <!-- <div>
+  <!-- <div>
         <input type="text" placeholder="pending" ng-model="filter.status">
     </div> -->
-<div style="display: flex;">
+  <div style="display: flex">
+    <ul class="nav justify-content-center" style="display: contents">
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          ng-class="{'active':filter.status==='pending'}"
+          ng-click="setFilter('pending')"
+          >Pending</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          ng-class="{'active':filter.status==='preparing'}"
+          ng-click="setFilter('preparing')"
+          >Preparing</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          ng-class="{'active':filter.status==='serving'}"
+          ng-click="setFilter('serving')"
+          >Serving</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          ng-class="{'active':filter.status==='served'}"
+          ng-click="setFilter('served')"
+          >Seved</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          ng-class="{'active':filter.status==='completed'}"
+          ng-click="setFilter('completed')"
+          >completed</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          ng-class="{'active':filter.status==='cancelled'}"
+          ng-click="setFilter('cancelled')"
+          >Cancelled</a
+        >
+      </li>
+    </ul>
+  </div>
 
-    <ul class="nav justify-content-center" style="display: contents;" >
-        <li class="nav-item">
-          <a class="nav-link " ng-class="{'active':filter.status==='pending'}" ng-click="setFilter('pending')" >Pending</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" ng-class="{'active':filter.status==='preparing'}" ng-click="setFilter('preparing')" >Preparing</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" ng-class="{'active':filter.status==='serving'}" ng-click="setFilter('serving')" >Serving</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " ng-class="{'active':filter.status==='served'}" ng-click="setFilter('served')" >Seved</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link " ng-class="{'active':filter.status==='cancelled'}" ng-click="setFilter('cancelled')" >Cancelled</a>
-          </li>
-      </ul>
-
-</div>
-    
-
-
-    <div ng-if="object.orders" class="order__mainDiv">
-        <div class="order__card" ng-repeat="order in object.orders |filter:filter.status">
-            
-            <div>
-                <div style="display: flex; justify-content: space-between;width: 285px;">
+  <div ng-if="object.orders" class="order__mainDiv">
+    <div
+      class="order__card"
+      ng-repeat="order in object.orders |filter:filter.status"
+    >
+      <div>
+        <div
+          style="display: flex; justify-content: space-between; width: 285px"
+        >
+          <div>
+            <span style="font-weight: 600">OrderId : </span>{{order.orderId}}
+          </div>
+          <div
+            class="order__infoIcon"
+            title="view details"
+            data-toggle="modal"
+            data-target=".bd-example-modal-lg"
+            ng-click="setData(order.items,order.customer,order.totalPrice)"
+          >
+            <div
+              class="modal fade bd-example-modal-lg"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="myLargeModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content order__modalContainer">
+                  <div class="order__modalLeft">
                     <div>
-                        <span style="font-weight: 600;">OrderId : </span>{{order.orderId}}
+                      <span style="font-weight: 900; opacity: 0.7">
+                        Customer Details
+                      </span>
                     </div>
-                    <div 
-                    class="order__infoIcon"
-                    title="view details"
-                    data-toggle="modal"
-                    data-target=".bd-example-modal-lg"
-                    ng-click="setData(order.items,order.customer,order.totalPrice)"
+                    <div>
+                      <i class="fas fa-user"></i
+                      ><span> {{customer.name}} </span>
+                    </div>
+
+                    <div>
+                      <i class="fas fa-phone"></i
+                      ><span> {{customer.number}} </span>
+                    </div>
+                  </div>
+                  <div class="order__modalRight">
+                    <div>
+                      <h5>
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Cart</span>
+                      </h5>
+                    </div>
+
+                    <div
+                      class="order__modalProduct"
+                      ng-repeat="product in items"
                     >
-                    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                          <div  
-                          class="modal-content order__modalContainer">
-                          <div class="order__modalLeft">
-                            <div>
-                                <span style="font-weight: 900; opacity: 0.7;">
-                                    Customer Details
-                                </span>
-                            </div>
-                            <div>
-                                <i class="fas fa-user"></i><span>
-                                    {{customer.name}}
-                                </span>
-                            </div>
-                           
-                            <div>
-                                <i class="fas fa-phone"></i><span>
-                                    {{customer.number}}
-                                </span>
-                            </div>
+                      <div
+                        style="
+                          display: flex;
+                          align-items: center;
+                          justify-content: space-between;
+                          width: 100%;
+                        "
+                      >
+                        <div style="margin-right: 10px">
+                          <img
+                            style="object-fit: contain; height: 100px"
+                            src="{{product.img}}"
+                            alt="..."
+                          />
+                        </div>
+                        <div>
+                          <div>
+                            <span style="font-weight: 900; font-size: 24px">
+                              {{product.name}}
+                            </span>
                           </div>
-                          <div class="order__modalRight">
-                            <div>
-                                <h5>
-                                    <i class="fas fa-shopping-cart"></i>
-                                    <span>Cart</span>
-                                </h5>
-                            </div>
-                           
-                            <div class="order__modalProduct"
-                             ng-repeat="product in items">
-                                
-                                <div style="display: flex;
-                                align-items: center;
-                                justify-content: space-between;
-                                width: 100%;">
-                                <div style="margin-right: 10px;">
-                                    <img style="object-fit: contain;
-                                    height: 100px;"
-                                    src={{product.img}} 
-                                    alt="...">
-                                </div>
-                                <div>
-                                    <div>
-                                        <span style="font-weight: 900;
-                                        font-size: 24px;">
-                                            {{product.name}}
-                                        </span>
-                                    </div>
-                                    <div style="    display: flex;
-                                    width: 100%;
-                                    
-                                    opacity: 0.7;">
-                                    <h5 style="font-weight: bolder;">
-                                        Rs. {{product.price}}
-                                    </h5>
-                                    
-                                    </div>
-                                    <div>
-                                        <span style="font-weight: 900;opacity: 0.5;">Quant.{{product.quantity}}</span>
-                                    </div>
-                                
-                                </div>
-                            
-                        </div> 
-                            </div>
-                            <div>
-                                Pay: {{amount}}
-                            </div>
+                          <div
+                            style="
+                              display: flex;
+                              width: 100%;
+
+                              opacity: 0.7;
+                            "
+                          >
+                            <h5 style="font-weight: bolder">
+                              Rs. {{product.price}}
+                            </h5>
                           </div>
-                          
+                          <div>
+                            <span style="font-weight: 900; opacity: 0.5"
+                              >Quant.{{product.quantity}}</span
+                            >
                           </div>
                         </div>
+                      </div>
                     </div>
-                        <i class="fa-solid fa-info"></i>
-                    </div>
+                    <div>Pay: {{amount}}</div>
+                  </div>
                 </div>
-                <div>
-                    <span style="font-weight: 900;opacity: 0.6;">Quantity :{{order.totalQuantity}}</span>
-                </div>
+              </div>
             </div>
-            <div>
-                <span>
-                     Rs.{{order.totalPrice}}
-                </span>
-            </div>
-            <div>
-                <span ng-class="{'badge badge-success':order.status==='served','badge badge-warning':order.status==='preparing','badge badge-primary':order.status==='serving','badge badge-secondary':order.status==='pending','badge badge-danger':order.status==='cancelled'}">{{order.status}}</span>
-            </div>
-            <div style="display: flex;
-            align-items: center;
-            flex-wrap: wrap;">
-                <button ng-if="order.status==='pending'" ng-click="updateStatus('preparing',order._id)" class="btn btn1">
-                    preparing
-                </button>
-                <button ng-if="order.status!=='served' && order.status!=='cancelled'" ng-click="updateStatus('cancelled',order._id)" class="btn btn1">
-                    cancelled
-                </button>
-                <button ng-if="order.status==='pending' || order.status==='preparing' " ng-click="updateStatus('serving',order._id)" class="btn btn1">
-                    serving
-                </button>
-                <button ng-if="order.status==='serving'" ng-click="updateStatus('served',order._id)" class="btn btn1">
-                    served
-                </button>
-
-            </div>
+            <i class="fa-solid fa-info"></i>
+          </div>
         </div>
+        <div>
+          <span style="font-weight: 900; opacity: 0.6"
+            >Quantity :{{order.totalQuantity}}</span
+          >
+        </div>
+      </div>
+      <div>
+        <span> Rs.{{order.totalPrice}} </span>
+      </div>
+      <div>
+        <span
+          ng-class="{'badge badge-success':order.status==='served','badge badge-success':order.status==='completed','badge badge-warning':order.status==='preparing','badge badge-primary':order.status==='serving','badge badge-secondary':order.status==='pending','badge badge-danger':order.status==='cancelled'}"
+          >{{order.status}}</span
+        >
+      </div>
+      <div style="display: flex; align-items: center; flex-wrap: wrap">
+        <button
+          ng-if="order.status==='pending'"
+          ng-click="updateStatus('preparing',order._id)"
+          class="btn btn1"
+        >
+          preparing
+        </button>
+        <button
+          ng-if="order.status!=='served' && order.status!=='cancelled' && order.status!=='completed'"
+          ng-click="updateStatus('cancelled',order._id)"
+          class="btn btn1"
+        >
+          cancelled
+        </button>
+        <button
+          ng-if="order.status==='pending' || order.status==='preparing' "
+          ng-click="updateStatus('serving',order._id)"
+          class="btn btn1"
+        >
+          serving
+        </button>
+        <button
+          ng-if="order.status==='serving'"
+          ng-click="updateStatus('served',order._id)"
+          class="btn btn1"
+        >
+          served
+        </button>
+        <button
+          ng-if="order.status==='served'"
+          ng-click="updateStatusToCompleted('completed',order._id,order.tableNumber,order.outlet._id)"
+          class="btn btn1"
+        >
+          completed
+        </button>
+      </div>
     </div>
+  </div>
 </div>

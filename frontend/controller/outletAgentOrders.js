@@ -11,8 +11,9 @@ app.controller("outletAgentOrdersController", [
     };
     $rootScope.$on("passData", function (err, result) {
       if (result) {
+        $scope.outletId = result.data.outlet._id;
         outletAgentApi.getOrders(
-          result.data.outlet._id,
+          $scope.outletId,
 
           function (err, result) {
             $scope.object.orders = result.data;
@@ -47,6 +48,30 @@ app.controller("outletAgentOrdersController", [
     $scope.updateStatus = function (status, orderId) {
       outletAgentApi.updateStatus(
         { status: status, _id: orderId },
+        function (err, result) {
+          if (result) {
+            var indx = $scope.object.orders.findIndex(function (value) {
+              return value._id === orderId;
+            });
+            var upData = $scope.object.orders[indx];
+            upData.status = status;
+
+            $scope.object.orders.splice(indx, 1);
+
+            $scope.object.orders.push(upData);
+          }
+        }
+      );
+    };
+
+    $scope.updateStatusToCompleted = function (status, orderId, tableNumbers) {
+      outletAgentApi.updateStatus(
+        {
+          status: status,
+          _id: orderId,
+          tableNumbers: tableNumbers,
+          outletId: $scope.outletId,
+        },
         function (err, result) {
           if (result) {
             var indx = $scope.object.orders.findIndex(function (value) {

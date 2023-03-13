@@ -9,7 +9,6 @@ var mongoose = require("mongoose");
 var productModel = require("../model/product.model");
 module.exports = {
   getAdminPage: function (req, res) {
-    // console.log(req.user);
     if (req.user.userType === "superAdmin") {
       return res.status(200).send({ message: "eligible", user: req.user });
     } else {
@@ -287,9 +286,6 @@ module.exports = {
       });
   },
   changeLogo: function (req, res) {
-    console.log(req.file);
-    console.log(req.body);
-
     if (req.file) {
       return awsService
         .uploadToS3(req.file.buffer, req.file.originalname, req.file.mimetype)

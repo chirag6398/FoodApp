@@ -3,11 +3,11 @@
 
 app.controller("outletAdminController", [
   "$scope",
-  "$http",
+  "$state",
   "$location",
   "outletApi",
   "$rootScope",
-  function ($scope, $http, $location, outletApi, $rootScope) {
+  function ($scope, $state, $location, outletApi, $rootScope) {
     outletApi.getOutletAdminPage();
 
     $rootScope.$on("passData", function (err, data) {
@@ -26,6 +26,11 @@ app.controller("outletAdminController", [
         $location.path("login");
       }
     });
+
+    $scope.logOutHandler = function () {
+      window.localStorage.removeItem("Authorization");
+      $state.go("login");
+    };
 
     let sidebar = document.querySelector(".sidebar");
     let sidebarBtn = document.querySelector(".bx-menu");
