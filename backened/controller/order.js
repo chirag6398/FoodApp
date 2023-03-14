@@ -52,8 +52,16 @@ module.exports = {
       });
   },
   getOrders: function (req, res) {
-    orderModel
-      .find({ "outlet._id": mongoose.Types.ObjectId(req.params.id) })
+    var data1 = orderModel.find({
+      "outlet._id": mongoose.Types.ObjectId(req.params.id),
+    });
+
+    var data2 = outletModel.findById(
+      { _id: req.params.id },
+      { _id: 0, table: 1 }
+    );
+
+    Promise.all([data1, data2])
       .then(function (result) {
         console.log(result);
         return res.send(result);

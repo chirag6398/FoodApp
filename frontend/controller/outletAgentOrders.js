@@ -18,16 +18,27 @@ app.controller("outletAgentOrdersController", [
       activeIndex: [],
       newTable: [],
     };
-    console.log($rootScope.tables);
+
     $rootScope.$on("passData", function (err, result) {
       if (result) {
         console.log(result);
         $scope.outletId = result.data.outlet._id;
+
+        // if($rootScope.tables === undefined){
+        //   outletAgentApi.getOutletTable($scope.outletId,function(err,result){
+        //     if(result){
+        //       $scope.tables=result.table;
+        //     }
+        //   })
+        // }
+
         outletAgentApi.getOrders(
           $scope.outletId,
 
           function (err, result) {
-            $scope.object.orders = result.data;
+            console.log(result.data);
+            $scope.object.orders = result.data[0];
+            $scope.object.tables = result.data[1].table;
             $scope.object.orders.forEach(function (value) {
               value.totalQuantity = value.items.reduce(function (accum, value) {
                 return accum + value.quantity;

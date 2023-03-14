@@ -9,6 +9,20 @@ function generateOrderId() {
   return orderId;
 }
 
+function updateTablesIndexes(tables, allotedTables) {
+  var indexes = [];
+  allotedTables.forEach(function (tableNumber) {
+    for (var x = 0; x < tables.length; x++) {
+      if (tables[x].number == tableNumber) {
+        indexes.push(x);
+        break;
+      }
+    }
+  });
+
+  return indexes;
+}
+
 function addTaxes(taxes, amount) {
   var extraAmount = 0;
   taxes.forEach(function (value) {
@@ -250,8 +264,17 @@ app.controller("outletAgentController", [
       outletAgentApi.placeOrder(data, function (err, result) {
         if (result) {
           alert("order placed");
+          console.log(result, $scope.object.tables, $scope.allotedTables);
+          var indx = updateTablesIndexes(
+            $scope.object.tables,
+            $scope.allotedTables
+          );
+          console.log(indx);
+          indx.forEach(function (value) {
+            $scope.object.tables[value].isAvailable = false;
+          });
           $scope.orderNo = generateOrderId();
-          $scope.object = { cart: [] };
+          $scope.object.cart = [];
           $scope.amount = 0;
           $scope.saved = false;
           $scope.orderBtn = "placed order";

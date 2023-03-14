@@ -164,7 +164,7 @@
                                 class="agt__tableDiv"
                                 title="{{table.isAvailable?'available':'booked'}}"
                                 ng-class="{'agt__tableGreen order__pointer':table.isAvailable,'order__none':!table.isAvailable,'order__activeTable': object.activeIndex.includes($index)}"
-                                ng-repeat="table in tables"
+                                ng-repeat="table in object.tables"
                                 ng-disabled="!table.isAvailable"
                                 ng-click="swapTableHandler(table,$index)"
                               >
