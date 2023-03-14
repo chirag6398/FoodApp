@@ -169,14 +169,5 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       controller: "superAdminBrandDataController",
     });
 
-  // $urlRouterProvider
-  // .when('/brandcategoryproduct/:id', '/brandcategoryproduct/:id')
-
   // $urlRouterProvider.otherwise('/login');
 });
-
-// .state("brandadmin.brandCategory", {
-//     url: "/brandadmincategory",
-//     templateUrl: "./templates/brandCategory.html",
-//     controller: "brandCategoryController",
-//   })

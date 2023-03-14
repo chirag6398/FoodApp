@@ -85,3 +85,18 @@
     background-color: lightgray;
     box-shadow: lightgray 0px 0px 0px 1px;
 }
+.order__customerDetail{
+    padding: 10px;
+    min-width: 212px;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+.order__pointer{
+    cursor: pointer;
+}
+.order__none{
+    cursor: not-allowed;
+}
+.order__activeTable{
+    opacity: 0.5;
+}

@@ -145,11 +145,10 @@ app.factory("adminApi", function ($http, $rootScope) {
         },
       })
       .then(function (response) {
-        // console.log(null,response);
         cb(null, response);
       })
       .catch(function (err) {
-        // console.log(err,null);
+        cb(err, null);
       });
   };
 
@@ -192,11 +191,10 @@ app.factory("adminApi", function ($http, $rootScope) {
         },
       })
       .then(function (response) {
-        // console.log(null,response);
         cb(null, response);
       })
       .catch(function (err) {
-        // console.log(err,null);
+        cb(err, null);
       });
   };
 
@@ -208,11 +206,10 @@ app.factory("adminApi", function ($http, $rootScope) {
         },
       })
       .then(function (response) {
-        // console.log(null,response);
         cb(null, response);
       })
       .catch(function (err) {
-        // console.log(err,null);
+        cb(err, null);
       });
   };
 
@@ -224,11 +221,10 @@ app.factory("adminApi", function ($http, $rootScope) {
         },
       })
       .then(function (response) {
-        // console.log(null,response);
         cb(null, response);
       })
       .catch(function (err) {
-        // console.log(err,null);
+        cb(err, null);
       });
   };
 
@@ -247,7 +243,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response);
       })
       .catch(function (err) {
-        // console.log(err,null);
+        cb(err, null);
       });
   };
   obj.activateBrand = function (brandId, cb) {
@@ -265,7 +261,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response);
       })
       .catch(function (err) {
-        // console.log(err,null);
+        cb(err, null);
       });
   };
 

@@ -108,6 +108,7 @@ app.controller("outletAgentController", [
           console.log(err, result);
           $scope.taxes = result.data.taxes;
           $scope.object.tables = result.data.table;
+          $rootScope.tables = $scope.object.tables;
         });
       }
     });

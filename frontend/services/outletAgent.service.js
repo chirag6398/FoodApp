@@ -122,7 +122,7 @@ app.service("outletAgentApi", function ($http, $rootScope) {
 
   this.updateStatus = function (data, cb) {
     $http
-      .post("http://localhost:5000/api/order/updateStatus", data, {
+      .put("http://localhost:5000/api/order/updateStatus", data, {
         headers: {
           Authorization: window.localStorage.getItem("Authorization"),
         },
@@ -149,6 +149,21 @@ app.service("outletAgentApi", function ($http, $rootScope) {
           },
         }
       )
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb(err, null);
+      });
+  };
+
+  this.updateTableNo = function (data, cb) {
+    $http
+      .put("http://localhost:5000/api/order/updateTableNo", data, {
+        headers: {
+          Authorization: window.localStorage.getItem("Authorization"),
+        },
+      })
       .then(function (response) {
         cb(null, response);
       })

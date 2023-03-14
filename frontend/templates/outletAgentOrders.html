@@ -1,7 +1,4 @@
 <div class="order__extDiv">
-  <!-- <div>
-        <input type="text" placeholder="pending" ng-model="filter.status">
-    </div> -->
   <div style="display: flex">
     <ul class="nav justify-content-center" style="display: contents">
       <li class="nav-item">
@@ -69,21 +66,26 @@
           </div>
           <div
             class="order__infoIcon"
-            title="view details"
             data-toggle="modal"
             data-target=".bd-example-modal-lg"
-            ng-click="setData(order.items,order.customer,order.totalPrice)"
+            ng-click="setData(order.items,order.customer,order.totalPrice,order.tableNumber)"
           >
-            <div
-              class="modal fade bd-example-modal-lg"
-              tabindex="-1"
-              role="dialog"
-              aria-labelledby="myLargeModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog modal-lg">
-                <div class="modal-content order__modalContainer">
-                  <div class="order__modalLeft">
+            <i class="fa-solid fa-info"></i>
+          </div>
+          <div
+            class="modal fade bd-example-modal-lg"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="myLargeModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-lg" role="document">
+              <div
+                style="flex-wrap: wrap"
+                class="modal-content order__modalContainer"
+              >
+                <div class="order__modalLeft">
+                  <div class="order__customerDetail">
                     <div>
                       <span style="font-weight: 900; opacity: 0.7">
                         Customer Details
@@ -99,65 +101,133 @@
                       ><span> {{customer.number}} </span>
                     </div>
                   </div>
-                  <div class="order__modalRight">
+
+                  <div>
+                    <div>Tables Alloted :{{allotedTable}}</div>
                     <div>
-                      <h5>
-                        <i class="fas fa-shopping-cart"></i>
-                        <span>Cart</span>
-                      </h5>
-                    </div>
-
-                    <div
-                      class="order__modalProduct"
-                      ng-repeat="product in items"
-                    >
-                      <div
-                        style="
-                          display: flex;
-                          align-items: center;
-                          justify-content: space-between;
-                          width: 100%;
-                        "
+                      <button
+                        data-toggle="modal"
+                        data-target="#tables"
+                        data-whatever="@mdo"
+                        class="btn btn-secondard"
                       >
-                        <div style="margin-right: 10px">
-                          <img
-                            style="object-fit: contain; height: 100px"
-                            src="{{product.img}}"
-                            alt="..."
-                          />
-                        </div>
-                        <div>
-                          <div>
-                            <span style="font-weight: 900; font-size: 24px">
-                              {{product.name}}
-                            </span>
-                          </div>
-                          <div
-                            style="
-                              display: flex;
-                              width: 100%;
-
-                              opacity: 0.7;
-                            "
-                          >
-                            <h5 style="font-weight: bolder">
-                              Rs. {{product.price}}
-                            </h5>
-                          </div>
-                          <div>
-                            <span style="font-weight: 900; opacity: 0.5"
-                              >Quant.{{product.quantity}}</span
+                        Swap tables
+                      </button>
+                      <div
+                        class="modal fade"
+                        id="tables"
+                        tabindex="-1"
+                        role="dialog"
+                        aria-labelledby="exampleModalLabel"
+                        aria-hidden="true"
+                      >
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">
+                                Select Available Table For Swaping
+                              </h5>
+                              <button
+                                type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                              >
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div
+                              style="display: flex; gap: 5px; flex-wrap: wrap"
+                              class="modal-body"
                             >
+                              <div
+                                class="agt__tableDiv"
+                                title="{{table.isAvailable?'available':'booked'}}"
+                                ng-class="{'agt__tableGreen order__pointer':table.isAvailable,'order__none':!table.isAvailable,'order__activeTable': object.activeIndex.includes($index)}"
+                                ng-repeat="table in tables"
+                                ng-disabled="!table.isAvailable"
+                                ng-click="swapTableHandler(table,$index)"
+                              >
+                                <p style="font-weight: 900">{{table.number}}</p>
+                                <p
+                                  style="
+                                    text-align: center;
+                                    width: -webkit-fill-available;
+                                  "
+                                >
+                                  {{table.capacity}}
+                                </p>
+                              </div>
+                              <div>
+                                <button
+                                  ng-disabled="object.activeIndex.length===0"
+                                  class="btn btn-warning"
+                                  ng-click="updateTableNo(order._id,order.tableNumber)"
+                                >
+                                  Apply Swaps
+                                </button>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div>Pay: {{amount}}</div>
                   </div>
+                </div>
+                <div class="order__modalRight">
+                  <div>
+                    <h5>
+                      <i class="fas fa-shopping-cart"></i>
+                      <span>Cart</span>
+                    </h5>
+                  </div>
+
+                  <div class="order__modalProduct" ng-repeat="product in items">
+                    <div
+                      style="
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        width: 100%;
+                      "
+                    >
+                      <div style="margin-right: 10px">
+                        <img
+                          style="object-fit: contain; height: 100px"
+                          src="{{product.img}}"
+                          alt="..."
+                        />
+                      </div>
+                      <div>
+                        <div>
+                          <span style="font-weight: 900; font-size: 24px">
+                            {{product.name}}
+                          </span>
+                        </div>
+                        <div
+                          style="
+                            display: flex;
+                            width: 100%;
+
+                            opacity: 0.7;
+                          "
+                        >
+                          <h5 style="font-weight: bolder">
+                            Rs. {{product.price}}
+                          </h5>
+                        </div>
+                        <div>
+                          <span style="font-weight: 900; opacity: 0.5"
+                            >Quant.{{product.quantity}}</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>Pay: {{amount}}</div>
                 </div>
               </div>
             </div>
-            <i class="fa-solid fa-info"></i>
           </div>
         </div>
         <div>

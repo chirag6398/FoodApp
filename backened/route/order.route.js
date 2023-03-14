@@ -16,10 +16,14 @@ orderRoute.get(
   passport.authenticate("jwt", { session: false }),
   orderController.getOrders
 );
-orderRoute.post(
+orderRoute.put(
   "/api/order/updateStatus",
   passport.authenticate("jwt", { session: false }),
   orderController.updateStatus
 );
-
+orderRoute.put(
+  "/api/order/updateTableNo",
+  passport.authenticate("jwt", { session: false }),
+  orderController.updateTableNo
+);
 module.exports = orderRoute;

@@ -104,4 +104,54 @@ module.exports = {
         });
     }
   },
+  updateTableNo: function (req, res) {
+    console.log(req.body);
+    var bulkUpdatOpt = [
+      {
+        updateMany: {
+          filter: {
+            _id: req.body.outletId,
+          },
+          update: {
+            $set: {
+              "table.$[elem].isAvailable": true,
+            },
+          },
+          arrayFilters: [{ "elem.number": { $in: req.body.oldTables } }],
+        },
+      },
+
+      {
+        updateMany: {
+          filter: {
+            _id: req.body.outletId,
+          },
+          update: {
+            $set: {
+              "table.$[elem].isAvailable": false,
+            },
+          },
+          arrayFilters: [{ "elem.number": { $in: req.body.newTables } }],
+        },
+      },
+    ];
+
+    var data1 = outletModel.bulkWrite(bulkUpdatOpt);
+
+    var data2 = orderModel.updateOne(
+      { _id: req.params._id },
+      {
+        tableNumber: req.params.newTables,
+      }
+    );
+
+    Promise.all([data1, data2])
+      .then(function (result) {
+        console.log(result);
+        return res.send(result);
+      })
+      .catch(function (err) {
+        return res.status(404).send(err);
+      });
+  },
 };
