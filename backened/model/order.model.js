@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 
-var OrederSchema = new mongoose.Schema(
+var OrderSchema = new mongoose.Schema(
   {
     orderId: {
       type: String,
@@ -115,4 +115,6 @@ var OrederSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("order", OrederSchema);
+OrderSchema.index({ createdAt: -1 });
+
+module.exports = mongoose.model("order", OrderSchema);

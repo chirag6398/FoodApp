@@ -4,6 +4,7 @@ var passport = require("passport");
 var cors = require("cors");
 var morgan = require("morgan");
 var dotenv = require("dotenv");
+
 dotenv.config({ path: "./.env" });
 
 require("./db/db");

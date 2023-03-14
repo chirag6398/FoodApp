@@ -29,7 +29,7 @@
 
                         </div>
                     </div>
-                </div>
+        </div>
         <div class="agt__navComponent" ui-sref="login">
             Login
         </div>
@@ -65,7 +65,7 @@
                         placeholder="Search Tasks...">
                         
                 </div>
-                <div>
+                <div style="position: absolute;z-index: 2;">
                     <ul class="list-group">
                         <li style="display: flex;
                         gap: 12px;
@@ -224,8 +224,12 @@
                 </h5>
                 <div ng-if="object.cart.length>0" class="agt__itemCart" ng-repeat="item in object.cart">
                     <div>
-                        <p>{{item.name}}</p>
-                        <p>{{item.price}}</p>
+                        <div style="display: flex;align-items: center;gap: 3px;">
+                            <img style="object-fit:contain;height: 80px;width: 80px;" src={{item.img}} alt="loading">
+                            <p>{{item.name}}</p>
+                        </div>
+                        
+                        <p>Rs.{{item.price}}</p>
                     </div>
                     <div style=" display: flex;
                     align-items: center;
