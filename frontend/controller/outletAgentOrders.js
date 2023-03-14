@@ -41,8 +41,15 @@ app.controller("outletAgentOrdersController", [
       }
     });
 
-    $scope.filter = {
+    $scope.object.filter = {
       status: "pending",
+    };
+    $scope.filter = {
+      type: "dine-in",
+    };
+
+    $scope.setType = function (value) {
+      $scope.filter.type = value;
     };
 
     $scope.setData = function (items, customer, amount, tableAlloted) {
@@ -51,11 +58,11 @@ app.controller("outletAgentOrdersController", [
       $scope.customer = customer;
       $scope.allotedTable = tableAlloted;
     };
-    $scope.filter = {
+    $scope.object.filter = {
       status: "pending",
     };
     $scope.setFilter = function (value) {
-      $scope.filter.status = value;
+      $scope.object.filter.status = value;
     };
     $scope.updateStatus = function (status, orderId) {
       outletAgentApi.updateStatus(

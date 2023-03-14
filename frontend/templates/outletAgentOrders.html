@@ -1,10 +1,10 @@
 <div class="order__extDiv">
-  <div style="display: flex">
+  <div style="display: flex; padding-top: 20px">
     <ul class="nav justify-content-center" style="display: contents">
       <li class="nav-item">
         <a
           class="nav-link"
-          ng-class="{'active':filter.status==='pending'}"
+          ng-class="{'active':object.filter.status==='pending'}"
           ng-click="setFilter('pending')"
           >Pending</a
         >
@@ -12,7 +12,7 @@
       <li class="nav-item">
         <a
           class="nav-link"
-          ng-class="{'active':filter.status==='preparing'}"
+          ng-class="{'active':object.filter.status==='preparing'}"
           ng-click="setFilter('preparing')"
           >Preparing</a
         >
@@ -20,7 +20,7 @@
       <li class="nav-item">
         <a
           class="nav-link"
-          ng-class="{'active':filter.status==='serving'}"
+          ng-class="{'active':object.filter.status==='serving'}"
           ng-click="setFilter('serving')"
           >Serving</a
         >
@@ -28,7 +28,7 @@
       <li class="nav-item">
         <a
           class="nav-link"
-          ng-class="{'active':filter.status==='served'}"
+          ng-class="{'active':object.filter.status==='served'}"
           ng-click="setFilter('served')"
           >Seved</a
         >
@@ -36,7 +36,7 @@
       <li class="nav-item">
         <a
           class="nav-link"
-          ng-class="{'active':filter.status==='completed'}"
+          ng-class="{'active':object.filter.status==='completed'}"
           ng-click="setFilter('completed')"
           >completed</a
         >
@@ -44,7 +44,7 @@
       <li class="nav-item">
         <a
           class="nav-link"
-          ng-class="{'active':filter.status==='cancelled'}"
+          ng-class="{'active':object.filter.status==='cancelled'}"
           ng-click="setFilter('cancelled')"
           >Cancelled</a
         >
@@ -52,10 +52,30 @@
     </ul>
   </div>
 
+  <div style="display: flex; padding-top: 20px">
+    <ul class="nav justify-content-center" style="display: contents">
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          ng-class="{'active':filter.type==='dine-in'}"
+          ng-click="setType('dine-in')"
+          >Dine-in</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          ng-class="{'active':filter.type==='take-away'}"
+          ng-click="setType('take-away')"
+          >Take-away</a
+        >
+      </li>
+    </ul>
+  </div>
   <div ng-if="object.orders" class="order__mainDiv">
     <div
       class="order__card"
-      ng-repeat="order in object.orders |filter:filter.status"
+      ng-repeat="order in object.orders |filter:object.filter.status |filter:filter.type"
     >
       <div>
         <div
