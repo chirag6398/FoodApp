@@ -1,4 +1,5 @@
 var brandModel = require("../model/brand.model");
+var productModel = require("../model/product.model");
 var outletModel = require("../model/outlet.model");
 var validation = require("../service/validation.service");
 var employeeModel = require("../model/employee.model");
@@ -267,16 +268,35 @@ module.exports = {
           console.log(data);
           var image = data.Location;
 
-          superCategoryModel
-            .findByIdAndUpdate(
-              { _id: req.body._id },
-              {
-                name: req.body.name,
-                logo: image,
-              }
-            )
+          var data1 = superCategoryModel.findByIdAndUpdate(
+            { _id: req.body._id },
+            {
+              name: req.body.name,
+              logo: image,
+            }
+          );
+
+          var data2 = categoryModel.updateMany(
+            { "superCategory._id": req.body._id },
+            { "superCategory.name": req.body.name }
+          );
+          var data3 = productModel.updateMany(
+            { "superCategory._id": req.body._id },
+            { "superCategory.name": req.body.name }
+          );
+          var data4 = outletModel.updateMany(
+            { "brand._id": req.body.brandId },
+            { "products.$[elem].product.superCategory.name": req.body.name },
+            {
+              arrayFilters: [
+                { "elem.product.superCategory._id": req.body._id },
+              ],
+            }
+          );
+
+          Promise.all([data1, data2, data3, data4])
             .then(function (result) {
-              return res.send({ message: "updated" });
+              return res.send(result);
             })
             .catch(function (err) {
               return res.status(401).send({ error: err });
@@ -287,17 +307,34 @@ module.exports = {
           return res.status(500).send({ error: err, status: 500 });
         });
     } else {
-      superCategoryModel
-        .findByIdAndUpdate(
-          { _id: req.body._id },
-          {
-            name: req.body.name,
-          }
-        )
+      var data1 = superCategoryModel.findByIdAndUpdate(
+        { _id: req.body._id },
+        {
+          name: req.body.name,
+        }
+      );
+
+      var data2 = categoryModel.updateMany(
+        { "superCategory._id": req.body._id },
+        { "superCategory.name": req.body.name }
+      );
+      var data3 = productModel.updateMany(
+        { "superCategory._id": req.body._id },
+        { "superCategory.name": req.body.name }
+      );
+      var data4 = outletModel.updateMany(
+        { "brand._id": req.body.brandId },
+        { "products.$[elem].product.superCategory.name": req.body.name },
+        { arrayFilters: [{ "elem.product.superCategory._id": req.body._id }] }
+      );
+
+      Promise.all([data1, data2, data3, data4])
         .then(function (result) {
-          return res.send({ message: "updated" });
+          console.log(result);
+          return res.send(result);
         })
         .catch(function (err) {
+          console.log(err);
           return res.status(401).send({ error: err });
         });
     }
@@ -311,18 +348,30 @@ module.exports = {
           console.log(data);
           var image = data.Location;
 
-          categoryModel
-            .findByIdAndUpdate(
-              { _id: req.body._id },
-              {
-                name: req.body.name,
-                logo: image,
-              }
-            )
+          var data1 = categoryModel.findByIdAndUpdate(
+            { _id: req.body._id },
+            {
+              name: req.body.name,
+              logo: image,
+            }
+          );
+
+          var data2 = productModel.updateMany(
+            { "category._id": req.body._id },
+            { "category.name": req.body.name }
+          );
+          var data3 = outletModel.updateMany(
+            { "brand._id": req.body.brandId },
+            { "products.$[elem].product.category.name": req.body.name },
+            { arrayFilters: [{ "elem.product.category._id": req.body._id }] }
+          );
+
+          Promise.all([data1, data2, data3])
             .then(function (result) {
-              return res.send({ message: "updated with image" });
+              return res.send(result);
             })
             .catch(function (err) {
+              console.log(err);
               return res.status(401).send({ error: err });
             });
         })
@@ -331,17 +380,29 @@ module.exports = {
           return res.status(500).send({ error: err, status: 500 });
         });
     } else {
-      categoryModel
-        .findByIdAndUpdate(
-          { _id: req.body._id },
-          {
-            name: req.body.name,
-          }
-        )
+      var data1 = categoryModel.findByIdAndUpdate(
+        { _id: req.body._id },
+        {
+          name: req.body.name,
+        }
+      );
+
+      var data2 = productModel.updateMany(
+        { "category._id": req.body._id },
+        { "category.name": req.body.name }
+      );
+      var data3 = outletModel.updateMany(
+        { "brand._id": req.body.brandId },
+        { "products.$[elem].product.category.name": req.body.name },
+        { arrayFilters: [{ "elem.product.category._id": req.body._id }] }
+      );
+
+      Promise.all([data1, data2, data3])
         .then(function (result) {
-          return res.send({ message: "updated" });
+          return res.send(result);
         })
         .catch(function (err) {
+          console.log(err);
           return res.status(401).send({ error: err });
         });
     }

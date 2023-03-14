@@ -4,10 +4,10 @@ var app = angular.module("myModule", ["ui.router"]);
 
 app.controller("mainController", [
   "$scope",
-  "$http",
+  "$location",
   "$state",
-  function ($scope, $http, $state) {
-    // $location.path('login')
-    $state.go("login");
+  function ($scope, $location, $state) {
+    // $location.path("login");
+    // $state.go("login");
   },
 ]);

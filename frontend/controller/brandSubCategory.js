@@ -71,7 +71,7 @@ app.controller("subCategoryController", [
       formData.append("name", $scope.category.name);
       formData.append("file", $scope.category.logo);
       formData.append("_id", $scope.category._id);
-
+      formData.append("brandId", $scope.brandId);
       $http
         .post("http://localhost:5000/api/brandAdmin/updateCategory", formData, {
           transformRequest: angular.identity,

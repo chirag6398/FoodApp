@@ -1,6 +1,10 @@
 var orderModel = require("../model/order.model");
 var mongoose = require("mongoose");
 var outletModel = require("../model/outlet.model");
+var moment = require("moment");
+var startDate = moment().subtract(1, "month").toDate();
+var endDate = moment().toDate();
+
 module.exports = {
   createOrder: function (req, res) {
     console.log("data", req.body);
@@ -53,7 +57,10 @@ module.exports = {
   },
   getOrders: function (req, res) {
     var data1 = orderModel.find({
-      "outlet._id": mongoose.Types.ObjectId(req.params.id),
+      $and: [
+        { "outlet._id": mongoose.Types.ObjectId(req.params.id) },
+        { createdAt: { $gte: startDate } },
+      ],
     });
 
     var data2 = outletModel.findById(

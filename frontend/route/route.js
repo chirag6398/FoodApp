@@ -159,8 +159,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       controller: "outletAgentOrdersController",
     })
     .state("brandadmin.subCategory", {
-      url: "/outletSubCategory/:id/:name",
-      templateUrl: "./templates/subCategory.html",
+      url: "/brandsubCategory/:id/:name",
+      templateUrl: "./templates/brandSubCategory.html",
       controller: "subCategoryController",
     })
     .state("superAdmin.brandData", {
