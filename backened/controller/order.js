@@ -106,52 +106,58 @@ module.exports = {
   },
   updateTableNo: function (req, res) {
     console.log(req.body);
-    var bulkUpdatOpt = [
-      {
-        updateMany: {
-          filter: {
-            _id: req.body.outletId,
-          },
-          update: {
-            $set: {
-              "table.$[elem].isAvailable": true,
-            },
-          },
-          arrayFilters: [{ "elem.number": { $in: req.body.oldTables } }],
-        },
-      },
+    mongoose
+      .startSession()
+      .then(function (session) {
+        session
+          .withTransaction(function () {
+            var bulkUpdatOpt = [
+              {
+                updateMany: {
+                  filter: {
+                    _id: req.body.outletId,
+                  },
+                  update: {
+                    $set: {
+                      "table.$[elem1].isAvailable": true,
+                      "table.$[elem2].isAvailable": false,
+                    },
+                  },
+                  arrayFilters: [
+                    { "elem1.number": { $in: req.body.oldTables } },
+                    { "elem2.number": { $in: req.body.newTables } },
+                  ],
+                },
+              },
+            ];
 
-      {
-        updateMany: {
-          filter: {
-            _id: req.body.outletId,
-          },
-          update: {
-            $set: {
-              "table.$[elem].isAvailable": false,
-            },
-          },
-          arrayFilters: [{ "elem.number": { $in: req.body.newTables } }],
-        },
-      },
-    ];
+            var data1 = outletModel.bulkWrite(bulkUpdatOpt, { session });
 
-    var data1 = outletModel.bulkWrite(bulkUpdatOpt);
+            var data2 = orderModel.updateOne(
+              { _id: req.body._id },
+              {
+                tableNumber: req.body.newTables,
+              },
+              {
+                session,
+              }
+            );
 
-    var data2 = orderModel.updateOne(
-      { _id: req.params._id },
-      {
-        tableNumber: req.params.newTables,
-      }
-    );
-
-    Promise.all([data1, data2])
-      .then(function (result) {
-        console.log(result);
-        return res.send(result);
+            return Promise.all([data1, data2]);
+          })
+          .then(function (result) {
+            console.log("commited", result);
+            session.endSession();
+            return res.send(result);
+          })
+          .catch(function (err) {
+            console.log("aborted", err);
+            session.endSession();
+            return res.status(401).send(err);
+          });
       })
       .catch(function (err) {
-        return res.status(404).send(err);
+        return res.status(500).send({ error: "try later" });
       });
   },
 };

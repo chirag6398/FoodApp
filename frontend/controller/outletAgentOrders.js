@@ -2,7 +2,7 @@
 
 function checkExistanceOfTable(table, data) {
   var ind = table.findIndex(function (value) {
-    return value.number === data.number;
+    return value === data.number;
   });
 
   return ind;
