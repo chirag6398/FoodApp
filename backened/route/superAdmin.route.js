@@ -23,8 +23,9 @@ superAdminRoute.get(
   passport.authenticate("jwt", { session: false }),
   superAdminController.getAdminPage
 );
+
 superAdminRoute.get(
-  "/api/superAdmin/getBrands",
+  "/api/superAdmin/getBrands/:limit/:page",
   passport.authenticate("jwt", { session: false }),
   superAdminController.getBrands
 );
@@ -33,6 +34,13 @@ superAdminRoute.get(
   passport.authenticate("jwt", { session: false }),
   superAdminController.getBrand
 );
+
+superAdminRoute.get(
+  "/api/superAdmin/searchBrandBySearchText/:searchText",
+  passport.authenticate("jwt", { session: false }),
+  superAdminController.searchBrandBySearchText
+);
+
 superAdminRoute.get(
   "/api/superAdmin/getBrandOutlets",
   passport.authenticate("jwt", { session: false }),

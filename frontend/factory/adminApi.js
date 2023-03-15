@@ -61,13 +61,19 @@ app.factory("adminApi", function ($http, $rootScope) {
       });
   };
 
-  obj.getBrands = function (cb) {
+  obj.getBrands = function (data, cb) {
     $http
-      .get("http://localhost:5000/api/superAdmin/getBrands", {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .get(
+        "http://localhost:5000/api/superAdmin/getBrands/" +
+          data.limit +
+          "/" +
+          data.page,
+        {
+          headers: {
+            Authorization: window.localStorage.getItem("Authorization"),
+          },
+        }
+      )
       .then(function (response) {
         cb(null, response.data);
       })
@@ -120,7 +126,7 @@ app.factory("adminApi", function ($http, $rootScope) {
     };
     // console.log(data);
     $http
-      .post("http://localhost:5000/api/employee/updateUser", data, {
+      .put("http://localhost:5000/api/employee/updateUser", data, {
         headers: {
           Authorization: window.localStorage.getItem("Authorization"),
         },
@@ -139,7 +145,7 @@ app.factory("adminApi", function ($http, $rootScope) {
       id: id,
     };
     $http
-      .post("http://localhost:5000/api/employee/updatePassword", data, {
+      .put("http://localhost:5000/api/employee/updatePassword", data, {
         headers: {
           Authorization: window.localStorage.getItem("Authorization"),
         },
@@ -287,6 +293,24 @@ app.factory("adminApi", function ($http, $rootScope) {
   obj.getUsers = function (cb) {
     $http
       .get("http://localhost:5000/api/employee/getUsers")
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb(err, null);
+      });
+  };
+  obj.searchBrandBySearchText = function (searchText, cb) {
+    $http
+      .get(
+        "http://localhost:5000/api/superAdmin/searchBrandBySearchText/" +
+          searchText,
+        {
+          headers: {
+            Authorization: window.localStorage.getItem("Authorization"),
+          },
+        }
+      )
       .then(function (response) {
         cb(null, response);
       })

@@ -17,11 +17,28 @@ module.exports = {
   },
   getBrands: function (req, res) {
     if (req.user.userType === "superAdmin") {
+      var limitSize = req.params.limit || 5;
+      var pageNo = req.params.page || 1;
+      var skipValue = (pageNo - 1) * limitSize;
+
       brandModel
         .find({})
+        .skip(skipValue)
+        .limit(limitSize)
+        .sort({ name: "asc" })
         .then(function (result) {
-          console.log(result);
-          return res.status(200).send({ data: result, status: 200 });
+          brandModel.countDocuments({}, function (err, count) {
+            if (count) {
+              console.log(result, count);
+              return res.status(200).send({ data: result, count: count });
+            } else {
+              return res.status(500).send({
+                message: "internal server error",
+                error: err,
+                status: 500,
+              });
+            }
+          });
         })
         .catch(function (err) {
           return res.status(500).send({
@@ -218,62 +235,6 @@ module.exports = {
       });
   },
 
-  // updateBrand: function (req, res) {
-  //   console.log(req.body);
-  //   if (req.file) {
-  //     return awsService
-  //       .updateToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
-  //       .then(function (data) {
-  //         console.log(data);
-  //         var image = data.Location;
-
-  //         brandModel
-  //           .findByIdAndUpdate(
-  //             { _id: req.body._id },
-  //             {
-  //               name: req.body.name,
-  //               logo: image,
-  //               "contactInfo.email": req.body.email,
-  //               "contactInfo.number": req.body.number,
-  //               "location.city": req.body.city,
-  //               "location.pinCode": req.body.pinCode,
-  //               "location.address": req.body.address,
-  //               description: req.body.description,
-  //             }
-  //           )
-  //           .then(function (result) {
-  //             return res.send({ message: "updated with image" });
-  //           })
-  //           .catch(function (err) {
-  //             return res.status(401).send({ error: err });
-  //           });
-  //       })
-  //       .catch(function (err) {
-  //         console.log(err);
-  //         return res.status(500).send({ error: err, status: 500 });
-  //       });
-  //   } else {
-  //     brandModel
-  //       .findByIdAndUpdate(
-  //         { _id: req.body._id },
-  //         {
-  //           name: req.body.name,
-  //           "contactInfo.email": req.body.email,
-  //           "contactInfo.number": req.body.number,
-  //           "location.city": req.body.city,
-  //           "location.pinCode": req.body.pinCode,
-  //           "location.address": req.body.address,
-  //           description: req.body.description,
-  //         }
-  //       )
-  //       .then(function (result) {
-  //         return res.send({ message: "updated" });
-  //       })
-  //       .catch(function (err) {
-  //         return res.status(401).send({ error: err });
-  //       });
-  //   }
-  // },
   getBrand: function (req, res) {
     brandModel
       .findById({ _id: req.params.id })
@@ -409,6 +370,19 @@ module.exports = {
         { _id: req.body._id },
         { contactInfo: req.body.contactInfo }
       )
+      .then(function (result) {
+        return res.send(result);
+      })
+      .catch(function (err) {
+        console.log(err);
+        return res.status(404).send(err);
+      });
+  },
+  searchBrandBySearchText: function (req, res) {
+    var regex = new RegExp(req.params.searchText, "i");
+
+    brandModel
+      .find({ name: { $regex: regex } })
       .then(function (result) {
         return res.send(result);
       })

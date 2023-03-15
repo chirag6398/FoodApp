@@ -78,14 +78,10 @@ app.controller("outletAgentController", [
       tables: [],
     };
     $scope.searchTextHandler = function () {
-      // console.log("called");
       if (timeout) {
         $timeout.cancel(timeout);
       }
       timeout = $timeout(function () {
-        // console.log("called");
-        // console.log($scope.searchText);
-
         outletAgentApi.getProductByName(
           $scope.searchText,
           $scope.outletId,
@@ -98,7 +94,7 @@ app.controller("outletAgentController", [
             }
           }
         );
-      }, 500);
+      }, 800);
     };
     outletAgentApi.getOutletAgentPage();
 
