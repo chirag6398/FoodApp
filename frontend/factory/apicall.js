@@ -111,22 +111,22 @@ app.factory("apiHandler", function ($http) {
       };
   };
 
-  obj.getBrandAdminPage = function (cb) {
-    $http
-      .get("http://localhost:5000/api/brandAdmin/getBrandAdminPage", {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
-      .then(function (response) {
-        // console.log(response)
-        cb(response.data);
-      })
-      .catch(function (err) {
-        // console.log(err);
-        cb({ status: 401, message: "unauthorized user" });
-      });
-  };
+  // obj.getBrandAdminPage = function (cb) {
+  //   $http
+  //     .get("http://localhost:5000/api/brandAdmin/getBrandAdminPage", {
+  //       headers: {
+  //         Authorization: window.localStorage.getItem("Authorization"),
+  //       },
+  //     })
+  //     .then(function (response) {
+  //       // console.log(response)
+  //       cb(response.data);
+  //     })
+  //     .catch(function (err) {
+  //       // console.log(err);
+  //       cb({ status: 401, message: "unauthorized user" });
+  //     });
+  // };
 
   obj.createOutlet = function (outletData, brandId, cb) {
     var data = {

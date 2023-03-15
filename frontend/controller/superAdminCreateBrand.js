@@ -41,14 +41,15 @@ app.controller("superAdminCreateBrandController", [
       $scope.object.searchTextResult = [];
       $scope.object.searchBrand = "";
     };
-    $scope.isAccess = false;
-    adminApi.getAdminPage();
+    // $scope.isAccess = false;
+
+    // adminApi.getAdminPage();
     $rootScope.$on("passData", function (err, data) {
       // console.log(data);
       if (data) {
         $scope.btnText = "Create";
         $scope.superAdminId = data._id;
-        $scope.isAccess = true;
+        // $scope.isAccess = true;
       } else {
       }
     });

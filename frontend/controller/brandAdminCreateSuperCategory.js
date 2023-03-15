@@ -4,15 +4,15 @@
 app.controller("brandAdminCategoryController", [
   "$scope",
   "$http",
-  "$location",
+  "$rootScope",
   "brandApi",
-  function ($scope, $http, $location, brandApi) {
-    brandApi.getBrandAdminPage(function (err, result) {
+  function ($scope, $http, $rootScope, brandApi) {
+    $rootScope.$on("passData", function (err, result) {
       if (result) {
-        $scope.brandName = result.data.name;
-        $scope.brandId = result.data._id;
+        $scope.brandName = result.data.data.name;
+        $scope.brandId = result.data.data._id;
         brandApi.getSuperCategoryByBrandId(
-          result.data._id,
+          result.data.data._id,
           function (err, result) {
             console.log(result);
 
@@ -26,10 +26,33 @@ app.controller("brandAdminCategoryController", [
             }
           }
         );
-      } else {
-        $location.path("login");
       }
     });
+
+    // brandApi.getBrandAdminPage(function (err, result) {
+    //   if (result) {
+    //     $scope.brandName = result.data.name;
+    //     $scope.brandId = result.data._id;
+    //     brandApi.getSuperCategoryByBrandId(
+    //       result.data._id,
+    //       function (err, result) {
+    //         console.log(result);
+
+    //         if (result) {
+    //           $scope.object = { superCategories: [] };
+    //           $scope.object.superCategories = result.data;
+
+    //           $scope.isLoading = false;
+    //         } else {
+    //           alert("plz try later some error has occured");
+    //         }
+    //       }
+    //     );
+    //   } else {
+    //     // $location.path("login");
+    //   }
+    // });
+
     $scope.btnText = "Add Super Category";
     $scope.addCategory = function ($event) {
       $event.preventDefault();

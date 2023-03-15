@@ -4,7 +4,9 @@
 app.controller("superAdminAnalysisController", [
   "$scope",
   "superAdminDashBoardApi",
-  function ($scope, superAdminDashBoardApi) {
+  "$location",
+  "$rootScope",
+  function ($scope, superAdminDashBoardApi, $location, $rootScope) {
     superAdminDashBoardApi.getBasicData(function (err, result) {
       if (result) {
         console.log(result);

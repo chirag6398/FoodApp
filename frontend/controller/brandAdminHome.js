@@ -3,26 +3,43 @@
 
 app.controller("brandAdminHomeController", [
   "$scope",
-  "$http",
+  "$rootScope",
   "$location",
   "brandApi",
-  function ($scope, $http, $location, brandApi) {
-    brandApi.getBrandAdminPage(function (err, result) {
+  function ($scope, $rootScope, $location, brandApi) {
+    $rootScope.$on("passData", function (err, result) {
       if (result) {
-        $scope.brandName = result.data.name;
-        $scope.brandId = result.data._id;
-        $scope.brandLogo = result.data.logo;
-        brandApi.getOutletsByBrandId(result.data._id, function (err, result) {
-          if (result) {
-            console.log(result);
-            $scope.object = { outlets: [] };
-            $scope.object.outlets = result.data;
+        $scope.brandName = result.data.data.name;
+        $scope.brandId = result.data.data._id;
+        $scope.brandLogo = result.data.data.logo;
+        brandApi.getOutletsByBrandId(
+          result.data.data._id,
+          function (err, result) {
+            if (result) {
+              console.log(result);
+              $scope.object = { outlets: [] };
+              $scope.object.outlets = result.data;
+            }
           }
-        });
-      } else {
-        $location.path("login");
+        );
       }
     });
+    // brandApi.getBrandAdminPage(function (err, result) {
+    //   if (result) {
+    //     $scope.brandName = result.data.name;
+    //     $scope.brandId = result.data._id;
+    //     $scope.brandLogo = result.data.logo;
+    //     brandApi.getOutletsByBrandId(result.data._id, function (err, result) {
+    //       if (result) {
+    //         console.log(result);
+    //         $scope.object = { outlets: [] };
+    //         $scope.object.outlets = result.data;
+    //       }
+    //     });
+    //   } else {
+    //     $location.path("login");
+    //   }
+    // });
     $scope.btnText = "Create Outlet";
     $scope.createOutlet = function ($event) {
       $event.preventDefault();

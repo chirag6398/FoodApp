@@ -1,9 +1,9 @@
 ///<reference path="../module/module.js"/>
 
-app.factory("brandApi", function ($http) {
+app.factory("brandApi", function ($http, $rootScope) {
   var obj = {};
 
-  obj.getBrandAdminPage = function (cb) {
+  obj.getBrandAdminPage = function () {
     $http
       .get("http://localhost:5000/api/brandAdmin/getBrandAdminPage", {
         headers: {
@@ -11,10 +11,14 @@ app.factory("brandApi", function ($http) {
         },
       })
       .then(function (response) {
-        cb(null, response.data);
+        $rootScope.$emit("passData", response);
       })
       .catch(function (err) {
-        cb({ status: 401, message: "unauthorized user" }, null);
+        $rootScope.$emit("notEligible", {
+          status: 401,
+          message: "unauthorized user",
+        });
+        // cb({ status: 401, message: "unauthorized user" }, null);
       });
   };
   obj.getOutlet = function (data, cb) {
