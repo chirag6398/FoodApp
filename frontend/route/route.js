@@ -63,12 +63,12 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       controller: "brandAdminController",
     })
     .state("brandadmin.dashboard", {
-      url: "/home",
+      url: "/dashboard",
       templateUrl: "./templates/brandAdminDashboard.html",
       controller: "brandAdminDashboardController",
     })
-    .state("brandadmin.home", {
-      url: "/home",
+    .state("brandadmin.outlets", {
+      url: "/outlets",
       templateUrl: "./templates/brandAdminHome.html",
       controller: "brandAdminHomeController",
     })

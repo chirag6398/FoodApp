@@ -49,11 +49,11 @@ module.exports = {
 
     Promise.all([data1, data2, data3, data4])
       .then(function (result) {
-        console.log(result);
+        // console.log(result);
         return res.send(result);
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
         return res.status(404).send(err);
       });
   },
@@ -84,14 +84,14 @@ module.exports = {
 
     Promise.all([data1, data2])
       .then(function (result) {
-        console.log(result);
+        // console.log(result);
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
   },
   getBrandGraphData: function (req, res) {
-    console.log(req.params.id);
+    // console.log(req.params.id);
 
     var pipeline = [
       {
@@ -125,16 +125,16 @@ module.exports = {
     orderModel
       .aggregate(pipeline)
       .then(function (result) {
-        console.log(result);
+        // console.log(result);
         return res.send(result);
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
         return res.status(500).send(err);
       });
   },
   getOutletGraphData: function (req, res) {
-    console.log(req.params.id);
+    // console.log(req.params.id);
     var pipeline = [
       {
         $match: {
@@ -167,11 +167,11 @@ module.exports = {
     orderModel
       .aggregate(pipeline)
       .then(function (result) {
-        console.log(result);
+        // console.log(result);
         return res.send(result);
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
         return res.status(500).send(err);
       });
   },

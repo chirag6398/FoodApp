@@ -82,24 +82,29 @@ app.controller("superAdminCreateBrandController", [
     };
 
     $scope.admin = {};
-
+    $scope.setBasicBrandData = function (brand) {
+      $scope.brandId = brand._id;
+      $scope.brandName = brand.name;
+    };
     $scope.createBrandAdmin = function ($event, brandId, brandName) {
       $event.preventDefault();
       $scope.btnText = "processing";
 
-      console.log($scope.admin);
+      // console.log($scope.admin, $scope.brandId, $scope.brandName);
 
       adminApi.postAddBrandAdmin(
         $scope.admin,
-        brandId,
-        brandName,
+        $scope.brandId,
+        $scope.brandName,
         function (err, result) {
           if (result) {
             console.log(result);
             $scope.btnText = "successful";
+            $scope.admin = {};
             $("#exampleModal").modal("hide");
           } else {
-            $scope.btnText = "successful";
+            $scope.btnText = "failed try later";
+
             console.log(err);
           }
         }
