@@ -9,16 +9,23 @@ app.controller("outletEmployeeFormController", [
   "outletApi",
   "$rootScope",
   function ($scope, $http, $location, apiHandler, outletApi, $rootScope) {
-    // outletApi.getOutletAdminPage(function(err,result){
-    //     if(result){
-    //         console.log(result.data);
-    //         $scope.outletData=result.data.outletData;
-    //     }
-
-    // });
+    outletApi.getOutletAdminPage();
+    $scope.object = {
+      agents: [],
+    };
     $rootScope.$on("passData", function (err, data) {
       if (data) {
+        console.log(data);
         $scope.outletData = data.data.outletData;
+        outletApi.getOutletAgentEmployees(
+          $scope.outletData._id,
+          function (err, result) {
+            console.log(err, result);
+            if (result) {
+              $scope.object.agents = result.data;
+            }
+          }
+        );
       }
     });
 

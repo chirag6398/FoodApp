@@ -93,4 +93,16 @@ module.exports = {
       }
     });
   },
+  getOutletAgentEmployees: function (req, res) {
+    employeeModel
+      .find({
+        $and: [{ "outlet._id": req.params.id }, { userType: "outletAgent" }],
+      })
+      .then(function (result) {
+        return res.send(result);
+      })
+      .catch(function (err) {
+        return res.status(404).send(err);
+      });
+  },
 };

@@ -13,7 +13,8 @@
     height: 100vh;
     justify-content: space-between;
     align-items: center;
-    /* width: 100vw; */
+    min-width: 100vw;
+    width: max-content;
     background: #16161a;
 }
 .agt__nav{
@@ -41,7 +42,7 @@
 .agt__mainDiv{
     display: flex;
     background: whitesmoke;
-    
+    min-width: 1098px;
     height: 95vh;
     width: 95%;
     justify-content: space-between;
@@ -100,6 +101,7 @@ color: #b8b9bc;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     height: 65%;
     overflow: auto;
+    min-width: 520px;
 }
 .agt__rightSide{
     display: flex;
@@ -107,6 +109,7 @@ color: #b8b9bc;
     background: #fffe;
     padding: 10px;
     border-radius: 3px;
+    min-width: 300px;
     flex-direction: column;
     align-items: center;
     /* justify-content: space-between; */
@@ -160,6 +163,7 @@ color: #b8b9bc;
     border-bottom-left-radius: 31px;
     padding: 10px;
     min-height: 129px;
+    min-width: 520px;
 }
 .agt__categoryCard{
     display: flex;

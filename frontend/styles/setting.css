@@ -24,7 +24,8 @@
     width: 50%;
     padding: 20px;
     box-shadow: lightgray 0px 0px 0px 1px;
-    gap:10px
+    gap:10px;
+    min-width: 371px;
 }
 .setting__table{
     width: 100px;

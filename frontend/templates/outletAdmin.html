@@ -1,72 +1,69 @@
 <div class="sidebar close">
-<div class="logo-details">
-    <img style="object-fit: contain;
-    height: 36px;"
-    src={{brandLogo}}
-    alt="...">
+  <div class="logo-details">
+    <img
+      style="object-fit: contain; height: 36px"
+      src="{{brandLogo}}"
+      alt="..."
+    />
     <span class="logo_name">{{outletName}}</span>
-</div>
-<ul class="nav-links">
+  </div>
+  <ul class="nav-links">
     <li>
-    <a ui-sref="outletAdmin.outletAdminDashboard" >
-        <i title="Dashboard" class='bx bx-grid-alt' ></i>
+      <a ui-sref="outletAdmin.outletAdminDashboard">
+        <i title="Dashboard" class="bx bx-grid-alt"></i>
         <span class="link_name">Dashboard</span>
-    </a>
-    
+      </a>
+    </li>
+
+    <li></li>
     <li>
-    <li>
-    <a ui-sref="outletAdmin.products">
-        <i title="products in outlets" class='bx bxl-product-hunt' ></i>
+      <a ui-sref="outletAdmin.products">
+        <i title="products in outlets" class="bx bxl-product-hunt"></i>
         <span class="link_name">Products</span>
-    </a>
+      </a>
+    </li>
+
+    <li></li>
     <li>
-    <li>
-    <a ui-sref="outletAdmin.outletBrandProducts">
-        <i title="Global Available Products" class='bx bx-globe' ></i>
+      <a ui-sref="outletAdmin.outletBrandProducts">
+        <i title="Global Available Products" class="bx bx-globe"></i>
         <span class="link_name">Global Products</span>
-    </a>
+      </a>
+    </li>
+
+    <li></li>
     <li>
-    <li>
-        <a ui-sref="outletAdmin.employee">
-        <i title="create agent" class='bx bxs-user' ></i>
+      <a ui-sref="outletAdmin.employee">
+        <i title="create agent" class="bx bxs-user"></i>
         <span class="link_name"> Create Agent</span>
-        </a>
-        
+      </a>
+    </li>
+
     <li>
-    
-    <a ui-sref="outletAdmin.setting" >
-        <i   class='bx bx-cog' ></i>
+      <a ui-sref="outletAdmin.setting">
+        <i class="bx bx-cog"></i>
         <span class="link_name">Setting</span>
-    </a>
-    <ul class="sub-menu blank">
+      </a>
+      <ul class="sub-menu blank">
         <li><a class="link_name" href="#">Setting</a></li>
-    </ul>
+      </ul>
     </li>
     <li>
-    <a ng-click="logOutHandler()">
-        <i title="LogOut" class='bx bx-log-out-circle' ></i>
+      <a ng-click="logOutHandler()">
+        <i title="LogOut" class="bx bx-log-out-circle"></i>
         <span class="link_name">Logout</span>
-    </a>
-    
-    <li>
-    <li>
-    <a ui-sref="login">
-        <i title="LogIn" class='bx bx-log-in-circle' ></i>
-        <span class="link_name">Login</span>
-    </a>
-    
-    <li>
-    
-</ul>
+      </a>
+    </li>
+
+    <li></li>
+  </ul>
 </div>
 <section class="home-section">
-<div class="home-content">
+  <div class="home-content">
     <div>
-    <i class='bx bx-menu' ></i>
+      <i class="bx bx-menu"></i>
     </div>
-    
-    <div style="display: flex;
-    width: -webkit-fill-available;" ui-view></div>
-    
-</div>
+
+    <div style="display: flex; width: -webkit-fill-available" ui-view></div>
+  </div>
 </section>
