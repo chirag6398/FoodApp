@@ -311,5 +311,46 @@ app.factory("brandApi", function ($http) {
       });
   };
 
+  obj.updateAdmin = function (admin, id, cb) {
+    var data = {
+      ...admin,
+      id: id,
+    };
+    // console.log(data);
+    $http
+      .put("http://localhost:5000/api/employee/updateUser", data, {
+        headers: {
+          Authorization: window.localStorage.getItem("Authorization"),
+        },
+      })
+      .then(function (response) {
+        // console.log(response);
+        cb(response);
+      })
+      .catch(function (err) {
+        // console.log(err);
+      });
+  };
+
+  obj.updatePassword = function (password, id, cb) {
+    var data = {
+      password: password,
+      id: id,
+    };
+    $http
+      .put("http://localhost:5000/api/employee/updatePassword", data, {
+        headers: {
+          Authorization: window.localStorage.getItem("Authorization"),
+        },
+      })
+      .then(function (response) {
+        // console.log(null,response);
+        cb(null, response);
+      })
+      .catch(function (err) {
+        // console.log(err,null);
+      });
+  };
+
   return obj;
 });

@@ -4,9 +4,9 @@
 app.controller("brandSettingController", [
   "$scope",
   "$stateParams",
-  "apiHandler",
+  "$stateParams",
   "brandApi",
-  function ($scope, $stateParams, apiHandler, brandApi) {
+  function ($scope, $stateParams, $stateParams, brandApi) {
     brandApi.getAdmin($stateParams.id, function (err, result) {
       console.log(err, result);
       if (result) {
@@ -16,20 +16,24 @@ app.controller("brandSettingController", [
 
     $scope.updateAdmin = function ($event, id) {
       $event.preventDefault();
-      apiHandler.updateAdmin($scope.brandAdmin, id, function (err, result) {
+      brandApi.updateAdmin($scope.brandAdmin, id, function (err, result) {
         if (result) {
           console.log(result);
         }
       });
     };
-    $scope.changePassword = function ($event, id) {
+    $scope.changePassword = function ($event) {
       $event.preventDefault();
-      apiHandler.updatePassword($scope.admin, id, function (err, result) {
-        console.log(result);
-        if (result) {
-          console.log(result);
+      brandApi.updatePassword(
+        $scope.brandAdmin.password,
+        $stateParams.id,
+        function (err, result) {
+          console.log(err, result);
+          if (result) {
+            // console.log(result);
+          }
         }
-      });
+      );
     };
   },
 ]);

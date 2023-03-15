@@ -76,6 +76,7 @@ module.exports = {
       });
   },
   updatePassword: function (req, res) {
+    console.log(req.body);
     hashPassword(req.body.password, function (err, hashedPassword) {
       if (err) {
         return res.status(500).send({ message: "internal error" });
@@ -83,6 +84,7 @@ module.exports = {
         employeeModel
           .findOneAndUpdate({ _id: req.body.id }, { password: hashedPassword })
           .then(function (result) {
+            console.log(result, hashedPassword);
             return res.send({ message: "updated" });
           })
           .catch(function (err) {
