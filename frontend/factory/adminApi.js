@@ -290,9 +290,14 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(err, null);
       });
   };
-  obj.getUsers = function (cb) {
+  obj.getUsers = function (data, cb) {
     $http
-      .get("http://localhost:5000/api/employee/getUsers")
+      .get(
+        "http://localhost:5000/api/employee/getUsers/" +
+          data.limit +
+          "/" +
+          data.page
+      )
       .then(function (response) {
         cb(null, response);
       })

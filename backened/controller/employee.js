@@ -36,6 +36,9 @@ module.exports = {
       });
   },
   getUsers: function (req, res) {
+    var limit = req.params.limit || 5;
+    var pageNo = req.params.page || 1;
+    var skipNo = (pageNo - 1) * limit;
     return employeeModel
       .find(
         {
@@ -45,8 +48,12 @@ module.exports = {
         },
         { password: 0, createdAt: 0, updatedAt: 0 }
       )
+      .skip(skipNo)
+      .limit(limit)
       .then(function (result) {
-        return res.send(result);
+        employeeModel.countDocuments(function (err, count) {
+          return res.send({ data: result, count: count });
+        });
       })
       .catch(function (err) {
         return res.status(500).send(err);

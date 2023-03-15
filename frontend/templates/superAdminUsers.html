@@ -1,26 +1,63 @@
-<div style="display: flex; width: 100%; padding: 20px">
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">UserName</th>
-        <th scope="col">Email</th>
-        <th scope="col">Phone Number</th>
-        <th scope="col">Brand</th>
-        <th scope="col">Type</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="user in users">
-        <th scope="row">{{$index}}</th>
-        <td>{{user.userName}}</td>
-        <td>{{user.email}}</td>
-        <td>{{user.number}}</td>
-        <td>{{user.brand.name}}</td>
-        <td>{{user.userType}}</td>
-      </tr>
-    </tbody>
-  </table>
+<div style="display: flex; flex-direction: column; width: 100%; padding: 20px">
+  <div>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">UserName</th>
+          <th scope="col">Email</th>
+          <th scope="col">Phone Number</th>
+          <th scope="col">Brand</th>
+          <th scope="col">Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="user in object.users">
+          <th scope="row">{{(object.page-1)*object.limit+$index+1}}</th>
+          <td>{{user.userName}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.number}}</td>
+          <td>{{user.brand.name}}</td>
+          <td>{{user.userType}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <nav
+      style="display: flex; align-items: center; justify-content: center"
+      aria-label="Page navigation example"
+    >
+      <ul class="pagination justify-content-end">
+        <li
+          class="page-item"
+          ng-click="getUserHandler(object.page-1,object.limit)"
+          ng-class="{'disabled':object.page===1}"
+        >
+          <a class="page-link">Previous</a>
+        </li>
+        <li
+          class="page-item"
+          ng-click="getUserHandler($index+1,object.limit)"
+          ng-class="{'disabled':object.page===$index+1}"
+          ng-repeat="page in object.pages track by $index"
+        >
+          <a class="page-link">{{$index+1}}</a>
+        </li>
+
+        <li class="page-item">
+          <a
+            class="page-link"
+            ng-click="getUserHandler(object.page+1,object.limit)"
+            ng-class="{'disabled':object.page===object.totalPage}"
+            >Next</a
+          >
+        </li>
+      </ul>
+    </nav>
+    <!-- {{object.page===object.totalPage}} -->
+  </div>
 </div>
 
 <!-- modal -->

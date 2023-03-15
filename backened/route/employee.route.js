@@ -11,7 +11,10 @@ employeeRoute.get(
   "/api/employee/getUserById/:id",
   employeeController.getUserById
 );
-employeeRoute.get("/api/employee/getUsers", employeeController.getUsers);
+employeeRoute.get(
+  "/api/employee/getUsers/:limit/:page",
+  employeeController.getUsers
+);
 employeeRoute.get(
   "/api/employee/getOutletAgentEmployees/:id",
   employeeController.getOutletAgentEmployees

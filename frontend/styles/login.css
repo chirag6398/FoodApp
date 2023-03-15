@@ -11,11 +11,12 @@
     height: 350px;
     padding: 30px;
     justify-content: flex-start;
-    box-shadow: cornflowerblue 0px 0px 0px 1px;
+    box-shadow: #fffe 0px 0px 0px 1px;
     align-items: center;
-    background: cornflowerblue;
+    background: #fffe;
     backdrop-filter: blur(6px);
     border-radius: 4px;
+    opacity: 0.99;
 }
 .lgn__header{
     display: flex;
