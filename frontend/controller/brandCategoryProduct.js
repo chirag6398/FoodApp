@@ -4,17 +4,15 @@
 app.controller("categoryProductController", [
   "$scope",
   "$http",
-  "$location",
+  "$rootScope",
   "brandApi",
   "$stateParams",
-  function ($scope, $http, $location, brandApi, $stateParams) {
-    // console.log($stateParams.id,$stateParams.name);
-
-    brandApi.getBrandAdminPage(function (err, result) {
+  function ($scope, $http, $rootScope, brandApi, $stateParams) {
+    $rootScope.$on("passData", function (err, result) {
       if (result) {
-        $scope.brandName = result.data.name;
-        $scope.brandId = result.data._id;
-        $scope.brandLogo = result.data.logo;
+        $scope.brandName = result.data.data.name;
+        $scope.brandId = result.data.data._id;
+        $scope.brandLogo = result.data.data.logo;
         $scope.categoryId = $stateParams.id;
         $scope.categoryName = $stateParams.name;
 
@@ -35,10 +33,9 @@ app.controller("categoryProductController", [
             $scope.superCategoryName = result.data.superCategory.name;
           }
         });
-      } else {
-        $location.path("login");
       }
     });
+
     $scope.btnText = "Add product";
     $scope.product = {};
 

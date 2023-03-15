@@ -1,6 +1,6 @@
 ///<reference path="../module/module.js"/>
 
-app.factory("brandApi", function ($http, $rootScope) {
+app.factory("brandApi", function ($http, $rootScope, setAdminData) {
   var obj = {};
 
   obj.getBrandAdminPage = function () {
@@ -12,6 +12,7 @@ app.factory("brandApi", function ($http, $rootScope) {
       })
       .then(function (response) {
         $rootScope.$emit("passData", response);
+        setAdminData.setAdminData(response);
       })
       .catch(function (err) {
         $rootScope.$emit("notEligible", {

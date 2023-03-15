@@ -9,15 +9,14 @@ app.controller("subCategoryController", [
   "$rootScope",
   "$stateParams",
   function ($scope, $http, $location, brandApi, $rootScope, $stateParams) {
-    brandApi.getBrandAdminPage(function (err, result) {
+    $rootScope.$on("passData", function (err, result) {
       if (result) {
-        $scope.brandName = result.data.name;
-        $scope.brandId = result.data._id;
-        $scope.brandLogo = result.data.logo;
-        console.log(result.data);
+        $scope.brandName = result.data.data.name;
+        $scope.brandId = result.data.data._id;
+        $scope.brandLogo = result.data.data.logo;
 
         brandApi.getCategoryByBrandId(
-          result.data._id,
+          result.data.data._id,
           $stateParams.id,
           function (err, result) {
             if (result) {
@@ -28,10 +27,9 @@ app.controller("subCategoryController", [
             }
           }
         );
-      } else {
-        $location.path("login");
       }
     });
+
     $scope.category1 = {};
     $scope.btnText = "Add Sub Category";
 
@@ -47,7 +45,6 @@ app.controller("subCategoryController", [
       formData.append("brandName", $scope.brandName);
       formData.append("brandId", $scope.brandId);
 
-      // console.log($scope.category,$stateParams.id,$stateParams.name)
       brandApi.addCategory(formData, function (err, result) {
         console.log(result);
         if (result) {

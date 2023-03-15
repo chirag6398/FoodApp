@@ -29,9 +29,6 @@ app.controller("brandSettingController", [
         $stateParams.id,
         function (err, result) {
           console.log(err, result);
-          if (result) {
-            // console.log(result);
-          }
         }
       );
     };

@@ -1,17 +1,10 @@
 ///<reference path="../module/module.js"/>
-///<reference path="../factory/apicall.js"/>
-
-// app.config(['$httpProvider', function($httpProvider) {
-//     $httpProvider.defaults.headers.common['Authorization'] = (window.localStorage.getItem("Authorization"));
-// }]);
 
 app.controller("brandAdminOutletDataController", [
   "$scope",
-  "$http",
   "$stateParams",
-  "apiHandler",
   "brandApi",
-  function ($scope, $http, $stateParams, apiHandler, brandApi) {
+  function ($scope, $stateParams, brandApi) {
     console.log($stateParams.id);
     brandApi.getOutlet({ _id: $stateParams.id }, function (err, result) {
       if (result) {
