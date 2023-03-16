@@ -7,6 +7,7 @@ app.controller("brandAdminCategoryController", [
   "$rootScope",
   "brandApi",
   function ($scope, $http, $rootScope, brandApi) {
+    brandApi.getBrandAdminPage();
     $rootScope.$on("passData", function (err, result) {
       if (result) {
         $scope.brandName = result.data.data.name;

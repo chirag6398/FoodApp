@@ -35,7 +35,7 @@ var OutletSchema = new mongoose.Schema(
     brand: {
       _id: {
         type: mongoose.Schema.Types.ObjectId,
-        required: false,
+        required: true,
       },
       name: {
         type: String,
@@ -96,7 +96,6 @@ var OutletSchema = new mongoose.Schema(
       {
         name: {
           type: String,
-          unique: true,
           trim: true,
         },
         percent: {
@@ -109,7 +108,6 @@ var OutletSchema = new mongoose.Schema(
         number: {
           type: Number,
           required: true,
-          unique: true,
         },
         capacity: {
           type: Number,

@@ -1,3 +1,22 @@
-<div >
-    {{users}}
+<div>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">User Name</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Handle</th>
+        <th scope="col">User Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="user in users">
+        <th scope="row">{{$index+1}}</th>
+        <td>{{user.userName}}</td>
+        <td>{{user.firstName}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.userType}}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>

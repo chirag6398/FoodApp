@@ -59,7 +59,7 @@
     align-items: center;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
     font-size: larger;
-    margin-right: 10px;
+    /* margin-right: 10px; */
     font-weight: 600;
     flex-direction: column;
     justify-content: center;

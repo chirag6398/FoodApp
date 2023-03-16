@@ -1,5 +1,5 @@
 <div>
-  <div ng-if="object.outlets.length!==0" class="spr__rightSide">
+  <div ng-if="object.outlets.length" class="spr__rightSide">
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
@@ -469,7 +469,7 @@
       </tbody>
     </table>
   </div>
-  <div class="spr__rightSide" ng-if="object.outlets.length===0">
+  <div class="spr__rightSide" ng-if="!object.outlets">
     <span>loading...</span>
   </div>
   <div>

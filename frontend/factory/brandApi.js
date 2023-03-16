@@ -37,10 +37,12 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
       });
   };
 
-  obj.createOutlet = function (outletData, brandId, cb) {
+  obj.createOutlet = function (outletData, brandId, brandName, brandLogo, cb) {
     var data = {
       ...outletData,
-      id: brandId,
+      brandId: brandId,
+      brandName,
+      brandLogo,
     };
 
     $http

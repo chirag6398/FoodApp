@@ -78,7 +78,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       controller: "brandAdminUsersController",
     })
     .state("brandadmin.brandAdminCategory", {
-      url: "/brandadmincategory",
+      url: "/brandadmincreatesupercategory",
       templateUrl: "./templates/brandAdminCreateSuperCategory.html",
       controller: "brandAdminCategoryController",
     })

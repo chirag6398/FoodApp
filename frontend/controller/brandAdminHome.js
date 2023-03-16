@@ -19,7 +19,7 @@ app.controller("brandAdminHomeController", [
           function (err, result) {
             if (result) {
               console.log(result);
-              $scope.object = { outlets: [] };
+              $scope.object = { outlets: null };
               $scope.object.outlets = result.data;
             }
           }
