@@ -40,6 +40,9 @@ module.exports = {
           outlets: { $push: { name: "$name", _id: "$_id" } },
         },
       },
+      {
+        $sort: { name: 1 },
+      },
     ];
 
     var data1 = brandModel.aggregate(pipeline);
@@ -125,7 +128,7 @@ module.exports = {
     orderModel
       .aggregate(pipeline)
       .then(function (result) {
-        // console.log(result);
+        console.log(result);
         return res.send(result);
       })
       .catch(function (err) {

@@ -210,41 +210,41 @@ module.exports = {
   },
   createOutletAgent: function (req, res) {
     console.log(req.body);
-    var valid = validation.validateUserData(req, res);
-    console.log(valid);
-    if (valid) {
-      var outletAgent = new employeeModel({
-        userName: req.body.userName,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        number: req.body.number,
-        password: req.body.password,
-        outlet: req.body.outlet,
-        userType: "outletAgent",
-        brand: req.body.brand,
-        "location.address": req.body.address,
-        "location.pinCode": req.body.pinCode,
-        "location.city": req.body.city,
-      });
+    // var valid = validation.validateUserData(req, res);
+    // console.log(valid);
+    // if (valid) {
+    var outletAgent = new employeeModel({
+      userName: req.body.userName,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      number: req.body.number,
+      password: req.body.password,
+      outlet: req.body.outlet,
+      userType: "outletAgent",
+      brand: req.body.brand,
+      "location.address": req.body.address,
+      "location.pinCode": req.body.pinCode,
+      "location.city": req.body.city,
+    });
 
-      outletAgent
-        .save()
-        .then(function (result) {
-          console.log(result);
-          return res
-            .status(200)
-            .send({ message: "admin created successfully", status: 200 });
-        })
-        .catch(function (err) {
-          console.log(err);
-          return res
-            .status(500)
-            .send({ error: "internal server error", status: 500 });
-        });
-    } else {
-      return res.status(500).send({ error: "try later", status: 500 });
-    }
+    return outletAgent
+      .save()
+      .then(function (result) {
+        console.log(result);
+        return res
+          .status(200)
+          .send({ message: "admin created successfully", status: 200 });
+      })
+      .catch(function (err) {
+        console.log(err);
+        return res
+          .status(500)
+          .send({ error: "internal server error", status: 500 });
+      });
+    // } else {
+    //   return res.status(500).send({ error: "try later", status: 500 });
+    // }
   },
   updateOutletData: function (req, res) {
     console.log(req.body);

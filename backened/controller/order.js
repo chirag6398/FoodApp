@@ -20,6 +20,27 @@ module.exports = {
         status: "pending",
         brand: req.body.brand,
       });
+
+      var data1 = order.save();
+      var data2 = outletModel.updateOne(
+        { _id: req.body.outlet._id },
+        { $set: { "table.$[elem].isAvailable": false } },
+        {
+          new: true,
+          arrayFilters: [{ "elem.number": { $in: req.body.allotedTables } }],
+        }
+      );
+
+      Promise.all([data1, data2])
+        .then(function (result) {
+          console.log(result);
+          return res.send(result);
+        })
+        .catch(function (err) {
+          console.log(err);
+
+          return res.status(500).send({ error: err });
+        });
     } else {
       order = new orderModel({
         customer: req.body.customer,
@@ -30,30 +51,20 @@ module.exports = {
         status: "pending",
         brand: req.body.brand,
       });
+
+      var data1 = order.save();
+
+      Promise.all([data1])
+        .then(function (result) {
+          console.log(result);
+          return res.send(result);
+        })
+        .catch(function (err) {
+          console.log(err);
+
+          return res.status(500).send({ error: err });
+        });
     }
-
-    console.log(req.body.allotedTables);
-    console.log(order);
-    var data1 = order.save();
-    var data2 = outletModel.updateOne(
-      { _id: req.body.outlet._id },
-      { $set: { "table.$[elem].isAvailable": false } },
-      {
-        new: true,
-        arrayFilters: [{ "elem.number": { $in: req.body.allotedTables } }],
-      }
-    );
-
-    Promise.all([data1, data2])
-      .then(function (result) {
-        console.log(result);
-        return res.send(result);
-      })
-      .catch(function (err) {
-        console.log(err);
-
-        return res.status(500).send({ error: err });
-      });
   },
   getOrders: function (req, res) {
     var data1 = orderModel.find({
@@ -82,7 +93,7 @@ module.exports = {
   updateStatus: function (req, res) {
     console.log(req.body);
 
-    if (req.body.status === "completed") {
+    if (req.body.status === "completed" && req.body.orderType === "dine-in") {
       var data1 = outletModel.updateOne(
         { _id: req.body.outletId },
         { $set: { "table.$[elem].isAvailable": true } },

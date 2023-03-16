@@ -22,6 +22,8 @@ app.controller("superAdminAnalysisController", [
       $scope.outlets = outlets;
     };
 
+    var myChart1 = null;
+
     $scope.fechGraphData = function (brandId) {
       console.log(brandId);
       superAdminDashBoardApi.fetchBrandGraphData(
@@ -36,8 +38,11 @@ app.controller("superAdminAnalysisController", [
               $scope.brandRevenue.push(element.totalRevenue);
             });
             console.log($scope.brandDates, $scope.brandRevenue);
+            if (myChart1) {
+              myChart1.destroy();
+            }
             var ctx1 = document.getElementById("myChart1").getContext("2d");
-            var myChart1 = new Chart(ctx1, {
+            myChart1 = new Chart(ctx1, {
               type: "line",
               data: {
                 labels: $scope.brandDates,

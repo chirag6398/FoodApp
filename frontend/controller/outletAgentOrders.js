@@ -94,13 +94,19 @@ app.controller("outletAgentOrdersController", [
       );
     };
 
-    $scope.updateStatusToCompleted = function (status, ord) {
+    $scope.updateStatusToCompleted = function (
+      status,
+      orderId,
+      tableNumbers,
+      type
+    ) {
       outletAgentApi.updateStatus(
         {
           status: status,
           _id: orderId,
           tableNumbers: tableNumbers,
           outletId: $scope.outletId,
+          orderType: type,
         },
         function (err, result) {
           if (result) {

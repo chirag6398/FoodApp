@@ -8,6 +8,7 @@ var mongoose = require("mongoose");
 
 module.exports = {
   addProduct: function (req, res) {
+    console.log(req.body);
     if (req.file) {
       return s3Services
         .uploadToS3(req.file.buffer, req.file.originalname, req.file.mimetype)

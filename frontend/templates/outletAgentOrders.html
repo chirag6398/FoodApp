@@ -296,7 +296,7 @@
         </button>
         <button
           ng-if="order.status==='served'"
-          ng-click="updateStatusToCompleted('completed',order._id,order.tableNumber,order.outlet._id)"
+          ng-click="updateStatusToCompleted('completed',order._id,order.tableNumber,order.type)"
           class="btn btn1"
         >
           completed

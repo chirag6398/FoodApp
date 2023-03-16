@@ -261,14 +261,17 @@ app.controller("outletAgentController", [
         if (result) {
           alert("order placed");
           console.log(result, $scope.object.tables, $scope.allotedTables);
-          var indx = updateTablesIndexes(
-            $scope.object.tables,
-            $scope.allotedTables
-          );
-          console.log(indx);
-          indx.forEach(function (value) {
-            $scope.object.tables[value].isAvailable = false;
-          });
+          if ($scope.type === "dine-in") {
+            var indx = updateTablesIndexes(
+              $scope.object.tables,
+              $scope.allotedTables
+            );
+            console.log(indx);
+            indx.forEach(function (value) {
+              $scope.object.tables[value].isAvailable = false;
+            });
+          }
+
           $scope.orderNo = generateOrderId();
           $scope.object.cart = [];
           $scope.amount = 0;

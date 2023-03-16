@@ -8,7 +8,7 @@
 }
 .order__mainDiv{
     display: flex;
-    height: 85%;
+    height: fit-content;
     flex-wrap: wrap;
     /* align-items: center; */
     gap: 10px;
