@@ -45,12 +45,42 @@ module.exports = {
       },
     ];
 
+    var pipeline2 = [
+      {
+        $match: {
+          createdAt: {
+            $gte: startDate,
+            $lt: endDate,
+          },
+        },
+      },
+      {
+        $unwind: "$items",
+      },
+      {
+        $group: {
+          _id: "$brand._id",
+          brandName: { $first: "$brand.name" },
+          totalRevenue: {
+            $sum: { $multiply: ["$items.quantity", "$items.price"] },
+          },
+        },
+      },
+      {
+        $sort: { totalRevenue: 1 },
+      },
+      {
+        $limit: 4,
+      },
+    ];
+
     var data1 = brandModel.aggregate(pipeline);
     var data2 = outletModel.aggregate(pipeline);
     var data3 = employeeModel.aggregate(pipeline);
     var data4 = outletModel.aggregate(pipeline1);
+    var data5 = orderModel.aggregate(pipeline2);
 
-    Promise.all([data1, data2, data3, data4])
+    Promise.all([data1, data2, data3, data4, data5])
       .then(function (result) {
         // console.log(result);
         return res.send(result);
@@ -128,7 +158,7 @@ module.exports = {
     orderModel
       .aggregate(pipeline)
       .then(function (result) {
-        console.log(result);
+        // console.log(result);
         return res.send(result);
       })
       .catch(function (err) {

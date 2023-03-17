@@ -23,76 +23,83 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-4">
-      <div class="list-group" id="list-tab" role="tablist">
-        <input
-          type="text"
-          style="margin-bottom: 10px"
-          ng-model="search.name"
-          placeholder="type brand name"
-          class="form-control"
-        />
-        <a
-          class="list-group-item list-group-item-action"
-          style="min-width: 200px"
-          ng-repeat="brand in brands | filter:search"
+  <div style="display: flex; gap: 20px; flex-wrap: wrap">
+    <div class="row">
+      <div class="col-4">
+        <div
+          style="width: fit-content"
+          class="list-group"
+          id="list-tab"
+          role="tablist"
         >
-          <div class="dropright analysis__brandList">
-            <div
-              ng-click="fechGraphData(brand._id)"
-              style="
-                display: flex;
-                cursor: pointer;
-                flex-wrap: wrap;
-                align-items: center;
-              "
-            >
-              <div>
-                <img
-                  ng-show="brand.logo"
-                  style="object-fit: contain; height: 50px"
-                  src="{{brand.logo}}"
-                  alt="..."
-                />
+          <input
+            type="text"
+            style="margin-bottom: 10px; min-width: 275px"
+            ng-model="search.name"
+            placeholder="type brand name"
+            class="form-control"
+          />
+          <a
+            class="list-group-item list-group-item-action"
+            style="min-width: 275px"
+            ng-repeat="brand in brands | filter:search"
+          >
+            <div class="dropright analysis__brandList">
+              <div
+                ng-click="fechGraphData(brand._id,brand.name)"
+                style="
+                  display: flex;
+                  cursor: pointer;
+                  flex-wrap: wrap;
+                  align-items: center;
+                "
+              >
+                <div>
+                  <img
+                    ng-show="brand.logo"
+                    style="object-fit: contain; height: 50px"
+                    src="{{brand.logo}}"
+                    alt="..."
+                  />
+                </div>
+                <div>{{brand.name}}</div>
               </div>
-              <div>{{brand.name}}</div>
-            </div>
-            <button
-              ng-click="setOutletData(brand.outlets)"
-              type="button"
-              class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <span class="sr-only">Toggle Dropright</span>
-            </button>
-            <div class="dropdown-menu">
-              <div class="analysis__outletLists">
-                <ul class="list-group">
-                  <li
-                    style="cursor: pointer"
-                    ng-click="fetchOutletGraphData(outlet._id)"
-                    class="list-group-item"
-                    ng-repeat="outlet in outlets"
-                  >
-                    {{outlet.name}}
-                  </li>
-                </ul>
+              <button
+                ng-click="setOutletData(brand.outlets)"
+                type="button"
+                class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <span class="sr-only">Toggle Dropright</span>
+              </button>
+              <div class="dropdown-menu">
+                <div class="analysis__outletLists">
+                  <ul class="list-group">
+                    <li
+                      style="cursor: pointer"
+                      ng-click="fetchOutletGraphData(outlet._id,outlet.name)"
+                      class="list-group-item"
+                      ng-repeat="outlet in outlets"
+                    >
+                      {{outlet.name}}
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-        </a>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-  <div ng-show="brandDates">
-    <h3>Brand: Last Month Revenue Analysis</h3>
-    <canvas id="myChart1" area-label="chart"></canvas>
-  </div>
-  <div ng-show="outletDates">
-    <h3>Outlet Last Month Revenue Analysis</h3>
-    <canvas id="myChart2" area-label="chart"></canvas>
+    <div style="width: 495px" ng-show="brandDates">
+      <h3>Brand: Last Month Revenue Analysis</h3>
+      <canvas id="myChart1" area-label="chart"></canvas>
+    </div>
+    <div style="width: 495px" ng-show="outletDates">
+      <h3>Outlet Last Month Revenue Analysis</h3>
+      <canvas id="myChart2" area-label="chart"></canvas>
+    </div>
   </div>
 </div>

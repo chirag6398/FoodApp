@@ -22,7 +22,7 @@ module.exports = {
       var skipValue = (pageNo - 1) * limitSize;
 
       brandModel
-        .find({})
+        .find({ isDeleted: false })
         .skip(skipValue)
         .limit(limitSize)
         .sort({ name: "asc" })
@@ -256,23 +256,25 @@ module.exports = {
 
           mongoose.startSession().then(function (session) {
             session.startTransaction();
-            Promise.all([
-              brandModel.findByIdAndUpdate(
-                { _id: req.body._id },
-                {
-                  logo: image,
-                },
-                {
-                  session,
-                }
-              ),
-              outletModel.updateMany(
-                { "brand._id": req.body._id },
-                {
-                  "brand.logo": image,
-                }
-              ),
-            ])
+
+            var data1 = brandModel.findByIdAndUpdate(
+              { _id: req.body._id },
+              {
+                logo: image,
+              },
+              {
+                session,
+              }
+            );
+
+            var data2 = outletModel.updateMany(
+              { "brand._id": req.body._id },
+              {
+                "brand.logo": image,
+              }
+            );
+
+            Promise.all([data1, data2])
               .then(function (result) {
                 console.log("parallel processing", result);
                 session

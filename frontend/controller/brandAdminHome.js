@@ -81,6 +81,13 @@ app.controller("brandAdminHomeController", [
         $scope.brandName,
         function (err, result) {
           if (result) {
+            console.log(result);
+            var indx = $scope.object.outlets.findIndex(function (value) {
+              return value._id === outletId;
+            });
+            if (indx !== -1) {
+              $scope.object.outlets[indx].outletAdminId = result.data.adminId;
+            }
             $scope.btnText0 = "successfull";
             $("#exampleModal1").modal("hide");
           } else {

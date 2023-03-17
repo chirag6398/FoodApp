@@ -78,11 +78,10 @@ module.exports = {
   createOutletAdmin: function (req, res) {
     console.log(req.body);
 
-    var valid = validation.validateUserData(req, res);
+    // var valid = validation.validateUserData(req, res);
 
-    console.log(valid);
+    // console.log(valid);
     if (
-      valid &&
       req.body.outletId &&
       req.body.brandId &&
       req.body.outletName &&
@@ -119,9 +118,11 @@ module.exports = {
             )
             .then(function (updated) {
               // console.log(updated);
-              return res
-                .status(200)
-                .send({ message: "admin created successfully", status: 200 });
+              return res.status(200).send({
+                message: "admin created successfully",
+                adminId: result._id,
+                status: 200,
+              });
             })
             .catch(function (err) {
               // console.log(err);

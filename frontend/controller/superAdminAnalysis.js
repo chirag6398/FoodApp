@@ -24,7 +24,7 @@ app.controller("superAdminAnalysisController", [
 
     var myChart1 = null;
 
-    $scope.fechGraphData = function (brandId) {
+    $scope.fechGraphData = function (brandId, brandName) {
       console.log(brandId);
       superAdminDashBoardApi.fetchBrandGraphData(
         brandId,
@@ -49,7 +49,7 @@ app.controller("superAdminAnalysisController", [
                 datasets: [
                   {
                     data: $scope.brandRevenue,
-                    label: "Dataset",
+                    label: brandName,
                     fill: true,
                     backgroundColor: "rgba(220,220,220,0.5)",
                     borderColor: "rgba(220,220,220,1)",
@@ -66,7 +66,7 @@ app.controller("superAdminAnalysisController", [
       );
     };
     var myChart2 = undefined;
-    $scope.fetchOutletGraphData = function (outletId) {
+    $scope.fetchOutletGraphData = function (outletId, outletName) {
       superAdminDashBoardApi.fetchOutletGraphData(
         outletId,
         function (err, result) {
@@ -90,7 +90,7 @@ app.controller("superAdminAnalysisController", [
                 datasets: [
                   {
                     data: $scope.outletRevenue,
-                    label: "Dataset",
+                    label: outletName,
                     fill: true,
                     backgroundColor: "rgba(220,220,220,0.5)",
                     borderColor: "rgba(220,220,220,1)",
