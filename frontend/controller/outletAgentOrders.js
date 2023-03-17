@@ -7,6 +7,11 @@ function checkExistanceOfTable(table, data) {
 
   return ind;
 }
+function getOrderInd(orders, id) {
+  return orders.findIndex(function (value) {
+    return value._id === id;
+  });
+}
 app.controller("outletAgentOrdersController", [
   "$scope",
   "outletAgentApi",
@@ -17,6 +22,7 @@ app.controller("outletAgentOrdersController", [
       orders: [],
       activeIndex: [],
       newTable: [],
+      // allotedTable: null,
     };
 
     $rootScope.$on("passData", function (err, result) {
@@ -139,7 +145,9 @@ app.controller("outletAgentOrdersController", [
       // console.log($scope.activeIndex);
     };
 
+    $scope.swapBtn = "Apply swaps";
     $scope.updateTableNo = function (orderId, oldTables) {
+      $scope.swapBtn = "Applying";
       outletAgentApi.updateTableNo(
         {
           _id: orderId,
@@ -149,6 +157,13 @@ app.controller("outletAgentOrdersController", [
         },
         function (err, result) {
           console.log(err, result);
+          if (result) {
+            $scope.swapBtn = "Applied";
+            var indx = getOrderInd($scope.object.orders, orderId);
+            $scope.object.orders[indx].tableNumber = $scope.object.newTable;
+            console.log($scope.object.orders[indx].tableNumber);
+            // $scope.object.allotedTable = $scope.object.newTable;
+          }
         }
       );
     };
