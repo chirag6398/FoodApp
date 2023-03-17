@@ -16,18 +16,22 @@ app.controller("superAdminSettingController", [
     });
 
     $scope.btnText1 = "update";
+    $scope.btnText2 = "change";
+
     $scope.updateAdmin = function ($event, adminId) {
       $event.preventDefault();
+      $scope.btnText1 = "processing";
       adminApi.updateAdmin($scope.admin, adminId, function (err, result) {
         console.log(result);
-        if (result) $scope.btnText1 = "updated successfully";
+        if (result) $scope.btnText1 = "successfull";
       });
     };
     $scope.changePassword = function ($event, adminId) {
       $event.preventDefault();
+      $scope.btnText2 = "changing";
       adminApi.updatePassword($scope.admin, adminId, function (err, result) {
         console.log(result);
-        $scope.btnText1 = "updated successfully";
+        $scope.btnText2 = "changed";
       });
     };
     $scope.adminId = $stateParams.id;

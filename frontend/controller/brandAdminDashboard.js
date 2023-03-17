@@ -16,7 +16,8 @@ app.controller("brandAdminDashboardController", [
     console.log(setAdminData.getAdminData());
     // var result=setAdminData.getAdminData()
     brandApi.getBrandAdminPage();
-
+    var myChart1 = null;
+    // var myChart2=null;
     $rootScope.$on("passData", function (err, result) {
       if (result) {
         console.log(result);
@@ -39,9 +40,12 @@ app.controller("brandAdminDashboardController", [
               $scope.brandDates.push(element._id);
               $scope.brandRevenue.push(element.totalRevenue);
             });
+            if (myChart1) {
+              myChart1.destroy();
+            }
             console.log($scope.brandDates, $scope.brandRevenue);
             var ctx1 = document.getElementById("myChart1").getContext("2d");
-            var myChart1 = new Chart(ctx1, {
+            myChart1 = new Chart(ctx1, {
               type: "line",
               data: {
                 labels: $scope.brandDates,
@@ -65,7 +69,7 @@ app.controller("brandAdminDashboardController", [
       }
     });
 
-    var myChart2 = undefined;
+    var myChart2 = null;
 
     $scope.fetchOutletGraphData = function (outletId) {
       brandAdminDashBoardApi.fetchOutletGraphData(
@@ -73,7 +77,7 @@ app.controller("brandAdminDashboardController", [
         function (err, result) {
           console.log(err, result);
           if (result.data) {
-            if (myChart2 !== undefined) {
+            if (myChart2) {
               myChart2.destroy();
             }
             $scope.outletDates = [0];

@@ -92,12 +92,12 @@ superAdminRoute.post(
   superAdminController.updateBrandName
 );
 
-superAdminRoute.post(
+superAdminRoute.put(
   "/api/superAdmin/deactivateBrand",
   passport.authenticate("jwt", { session: false }),
   superAdminController.deactivateBrand
 );
-superAdminRoute.post(
+superAdminRoute.put(
   "/api/superAdmin/activateBrand",
   passport.authenticate("jwt", { session: false }),
   superAdminController.activateBrand

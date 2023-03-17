@@ -1,4 +1,4 @@
-<div style="display: flex; flex-wrap: wrap">
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
   <div>
     <div id="container1">
       <div class="box">
@@ -30,5 +30,86 @@
   <div ng-show="outletDates">
     <h3>Outlet Last Month Revenue Analysis</h3>
     <canvas id="myChart" area-label="chart"></canvas>
+  </div>
+  <div style="display: flex; gap: 10px">
+    <div>
+      <div style="margin-right: 10px">
+        <div class="row">
+          <div class="col-4">
+            <div class="list-group" id="list-tab" role="tablist">
+              <span
+                style="
+                  width: 300px;
+                  font-weight: bolder;
+                  opacity: 0.6;
+                  margin-bottom: 10px;
+                "
+                >Top List Of Products</span
+              >
+              <a
+                class="list-group-item list-group-item-action"
+                style="min-width: 300px"
+                ng-repeat="product in topTenProducts "
+              >
+                <div class="analysis__brandList">
+                  <div
+                    style="
+                      display: flex;
+                      cursor: pointer;
+                      flex-wrap: wrap;
+                      align-items: center;
+                    "
+                  >
+                    <div style="width: 100px; text-align: center">
+                      <img
+                        style="object-fit: contain; height: 50px"
+                        src="{{product.img}}"
+                        slt="..."
+                      />
+                    </div>
+                    <div>{{product.productName}}</div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="row">
+        <div class="col-4">
+          <div class="list-group" id="list-tab" role="tablist">
+            <span
+              style="
+                width: 300px;
+                font-weight: bolder;
+                opacity: 0.6;
+                margin-bottom: 10px;
+              "
+              >Top List Of Categories</span
+            >
+            <a
+              class="list-group-item list-group-item-action"
+              style="min-width: 300px"
+              ng-repeat="category in topTenCategories "
+            >
+              <div class="analysis__brandList">
+                <div
+                  style="
+                    display: flex;
+                    cursor: pointer;
+                    flex-wrap: wrap;
+                    align-items: center;
+                  "
+                >
+                  <div>{{category.categoryName}}</div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

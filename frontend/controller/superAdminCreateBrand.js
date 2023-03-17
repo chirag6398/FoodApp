@@ -1,6 +1,11 @@
 ///<reference path="../module/module.js"/>
 ///<reference path="../factory/apicall.js"/>
 
+function getBrandIndxById(brands, id) {
+  return brands.findIndex(function (value) {
+    return value._id === id;
+  });
+}
 app.controller("superAdminCreateBrandController", [
   "$scope",
   "adminApi",
@@ -114,15 +119,27 @@ app.controller("superAdminCreateBrandController", [
 
     $scope.deactivateBrand = function (brandId) {
       console.log(brandId);
-      adminApi.deactivateBrand(brandId, function (result) {
-        console.log(result);
+      adminApi.deactivateBrand(brandId, function (err, result) {
+        console.log(err, result);
+        if (result) {
+          var indx = getBrandIndxById($scope.object.brands, brandId);
+
+          $scope.object.brands[indx].isActive = false;
+          alert("brand deactivated");
+        }
       });
     };
 
     $scope.activateBrand = function (brandId) {
       console.log(brandId);
-      adminApi.activateBrand(brandId, function (result) {
-        console.log(result);
+      adminApi.activateBrand(brandId, function (err, result) {
+        console.log(err, result);
+        if (result) {
+          var indx = getBrandIndxById($scope.object.brands, brandId);
+
+          $scope.object.brands[indx].isActive = true;
+          alert("brand activated");
+        }
       });
     };
 
@@ -130,6 +147,12 @@ app.controller("superAdminCreateBrandController", [
       adminApi.deleteBrand(brandId, function (err, result) {
         if (result) {
           console.log(result);
+          var indx = getBrandIndxById($scope.object.brands, brandId);
+
+          $scope.object.brands[indx].isDeleted = true;
+          alert("brand deleted successfully");
+        } else {
+          alert("brand not deleted try later");
         }
       });
     };

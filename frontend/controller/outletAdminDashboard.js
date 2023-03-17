@@ -8,6 +8,7 @@ app.controller("outletAdminDashboardController", [
   "outletApi",
   function ($scope, $location, outletAdminDashBoardApi, $rootScope, outletApi) {
     outletApi.getOutletAdminPage();
+    var myChart1 = null;
     $rootScope.$on("passData", function (err, data) {
       console.log(data);
       if (data) {
@@ -27,9 +28,12 @@ app.controller("outletAdminDashboardController", [
               $scope.outletDates.push(element._id);
               $scope.outletRevenue.push(element.totalRevenue);
             });
+            if (myChart1) {
+              myChart1.destroy();
+            }
             console.log($scope.outletDates, $scope.outletRevenue);
             var ctx2 = document.getElementById("myChart").getContext("2d");
-            var myChart1 = new Chart(ctx2, {
+            myChart1 = new Chart(ctx2, {
               type: "line",
               data: {
                 labels: $scope.outletDates,

@@ -17,4 +17,10 @@ outletRoute.post(
   outletController.saveTableView
 );
 
+outletRoute.put(
+  "/api/outlet/deleteOutlet",
+  passport.authenticate("jwt", { session: false }),
+  outletController.deleteOutlet
+);
+
 module.exports = outletRoute;

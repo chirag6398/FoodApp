@@ -1,6 +1,11 @@
 ///<reference path="../module/module.js"/>
 ///<reference path="../factory/apicall.js"/>
 
+function getIndxOfOutletById(outlets, id) {
+  return outlets.findIndex(function (value) {
+    return value._id === id;
+  });
+}
 app.controller("brandAdminHomeController", [
   "$scope",
   "$rootScope",
@@ -100,9 +105,25 @@ app.controller("brandAdminHomeController", [
 
     $scope.togleOutlet = function (outletId) {
       console.log(outletId);
-      apiHandler.togleOutlet(outletId, function (err, result) {
+      brandApi.togleOutlet(outletId, function (err, result) {
         if (result) {
           console.log(result);
+          var indx = getIndxOfOutletById($scope.object.outlets, outletId);
+          $scope.object.outlets[indx].isActive =
+            !$scope.object.outlets[indx].isActive;
+
+          alert("outlet toggle succesfully");
+        }
+      });
+    };
+
+    $scope.deleteOutlet = function (outletId) {
+      brandApi.deleteOutlet(outletId, function (err, result) {
+        console.log(err, result);
+        if (result) {
+          alert("outlet deleted successfully");
+          var indx = getIndxOfOutletById($scope.object.outlets, outletId);
+          $scope.object.outlets[indx].isDeleted = true;
         }
       });
     };

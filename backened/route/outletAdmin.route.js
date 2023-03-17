@@ -47,12 +47,12 @@ outletAdminRoute.post(
   passport.authenticate("jwt", { session: false }),
   outletAdminController.createOutletAgent
 );
-outletAdminRoute.post(
+outletAdminRoute.put(
   "/api/outlet/updateOutletData",
   passport.authenticate("jwt", { session: false }),
   outletAdminController.updateOutletData
 );
-outletAdminRoute.post(
+outletAdminRoute.put(
   "/api/outlet/togleOutlet",
   passport.authenticate("jwt", { session: false }),
   outletAdminController.togleOutlet

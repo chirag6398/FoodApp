@@ -52,7 +52,6 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
         },
       })
       .then(function (response) {
-        // console.log(response);
         cb(null, response);
       }),
       function (err) {
@@ -113,7 +112,7 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
 
   obj.updateOutletData = function (data, cb) {
     $http
-      .post("http://localhost:5000/api/outlet/updateOutletData", data, {
+      .put("http://localhost:5000/api/outlet/updateOutletData", data, {
         headers: {
           Authorization: window.localStorage.getItem("Authorization"),
         },
@@ -152,7 +151,7 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
         cb(null, response);
       })
       .catch(function (err) {
-        // console.log(err,null);
+        cb(err, null);
       });
   };
 
@@ -197,11 +196,9 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
         },
       })
       .then(function (response) {
-        // console.log(response);
         cb(null, response);
       })
       .catch(function (err) {
-        // console.log(err);
         cb(err, null);
       });
   };
@@ -214,11 +211,9 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
         },
       })
       .then(function (response) {
-        // console.log(response);
         cb(null, response);
       }),
       function (err) {
-        // console.log(err);
         cb(err, null);
       };
   };
@@ -263,11 +258,10 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
         },
       })
       .then(function (response) {
-        // console.log(null,response);
         cb(null, response);
       })
       .catch(function (err) {
-        // console.log(err,null);
+        cb(err, null);
       });
   };
 
@@ -279,11 +273,10 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
         },
       })
       .then(function (response) {
-        // console.log(null,response);
         cb(null, response);
       })
       .catch(function (err) {
-        // console.log(err,null);
+        cb(err, null);
       });
   };
 
@@ -295,11 +288,10 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
         },
       })
       .then(function (response) {
-        // console.log(null,response);
         cb(null, response);
       })
       .catch(function (err) {
-        // console.log(err,null);
+        cb(err, null);
       });
   };
 
@@ -331,12 +323,9 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
         },
       })
       .then(function (response) {
-        // console.log(response);
         cb(response);
       })
-      .catch(function (err) {
-        // console.log(err);
-      });
+      .catch(function (err) {});
   };
 
   obj.updatePassword = function (password, id, cb) {
@@ -351,12 +340,49 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
         },
       })
       .then(function (response) {
-        // console.log(null,response);
         cb(null, response);
       })
       .catch(function (err) {
-        // console.log(err,null);
+        cb(err, null);
       });
+  };
+
+  obj.togleOutlet = function (outletId, cb) {
+    $http
+      .put(
+        "http://localhost:5000/api/outlet/togleOutlet",
+        { outletId },
+        {
+          headers: {
+            Authorization: window.localStorage.getItem("Authorization"),
+          },
+        }
+      )
+      .then(function (response) {
+        cb(null, response);
+      }),
+      function (err) {
+        cb(err, null);
+      };
+  };
+
+  obj.deleteOutlet = function (outletId, cb) {
+    $http
+      .put(
+        "http://localhost:5000/api/outlet/deleteOutlet",
+        { outletId },
+        {
+          headers: {
+            Authorization: window.localStorage.getItem("Authorization"),
+          },
+        }
+      )
+      .then(function (response) {
+        cb(null, response);
+      }),
+      function (err) {
+        cb(err, null);
+      };
   };
 
   return obj;

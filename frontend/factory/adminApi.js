@@ -235,8 +235,9 @@ app.factory("adminApi", function ($http, $rootScope) {
   };
 
   obj.deactivateBrand = function (brandId, cb) {
+    console.log(brandId);
     $http
-      .post(
+      .put(
         "http://localhost:5000/api/superAdmin/deactivateBrand",
         { brandId },
         {
@@ -253,8 +254,9 @@ app.factory("adminApi", function ($http, $rootScope) {
       });
   };
   obj.activateBrand = function (brandId, cb) {
+    console.log(brandId);
     $http
-      .post(
+      .put(
         "http://localhost:5000/api/superAdmin/activateBrand",
         { brandId },
         {

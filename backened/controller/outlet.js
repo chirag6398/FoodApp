@@ -28,4 +28,16 @@ module.exports = {
         return res.status(500).send(err);
       });
   },
+  deleteOutlet: function (req, res) {
+    console.log(req.body);
+    outletModel
+      .findByIdAndUpdate({ _id: req.body.outletId }, { isDeleted: true })
+      .then(function (result) {
+        return res.send({ message: "deleted outlet" });
+      })
+      .catch(function (err) {
+        console.log(err);
+        return res.status(404).send(err);
+      });
+  },
 };

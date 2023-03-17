@@ -163,41 +163,28 @@ module.exports = {
   },
 
   deactivateBrand: function (req, res) {
-    try {
-      req.body.brandId = mongoose.Types.ObjectId(req.body.brandId);
-      brandModel
-        .findByIdAndUpdate({ _id: req.body.brandId }, { isActive: false })
-        .then(function (result) {
-          // console.log("result",result)
-          return res.status({ message: "deactivated" });
-        })
-        .catch(function (err) {
-          // console.log(err);
-          return res.status(500).send({ error: "server error" });
-        });
-    } catch (err) {
-      // console.log(err);
-      return res.status(500).send({ error: "server error" });
-    }
+    console.log(req.body);
+    req.body.brandId = mongoose.Types.ObjectId(req.body.brandId);
+    brandModel
+      .findByIdAndUpdate({ _id: req.body.brandId }, { isActive: false })
+      .then(function (result) {
+        return res.send({ message: "deactivated" });
+      })
+      .catch(function (err) {
+        return res.status(500).send({ error: "server error" });
+      });
   },
 
   activateBrand: function (req, res) {
-    try {
-      req.body.brandId = mongoose.Types.ObjectId(req.body.brandId);
-      brandModel
-        .findByIdAndUpdate({ _id: req.body.brandId }, { isActive: true })
-        .then(function (result) {
-          // console.log("result",result)
-          return res.status({ message: "deactivated" });
-        })
-        .catch(function (err) {
-          // console.log(err);
-          return res.status(500).send({ error: "server error" });
-        });
-    } catch (err) {
-      // console.log(err);
-      return res.status(500).send({ error: "server error" });
-    }
+    req.body.brandId = mongoose.Types.ObjectId(req.body.brandId);
+    brandModel
+      .findByIdAndUpdate({ _id: req.body.brandId }, { isActive: true })
+      .then(function (result) {
+        return res.send({ message: "deactivated" });
+      })
+      .catch(function (err) {
+        return res.status(500).send({ error: "server error" });
+      });
   },
 
   deleteBrand: function (req, res) {

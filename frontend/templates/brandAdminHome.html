@@ -14,7 +14,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr style="cursor: pointer" ng-repeat="outlet in object.outlets">
+        <tr
+          ng-if="!outlet.isDeleted"
+          style="cursor: pointer"
+          ng-repeat="outlet in object.outlets"
+        >
           <td scope="row">{{$index}}</td>
           <td>
             <img
@@ -313,7 +317,13 @@
             </button>
           </td>
           <td>
-            <button type="button" class="btn btn-secondary">Delete</button>
+            <button
+              type="button"
+              ng-click="deleteOutlet(outlet._id)"
+              class="btn btn-secondary"
+            >
+              Delete
+            </button>
           </td>
           <td>
             <!-- {{outlet._id}} -->
