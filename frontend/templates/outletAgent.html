@@ -35,9 +35,9 @@
         <div class="agt__navComponent">
             <button type="button" class="agt__navProfileBtn" data-toggle="modal" data-target="#exampleModal2" data-whatever="@mdo">Profile</button>
         </div>
-        <div ng-show="brandLogo">
-            <img title={{brand.name}} style="object-fit: contain;
-                height: 32px;" src={{brandLogo}} alt="...">
+        <div ng-show="object.brand">
+            <img title={{object.brand.name}} style="object-fit: contain;
+                height: 32px;" src={{object.brand.logo}} alt="...">
         </div>
 
 
@@ -49,7 +49,7 @@
                     {{orderNo}}
                 </div>
                 <div style="opacity: 0.6;font-weight: 600 ;">
-                    {{currentTime | date:'mediumTime'}}
+                    {{object.currentTime | date:'mediumTime'}}
                 </div>
             </div>
             <div class="agt__searchField">
@@ -85,7 +85,7 @@
                 <div style="height: -webkit-fill-available;
                 display: flex;
                 align-items: center;gap: 10px;
-                justify-content: center;" ng-if="!type">
+                justify-content: center;" ng-if="!object.type">
                     <div>
                         <img data-toggle="modal"
                         data-target="#dineIn" data-whatever="@mdo"
@@ -107,7 +107,7 @@
                                                 <div class="form-group">
                                                     <label for="count" class="col-form-label">number of person:</label>
                                                     <input type="number" name="count" ng-required="true"
-                                                         ng-model="customer.personCount" class="form-control"
+                                                         ng-model="object.customer.personCount" class="form-control"
                                                         id="count">
                                                     <span
                                                         ng-show="numberOfPerson.count.$dirty && numberOfPerson.count.$error.required">plz fill this field</span>
@@ -139,8 +139,10 @@
                         alt="...">
                     </div>
                 </div>
-                <div ng-if="type" class="agt__products1">
-                    <div class="agt__product" ng-repeat="product in products | filter:search">
+                
+                <div ng-if="object.type" class="agt__products1">
+                   
+                    <div class="agt__product" ng-repeat="product in object.products ">
                         <div style="display: flex;
                         align-items: center;
                         justify-content: space-around;
@@ -189,14 +191,15 @@
             </div>
             <div class="agt__category">
                 <!-- {{isSelected}} -->
+                <!-- {{object.productsData}} -->
                 <div class="agt__categoryCard">
 
 
-                    <div ng-class="{'agt__active': isSelected==$index}" style="min-width: 145px;
+                    <div ng-class="{'agt__active': object.isSelected==$index}" style="min-width: 145px;
                             min-height: 64px;
                             display: flex;
                             align-items: center;
-                            justify-content: center;" ng-repeat="category in categories"
+                            justify-content: center;" ng-repeat="category in object.productsData.categories"
                         ng-click="setIndexing($index)">
 
                         <div style="font-weight: bold;">
@@ -246,7 +249,7 @@
                     
                 </div>
             </div>
-            <div ng-if=" amount>0" class="agt__bill">
+            <div ng-if=" object.amount>0" class="agt__bill">
                                 <div style="display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -255,7 +258,7 @@
                                         Sub Total
                                     </div>
                                     <div>
-                                        Rs.{{amount}}
+                                        Rs.{{object.amount}}
                                     </div>
                                 </div>
                                 <div
@@ -266,7 +269,7 @@
                                         </caption>
                                         <section>
                                             <div style="width: 100%;display: flex;justify-content: space-between;"
-                                                ng-repeat="tax in taxes">
+                                                ng-repeat="tax in object.taxes">
                                                 <span>
                                                     {{tax.name}}
                                                 </span>
@@ -280,7 +283,7 @@
 
                                 </div>
             </div>
-                    <div ng-if="amount>0" class="agt__order">
+                    <div ng-if="object.amount>0" class="agt__order">
                         <div style="display: flex;
                 width: 100%;
                 justify-content: space-between;
@@ -290,16 +293,16 @@
                                 Total
                             </div>
                             <div>
-                                {{payableAmount}}
+                                {{object.payableAmount}}
                             </div>
                         </div>
-                        <div ng-if="saved">
+                        <div ng-if="object.saved">
                             <button ng-click="orderHandler()" class="btn btn-primary">
-                                {{orderBtn}}
+                                {{object.orderBtn}}
                             </button>
                         </div>
                         <div>
-                            <button ng-if="!saved" type="button" class="btn btn-primary" data-toggle="modal"
+                            <button ng-if="!object.saved" type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#exampleModal" data-whatever="@mdo">Customer Detail</button>
                             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -316,18 +319,18 @@
                                                 <div class="form-group">
                                                     <label for="customerName" class="col-form-label">Name:</label>
                                                     <input type="text" name="customerName" ng-required="true"
-                                                        ng-minlength="3" ng-model="customer.name" class="form-control"
+                                                        ng-minlength="3" ng-model="object.customer.name" class="form-control"
                                                         id="customerName">
                                                     <span
                                                         ng-show="customerData.customerName.$dirty && customerData.customerName.$error.minlength">Minimum
                                                         3 characters required</span>
                                                 </div>
-                                                <!-- {{customer.type}} -->
+                                                <!-- {{object.customer.type}} -->
                                                 <div class="form-group">
                                                     <label for="customerNumber" class="col-form-label">Phone
                                                         Number:</label>
                                                     <input type="number" name="customerNumber" ng-pattern="/^\d{10}$/"
-                                                        ng-required="true" ng-minlength="3" ng-model="customer.number"
+                                                        ng-required="true" ng-minlength="3" ng-model="object.customer.number"
                                                         class="form-control" id="customerNumber">
                                                     <span
                                                         ng-show="customerData.customerNumber.$dirty && customerData.customerNumber.$invalid">Enter
@@ -340,7 +343,7 @@
                                                     <button type="button"
                                                         ng-disabled="customerData.$invalid"
                                                         ng-click="saveCustomerData()"
-                                                        class="btn btn-primary">{{btnText}}</button>
+                                                        class="btn btn-primary">{{object.btnText}}</button>
                                                 </div>
 
                                             </form>
@@ -358,7 +361,7 @@
             align-items: center;
             height: -webkit-fill-available;
             font-weight: bold;
-            opacity: 0.5;" ng-if="amount==0">
+            opacity: 0.5;" ng-if="object.amount==0">
                         <span>
                             "Looks like your cart is empty. Time to add some tasty items!"
                         </span>
@@ -383,7 +386,7 @@
                             <div class="form-group">
                                 <label for="userName" class="col-form-label">UserName :</label>
                                 <input type="text" name="userName" ng-required="true" ng-minlength="3"
-                                    ng-model="admin.userName" class="form-control">
+                                    ng-model="object.admin.userName" class="form-control">
                                 <span
                                     ng-show="adminData.userName.$dirty && adminData.userName.$error.minlength">Minimum
                                     3 characters required</span>
@@ -394,7 +397,7 @@
                             <div class="form-group">
                                 <label for="firstName" class="col-form-label">FirstName :</label>
                                 <input type="text" name="firstName" ng-required="true" ng-minlength="3"
-                                    ng-model="admin.firstName" class="form-control">
+                                    ng-model="object.admin.firstName" class="form-control">
                                 <span
                                     ng-show="adminData.firstName.$dirty && adminData.firstName.$error.minlength">Minimum
                                     3 characters required</span>
@@ -404,7 +407,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="lastName" class="col-form-label">LastName :</label>
-                                <input type="text" name="lastName" ng-minlength="0" ng-model="admin.lastName"
+                                <input type="text" name="lastName" ng-minlength="0" ng-model="object.admin.lastName"
                                     class="form-control">
                                 <span
                                     ng-show="adminData.lastName.$dirty && adminData.lastName.$error.minlength">Minimum
@@ -415,7 +418,7 @@
                                 <label for="email" class="col-form-label">Email :</label>
                                 <input type="email" name="email" ng-required="true"
                                     ng-pattern="/^([a-z A-Z 0-9\.-]+)@([0-9 a-z A-Z -]+).([a-z]{2,8})(.[a-z{2,4}])?$/"
-                                    ng-model="admin.email" class="form-control">
+                                    ng-model="object.admin.email" class="form-control">
                                 <span
                                     ng-show="adminData.email.$dirty && !adminData.email.$error.required && adminData.email.$invalid">Please
                                     enter correct email</span>
@@ -425,7 +428,7 @@
                             <div class="form-group">
                                 <label for="number" class="col-form-label">Phone Number :</label>
                                 <input type="number" name="number" ng-required="true" ng-pattern="/^\d{10}$/"
-                                    ng-model="admin.number" class="form-control">
+                                    ng-model="object.admin.number" class="form-control">
                                 <span ng-show="adminData.number.$dirty && adminData.number.$invalid">please
                                     enter correct number</span>
                                 <span
@@ -433,14 +436,14 @@
                                     fill this field</span>
                             </div>
 
-                            <button style="background: transparent;
+                            <!-- <button style="background: transparent;
                 font-weight: 700;
                 cursor: pointer;
                 outline: none;
                 border: 0px;
                 opacity: 0.7;" type="button" data-toggle="modal" data-target="#exampleModal1"
                                 data-whatever="@mdo">Change Password ?
-                            </button>
+                            </button> -->
 
 
                             <div class="modal-footer">
@@ -461,7 +464,7 @@
     <div>
 
 
-        <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"
+        <!-- <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -476,7 +479,7 @@
                             <div class="form-group">
                                 <label for="password" class="col-form-label">Password :</label>
                                 <input type="password" name="password" ng-required="true" ng-minlength="5"
-                                    ng-maxlength="8" ng-model="admin.password" class="form-control">
+                                    ng-maxlength="8" ng-model="object.admin.password" class="form-control">
                                 <span
                                     ng-show="passwordForm.password.$dirty && (passwordForm.password.$error.minlength || passwordForm.password.$error.maxlength)">Minimum
                                     5-8 characters required</span>
@@ -486,17 +489,16 @@
                             </div>
                             <div class="form-group">
                                 <label for="cpassword" class="col-form-label">Confirm Password :</label>
-                                <input type="password" ng-disabled="!admin.password" name="cpassword"
+                                <input type="password" ng-disabled="!object.admin.password" name="cpassword"
                                     ng-required="true" ng-minlength="5" ng-maxlength="8"
-                                    ng-model="admin.cpassword" class="form-control">
-                                <!-- <span ng-show="passwordForm.cpassword.$dirty && (passwordForm.cpassword.$error.minlength || passwordForm.cpassword.$error.maxlength)">Minimum 5-8 characters required</span> -->
+                                    ng-model="object.admin.cpassword" class="form-control">
                                 <span
                                     ng-show="passwordForm.cpassword.$dirty && passwordForm.cpassword.$error.required">Please
                                     fill this field</span>
                                 <span
-                                    ng-show="passwordForm.cpassword.$dirty && !(passwordForm.cpassword.$error.required) && admin.password && admin.password!=admin.cpassword">confirm
+                                    ng-show="passwordForm.cpassword.$dirty && !(passwordForm.cpassword.$error.required) && object.admin.password && object.admin.password!=object.admin.cpassword">confirm
                                     password is not matching password</span>
-                                <!-- <span ng-show=""></span> -->
+                                
                             </div>
 
 
@@ -513,6 +515,6 @@
 
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>

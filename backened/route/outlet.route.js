@@ -5,11 +5,11 @@ var passportJwt = require("../passport/passportjwt");
 
 passportJwt.initializer(passport);
 
-outletRoute.get(
-  "/api/outlet/getOutlet/:id",
-  passport.authenticate("jwt", { session: false }),
-  outletController.getOutlet
-);
+// outletRoute.get(
+//   "/api/outlet/getOutlet/:id",
+//   passport.authenticate("jwt", { session: false }),
+//   outletController.getOutlet
+// );
 
 outletRoute.post(
   "/api/outlet/saveTableView",

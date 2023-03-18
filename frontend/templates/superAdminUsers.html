@@ -1,4 +1,33 @@
 <div style="display: flex; flex-direction: column; width: 100%; padding: 20px">
+  <div style="margin-bottom: 15px">
+    <div class="mt-3 inputs">
+      <i class="fa fa-search"></i>
+      <input
+        type="text"
+        ng-model="object.searchUser"
+        ng-change="searchTextHandler()"
+        class="form-control1 form-control"
+        placeholder="Search user by user name"
+      />
+    </div>
+    <div ng-if="object.searchTextResult.length!==0">
+      <div class="list-group">
+        <!-- {{object.searchTextResult}} -->
+        <a
+          style="cursor: pointer"
+          ng-repeat="res in object.searchTextResult"
+          class="list-group-item list-group-item-action"
+          ng-click="setSearchResult(res)"
+        >
+          <div style="display: flex; align-items: center; gap: 20px">
+            <div>
+              <span>{{res.userName}}</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
   <div>
     <table class="table">
       <thead class="thead-dark">

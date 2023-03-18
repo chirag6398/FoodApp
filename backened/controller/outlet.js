@@ -16,18 +16,18 @@ module.exports = {
         return res.status(500).send(err);
       });
   },
-  getOutlet: function (req, res) {
-    console.log(req.params);
-    return outletModel
-      .findById({ _id: req.params.id })
-      .then(function (result) {
-        return res.send(result);
-      })
-      .catch(function (err) {
-        console.log(err);
-        return res.status(500).send(err);
-      });
-  },
+  // getOutlet: function (req, res) {
+  //   console.log(req.params);
+  //   return outletModel
+  //     .findById({ _id: req.params.id })
+  //     .then(function (result) {
+  //       return res.send(result);
+  //     })
+  //     .catch(function (err) {
+  //       console.log(err);
+  //       return res.status(500).send(err);
+  //     });
+  // },
   deleteOutlet: function (req, res) {
     console.log(req.body);
     outletModel

@@ -14,48 +14,36 @@ function getOrderInd(orders, id) {
 }
 app.controller("outletAgentOrdersController", [
   "$scope",
-  "outletAgentApi",
+  "outletAgentFactory",
   "$rootScope",
-  function ($scope, outletAgentApi, $rootScope) {
-    outletAgentApi.getOutletAgentPage();
+  function ($scope, outletAgentFactory, $rootScope) {
     $scope.object = {
       orders: [],
       activeIndex: [],
       newTable: [],
       // allotedTable: null,
     };
+    outletAgentFactory.getOutletAgentPage(function (err, result) {
+      console.log(result);
+      $scope.outletId = result.data.outlet._id;
 
-    $rootScope.$on("passData", function (err, result) {
-      if (result) {
-        console.log(result);
-        $scope.outletId = result.data.outlet._id;
+      outletAgentFactory.getOrders(
+        $scope.outletId,
 
-        // if($rootScope.tables === undefined){
-        //   outletAgentApi.getOutletTable($scope.outletId,function(err,result){
-        //     if(result){
-        //       $scope.tables=result.table;
-        //     }
-        //   })
-        // }
-
-        outletAgentApi.getOrders(
-          $scope.outletId,
-
-          function (err, result) {
-            console.log(result.data);
-            $scope.object.orders = result.data[0];
-            $scope.object.tables = result.data[1].table;
-            $scope.object.orders.forEach(function (value) {
-              value.totalQuantity = value.items.reduce(function (accum, value) {
-                return accum + value.quantity;
-              }, 0);
-              value.totalPrice = value.items.reduce(function (accum, value) {
-                return accum + value.quantity * value.price;
-              }, 0);
-            });
-          }
-        );
-      }
+        function (err, result) {
+          console.log(result.data);
+          $scope.object.orders = result.data[0];
+          $scope.object.tables = result.data[1].table;
+          $scope.object.orders.forEach(function (value) {
+            value.totalQuantity = value.items.reduce(function (accum, value) {
+              return accum + value.quantity;
+            }, 0);
+            value.totalPrice = value.items.reduce(function (accum, value) {
+              return accum + value.quantity * value.price;
+            }, 0);
+          });
+        }
+      );
     });
 
     $scope.object.filter = {

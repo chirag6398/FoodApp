@@ -2,246 +2,170 @@
 ///<reference path="../factory/apicall.js"/>
 ///<reference path="../services/cart.service.js"/>
 
-function generateOrderId() {
-  const timestamp = new Date().getTime();
-  const randomNumber = Math.floor(Math.random() * 10000);
-  const orderId = "ORDERID-" + timestamp + "-" + randomNumber;
-  return orderId;
-}
-
-function updateTablesIndexes(tables, allotedTables) {
-  var indexes = [];
-  allotedTables.forEach(function (tableNumber) {
-    for (var x = 0; x < tables.length; x++) {
-      if (tables[x].number == tableNumber) {
-        indexes.push(x);
-        break;
-      }
-    }
-  });
-
-  return indexes;
-}
-
-function addTaxes(taxes, amount) {
-  var extraAmount = 0;
-  taxes.forEach(function (value) {
-    extraAmount += (amount * value.percent) / 100;
-  });
-  return extraAmount;
-}
-
-function isTableAvailable(count, tables) {
-  // console.log(count);
-  var allotedTables = [];
-
-  for (var x of tables) {
-    // console.log(x, count);
-    if (x.isAvailable) {
-      if (count >= x.capacity) {
-        count = count - x.capacity;
-      } else {
-        count = 0;
-      }
-      allotedTables.push(x.number);
-    }
-
-    if (count == 0) {
-      break;
-    }
-  }
-
-  console.log(count, allotedTables);
-
-  return count === 0 ? allotedTables : false;
-}
-
 app.controller("outletAgentController", [
   "$scope",
-  "$timeout",
   "$location",
-  "outletAgentApi",
-  "cartService",
+  "outletAgentFactory",
+  "outletAgentService",
   "$interval",
-  "$rootScope",
   function (
     $scope,
-    $timeout,
     $location,
-    outletAgentApi,
-    cartService,
-    $interval,
-    $rootScope
+    outletAgentFactory,
+    outletAgentService,
+    $interval
   ) {
-    var timeout = null;
     $scope.object = {
       tables: [],
+      brand: null,
+      outlet: null,
+      admin: null,
+      taxes: [],
+      currentTime: null,
+      orderNo: null,
+      customer: {},
+      cart: [],
+      amount: 0,
+      btnText: "Enter",
+      orderBtn: "place order",
+      type: null,
+      saved: false,
+      productsData: null,
+      products: null,
+      isSelected: 0,
+      payableAmount: 0,
     };
-    $scope.searchTextHandler = function () {
-      if (timeout) {
-        $timeout.cancel(timeout);
-      }
-      timeout = $timeout(function () {
-        outletAgentApi.getProductByName(
-          $scope.searchText,
-          $scope.outletId,
-          function (err, result) {
-            console.log(err, result);
-            if (result) {
-              $scope.searchTextResult = result.data;
-            } else {
-              $scope.searchTextResult = [];
-            }
-          }
-        );
-      }, 800);
-    };
-    outletAgentApi.getOutletAgentPage();
 
-    $rootScope.$on("passData", function (err, result) {
+    outletAgentFactory.getOutletAgentPage(function (err, result) {
+      console.log(err, result);
       if (result) {
-        console.log(result);
-        $scope.brand = result.data.brand;
-        $scope.outlet = result.data.outlet;
-        $scope.outletId = result.data.outlet._id;
-        $scope.admin = {
-          userName: result.data.userName,
-          email: result.data.email,
-          firstName: result.data.firstName,
-          lastName: result.data.lastName,
-          number: result.data.number,
-        };
-        $scope.adminId = result.data._id;
-
-        outletAgentApi.getOutletProducts($scope.outletId);
-        outletAgentApi.getOutlet($scope.outletId, function (err, result) {
-          console.log(err, result);
-          $scope.taxes = result.data.taxes;
-          $scope.object.tables = result.data.table;
-          $rootScope.tables = $scope.object.tables;
-        });
-      }
-    });
-
-    $interval(function () {
-      $scope.getCurrentTime();
-    }, 1000);
-    $scope.brandLogo = "";
-    $rootScope.$on("agentProducts", function (err, result) {
-      console.log(result);
-      $scope.categories = [];
-
-      if (result.data && result.data.length > 0) {
-        if ($scope.brandLogo == "") {
-          $scope.brandLogo = result.data[0].brandLogo;
-        }
-        result.data.forEach(function (value) {
-          $scope.categoryProducts = {
-            ...$scope.categoryProducts,
-            [value.name]: value.products,
-          };
-          $scope.categories.push(value.name);
-        });
-
-        $scope.isSelected = 0;
-        $scope.products =
-          $scope.categoryProducts[$scope.categories[$scope.isSelected]];
-      }
-    });
-
-    $rootScope.$on("agentProductsError", function (err, result) {
-      console.log(result);
-    });
-
-    $rootScope.$on("notEligible", function (err, isEligible) {
-      if (!isEligible) {
+        $scope.object.brand = result.data.outlet.brand;
+        $scope.object.tables = result.data.outlet.table;
+        // console.log($scope.object.tables);
+        $scope.object.outlet = result.data.outlet;
+        $scope.object.admin = result.data.agent;
+        $scope.object.taxes = result.data.outlet.taxes;
+        $scope.object.productsData =
+          outletAgentService.groupProductByCategories(
+            $scope.object.outlet.products
+          );
+        $scope.object.products =
+          $scope.object.productsData.categoryProducts[
+            $scope.object.productsData.categories[0]
+          ];
+      } else {
         $location.path("login");
       }
     });
 
-    $scope.getCurrentTime = function () {
-      $scope.currentTime = new Date();
+    $interval(function () {
+      $scope.object.currentTime = new Date();
+    }, 1000);
+
+    $scope.searchTextHandler = function () {
+      outletAgentFactory.debouncing(
+        $scope.searchText,
+        $scope.outletId,
+        function (err, result) {
+          console.log(err, result);
+          if (result) {
+            $scope.searchTextResult = result.data;
+          } else {
+            $scope.searchTextResult = [];
+          }
+        }
+      );
     };
 
     $scope.updateAdmin = function ($event, id) {
-      console.log(id);
-      outletAgentApi.updateAdmin($scope.admin, id, function (result) {
-        console.log(result);
-      });
+      console.log(id, $scope.admin);
+      outletAgentFactory.updateAdmin(
+        $scope.admin,
+        $scope.admin._id,
+        function (result) {
+          console.log(result);
+        }
+      );
     };
 
     $scope.changePassword = function ($event, id) {
       console.log(id);
-      outletAgentApi.updatePassword($scope.admin, id, function (err, result) {
-        if (result) {
-          console.log(result);
+      outletAgentFactory.updatePassword(
+        $scope.admin,
+        id,
+        function (err, result) {
+          if (result) {
+            console.log(result);
+          }
         }
-      });
+      );
     };
 
-    $scope.orderNo = generateOrderId();
-    $scope.customer = {};
-    $scope.amount = 0;
-    $scope.btnText = "Enter";
-    $scope.orderBtn = "placed order";
-    $scope.saved = false;
-    $scope.object = { cart: [] };
-    $scope.type = null;
+    $scope.object.orderNo = outletAgentService.generateOrderId();
 
     $scope.setOrderType = function (type) {
       if (type === "Dine-in") {
-        var value = isTableAvailable(
-          $scope.customer.personCount,
+        var value = outletAgentService.isTableAvailable(
+          $scope.object.customer.personCount,
           $scope.object.tables
         );
         console.log(value);
         if (!value) {
           alert("sorry dine in not possible at this time");
         } else {
-          $scope.type = "dine-in";
+          $scope.object.type = "dine-in";
           $scope.allotedTables = value;
           $("#dineIn").modal("hide");
         }
       } else {
-        $scope.type = "take-away";
+        $scope.object.type = "take-away";
       }
     };
+
     $scope.saveCustomerData = function () {
-      $scope.btnText = "saved";
-      $scope.saved = true;
+      $scope.object.btnText = "saved";
+      $scope.object.saved = true;
 
       $("#exampleModal").modal("hide");
     };
+
     $scope.addToCart = function (product) {
-      $scope.object.cart = cartService.addToCart($scope.object.cart, product);
-
-      $scope.amount = cartService.totalPrice($scope.object.cart);
-      $scope.payableAmount =
-        $scope.amount + addTaxes($scope.taxes, $scope.amount);
-      // console.log($scope.object.cart);
-    };
-    $scope.plus = function (product) {
-      $scope.object.cart = cartService.addToCart($scope.object.cart, product);
-
-      $scope.amount = cartService.totalPrice($scope.object.cart);
-    };
-
-    $scope.minus = function (product) {
-      $scope.object.cart = cartService.removeFromCart(
+      $scope.object.cart = outletAgentService.addToCart(
         $scope.object.cart,
         product
       );
 
-      $scope.amount = cartService.totalPrice($scope.object.cart);
+      $scope.object.amount = outletAgentService.totalPrice($scope.object.cart);
+      $scope.object.payableAmount =
+        $scope.object.amount +
+        outletAgentService.addTaxes($scope.object.taxes, $scope.object.amount);
+    };
+
+    $scope.plus = function (product) {
+      $scope.object.cart = outletAgentService.addToCart(
+        $scope.object.cart,
+        product
+      );
+
+      $scope.object.amount = outletAgentService.totalPrice($scope.object.cart);
+    };
+
+    $scope.minus = function (product) {
+      $scope.object.cart = outletAgentService.removeFromCart(
+        $scope.object.cart,
+        product
+      );
+
+      $scope.object.amount = outletAgentService.totalPrice($scope.object.cart);
     };
 
     $scope.orderHandler = function () {
-      $scope.orderBtn = "placing...";
-      // console.log($scope.customer, $scope.object.cart);
+      $scope.object.orderBtn = "placing...";
+
       var data = {
         customer: {
-          name: $scope.customer.name,
-          number: $scope.customer.number,
+          name: $scope.object.customer.name,
+          number: $scope.object.customer.number,
         },
         type: $scope.type,
         orderId: $scope.orderNo,
@@ -257,12 +181,12 @@ app.controller("outletAgentController", [
         allotedTables: $scope.allotedTables,
       };
 
-      outletAgentApi.placeOrder(data, function (err, result) {
+      outletAgentFactory.placeOrder(data, function (err, result) {
         if (result) {
           alert("order placed");
           console.log(result, $scope.object.tables, $scope.allotedTables);
           if ($scope.type === "dine-in") {
-            var indx = updateTablesIndexes(
+            var indx = outletAgentService.updateTablesIndexes(
               $scope.object.tables,
               $scope.allotedTables
             );
@@ -272,22 +196,27 @@ app.controller("outletAgentController", [
             });
           }
 
-          $scope.orderNo = generateOrderId();
+          $scope.orderNo = outletAgentService.generateOrderId();
           $scope.object.cart = [];
-          $scope.amount = 0;
-          $scope.saved = false;
-          $scope.orderBtn = "placed order";
-          $scope.btnText = "Enter";
-          $scope.customer = {};
-          $scope.type = null;
+          $scope.object.amount = 0;
+          $scope.object.saved = false;
+          $scope.object.orderBtn = "placed order";
+          $scope.object.btnText = "Enter";
+          $scope.object.customer = {};
+          $scope.object.type = null;
         }
       });
     };
 
     $scope.setIndexing = function (ind) {
-      $scope.isSelected = ind;
-      $scope.products =
-        $scope.categoryProducts[$scope.categories[$scope.isSelected]];
+      $scope.object.isSelected = ind;
+
+      $scope.object.products =
+        $scope.object.productsData.categoryProducts[
+          $scope.object.productsData.categories[$scope.object.isSelected]
+        ];
+
+      console.log($scope.object.products);
     };
   },
 ]);

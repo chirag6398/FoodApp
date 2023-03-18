@@ -112,4 +112,17 @@ module.exports = {
         return res.status(404).send(err);
       });
   },
+  searchUserBySearchText: function (req, res) {
+    var regex = new RegExp(req.params.searchText, "i");
+
+    employeeModel
+      .find({ userName: { $regex: regex } })
+      .then(function (result) {
+        return res.send(result);
+      })
+      .catch(function (err) {
+        console.log(err);
+        return res.status(404).send(err);
+      });
+  },
 };

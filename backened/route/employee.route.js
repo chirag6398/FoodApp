@@ -20,6 +20,11 @@ employeeRoute.get(
   employeeController.getOutletAgentEmployees
 );
 
+employeeRoute.get(
+  "/api/employee/searchUserBySearchText/:searchText",
+  employeeController.searchUserBySearchText
+);
+
 employeeRoute.put("/api/employee/updateUser", employeeController.updateUser);
 employeeRoute.put(
   "/api/employee/updatePassword",

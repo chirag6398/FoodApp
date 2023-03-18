@@ -5,7 +5,7 @@ app.factory("adminApi", function ($http, $rootScope) {
 
   obj.getBrand = function (id, cb) {
     $http
-      .get("http://localhost:5000/api/superAdmin/getBrand/" + id, {
+      .get("http://localhost:5000/api/brand/getBrand/" + id, {
         headers: {
           Authorization: window.localStorage.getItem("Authorization"),
         },
@@ -19,7 +19,7 @@ app.factory("adminApi", function ($http, $rootScope) {
   };
   obj.changeLogo = function (data, cb) {
     $http
-      .post("http://localhost:5000/api/superAdmin/changeLogo", data, {
+      .post("http://localhost:5000/api/brand/changeLogo", data, {
         transformRequest: angular.identity,
         headers: { "Content-Type": undefined },
       })
@@ -34,7 +34,7 @@ app.factory("adminApi", function ($http, $rootScope) {
     console.log(data);
 
     $http
-      .post("http://localhost:5000/api/superAdmin/createBrand", data, {
+      .post("http://localhost:5000/api/brand/createBrand", data, {
         transformRequest: angular.identity,
         headers: { "Content-Type": undefined },
       })
@@ -64,7 +64,7 @@ app.factory("adminApi", function ($http, $rootScope) {
   obj.getBrands = function (data, cb) {
     $http
       .get(
-        "http://localhost:5000/api/superAdmin/getBrands/" +
+        "http://localhost:5000/api/brand/getBrands/" +
           data.limit +
           "/" +
           data.page,
@@ -191,7 +191,7 @@ app.factory("adminApi", function ($http, $rootScope) {
   obj.updateBrandName = function (data, cb) {
     console.log(data);
     $http
-      .post("http://localhost:5000/api/superAdmin/updateBrandName", data, {
+      .post("http://localhost:5000/api/brand/updateBrandName", data, {
         headers: {
           Authorization: window.localStorage.getItem("Authorization"),
         },
@@ -238,7 +238,7 @@ app.factory("adminApi", function ($http, $rootScope) {
     console.log(brandId);
     $http
       .put(
-        "http://localhost:5000/api/superAdmin/deactivateBrand",
+        "http://localhost:5000/api/brand/deactivateBrand",
         { brandId },
         {
           headers: {
@@ -257,7 +257,7 @@ app.factory("adminApi", function ($http, $rootScope) {
     console.log(brandId);
     $http
       .put(
-        "http://localhost:5000/api/superAdmin/activateBrand",
+        "http://localhost:5000/api/brand/activateBrand",
         { brandId },
         {
           headers: {
@@ -277,7 +277,7 @@ app.factory("adminApi", function ($http, $rootScope) {
     console.log(brandId);
     $http
       .post(
-        "http://localhost:5000/api/superAdmin/deleteBrand",
+        "http://localhost:5000/api/brand/deleteBrand",
         { brandId },
         {
           headers: {
@@ -310,8 +310,7 @@ app.factory("adminApi", function ($http, $rootScope) {
   obj.searchBrandBySearchText = function (searchText, cb) {
     $http
       .get(
-        "http://localhost:5000/api/superAdmin/searchBrandBySearchText/" +
-          searchText,
+        "http://localhost:5000/api/brand/searchBrandBySearchText/" + searchText,
         {
           headers: {
             Authorization: window.localStorage.getItem("Authorization"),
@@ -325,6 +324,18 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(err, null);
       });
   };
-
+  obj.searchUserBySearchText = function (searchText, cb) {
+    $http
+      .get(
+        "http://localhost:5000/api/employee/searchUserBySearchText/" +
+          searchText
+      )
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb(err, null);
+      });
+  };
   return obj;
 });

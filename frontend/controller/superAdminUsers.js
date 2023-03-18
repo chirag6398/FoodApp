@@ -4,8 +4,8 @@
 app.controller("superAdminUsersController", [
   "$scope",
   "adminApi",
-  "$rootScope",
-  function ($scope, adminApi, $rootScope) {
+  "$timeout",
+  function ($scope, adminApi, $timeout) {
     // $rootScope.$on("passData", function (event, data) {
 
     // });
@@ -16,6 +16,28 @@ app.controller("superAdminUsersController", [
       totalCount: 0,
       users: [],
       totalPage: 1,
+      searchUser: "",
+      searchTextResult: [],
+    };
+    var timeout = null;
+    $scope.searchTextHandler = function () {
+      console.log("called");
+      if (timeout) {
+        $timeout.cancel(timeout);
+      }
+      timeout = $timeout(function () {
+        adminApi.searchUserBySearchText(
+          $scope.object.searchUser,
+          function (err, result) {
+            console.log(err, result);
+            if (result) {
+              $scope.object.searchTextResult = result.data;
+            } else {
+              $scope.object.searchTextResult = [];
+            }
+          }
+        );
+      }, 800);
     };
     adminApi.getUsers(
       { limit: $scope.object.limit, page: $scope.object.page },

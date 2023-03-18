@@ -3,10 +3,8 @@ var superAdminController = require("../controller/superAdmin.js");
 var passport = require("passport");
 var multer = require("multer");
 
-// // var passportLocal=require("../passport/passportLocal");
 var passportJwt = require("../passport/passportjwt");
 
-// // passportLocal.initializer(passport);
 passportJwt.initializer(passport);
 
 const uploadProductImg = multer({
@@ -22,23 +20,6 @@ superAdminRoute.get(
   "/api/superAdmin/getAdminPage",
   passport.authenticate("jwt", { session: false }),
   superAdminController.getAdminPage
-);
-
-superAdminRoute.get(
-  "/api/superAdmin/getBrands/:limit/:page",
-  passport.authenticate("jwt", { session: false }),
-  superAdminController.getBrands
-);
-superAdminRoute.get(
-  "/api/superAdmin/getBrand/:id",
-  passport.authenticate("jwt", { session: false }),
-  superAdminController.getBrand
-);
-
-superAdminRoute.get(
-  "/api/superAdmin/searchBrandBySearchText/:searchText",
-  passport.authenticate("jwt", { session: false }),
-  superAdminController.searchBrandBySearchText
 );
 
 superAdminRoute.get(
@@ -58,17 +39,6 @@ superAdminRoute.get(
 );
 
 superAdminRoute.post(
-  "/api/superAdmin/createBrand",
-  uploadProductImg.single("file"),
-  superAdminController.createBrand
-);
-superAdminRoute.post(
-  "/api/superAdmin/changeLogo",
-  uploadProductImg.single("file"),
-  superAdminController.changeLogo
-);
-
-superAdminRoute.post(
   "/api/superAdmin/addBrandAdmin",
   passport.authenticate("jwt", { session: false }),
   superAdminController.addBrandAdmin
@@ -84,28 +54,6 @@ superAdminRoute.post(
   "/api/superAdmin/updateContactInfo",
   passport.authenticate("jwt", { session: false }),
   superAdminController.updateContactInfo
-);
-
-superAdminRoute.post(
-  "/api/superAdmin/updateBrandName",
-  passport.authenticate("jwt", { session: false }),
-  superAdminController.updateBrandName
-);
-
-superAdminRoute.put(
-  "/api/superAdmin/deactivateBrand",
-  passport.authenticate("jwt", { session: false }),
-  superAdminController.deactivateBrand
-);
-superAdminRoute.put(
-  "/api/superAdmin/activateBrand",
-  passport.authenticate("jwt", { session: false }),
-  superAdminController.activateBrand
-);
-superAdminRoute.post(
-  "/api/superAdmin/deleteBrand",
-  passport.authenticate("jwt", { session: false }),
-  superAdminController.deleteBrand
 );
 
 module.exports = superAdminRoute;
