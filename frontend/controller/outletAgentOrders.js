@@ -1,88 +1,85 @@
 ///<reference path="../module/module.js"/>
 
-function checkExistanceOfTable(table, data) {
-  var ind = table.findIndex(function (value) {
-    return value === data.number;
-  });
-
-  return ind;
-}
-function getOrderInd(orders, id) {
-  return orders.findIndex(function (value) {
-    return value._id === id;
-  });
-}
 app.controller("outletAgentOrdersController", [
   "$scope",
   "outletAgentFactory",
-  "$rootScope",
-  function ($scope, outletAgentFactory, $rootScope) {
+  "outletAgentService",
+  function ($scope, outletAgentFactory, outletAgentService) {
     $scope.object = {
       orders: [],
       activeIndex: [],
       newTable: [],
-      // allotedTable: null,
+      tables: null,
+      outlet: null,
+      filter: {
+        status: "pending",
+        type: "dine-in",
+      },
+      item: null,
+      customer: null,
+      amount: 0,
+      allotedTable: null,
+      swapBtn: "Apply swaps",
     };
+
     outletAgentFactory.getOutletAgentPage(function (err, result) {
-      console.log(result);
-      $scope.outletId = result.data.outlet._id;
+      $scope.object.outlet = result.data.outlet;
+      $scope.object.tables = result.data.outlet.table;
 
       outletAgentFactory.getOrders(
-        $scope.outletId,
+        $scope.object.outlet._id,
 
         function (err, result) {
-          console.log(result.data);
-          $scope.object.orders = result.data[0];
-          $scope.object.tables = result.data[1].table;
-          $scope.object.orders.forEach(function (value) {
-            value.totalQuantity = value.items.reduce(function (accum, value) {
-              return accum + value.quantity;
-            }, 0);
-            value.totalPrice = value.items.reduce(function (accum, value) {
-              return accum + value.quantity * value.price;
-            }, 0);
-          });
+          if (result) {
+            $scope.object.orders = result.data;
+
+            $scope.object.orders.forEach(function (value) {
+              value.totalQuantity = value.items.reduce(function (accum, value) {
+                return accum + value.quantity;
+              }, 0);
+              value.totalPrice = value.items.reduce(function (accum, value) {
+                return accum + value.quantity * value.price;
+              }, 0);
+            });
+          } else {
+            alert("something is wrong in fetching orders");
+          }
         }
       );
     });
 
-    $scope.object.filter = {
-      status: "pending",
-    };
-    $scope.filter = {
-      type: "dine-in",
-    };
-
     $scope.setType = function (value) {
-      $scope.filter.type = value;
+      $scope.object.filter.type = value;
     };
 
-    $scope.setData = function (items, customer, amount, tableAlloted) {
-      $scope.items = items;
-      $scope.amount = amount;
-      $scope.customer = customer;
-      $scope.allotedTable = tableAlloted;
-    };
-    $scope.object.filter = {
-      status: "pending",
-    };
     $scope.setFilter = function (value) {
       $scope.object.filter.status = value;
     };
+
+    $scope.setData = function (items, customer, amount, tableAlloted) {
+      $scope.object.items = items;
+      $scope.object.amount = amount;
+      $scope.object.customer = customer;
+      $scope.object.allotedTable = tableAlloted;
+    };
+
     $scope.updateStatus = function (status, orderId) {
-      outletAgentApi.updateStatus(
+      outletAgentFactory.updateStatus(
         { status: status, _id: orderId },
         function (err, result) {
           if (result) {
-            var indx = $scope.object.orders.findIndex(function (value) {
-              return value._id === orderId;
-            });
+            var indx = outletAgentService.getIndxById(
+              $scope.object.orders,
+              orderId
+            );
             var upData = $scope.object.orders[indx];
             upData.status = status;
 
             $scope.object.orders.splice(indx, 1);
 
             $scope.object.orders.push(upData);
+          } else {
+            alert("try later");
           }
         }
       );
@@ -94,34 +91,38 @@ app.controller("outletAgentOrdersController", [
       tableNumbers,
       type
     ) {
-      outletAgentApi.updateStatus(
+      outletAgentFactory.updateStatus(
         {
           status: status,
           _id: orderId,
           tableNumbers: tableNumbers,
-          outletId: $scope.outletId,
+          outletId: $scope.object.outlet._id,
           orderType: type,
         },
         function (err, result) {
           if (result) {
-            var indx = $scope.object.orders.findIndex(function (value) {
-              return value._id === orderId;
-            });
+            var indx = outletAgentService.getIndxById(
+              $scope.object.orders,
+              orderId
+            );
             var upData = $scope.object.orders[indx];
             upData.status = status;
 
             $scope.object.orders.splice(indx, 1);
 
             $scope.object.orders.push(upData);
+          } else {
+            alert("try later");
           }
         }
       );
     };
-    // $scope.newTable = [];
-    // $scope.activeIndex = [];
+
     $scope.swapTableHandler = function (table, index) {
-      console.log(table);
-      var existIndex = checkExistanceOfTable($scope.object.newTable, table);
+      var existIndex = outletAgentService.checkExistanceOfTable(
+        $scope.object.newTable,
+        table
+      );
       if (existIndex === -1) {
         $scope.object.newTable.push(table.number);
         $scope.object.activeIndex.push(index);
@@ -129,28 +130,26 @@ app.controller("outletAgentOrdersController", [
         $scope.object.newTable.splice(existIndex, 1);
         $scope.object.activeIndex.splice(existIndex, 1);
       }
-
-      // console.log($scope.activeIndex);
     };
 
-    $scope.swapBtn = "Apply swaps";
     $scope.updateTableNo = function (orderId, oldTables) {
-      $scope.swapBtn = "Applying";
-      outletAgentApi.updateTableNo(
+      $scope.object.swapBtn = "Applying";
+      outletAgentFactory.updateTableNo(
         {
           _id: orderId,
-          outletId: $scope.outletId,
+          outletId: $scope.object.outlet._id,
           newTables: $scope.object.newTable,
           oldTables: oldTables,
         },
         function (err, result) {
           console.log(err, result);
           if (result) {
-            $scope.swapBtn = "Applied";
-            var indx = getOrderInd($scope.object.orders, orderId);
+            $scope.object.swapBtn = "Applied";
+            var indx = outletAgentService.getIndxById(
+              $scope.object.orders,
+              orderId
+            );
             $scope.object.orders[indx].tableNumber = $scope.object.newTable;
-            console.log($scope.object.orders[indx].tableNumber);
-            // $scope.object.allotedTable = $scope.object.newTable;
           }
         }
       );

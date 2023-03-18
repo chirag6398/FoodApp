@@ -50,6 +50,7 @@ module.exports = {
       )
       .skip(skipNo)
       .limit(limit)
+      .sort({ "brand.name": 1 })
       .then(function (result) {
         employeeModel.countDocuments(function (err, count) {
           return res.send({ data: result, count: count });

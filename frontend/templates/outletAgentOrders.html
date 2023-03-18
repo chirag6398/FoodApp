@@ -57,7 +57,7 @@
       <li class="nav-item">
         <a
           class="nav-link"
-          ng-class="{'active':filter.type==='dine-in'}"
+          ng-class="{'active':object.filter.type==='dine-in'}"
           ng-click="setType('dine-in')"
           >Dine-in</a
         >
@@ -65,7 +65,7 @@
       <li class="nav-item">
         <a
           class="nav-link"
-          ng-class="{'active':filter.type==='take-away'}"
+          ng-class="{'active':object.filter.type==='take-away'}"
           ng-click="setType('take-away')"
           >Take-away</a
         >
@@ -75,7 +75,7 @@
   <div ng-if="object.orders" class="order__mainDiv">
     <div
       class="order__card"
-      ng-repeat="order in object.orders |filter:object.filter.status |filter:filter.type"
+      ng-repeat="order in object.orders |filter:object.filter.status |filter:object.filter.type"
     >
       <div>
         <div
@@ -113,17 +113,17 @@
                     </div>
                     <div>
                       <i class="fas fa-user"></i
-                      ><span> {{customer.name}} </span>
+                      ><span> {{object.customer.name}} </span>
                     </div>
 
                     <div>
                       <i class="fas fa-phone"></i
-                      ><span> {{customer.number}} </span>
+                      ><span> {{object.customer.number}} </span>
                     </div>
                   </div>
 
                   <div ng-if="allotedTable">
-                    <div>Tables Alloted :{{allotedTable}}</div>
+                    <div>Tables Alloted :{{object.allotedTable}}</div>
                     <div>
                       <button
                         data-toggle="modal"
@@ -184,7 +184,7 @@
                                   class="btn btn-warning"
                                   ng-click="updateTableNo(order._id,order.tableNumber)"
                                 >
-                                  {{swapBtn}}
+                                  {{object.swapBtn}}
                                 </button>
                               </div>
                             </div>
@@ -202,7 +202,10 @@
                     </h5>
                   </div>
 
-                  <div class="order__modalProduct" ng-repeat="product in items">
+                  <div
+                    class="order__modalProduct"
+                    ng-repeat="product in object.items"
+                  >
                     <div
                       style="
                         display: flex;
@@ -244,7 +247,7 @@
                       </div>
                     </div>
                   </div>
-                  <div>Pay: {{amount}}</div>
+                  <div>Pay: {{object.amount}}</div>
                 </div>
               </div>
             </div>

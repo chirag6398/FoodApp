@@ -22,6 +22,7 @@ app.controller("superAdminCreateBrandController", [
       totalPage: 1,
       pages: null,
       searchTextResult: [],
+      selectedBrand: null,
     };
     $scope.searchTextHandler = function () {
       if (timeout) {
@@ -43,12 +44,11 @@ app.controller("superAdminCreateBrandController", [
     };
     $scope.setSearchResult = function (res) {
       $scope.object.brands = [res];
+      $scope.object.selectedBrand = res;
       $scope.object.searchTextResult = [];
-      $scope.object.searchBrand = "";
+      // $scope.object.searchBrand = "";
     };
-    // $scope.isAccess = false;
 
-    // adminApi.getAdminPage();
     $rootScope.$on("passData", function (err, data) {
       // console.log(data);
       if (data) {

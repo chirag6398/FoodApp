@@ -39,7 +39,7 @@
     <table style="max-width: 700px" class="table table-bordered table-hover">
       <thead>
         <tr>
-          <th scope="col">S.No</th>
+          <th ng-if="!object.selectedBrand" scope="col">S.No</th>
           <th scope="col">Logo</th>
           <th scope="col">Brand Name</th>
           <th scope="col">Brand Admin</th>
@@ -56,7 +56,9 @@
           ng-show="!brand.isDeleted"
           ng-repeat="brand in object.brands"
         >
-          <th scope="row">{{(object.page-1)*object.limit+$index+1}}</th>
+          <th ng-if="!object.selectedBrand" scope="row">
+            {{(object.page-1)*object.limit+$index+1}}
+          </th>
           <td>
             <img
               style="object-fit: contain; height: 50px"
@@ -377,6 +379,7 @@
   </div>
 
   <nav
+    ng-if="!object.selectedBrand"
     style="display: flex; align-items: center; justify-content: center"
     aria-label="Page navigation example"
   >

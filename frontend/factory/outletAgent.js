@@ -4,22 +4,6 @@ app.factory("outletAgentFactory", function ($http, $rootScope, $timeout) {
   var obj = {};
   var timeout = null;
 
-  //   obj.getOutletProducts = function (id) {
-  //     // console.log(id);
-  //     $http
-  //       .get("http://localhost:5000/api/outlet/getProduct/" + id, {
-  //         headers: {
-  //           Authorization: window.localStorage.getItem("Authorization"),
-  //         },
-  //       })
-  //       .then(function (response) {
-  //         $rootScope.$emit("agentProducts", response);
-  //       })
-  //       .catch(function (err) {
-  //         $rootScope.$emit("agentProductsError", err);
-  //       });
-  //   };
-
   obj.getOutletAgentPage = function (cb) {
     $http
       .get("http://localhost:5000/api/outletAgent/getOutletAgentPage", {
@@ -34,21 +18,7 @@ app.factory("outletAgentFactory", function ($http, $rootScope, $timeout) {
         cb(err, null);
       });
   };
-  //   obj.getOutlet = function (id, cb) {
-  //     // console.log(id);
-  //     $http
-  //       .get("http://localhost:5000/api/outlet/getOutlet/" + id, {
-  //         headers: {
-  //           Authorization: window.localStorage.getItem("Authorization"),
-  //         },
-  //       })
-  //       .then(function (response) {
-  //         cb(null, response);
-  //       })
-  //       .catch(function (err) {
-  //         cb(err, null);
-  //       });
-  //   };
+
   obj.updateAdmin = function (admin, id, cb) {
     var data = {
       ...admin,

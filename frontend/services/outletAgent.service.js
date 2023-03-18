@@ -35,7 +35,6 @@ app.service("outletAgentService", function (outletAgentFactory) {
       });
       console.log(exist);
       if (exist >= 0) {
-        // console.log(cart[exist])
         cart[exist].quantity += 1;
       } else {
         cart.push({
@@ -89,7 +88,7 @@ app.service("outletAgentService", function (outletAgentFactory) {
   this.generateOrderId = function () {
     const timestamp = new Date().getTime();
     const randomNumber = Math.floor(Math.random() * 10000);
-    const orderId = "ORDERID-" + timestamp + "-" + randomNumber;
+    const orderId = "ORDERNO-" + timestamp + "-" + randomNumber;
     return orderId;
   };
 
@@ -166,13 +165,26 @@ app.service("outletAgentService", function (outletAgentFactory) {
       },
       allotedTables: allotedTables,
     };
-    console.log(data);
+
     outletAgentFactory.placeOrder(data, function (err, result) {
       if (result) {
         cb(null, result);
       } else {
         cb(err, result);
       }
+    });
+  };
+
+  this.checkExistanceOfTable = function (table, data) {
+    var ind = table.findIndex(function (value) {
+      return value === data.number;
+    });
+
+    return ind;
+  };
+  this.getIndxById = function (orders, id) {
+    return orders.findIndex(function (value) {
+      return value._id === id;
     });
   };
 });

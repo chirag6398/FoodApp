@@ -67,19 +67,13 @@ module.exports = {
     }
   },
   getOrders: function (req, res) {
-    var data1 = orderModel.find({
-      $and: [
-        { "outlet._id": mongoose.Types.ObjectId(req.params.id) },
-        { createdAt: { $gte: startDate } },
-      ],
-    });
-
-    var data2 = outletModel.findById(
-      { _id: req.params.id },
-      { _id: 0, table: 1 }
-    );
-
-    Promise.all([data1, data2])
+    orderModel
+      .find({
+        $and: [
+          { "outlet._id": mongoose.Types.ObjectId(req.params.id) },
+          { createdAt: { $gte: startDate } },
+        ],
+      })
       .then(function (result) {
         console.log(result);
         return res.send(result);
