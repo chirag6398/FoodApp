@@ -56,7 +56,7 @@ app.factory("outletAgentFactory", function ($http, $rootScope, $timeout) {
     };
 
     $http
-      .post("http://localhost:5000/api/employee/updateUser", data, {
+      .put("http://localhost:5000/api/employee/updateUser", data, {
         headers: {
           Authorization: window.localStorage.getItem("Authorization"),
         },
@@ -73,7 +73,7 @@ app.factory("outletAgentFactory", function ($http, $rootScope, $timeout) {
       id: id,
     };
     $http
-      .post("http://localhost:5000/api/employee/updatePassword", data, {
+      .put("http://localhost:5000/api/employee/updatePassword", data, {
         headers: {
           Authorization: window.localStorage.getItem("Authorization"),
         },

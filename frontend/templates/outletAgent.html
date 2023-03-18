@@ -1,442 +1,630 @@
 <div class="agt__extDiv">
-    <div class="agt__nav">
-        <div class="agt__navComponent agt__activeNav"  ui-sref="outletAgent">
-            Home
-        </div>
-        <div class="agt__navComponent" ui-sref="outletAgentOrders">
-            Orders
-        </div>
-        <div data-toggle="modal" data-target="#tables" data-whatever="@mdo" class="agt__navComponent">
-            Tables 
-        </div>
-        <div class="modal fade" id="tables" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Table Booking View</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div style="display: flex;gap: 5px;flex-wrap: wrap;" class="modal-body">
-                               <div class="agt__tableDiv" title="{{table.isAvailable?'available':'booked'}}" ng-class="{'agt__tableGreen':table.isAvailable}" ng-repeat="table in object.tables"> 
-                                    <p style="font-weight: 900;">{{table.number}}</p>
-                                    <p style="text-align: center;width: -webkit-fill-available;">{{table.capacity}}</p>
-                               </div>
-                            </div>
-
-                        </div>
-                    </div>
-        </div>
-        <div class="agt__navComponent" ui-sref="login">
-            Login
-        </div>
-        <div class="agt__navComponent">
-            <button type="button" class="agt__navProfileBtn" data-toggle="modal" data-target="#exampleModal2" data-whatever="@mdo">Profile</button>
-        </div>
-        <div ng-show="object.brand">
-            <img title={{object.brand.name}} style="object-fit: contain;
-                height: 32px;" src={{object.brand.logo}} alt="...">
-        </div>
-
-
+  <div class="agt__nav">
+    <div class="agt__navComponent agt__activeNav" ui-sref="outletAgent">
+      Home
     </div>
-    <div class="agt__mainDiv">
-        <div class="agt__leftSide">
-            <div class="agt__header">
-                <div style="opacity: 0.6;font-weight: 600  ;">
-                    {{orderNo}}
-                </div>
-                <div style="opacity: 0.6;font-weight: 600 ;">
-                    {{object.currentTime | date:'mediumTime'}}
-                </div>
+    <div class="agt__navComponent" ui-sref="outletAgentOrders">Orders</div>
+    <div
+      data-toggle="modal"
+      data-target="#tables"
+      data-whatever="@mdo"
+      class="agt__navComponent"
+    >
+      Tables
+    </div>
+    <div
+      class="modal fade"
+      id="tables"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Table Booking View
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div
+            style="display: flex; gap: 5px; flex-wrap: wrap"
+            class="modal-body"
+          >
+            <div
+              class="agt__tableDiv"
+              title="{{table.isAvailable?'available':'booked'}}"
+              ng-class="{'agt__tableGreen':table.isAvailable}"
+              ng-repeat="table in object.tables"
+            >
+              <p style="font-weight: 900">{{table.number}}</p>
+              <p style="text-align: center; width: -webkit-fill-available">
+                {{table.capacity}}
+              </p>
             </div>
-            <div class="agt__searchField">
-                    <div class="mt-3 inputs">
-                        <i class="fa fa-search"></i>
-                        <input type="text" ng-model="searchText" ng-change="searchTextHandler()" class="form-control1 form-control"
-                            placeholder="Search Tasks...">
-                            
-                    </div>
-                <div style="position: absolute;z-index: 2;">
-                    <ul class="list-group">
-                        <li style="display: flex;
-                        gap: 12px;
-                        align-items: center;" class="list-group-item" ng-repeat="res in searchTextResult">
-                            <div style="width:120px;justify-content: center;display: flex;">
-                                <img
-                                  style="object-fit: contain; height: 50px"
-                                  src="{{res.products.product.img}}"
-                                  slt="..."
-                                />
-                              </div>
-                            <div>
-                                {{res.products.product.name}}
-                            </div>
-                        </li>
-                       
-                      </ul>
-                </div>
-            </div>
-            <p class="agt__itemsNumbering"></p>
-            <div class="items">
-                <!-- {{products}} -->
-                <div style="height: -webkit-fill-available;
-                display: flex;
-                align-items: center;gap: 10px;
-                justify-content: center;" ng-if="!object.type">
-                    <div>
-                        <img data-toggle="modal"
-                        data-target="#dineIn" data-whatever="@mdo"
-                        style="object-fit: contain;height: 185px; cursor: pointer;  width: 185px;  box-shadow: black 0px 0px 0px 1px;"
-                        src="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX39681593.jpg" alt="...">
-
-                        <div class="modal fade" id="dineIn" tabindex="-1" role="dialog"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Enter Number of person</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form name="numberOfPerson" novalidate>
-                                                <div class="form-group">
-                                                    <label for="count" class="col-form-label">number of person:</label>
-                                                    <input type="number" name="count" ng-required="true"
-                                                         ng-model="object.customer.personCount" class="form-control"
-                                                        id="count">
-                                                    <span
-                                                        ng-show="numberOfPerson.count.$dirty && numberOfPerson.count.$error.required">plz fill this field</span>
-                                                </div>
-                                                
-
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Close</button>
-                                                    <button type="button"
-                                                        ng-disabled="numberOfPerson.$invalid"
-                                                        ng-click="setOrderType('Dine-in')"
-                                                        class="btn btn-primary">Enter</button>
-                                                </div>
-
-                                            </form>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                    </div>
-                    <div>
-                        <img 
-                        ng-click="setOrderType('Take-away')" 
-                        style=" object-fit: contain;   height: 185px; cursor: pointer;box-shadow: black 0px 0px 0px 1px;" 
-                        src="https://img.freepik.com/premium-vector/take-away-food-bag-line-sign-takeout-service-pack-witch-symbol-free-takeaway-food-delivery_352905-905.jpg?w=2000"
-                        alt="...">
-                    </div>
-                </div>
-                
-                <div ng-if="object.type" class="agt__products1">
-                   
-                    <div class="agt__product" ng-repeat="product in object.products ">
-                        <div style="display: flex;
-                        align-items: center;
-                        justify-content: space-around;
-                        width: 100%;">
-                            <div style="margin-right: 10px;">
-                                <img style="object-fit: contain;
-                                width: 60px;" src={{product.img}} alt="...">
-                            </div>
-                            <div>
-                                <div>
-                                    <span style="font-weight: 500;
-                                    font-size: 16px;
-                                    opacity: 0.8;">
-                                        {{product.name}}
-                                    </span>
-                                </div>
-                                <div style="    display: flex;
-                                width: 100%;
-                                
-                                opacity: 0.7;">
-                                    <h5 style="font-weight: bolder;">
-                                        Rs. {{product.price}}
-                                    </h5>
-                                </div>
-                                <div ng-click="addToCart(product)" style="display: flex;
-                                width: 67px;
-                                justify-content: center;
-                                padding: 4px 4px;
-                                cursor: pointer;
-                             
-                                border: 2px solid lightgray;
-                                
-                                border-radius: 3px;">
-
-                                    <div>
-                                        <span style="font-weight: bolder;">
-                                            Add
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="agt__category">
-                <!-- {{isSelected}} -->
-                <!-- {{object.productsData}} -->
-                <div class="agt__categoryCard">
-
-
-                    <div ng-class="{'agt__active': object.isSelected==$index}" style="min-width: 145px;
-                            min-height: 64px;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;" ng-repeat="category in object.productsData.categories"
-                        ng-click="setIndexing($index)">
-
-                        <div style="font-weight: bold;">
-                            {{category}}
-                        </div>
-
-                    </div>
-
-
-                </div>
-            </div>
+          </div>
         </div>
-
-        <div class="agt__rightSide">
-
-            <div class="agt__cart">
-                <h5>
-                    <i class="fas fa-shopping-cart"></i>
-                    <span>Cart</span>
-                </h5>
-                <div ng-if="object.cart.length>0" class="agt__itemCart" ng-repeat="item in object.cart">
-                    <div>
-                        <div style="display: flex;align-items: center;gap: 3px;">
-                            <img style="object-fit:contain;height: 80px;width: 80px;" src={{item.img}} alt="loading">
-                            <p>{{item.name}}</p>
-                        </div>
-                        
-                        <p>Rs.{{item.price}}</p>
-                    </div>
-                    <div style=" display: flex;
-                    align-items: center;
-                    justify-content: space-around;
-                    width: 72px;"">
-                        <div ng-click=" minus(item)" style="cursor:pointer">
-                        <i class="fas fa-minus" "></i>
-                        </div>
-                        <div>
-                            {{item.quantity}}
-                        </div>
-                        <div ng-click=" plus(item)" style="cursor:pointer">
-                            <i class="fas fa-plus" "></i>
-
-                        </div>
-                       
-
-                    </div>
-                    
-                </div>
-            </div>
-            <div ng-if=" object.amount>0" class="agt__bill">
-                                <div style="display: flex;
-                justify-content: space-between;
-                align-items: center;
-                height: 33px;">
-                                    <div>
-                                        Sub Total
-                                    </div>
-                                    <div>
-                                        Rs.{{object.amount}}
-                                    </div>
-                                </div>
-                                <div
-                                    style="display: flex; justify-content: space-between;align-items: center;height: 33px;">
-                                    <div style="width:100%">
-                                        <caption>
-                                            Tax
-                                        </caption>
-                                        <section>
-                                            <div style="width: 100%;display: flex;justify-content: space-between;"
-                                                ng-repeat="tax in object.taxes">
-                                                <span>
-                                                    {{tax.name}}
-                                                </span>
-                                                <span>
-                                                    {{tax.percent}}%
-                                                </span>
-                                            </div>
-                                        </section>
-                                    </div>
-
-
-                                </div>
-            </div>
-                    <div ng-if="object.amount>0" class="agt__order">
-                        <div style="display: flex;
-                width: 100%;
-                justify-content: space-between;
-                height: 38px;
-                align-items: center;">
-                            <div>
-                                Total
-                            </div>
-                            <div>
-                                {{object.payableAmount}}
-                            </div>
-                        </div>
-                        <div ng-if="object.saved">
-                            <button ng-click="orderHandler()" class="btn btn-primary">
-                                {{object.orderBtn}}
-                            </button>
-                        </div>
-                        <div>
-                            <button ng-if="!object.saved" type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#exampleModal" data-whatever="@mdo">Customer Detail</button>
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Enter Customer Details</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form name="customerData" novalidate>
-                                                <div class="form-group">
-                                                    <label for="customerName" class="col-form-label">Name:</label>
-                                                    <input type="text" name="customerName" ng-required="true"
-                                                        ng-minlength="3" ng-model="object.customer.name" class="form-control"
-                                                        id="customerName">
-                                                    <span
-                                                        ng-show="customerData.customerName.$dirty && customerData.customerName.$error.minlength">Minimum
-                                                        3 characters required</span>
-                                                </div>
-                                                <!-- {{object.customer.type}} -->
-                                                <div class="form-group">
-                                                    <label for="customerNumber" class="col-form-label">Phone
-                                                        Number:</label>
-                                                    <input type="number" name="customerNumber" ng-pattern="/^\d{10}$/"
-                                                        ng-required="true" ng-minlength="3" ng-model="object.customer.number"
-                                                        class="form-control" id="customerNumber">
-                                                    <span
-                                                        ng-show="customerData.customerNumber.$dirty && customerData.customerNumber.$invalid">Enter
-                                                        valid number</span>
-                                                </div>
-
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Close</button>
-                                                    <button type="button"
-                                                        ng-disabled="customerData.$invalid"
-                                                        ng-click="saveCustomerData()"
-                                                        class="btn btn-primary">{{object.btnText}}</button>
-                                                </div>
-
-                                            </form>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="position: absolute;
-            display: flex;
-            /* top: 0px; */
-            max-width: 198px;
-            align-items: center;
+      </div>
+    </div>
+    <div class="agt__navComponent" ui-sref="login">Login</div>
+    <div class="agt__navComponent">
+      <button
+        type="button"
+        class="agt__navProfileBtn"
+        data-toggle="modal"
+        data-target="#exampleModal2"
+        data-whatever="@mdo"
+      >
+        Profile
+      </button>
+    </div>
+    <div ng-show="object.brand">
+      <img
+        title="{{object.brand.name}}"
+        style="object-fit: contain; height: 32px"
+        src="{{object.brand.logo}}"
+        alt="..."
+      />
+    </div>
+  </div>
+  <div class="agt__mainDiv">
+    <div class="agt__leftSide">
+      <div class="agt__header">
+        <div style="opacity: 0.6; font-weight: 600">{{orderNo}}</div>
+        <div style="opacity: 0.6; font-weight: 600">
+          {{object.currentTime | date:'mediumTime'}}
+        </div>
+      </div>
+      <div class="agt__searchField">
+        <div class="mt-3 inputs">
+          <i class="fa fa-search"></i>
+          <input
+            type="text"
+            ng-model="searchText"
+            ng-change="searchTextHandler()"
+            class="form-control1 form-control"
+            placeholder="Search Tasks..."
+          />
+        </div>
+        <div style="position: absolute; z-index: 2">
+          <ul class="list-group">
+            <li
+              style="display: flex; gap: 12px; align-items: center"
+              class="list-group-item"
+              ng-repeat="res in searchTextResult"
+            >
+              <div style="width: 120px; justify-content: center; display: flex">
+                <img
+                  style="object-fit: contain; height: 50px"
+                  src="{{res.products.product.img}}"
+                  slt="..."
+                />
+              </div>
+              <div>{{res.products.product.name}}</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <p class="agt__itemsNumbering"></p>
+      <div class="items">
+        <!-- {{products}} -->
+        <div
+          style="
             height: -webkit-fill-available;
-            font-weight: bold;
-            opacity: 0.5;" ng-if="object.amount==0">
-                        <span>
-                            "Looks like your cart is empty. Time to add some tasty items!"
-                        </span>
-                    </div>
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+          "
+          ng-if="!object.type"
+        >
+          <div>
+            <img
+              data-toggle="modal"
+              data-target="#dineIn"
+              data-whatever="@mdo"
+              style="
+                object-fit: contain;
+                height: 185px;
+                cursor: pointer;
+                width: 185px;
+                box-shadow: black 0px 0px 0px 1px;
+              "
+              src="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX39681593.jpg"
+              alt="..."
+            />
+
+            <div
+              class="modal fade"
+              id="dineIn"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      Enter Number of person
+                    </h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form name="numberOfPerson" novalidate>
+                      <div class="form-group">
+                        <label for="count" class="col-form-label"
+                          >number of person:</label
+                        >
+                        <input
+                          type="number"
+                          name="count"
+                          ng-required="true"
+                          ng-model="object.customer.personCount"
+                          class="form-control"
+                          id="count"
+                        />
+                        <span
+                          ng-show="numberOfPerson.count.$dirty && numberOfPerson.count.$error.required"
+                          >plz fill this field</span
+                        >
+                      </div>
+
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button
+                          type="button"
+                          ng-disabled="numberOfPerson.$invalid"
+                          ng-click="setOrderType('Dine-in')"
+                          class="btn btn-primary"
+                        >
+                          Enter
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <img
+              ng-click="setOrderType('Take-away')"
+              style="
+                object-fit: contain;
+                height: 185px;
+                cursor: pointer;
+                box-shadow: black 0px 0px 0px 1px;
+              "
+              src="https://img.freepik.com/premium-vector/take-away-food-bag-line-sign-takeout-service-pack-witch-symbol-free-takeaway-food-delivery_352905-905.jpg?w=2000"
+              alt="..."
+            />
+          </div>
         </div>
 
+        <div ng-if="object.type" class="agt__products1">
+          <div class="agt__product" ng-repeat="product in object.products ">
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                width: 100%;
+              "
+            >
+              <div style="margin-right: 10px">
+                <img
+                  style="object-fit: contain; width: 60px"
+                  src="{{product.img}}"
+                  alt="..."
+                />
+              </div>
+              <div>
+                <div>
+                  <span style="font-weight: 500; font-size: 16px; opacity: 0.8">
+                    {{product.name}}
+                  </span>
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    width: 100%;
+
+                    opacity: 0.7;
+                  "
+                >
+                  <h5 style="font-weight: bolder">Rs. {{product.price}}</h5>
+                </div>
+                <div
+                  ng-click="addToCart(product)"
+                  style="
+                    display: flex;
+                    width: 67px;
+                    justify-content: center;
+                    padding: 4px 4px;
+                    cursor: pointer;
+
+                    border: 2px solid lightgray;
+
+                    border-radius: 3px;
+                  "
+                >
+                  <div>
+                    <span style="font-weight: bolder"> Add </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="agt__category">
+        <!-- {{isSelected}} -->
+        <!-- {{object.productsData}} -->
+        <div class="agt__categoryCard">
+          <div
+            ng-class="{'agt__active': object.isSelected==$index}"
+            style="
+              min-width: 145px;
+              min-height: 64px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+            ng-repeat="category in object.productsData.categories"
+            ng-click="setIndexing($index)"
+          >
+            <div style="font-weight: bold">{{category}}</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div>
 
-        <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Details</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form name="adminData" novalidate>
-                            <div class="form-group">
-                                <label for="userName" class="col-form-label">UserName :</label>
-                                <input type="text" name="userName" ng-required="true" ng-minlength="3"
-                                    ng-model="object.admin.userName" class="form-control">
-                                <span
-                                    ng-show="adminData.userName.$dirty && adminData.userName.$error.minlength">Minimum
-                                    3 characters required</span>
-                                <span
-                                    ng-show="adminData.userName.$dirty && adminData.userName.$error.required">Please
-                                    fill this field</span>
-                            </div>
-                            <div class="form-group">
-                                <label for="firstName" class="col-form-label">FirstName :</label>
-                                <input type="text" name="firstName" ng-required="true" ng-minlength="3"
-                                    ng-model="object.admin.firstName" class="form-control">
-                                <span
-                                    ng-show="adminData.firstName.$dirty && adminData.firstName.$error.minlength">Minimum
-                                    3 characters required</span>
-                                <span
-                                    ng-show="adminData.firstName.$dirty && adminData.firstName.$error.required">Please
-                                    fill this field</span>
-                            </div>
-                            <div class="form-group">
-                                <label for="lastName" class="col-form-label">LastName :</label>
-                                <input type="text" name="lastName" ng-minlength="0" ng-model="object.admin.lastName"
-                                    class="form-control">
-                                <span
-                                    ng-show="adminData.lastName.$dirty && adminData.lastName.$error.minlength">Minimum
-                                    3 characters required</span>
-                                <!-- <span ng-show="adminData.lastName.$dirty && adminData.lastName.$error.required">Please fill this field</span> -->
-                            </div>
-                            <div class="form-group">
-                                <label for="email" class="col-form-label">Email :</label>
-                                <input type="email" name="email" ng-required="true"
-                                    ng-pattern="/^([a-z A-Z 0-9\.-]+)@([0-9 a-z A-Z -]+).([a-z]{2,8})(.[a-z{2,4}])?$/"
-                                    ng-model="object.admin.email" class="form-control">
-                                <span
-                                    ng-show="adminData.email.$dirty && !adminData.email.$error.required && adminData.email.$invalid">Please
-                                    enter correct email</span>
-                                <span ng-show="adminData.email.$dirty && adminData.email.$error.required">Please
-                                    fill this field</span>
-                            </div>
-                            <div class="form-group">
-                                <label for="number" class="col-form-label">Phone Number :</label>
-                                <input type="number" name="number" ng-required="true" ng-pattern="/^\d{10}$/"
-                                    ng-model="object.admin.number" class="form-control">
-                                <span ng-show="adminData.number.$dirty && adminData.number.$invalid">please
-                                    enter correct number</span>
-                                <span
-                                    ng-show="adminData.number.$dirty && adminData.number.$error.required">Please
-                                    fill this field</span>
-                            </div>
+    <div class="agt__rightSide">
+      <div class="agt__cart">
+        <h5>
+          <i class="fas fa-shopping-cart"></i>
+          <span>Cart</span>
+        </h5>
+        <div
+          ng-if="object.cart.length>0"
+          class="agt__itemCart"
+          ng-repeat="item in object.cart"
+        >
+          <div>
+            <div style="display: flex; align-items: center; gap: 3px">
+              <img
+                style="object-fit: contain; height: 80px; width: 80px"
+                src="{{item.img}}"
+                alt="loading"
+              />
+              <p>{{item.name}}</p>
+            </div>
 
-                            <!-- <button style="background: transparent;
+            <p>Rs.{{item.price}}</p>
+          </div>
+          <div style=" display: flex; align-items: center; justify-content:
+          space-around; width: 72px;"">
+          <div ng-click=" minus(item)" style="cursor: pointer">
+            <i class="fas fa-minus"></i>
+          </div>
+          <div>{{item.quantity}}</div>
+          <div ng-click=" plus(item)" style="cursor: pointer">
+            <i class="fas fa-plus"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-if=" object.amount>0" class="agt__bill">
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: 33px;
+        "
+      >
+        <div>Sub Total</div>
+        <div>Rs.{{object.amount}}</div>
+      </div>
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: 33px;
+        "
+      >
+        <div style="width: 100%">
+          <caption>
+            Tax
+          </caption>
+          <section>
+            <div
+              style="width: 100%; display: flex; justify-content: space-between"
+              ng-repeat="tax in object.taxes"
+            >
+              <span> {{tax.name}} </span>
+              <span> {{tax.percent}}% </span>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div ng-if="object.amount>0" class="agt__order">
+      <div
+        style="
+          display: flex;
+          width: 100%;
+          justify-content: space-between;
+          height: 38px;
+          align-items: center;
+        "
+      >
+        <div>Total</div>
+        <div>{{object.payableAmount}}</div>
+      </div>
+      <div ng-if="object.saved">
+        <button ng-click="orderHandler()" class="btn btn-primary">
+          {{object.orderBtn}}
+        </button>
+      </div>
+      <div>
+        <button
+          ng-if="!object.saved"
+          type="button"
+          class="btn btn-primary"
+          data-toggle="modal"
+          data-target="#exampleModal"
+          data-whatever="@mdo"
+        >
+          Customer Detail
+        </button>
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                  Enter Customer Details
+                </h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form name="customerData" novalidate>
+                  <div class="form-group">
+                    <label for="customerName" class="col-form-label"
+                      >Name:</label
+                    >
+                    <input
+                      type="text"
+                      name="customerName"
+                      ng-required="true"
+                      ng-minlength="3"
+                      ng-model="object.customer.name"
+                      class="form-control"
+                      id="customerName"
+                    />
+                    <span
+                      ng-show="customerData.customerName.$dirty && customerData.customerName.$error.minlength"
+                      >Minimum 3 characters required</span
+                    >
+                  </div>
+                  <!-- {{object.customer.type}} -->
+                  <div class="form-group">
+                    <label for="customerNumber" class="col-form-label"
+                      >Phone Number:</label
+                    >
+                    <input
+                      type="number"
+                      name="customerNumber"
+                      ng-pattern="/^\d{10}$/"
+                      ng-required="true"
+                      ng-minlength="3"
+                      ng-model="object.customer.number"
+                      class="form-control"
+                      id="customerNumber"
+                    />
+                    <span
+                      ng-show="customerData.customerNumber.$dirty && customerData.customerNumber.$invalid"
+                      >Enter valid number</span
+                    >
+                  </div>
+
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      ng-disabled="customerData.$invalid"
+                      ng-click="saveCustomerData()"
+                      class="btn btn-primary"
+                    >
+                      {{object.btnText}}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      style="
+        position: absolute;
+        display: flex;
+        /* top: 0px; */
+        max-width: 198px;
+        align-items: center;
+        height: -webkit-fill-available;
+        font-weight: bold;
+        opacity: 0.5;
+      "
+      ng-if="object.amount==0"
+    >
+      <span>
+        "Looks like your cart is empty. Time to add some tasty items!"
+      </span>
+    </div>
+  </div>
+</div>
+<div>
+  <div
+    class="modal fade"
+    id="exampleModal2"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Details</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form name="adminData" novalidate>
+            <div class="form-group">
+              <label for="userName" class="col-form-label">UserName :</label>
+              <input
+                type="text"
+                name="userName"
+                ng-required="true"
+                ng-minlength="3"
+                ng-model="object.admin.userName"
+                class="form-control"
+              />
+              <span
+                ng-show="adminData.userName.$dirty && adminData.userName.$error.minlength"
+                >Minimum 3 characters required</span
+              >
+              <span
+                ng-show="adminData.userName.$dirty && adminData.userName.$error.required"
+                >Please fill this field</span
+              >
+            </div>
+            <div class="form-group">
+              <label for="firstName" class="col-form-label">FirstName :</label>
+              <input
+                type="text"
+                name="firstName"
+                ng-required="true"
+                ng-minlength="3"
+                ng-model="object.admin.firstName"
+                class="form-control"
+              />
+              <span
+                ng-show="adminData.firstName.$dirty && adminData.firstName.$error.minlength"
+                >Minimum 3 characters required</span
+              >
+              <span
+                ng-show="adminData.firstName.$dirty && adminData.firstName.$error.required"
+                >Please fill this field</span
+              >
+            </div>
+            <div class="form-group">
+              <label for="lastName" class="col-form-label">LastName :</label>
+              <input
+                type="text"
+                name="lastName"
+                ng-minlength="0"
+                ng-model="object.admin.lastName"
+                class="form-control"
+              />
+              <span
+                ng-show="adminData.lastName.$dirty && adminData.lastName.$error.minlength"
+                >Minimum 3 characters required</span
+              >
+              <!-- <span ng-show="adminData.lastName.$dirty && adminData.lastName.$error.required">Please fill this field</span> -->
+            </div>
+            <div class="form-group">
+              <label for="email" class="col-form-label">Email :</label>
+              <input
+                type="email"
+                name="email"
+                ng-required="true"
+                ng-pattern="/^([a-z A-Z 0-9\.-]+)@([0-9 a-z A-Z -]+).([a-z]{2,8})(.[a-z{2,4}])?$/"
+                ng-model="object.admin.email"
+                class="form-control"
+              />
+              <span
+                ng-show="adminData.email.$dirty && !adminData.email.$error.required && adminData.email.$invalid"
+                >Please enter correct email</span
+              >
+              <span
+                ng-show="adminData.email.$dirty && adminData.email.$error.required"
+                >Please fill this field</span
+              >
+            </div>
+            <div class="form-group">
+              <label for="number" class="col-form-label">Phone Number :</label>
+              <input
+                type="number"
+                name="number"
+                ng-required="true"
+                ng-pattern="/^\d{10}$/"
+                ng-model="object.admin.number"
+                class="form-control"
+              />
+              <span
+                ng-show="adminData.number.$dirty && adminData.number.$invalid"
+                >please enter correct number</span
+              >
+              <span
+                ng-show="adminData.number.$dirty && adminData.number.$error.required"
+                >Please fill this field</span
+              >
+            </div>
+
+            <!-- <button style="background: transparent;
                 font-weight: 700;
                 cursor: pointer;
                 outline: none;
@@ -445,26 +633,32 @@
                                 data-whatever="@mdo">Change Password ?
                             </button> -->
 
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary"
-                                    data-dismiss="modal">Close</button>
-                                <button type="submit" ng-disabled="adminData.$invalid"
-                                    ng-click="updateAdmin($event,adminId)"
-                                    class="btn btn-primary">update</button>
-                            </div>
-
-                        </form>
-                    </div>
-
-                </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="submit"
+                ng-disabled="adminData.$invalid"
+                ng-click="updateAdmin($event)"
+                class="btn btn-primary"
+              >
+                update
+              </button>
             </div>
+          </form>
         </div>
+      </div>
     </div>
-    <div>
+  </div>
+</div>
+<div></div>
 
-
-        <!-- <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"
+<!-- <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -506,7 +700,7 @@
                                 <button type="button" class="btn btn-secondary"
                                     data-dismiss="modal">Close</button>
                                 <button type="submit" ng-disabled="passwordForm.$invalid"
-                                    ng-click="changePassword($event,adminId)"
+                                    ng-click="changePassword($event)"
                                     class="btn btn-primary">update</button>
                             </div>
 
@@ -516,5 +710,3 @@
                 </div>
             </div>
         </div> -->
-    </div>
-</div>

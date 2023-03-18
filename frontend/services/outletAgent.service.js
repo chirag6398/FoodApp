@@ -1,6 +1,6 @@
 ///<reference path="../module/module.js"/>
 
-app.service("outletAgentService", function () {
+app.service("outletAgentService", function (outletAgentFactory) {
   this.groupProductByCategories = function (products) {
     var categoryProducts = {};
     var categories = [];
@@ -136,5 +136,43 @@ app.service("outletAgentService", function () {
     console.log(count, allotedTables);
 
     return count === 0 ? allotedTables : false;
+  };
+
+  this.placeOrder = function (
+    customer,
+    type,
+    orderNo,
+    brand,
+    cart,
+    outlet,
+    allotedTables,
+    cb
+  ) {
+    var data = {
+      customer: {
+        name: customer.name,
+        number: customer.number,
+      },
+      type: type,
+      orderId: orderNo,
+      brand: {
+        _id: brand._id,
+        name: brand.name,
+      },
+      item: cart,
+      outlet: {
+        _id: outlet._id,
+        name: outlet.name,
+      },
+      allotedTables: allotedTables,
+    };
+    console.log(data);
+    outletAgentFactory.placeOrder(data, function (err, result) {
+      if (result) {
+        cb(null, result);
+      } else {
+        cb(err, result);
+      }
+    });
   };
 });
