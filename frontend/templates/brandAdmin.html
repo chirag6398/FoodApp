@@ -2,10 +2,10 @@
   <div class="logo-details">
     <img
       style="object-fit: contain; height: 36px"
-      src="{{brandLogo}}"
+      src="{{object.brand.logo}}"
       alt="..."
     />
-    <span class="logo_name">{{brandName}}</span>
+    <span class="logo_name">{{object.brand.name}}</span>
   </div>
   <ul class="nav-links">
     <li>
@@ -41,7 +41,7 @@
     </li>
 
     <li>
-      <a ui-sref="brandadmin.setting({id:brandAdminId})">
+      <a ui-sref="brandadmin.setting({id:object.brand._id})">
         <i class="bx bx-cog"></i>
         <span class="link_name">Setting</span>
       </a>

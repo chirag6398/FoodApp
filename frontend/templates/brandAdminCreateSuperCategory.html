@@ -69,7 +69,7 @@
                       name="name"
                       ng-required="true"
                       ng-minlength="3"
-                      ng-model="category.name"
+                      ng-model="object.category.name"
                       class="form-control"
                     />
                     <span
@@ -84,7 +84,7 @@
                     <input
                       type="file"
                       name="logo"
-                      file-model="category.logo"
+                      file-model="object.category.logo"
                       id="logo"
                     />
                   </div>
@@ -171,7 +171,7 @@
                   name="name"
                   ng-required="true"
                   ng-minlength="3"
-                  ng-model="superCategory.name"
+                  ng-model="object.superCategory.name"
                   class="form-control"
                 />
                 <span
@@ -186,7 +186,7 @@
                 <input
                   type="file"
                   name="logo"
-                  file-model="superCategory.logo"
+                  file-model="object.superCategory.logo"
                   id="logo"
                 />
               </div>
@@ -205,7 +205,7 @@
                   ng-click="addCategory($event)"
                   class="btn btn-primary"
                 >
-                  {{btnText}}
+                  {{object.btnText}}
                 </button>
               </div>
             </form>

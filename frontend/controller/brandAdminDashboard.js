@@ -3,21 +3,12 @@
 app.controller("brandAdminDashboardController", [
   "$scope",
   "$rootScope",
-  "setAdminData",
   "brandApi",
   "brandAdminDashBoardApi",
-  function (
-    $scope,
-    $rootScope,
-    setAdminData,
-    brandApi,
-    brandAdminDashBoardApi
-  ) {
-    console.log(setAdminData.getAdminData());
-    // var result=setAdminData.getAdminData()
+  function ($scope, $rootScope, brandApi, brandAdminDashBoardApi) {
     brandApi.getBrandAdminPage();
     var myChart1 = null;
-    // var myChart2=null;
+
     $rootScope.$on("passData", function (err, result) {
       if (result) {
         console.log(result);
@@ -107,7 +98,6 @@ app.controller("brandAdminDashboardController", [
                 ],
               },
             });
-          } else {
           }
         }
       );

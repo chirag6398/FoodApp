@@ -139,6 +139,20 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
       };
   };
 
+  obj.updateSuperCategory = function (data, cb) {
+    $http
+      .post("http://localhost:5000/api/brandAdmin/updateSuperCategory", data, {
+        transformRequest: angular.identity,
+        headers: { "Content-Type": undefined },
+      })
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb(err, null);
+      });
+  };
+
   obj.getSuperCategoryByBrandId = function (brandId, cb) {
     console.log(brandId);
     $http
