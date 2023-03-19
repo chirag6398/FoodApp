@@ -9,7 +9,7 @@
           <label for="name">Tax Name</label>
           <input
             type="text"
-            ng-model="tax.name"
+            ng-model="object.tax.name"
             required
             class="form-control"
             id="name"
@@ -23,7 +23,7 @@
             type="number"
             required
             class="form-control"
-            ng-model="tax.percent"
+            ng-model="object.tax.percent"
             id="percent"
             placeholder="enter %"
           />
@@ -62,9 +62,6 @@
         </li>
       </ul>
       <span ng-if="objext.taxes.length==0"> No taxes included yet </span>
-      <!-- <span ng-if="isLoading">
-    
-            </span> -->
     </div>
   </div>
   <div class="setting__extDiv">
@@ -84,7 +81,7 @@
           <label for="tableNumber">Table Number</label>
           <input
             type="number"
-            ng-model="table.number"
+            ng-model="object.table.number"
             required
             class="form-control"
             id="tableNumber"
@@ -98,7 +95,7 @@
             type="number"
             required
             class="form-control"
-            ng-model="table.capacity"
+            ng-model="object.table.capacity"
             id="capacity"
             placeholder="enter capacity"
           />
@@ -121,13 +118,13 @@
       <div style="display: flex; flex-wrap: wrap; gap: 7px">
         <div class="setting__table" ng-repeat="table in object.tables">
           <div style="width: 100%; padding: 10px">
-            <p>{{table.number}}</p>
+            <p>{{object.table.number}}</p>
 
-            <p style="text-align: center">{{table.capacity}}</p>
+            <p style="text-align: center">{{object.table.capacity}}</p>
           </div>
         </div>
       </div>
-      <span ng-if="addingTables.length">
+      <span ng-if="object.addingTables.length>0">
         <button ng-click="saveTableView()" class="btn btn-secondary">
           Save
         </button>

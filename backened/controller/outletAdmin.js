@@ -43,7 +43,6 @@ module.exports = {
 
     return productModel
       .find({
-        "brand._id": req.body.brandId,
         "category._id": req.body.categoryId,
         "outlet._id": { $ne: req.body.outletId },
       })
@@ -160,41 +159,41 @@ module.exports = {
         });
     });
   },
-  // getProduct: function (req, res) {
-  //   var outletId = mongoose.Types.ObjectId(req.params.id);
-  //   console.log("outletid", req.params.id);
-  //   outletModel
-  //     .aggregate([
-  //       {
-  //         $match: {
-  //           _id: outletId,
-  //         },
-  //       },
-  //       {
-  //         $unwind: "$products",
-  //       },
-  //       {
-  //         $group: {
-  //           _id: "$products.product.category._id",
-  //           name: { $first: "$products.product.category.name" },
-  //           brandLogo: { $first: "$brand.logo" },
-  //           products: { $push: "$products.product" },
-  //         },
-  //       },
-  //       {
-  //         $sort: { name: 1 },
-  //       },
-  //     ])
-  //     .exec(function (err, result) {
-  //       if (err) {
-  //         console.log(err);
-  //         return res.status(500).send({ error: err });
-  //       } else {
-  //         console.log("result", result);
-  //         return res.status(200).send(result);
-  //       }
-  //     });
-  // },
+  getProduct: function (req, res) {
+    var outletId = mongoose.Types.ObjectId(req.params.id);
+    console.log("outletid", req.params.id);
+    outletModel
+      .aggregate([
+        {
+          $match: {
+            _id: outletId,
+          },
+        },
+        {
+          $unwind: "$products",
+        },
+        {
+          $group: {
+            _id: "$products.product.category._id",
+            name: { $first: "$products.product.category.name" },
+            brandLogo: { $first: "$brand.logo" },
+            products: { $push: "$products.product" },
+          },
+        },
+        {
+          $sort: { name: 1 },
+        },
+      ])
+      .exec(function (err, result) {
+        if (err) {
+          console.log(err);
+          return res.status(500).send({ error: err });
+        } else {
+          console.log("result", result);
+          return res.status(200).send(result);
+        }
+      });
+  },
 
   removeOutletProduct: function (req, res) {
     console.log(req.body);
@@ -210,27 +209,30 @@ module.exports = {
           },
         }
       )
-      .then(function (result) {
+      .then(function (result1) {
         productModel
           .updateOne(
             { name: req.body.name },
             {
               $pull: {
-                outletIds: {
-                  outletId: req.body.outletId,
+                outlet: {
+                  _id: req.body.outletId,
                 },
               },
             }
           )
-          .then(function (result) {
-            console.log(result);
+          .then(function (result2) {
+            console.log(result1, result2);
+            return res.send({ result1, result2 });
           })
           .catch(function (err) {
             console.log(err);
+            return res.status(404).send(err);
           });
       })
       .catch(function (err) {
         console.log(err);
+        return res.status(404).send(err);
       });
   },
   createOutletAgent: function (req, res) {

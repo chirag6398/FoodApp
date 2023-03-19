@@ -340,21 +340,21 @@ app.factory("apiHandler", function ($http) {
   //     });
   // };
 
-  obj.getProductByCategory = function (data, cb) {
-    // console.log(data)
-    $http
-      .post("http://localhost:5000/api/outlet/categoryProduct", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
-      .then(function (response) {
-        cb(response);
-      })
-      .catch(function (err) {
-        // console.log(err);
-      });
-  };
+  // obj.getProductByCategory = function (data, cb) {
+  //   // console.log(data)
+  //   $http
+  //     .post("http://localhost:5000/api/outlet/categoryProduct", data, {
+  //       headers: {
+  //         Authorization: window.localStorage.getItem("Authorization"),
+  //       },
+  //     })
+  //     .then(function (response) {
+  //       cb(response);
+  //     })
+  //     .catch(function (err) {
+  //       // console.log(err);
+  //     });
+  // };
 
   obj.addProductToOutlet = function (product, outletId, cb) {
     var data = {

@@ -43,15 +43,10 @@ app.controller("brandProductsController", [
     };
 
     $scope.getProducts = function (id) {
-      console.log(id);
-      apiHandler.getProductByCategory(
-        {
-          brandId: $scope.brandId,
-          categoryId: id,
-          outletId: $scope.outletId,
-        },
-        function (result) {
-          console.log(result);
+      outletAdminService.getProducts(
+        id,
+        $scope.object.outlet._id,
+        function (err, result) {
           if (result.data.length) {
             $scope.products = result.data;
           } else if (result) {

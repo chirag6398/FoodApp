@@ -123,5 +123,20 @@ app.factory("outletApi", function ($http, $rootScope) {
       });
   };
 
+  obj.getProductByCategory = function (data, cb) {
+    $http
+      .post("http://localhost:5000/api/outlet/categoryProduct", data, {
+        headers: {
+          Authorization: window.localStorage.getItem("Authorization"),
+        },
+      })
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb(err, null);
+      });
+  };
+
   return obj;
 });

@@ -10,11 +10,13 @@ outletAdminRoute.get(
   passport.authenticate("jwt", { session: false }),
   outletAdminController.getAdminPage
 );
-// outletAdminRoute.get(
-//   "/api/outlet/getProduct/:id",
-//   passport.authenticate("jwt", { session: false }),
-//   outletAdminController.getProduct
-// );
+
+outletAdminRoute.get(
+  "/api/outlet/getProduct/:id",
+  passport.authenticate("jwt", { session: false }),
+  outletAdminController.getProduct
+);
+
 outletAdminRoute.get(
   "/api/outlet/getTaxes/:id",
   passport.authenticate("jwt", { session: false }),

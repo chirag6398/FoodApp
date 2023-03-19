@@ -3,22 +3,33 @@
 
 app.controller("outletEmployeeFormController", [
   "$scope",
-  "$http",
+  "outletAdminService",
   "$location",
   "apiHandler",
   "outletApi",
   "$rootScope",
-  function ($scope, $http, $location, apiHandler, outletApi, $rootScope) {
+  function (
+    $scope,
+    outletAdminService,
+    $location,
+    apiHandler,
+    outletApi,
+    $rootScope
+  ) {
     outletApi.getOutletAdminPage();
     $scope.object = {
       agents: [],
+      outlet: null,
+      btnText: "create agent",
+      agent: {},
     };
+
     $rootScope.$on("passData", function (err, data) {
       if (data) {
-        console.log(data);
-        $scope.outletData = data.data.outletData;
-        outletApi.getOutletAgentEmployees(
-          $scope.outletData._id,
+        $scope.object.outlet = data.data.outletData;
+
+        outletAdminService.getOutletAgentEmployees(
+          $scope.object.outlet._id,
           function (err, result) {
             console.log(err, result);
             if (result) {
@@ -29,27 +40,17 @@ app.controller("outletEmployeeFormController", [
       }
     });
 
-    $scope.btnText = "create agent";
-    $scope.agent = {};
-
     $scope.createOutletAgent = function ($event) {
       $event.preventDefault();
-      $scope.btnText = "creating...";
+      $scope.object.btnText = "creating...";
 
-      outletApi.createOutletAgent(
-        {
-          ...$scope.agent,
-          brand: $scope.outletData.brand,
-          outlet: {
-            _id: $scope.outletData._id,
-            type: $scope.outletData.type,
-            name: $scope.outletData.name,
-          },
-        },
+      outletAdminService.createOutletAgent(
+        $scope.object.agent,
+        $scope.object.outlet,
         function (err, result) {
           if (result) {
             console.log(result);
-            $scope.btnText = "created";
+            $scope.object.btnText = "created";
             $("#exampleModal").modal("hide");
           }
         }
