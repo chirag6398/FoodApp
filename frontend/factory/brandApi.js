@@ -399,5 +399,21 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
       };
   };
 
+  obj.updateProduct = function (data, cb) {
+    $http
+      .post("http://localhost:5000/api/product/updateProduct", data, {
+        transformRequest: angular.identity,
+        headers: { "Content-Type": undefined },
+      })
+      .then(
+        function (response) {
+          cb(null, response.data);
+        },
+        function (error) {
+          cb(err, null);
+        }
+      );
+  };
+
   return obj;
 });

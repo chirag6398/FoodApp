@@ -1,6 +1,6 @@
 ///<reference path="../module/module.js"/>
 
-app.service("brandAdminService", function (brandApi) {
+app.service("brandAdminService", function (brandApi, $stateParams) {
   this.addSuperCategory = function (superCategory, brand, cb) {
     var formData = new FormData();
     formData.append("name", superCategory.name);
@@ -34,6 +34,38 @@ app.service("brandAdminService", function (brandApi) {
     });
   };
 
+  this.updateProduct = function (updatedProduct, cb) {
+    var updatedFormData = new FormData();
+    updatedFormData.append("name", updatedProduct.name);
+    updatedFormData.append("file", updatedProduct.image);
+    updatedFormData.append("price", updatedProduct.price);
+    updatedFormData.append("description", updatedProduct.description);
+    updatedFormData.append("_id", updatedProduct._id);
+
+    brandApi.updateProduct(updatedFormData, cb);
+  };
+
+  this.addProduct = function (product, cb) {
+    var formData = new FormData();
+
+    formData.append("name", product.productName);
+    formData.append("file", product.image);
+    formData.append("categoryId", $stateParams.id);
+    formData.append("categoryName", $stateParams.name);
+    formData.append("price", product.price);
+    formData.append("description", product.description);
+
+    brandApi.addProduct(formData, cb);
+  };
+
+  this.getProductsInBrand = function (cb) {
+    brandApi.getProductsInBrand(
+      {
+        categoryId: $stateParams.id,
+      },
+      cb
+    );
+  };
   this.getIndxById = function (arrayField, id) {
     return arrayField.findIndex(function (value) {
       return value._id === id;

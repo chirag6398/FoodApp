@@ -2,56 +2,66 @@ var productModel = require("../model/product.model");
 var categoryModal = require("../model/category.model");
 var outletModel = require("../model/outlet.model");
 var s3Services = require("../service/awsS3.service");
+// var superCategoryModel=require("../")
 var mongoose = require("mongoose");
 
 // var uploadToS3=require("../service/awsS3.service");
 
 module.exports = {
   addProduct: function (req, res) {
-    console.log(req.body);
-    if (req.file) {
-      return s3Services
-        .uploadToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
-        .then(function (data) {
-          console.log(data);
-          var image = data.Location;
+    categoryModal
+      .findById({ _id: req.body.categoryId }, { brand: 1, superCategory: 1 })
+      .then(function (result) {
+        if (req.file) {
+          return s3Services
+            .uploadToS3(
+              req.file.buffer,
+              req.file.originalname,
+              req.file.mimetype
+            )
+            .then(function (data) {
+              console.log(data);
+              var image = data.Location;
 
-          var product = new productModel({
-            name: req.body.name,
-            price: req.body.price,
-            "category.name": req.body.categoryName,
-            "brand.name": req.body.brandName,
-            "brand._id": req.body.brandId,
-            "superCategory.name": req.body.superCategoryName,
-            "superCategory._id": req.body.superCategoryId,
-            "category._id": req.body.categoryId,
-            description: req.body.description,
-            img: image,
-          });
-          product
-            .save()
-            .then(function (result) {
-              return res.status(200).send(result);
+              var product = new productModel({
+                name: req.body.name,
+                price: req.body.price,
+                "category.name": req.body.categoryName,
+                brand: result.brand,
+                superCategory: result.superCategory,
+                "category._id": req.body.categoryId,
+                description: req.body.description,
+                img: image,
+              });
+              product
+                .save()
+                .then(function (result) {
+                  return res.status(200).send(result);
+                })
+                .catch(function (err) {
+                  console.log(err);
+                  return res.status(500).send({ error: err, status: 500 });
+                });
             })
             .catch(function (err) {
               console.log(err);
               return res.status(500).send({ error: err, status: 500 });
             });
-        })
-        .catch(function (err) {
-          console.log(err);
-          return res.status(500).send({ error: err, status: 500 });
-        });
-    } else {
-      return res.status(500).send({ message: "internal error", status: 500 });
-    }
+        } else {
+          return res
+            .status(500)
+            .send({ message: "internal error", status: 500 });
+        }
+      })
+      .catch(function (err) {
+        return res.status(404).send(err);
+      });
   },
   getProducts: function (req, res) {
     try {
       productModel
         .find(
           {
-            "brand._id": req.body.brandId,
             "category._id": req.body.categoryId,
           },
           {
@@ -74,6 +84,7 @@ module.exports = {
     }
   },
   updateProduct: function (req, res) {
+    console.log(req.file, req.body);
     if (req.file) {
       return s3Services
         .updateToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
