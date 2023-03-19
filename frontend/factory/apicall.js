@@ -325,20 +325,20 @@ app.factory("apiHandler", function ($http) {
       });
   };
 
-  obj.getBrandOutletProducts = function (data, cb) {
-    $http
-      .post("http://localhost:5000/api/outlet/brandProducts", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
-      .then(function (response) {
-        cb(response);
-      })
-      .catch(function (err) {
-        // console.log(err);
-      });
-  };
+  // obj.getBrandOutletProducts = function (data, cb) {
+  //   $http
+  //     .post("http://localhost:5000/api/outlet/brandProducts", data, {
+  //       headers: {
+  //         Authorization: window.localStorage.getItem("Authorization"),
+  //       },
+  //     })
+  //     .then(function (response) {
+  //       cb(response);
+  //     })
+  //     .catch(function (err) {
+  //       // console.log(err);
+  //     });
+  // };
 
   obj.getProductByCategory = function (data, cb) {
     // console.log(data)

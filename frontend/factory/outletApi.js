@@ -94,5 +94,34 @@ app.factory("outletApi", function ($http, $rootScope) {
       });
   };
 
+  obj.getSuperCategories = function (id, cb) {
+    $http
+      .get("http://localhost:5000/api/outletAdmin/getSuperCategories/" + id, {
+        headers: {
+          Authorization: window.localStorage.getItem("Authorization"),
+        },
+      })
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb(err, null);
+      });
+  };
+  obj.getSubCategory = function (id, cb) {
+    $http
+      .get("http://localhost:5000/api/outletAdmin/getSubCategories/" + id, {
+        headers: {
+          Authorization: window.localStorage.getItem("Authorization"),
+        },
+      })
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb(err, null);
+      });
+  };
+
   return obj;
 });

@@ -5,6 +5,7 @@ var categoryModel = require("../model/category.model");
 var mongoose = require("mongoose");
 var validation = require("../service/validation.service");
 var employeeModel = require("../model/employee.model");
+const superCategoryModel = require("../model/superCategory.model");
 
 module.exports = {
   getAdminPage: function (req, res) {
@@ -55,11 +56,35 @@ module.exports = {
         return res.status(500).send({ error: err });
       });
   },
-  brandProducts: function (req, res) {
-    console.log(req.body);
+  // brandProducts: function (req, res) {
+  //   console.log(req.body);
 
-    return categoryModel
-      .find({ "brand._id": req.body.brandId })
+  //   return categoryModel
+  //     .find({ "brand._id": req.body.brandId })
+  //     .then(function (result) {
+  //       console.log(result);
+  //       return res.send(result);
+  //     })
+  //     .catch(function (err) {
+  //       console.log(err);
+  //       return res.status(500).send({ error: err });
+  //     });
+  // },
+  getSuperCategories: function (req, res) {
+    superCategoryModel
+      .find({ "brand._id": req.params.id })
+      .then(function (result) {
+        console.log(result);
+        return res.send(result);
+      })
+      .catch(function (err) {
+        console.log(err);
+        return res.status(500).send({ error: err });
+      });
+  },
+  getSubCategories: function (req, res) {
+    categoryModel
+      .find({ "superCategory._id": req.params.id })
       .then(function (result) {
         console.log(result);
         return res.send(result);

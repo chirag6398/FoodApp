@@ -4,28 +4,43 @@
 app.controller("brandProductsController", [
   "$scope",
   "outletApi",
-  "$location",
+  "outletAdminService",
   "apiHandler",
   "$rootScope",
-  function ($scope, outletApi, $location, apiHandler, $rootScope) {
+  function ($scope, outletApi, outletAdminService, apiHandler, $rootScope) {
+    $scope.object = {
+      brand: null,
+      outlet: null,
+      superCategories: null,
+      subCategories: null,
+    };
     outletApi.getOutletAdminPage();
     $rootScope.$on("passData", function (err, data) {
       if (data) {
         console.log(data);
-        $scope.outletName = data.data.outletData.outletName;
-
-        $scope.outletId = data.data.outletData._id;
-        $scope.brandId = data.data.brandId;
-        $scope.brandLogo = data.data.outletData.brand.logo;
-        apiHandler.getBrandOutletProducts(
-          { brandId: $scope.brandId, outletId: $scope.outletId },
-          function (result) {
-            console.log(result);
-            $scope.categories = result.data;
+        $scope.object.outlet = data.data.outletData;
+        $scope.object.brand = data.data.outletData.brand;
+        outletAdminService.getSuperCategories(
+          $scope.object.brand._id,
+          function (err, result) {
+            console.log(err, result);
+            $scope.object.superCategories = result.data;
           }
         );
       }
     });
+
+    $scope.getSubCategory = function (id) {
+      outletAdminService.getSubCategory(id, function (err, result) {
+        console.log(err, result);
+        if (result) {
+          $scope.object.subCategories = result.data;
+          if ($scope.object.subCategories.length == 0) {
+            alert("no sub category");
+          }
+        }
+      });
+    };
 
     $scope.getProducts = function (id) {
       console.log(id);

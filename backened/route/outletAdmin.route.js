@@ -20,13 +20,26 @@ outletAdminRoute.get(
   passport.authenticate("jwt", { session: false }),
   outletAdminController.getTaxes
 );
+
+outletAdminRoute.get(
+  "/api/outletAdmin/getSuperCategories/:id",
+  passport.authenticate("jwt", { session: false }),
+  outletAdminController.getSuperCategories
+);
+
+outletAdminRoute.get(
+  "/api/outletAdmin/getSubCategories/:id",
+  passport.authenticate("jwt", { session: false }),
+  outletAdminController.getSubCategories
+);
+
 // outletAdminRoute.get("/api/outletAdmin/getCategory/:id",passport.authenticate('jwt',{session: false }),outletAdminController.getCategory);
 
-outletAdminRoute.post(
-  "/api/outlet/brandProducts",
-  passport.authenticate("jwt", { session: false }),
-  outletAdminController.brandProducts
-);
+// outletAdminRoute.post(
+//   "/api/outlet/brandProducts",
+//   passport.authenticate("jwt", { session: false }),
+//   outletAdminController.brandProducts
+// );
 outletAdminRoute.post(
   "/api/outlet/categoryProduct",
   passport.authenticate("jwt", { session: false }),

@@ -14,14 +14,6 @@ module.exports = {
   getBasicData: function (req, res) {
     var pipeline = [
       {
-        $match: {
-          createdAt: {
-            $gte: startDate,
-            $lt: endDate,
-          },
-        },
-      },
-      {
         $group: {
           _id: null,
           count: {
@@ -59,7 +51,10 @@ module.exports = {
       },
       {
         $group: {
-          _id: "$brand._id",
+          _id: {
+            brand: "$brand.name",
+            date: { $dateToString: { format: "%d-%m-%Y", date: "$createdAt" } },
+          },
           brandName: { $first: "$brand.name" },
           totalRevenue: {
             $sum: { $multiply: ["$items.quantity", "$items.price"] },
@@ -67,10 +62,47 @@ module.exports = {
         },
       },
       {
-        $sort: { totalRevenue: 1 },
+        $sort: { totalRevenue: -1 },
       },
       {
-        $limit: 4,
+        $group: {
+          _id: "$_id.date",
+          brands: {
+            $push: {
+              brand: "$_id.brand",
+              revenue: "$totalRevenue",
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          date: "$_id",
+          brands: { $slice: ["$brands", 4] },
+        },
+      },
+    ];
+
+    var pipeline3 = [
+      {
+        $match: {
+          createdAt: {
+            $gte: startDate,
+            $lt: endDate,
+          },
+        },
+      },
+      {
+        $unwind: "$items",
+      },
+      {
+        $group: {
+          _id: null,
+          lastMonthRevenue: {
+            $sum: { $multiply: ["$items.quantity", "$items.price"] },
+          },
+        },
       },
     ];
 
@@ -79,14 +111,15 @@ module.exports = {
     var data3 = employeeModel.aggregate(pipeline);
     var data4 = outletModel.aggregate(pipeline1);
     var data5 = orderModel.aggregate(pipeline2);
+    var data6 = orderModel.aggregate(pipeline3);
 
-    Promise.all([data1, data2, data3, data4, data5])
+    Promise.all([data1, data2, data3, data4, data5, data6])
       .then(function (result) {
         // console.log(result);
         return res.send(result);
       })
       .catch(function (err) {
-        // console.log(err);
+        console.log(err);
         return res.status(404).send(err);
       });
   },
@@ -124,8 +157,6 @@ module.exports = {
       });
   },
   getBrandGraphData: function (req, res) {
-    // console.log(req.params.id);
-
     var pipeline = [
       {
         $match: {

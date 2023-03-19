@@ -14,6 +14,7 @@ app.controller("superAdminAnalysisController", [
         $scope.outletCnt = result.data[1][0].count;
         $scope.userCnt = result.data[2][0].count;
         $scope.brands = result.data[3];
+        $scope.totalRevenue = result.data[5][0].lastMonthRevenue;
       }
     });
 
