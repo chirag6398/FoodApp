@@ -5,7 +5,7 @@
         <div class="subBox">
           <p><i title="outlets" class="bx bx-building"></i></p>
           <span> Total Outlets </span>
-          <p id="upComingData">{{totalOutlets}}</p>
+          <p id="upComingData">{{object.totalOutlets}}</p>
         </div>
       </div>
       <div class="box">
@@ -14,19 +14,19 @@
             <i title="employees" class="fa fa-users" aria-hidden="true"></i>
           </p>
           <span> Total Employees </span>
-          <p id="noOfCustomer">{{totalEmployees}}</p>
+          <p id="noOfCustomer">{{object.totalEmployees}}</p>
         </div>
       </div>
       <div class="box">
         <div class="subBox">
           <p><i title="Total Revenue" class="bx bx-cart"></i></p>
           <span> Last Month Revenue </span>
-          <p id="totalPay">Rs. {{totalRevenue}}</p>
+          <p id="totalPay">Rs. {{object.totalRevenue}}</p>
         </div>
       </div>
     </div>
 
-    <div ng-show="brandDates">
+    <div ng-show="object.brandDates.length>1">
       <h3>Brand Last Month Revenue Analysis</h3>
       <canvas id="myChart1" area-label="chart"></canvas>
     </div>
@@ -44,7 +44,7 @@
           <a
             class="list-group-item list-group-item-action"
             style="min-width: 200px"
-            ng-repeat="outlet in outlets | filter:search"
+            ng-repeat="outlet in object.outlets | filter:search"
           >
             <div class="analysis__brandList">
               <div
@@ -71,7 +71,7 @@
       </div>
     </div>
 
-    <div ng-show="outletDates">
+    <div ng-show="object.outletDates.length>1">
       <h3>Outlet Last Month Revenue Analysis</h3>
       <canvas id="myChart2" area-label="chart"></canvas>
     </div>
@@ -93,7 +93,7 @@
           <a
             class="list-group-item list-group-item-action"
             style="min-width: 300px"
-            ng-repeat="product in topTenProducts | filter:search"
+            ng-repeat="product in object.topTenProducts | filter:search"
           >
             <div class="analysis__brandList">
               <div
@@ -137,7 +137,7 @@
           <a
             class="list-group-item list-group-item-action"
             style="min-width: 300px"
-            ng-repeat="category in topTenCategories | filter:search"
+            ng-repeat="category in object.topTenCategories | filter:search"
           >
             <div class="analysis__brandList">
               <div

@@ -80,7 +80,7 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
     outletAdminData,
     outletId,
     outletName,
-    outlateLocation,
+    // outlateLocation,
     outletType,
     brandId,
     brandName,
@@ -91,7 +91,7 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
       outletId,
       brandId,
       outletName,
-      outlateLocation,
+      // outlateLocation,
       brandName,
       outletType,
     };

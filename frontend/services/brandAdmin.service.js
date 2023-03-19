@@ -33,4 +33,10 @@ app.service("brandAdminService", function (brandApi) {
       }
     });
   };
+
+  this.getIndxById = function (arrayField, id) {
+    return arrayField.findIndex(function (value) {
+      return value._id === id;
+    });
+  };
 });

@@ -1,30 +1,32 @@
 ///<reference path="../module/module.js"/>
 ///<reference path="../factory/apicall.js"/>
 
-function getIndxOfOutletById(outlets, id) {
-  return outlets.findIndex(function (value) {
-    return value._id === id;
-  });
-}
 app.controller("brandAdminHomeController", [
   "$scope",
   "$rootScope",
   "$location",
   "brandApi",
-  function ($scope, $rootScope, $location, brandApi) {
+  "brandAdminService",
+  function ($scope, $rootScope, $location, brandApi, brandAdminService) {
+    $scope.object = {
+      brand: null,
+      outlets: null,
+      btnText: "create outlet",
+      btnText0: "create",
+      admin: {},
+      updateOutletData: {},
+      outlet: {},
+    };
     brandApi.getBrandAdminPage();
 
     $rootScope.$on("passData", function (err, result) {
       if (result) {
-        $scope.brandName = result.data.data.name;
-        $scope.brandId = result.data.data._id;
-        $scope.brandLogo = result.data.data.logo;
+        $scope.object.brand = result.data.data;
+
         brandApi.getOutletsByBrandId(
-          result.data.data._id,
+          $scope.object.brand._id,
           function (err, result) {
             if (result) {
-              console.log(result);
-              $scope.object = { outlets: null };
               $scope.object.outlets = result.data;
             }
           }
@@ -32,17 +34,15 @@ app.controller("brandAdminHomeController", [
       }
     });
 
-    $scope.btnText = "Create Outlet";
     $scope.createOutlet = function ($event) {
       $event.preventDefault();
       brandApi.createOutlet(
-        $scope.outlet,
-        $scope.brandId,
-        $scope.brandName,
-        $scope.brandLogo,
+        $scope.object.outlet,
+        $scope.object.brand._id,
+        $scope.object.brand.name,
+        $scope.object.brand.logo,
         function (err, result) {
           if (result) {
-            console.log(result);
             $scope.object.outlets.push(result.data);
             $("#exampleModal").modal("hide");
           } else {
@@ -51,10 +51,6 @@ app.controller("brandAdminHomeController", [
         }
       );
     };
-
-    $scope.btnText0 = "Create";
-    $scope.admin = {};
-    $scope.updateOutletData = {};
 
     $scope.updateOutlet = function ($event, outlet) {
       $event.preventDefault();
@@ -71,32 +67,34 @@ app.controller("brandAdminHomeController", [
       $event,
       outletId,
       outletName,
-      outlateLocation,
+      // outlateLocation,
       outletType
     ) {
       $event.preventDefault();
-      $scope.btnText0 = "processing";
+      $scope.object.btnText0 = "processing";
+
       brandApi.createOutletAdmin(
-        $scope.admin,
+        $scope.object.admin,
         outletId,
         outletName,
-        outlateLocation,
+        // outlateLocation,
         outletType,
-        $scope.brandId,
-        $scope.brandName,
+        $scope.object.brand._id,
+        $scope.object.brand.name,
         function (err, result) {
           if (result) {
             console.log(result);
-            var indx = $scope.object.outlets.findIndex(function (value) {
-              return value._id === outletId;
-            });
+            var indx = brandAdminService.getIndxById(
+              $scope.object.outlets,
+              outletId
+            );
             if (indx !== -1) {
               $scope.object.outlets[indx].outletAdminId = result.data.adminId;
             }
-            $scope.btnText0 = "successfull";
+            $scope.object.btnText0 = "successfull";
             $("#exampleModal1").modal("hide");
           } else {
-            $scope.btnText0 = "failed";
+            $scope.object.btnText0 = "failed";
             console.log(err);
           }
         }
@@ -108,7 +106,10 @@ app.controller("brandAdminHomeController", [
       brandApi.togleOutlet(outletId, function (err, result) {
         if (result) {
           console.log(result);
-          var indx = getIndxOfOutletById($scope.object.outlets, outletId);
+          var indx = brandAdminService.getIndxById(
+            $scope.object.outlets,
+            outletId
+          );
           $scope.object.outlets[indx].isActive =
             !$scope.object.outlets[indx].isActive;
 

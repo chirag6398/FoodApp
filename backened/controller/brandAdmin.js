@@ -78,9 +78,6 @@ module.exports = {
   createOutletAdmin: function (req, res) {
     console.log(req.body);
 
-    // var valid = validation.validateUserData(req, res);
-
-    // console.log(valid);
     if (
       req.body.outletId &&
       req.body.brandId &&
@@ -97,7 +94,7 @@ module.exports = {
         userType: "outletAdmin",
         "outlet._id": req.body.outletId,
         "outlet.name": req.body.outletName,
-        "outlet.location": req.body.location,
+        // "outlet.location": req.body.location,
         "brand._id": req.body.brandId,
         "brand.name": req.body.brandName,
         "outlet.type": req.body.outletType,
