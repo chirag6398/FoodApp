@@ -24,6 +24,7 @@ app.controller("superAdminCreateBrandController", [
       searchTextResult: [],
       selectedBrand: null,
     };
+
     $scope.searchTextHandler = function () {
       if (timeout) {
         $timeout.cancel(timeout);
@@ -95,8 +96,6 @@ app.controller("superAdminCreateBrandController", [
     $scope.createBrandAdmin = function ($event, brandId, brandName) {
       $event.preventDefault();
       $scope.btnText = "processing";
-
-      // console.log($scope.admin, $scope.brandId, $scope.brandName);
 
       adminApi.postAddBrandAdmin(
         $scope.admin,

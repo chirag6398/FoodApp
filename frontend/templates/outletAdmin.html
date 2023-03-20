@@ -9,7 +9,10 @@
   </div>
   <ul class="nav-links">
     <li>
-      <a ui-sref="outletAdmin.outletAdminDashboard">
+      <a
+        ui-sref-active="activeNavBar"
+        ui-sref="outletAdmin.outletAdminDashboard"
+      >
         <i title="Dashboard" class="bx bx-grid-alt"></i>
         <span class="link_name">Dashboard</span>
       </a>
@@ -17,7 +20,7 @@
 
     <li></li>
     <li>
-      <a ui-sref="outletAdmin.products">
+      <a ui-sref-active="activeNavBar" ui-sref="outletAdmin.products">
         <i title="products in outlets" class="bx bxl-product-hunt"></i>
         <span class="link_name">Products</span>
       </a>
@@ -25,7 +28,10 @@
 
     <li></li>
     <li>
-      <a ui-sref="outletAdmin.outletBrandProducts">
+      <a
+        ui-sref-active="activeNavBar"
+        ui-sref="outletAdmin.outletBrandProducts"
+      >
         <i title="Global Available Products" class="bx bx-globe"></i>
         <span class="link_name">Global Products</span>
       </a>
@@ -33,14 +39,14 @@
 
     <li></li>
     <li>
-      <a ui-sref="outletAdmin.employee">
+      <a ui-sref-active="activeNavBar" ui-sref="outletAdmin.employee">
         <i title="create agent" class="bx bxs-user"></i>
         <span class="link_name"> Create Agent</span>
       </a>
     </li>
 
     <li>
-      <a ui-sref="outletAdmin.setting">
+      <a ui-sref-active="activeNavBar" ui-sref="outletAdmin.setting">
         <i class="bx bx-cog"></i>
         <span class="link_name">Setting</span>
       </a>

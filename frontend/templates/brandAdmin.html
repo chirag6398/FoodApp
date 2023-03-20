@@ -9,7 +9,7 @@
   </div>
   <ul class="nav-links">
     <li>
-      <a ui-sref="brandadmin.dashboard">
+      <a ui-sref-active="activeNavBar" ui-sref="brandadmin.dashboard">
         <i title="Dashboard" class="bx bx-grid-alt"></i>
         <span class="link_name">Dashboard</span>
       </a>
@@ -17,7 +17,7 @@
 
     <li></li>
     <li>
-      <a ui-sref="brandadmin.outlets">
+      <a ui-sref-active="activeNavBar" ui-sref="brandadmin.outlets">
         <i title=" create outlets" class="bx bx-buildings"></i>
         <span class="link_name">Create Outlet</span>
       </a>
@@ -25,7 +25,7 @@
 
     <li></li>
     <li>
-      <a ui-sref="brandadmin.users">
+      <a ui-sref-active="activeNavBar" ui-sref="brandadmin.users">
         <i title="users" class="bx bxs-user-detail"></i>
         <span class="link_name">Users</span>
       </a>
@@ -34,14 +34,17 @@
     <li></li>
 
     <li>
-      <a ui-sref="brandadmin.brandAdminCategory">
+      <a ui-sref-active="activeNavBar" ui-sref="brandadmin.brandAdminCategory">
         <i title="food super categories" class="bx bx-category"></i>
         <span class="link_name"> Create Super Categories</span>
       </a>
     </li>
 
     <li>
-      <a ui-sref="brandadmin.setting({id:object.brand._id})">
+      <a
+        ui-sref-active="activeNavBar"
+        ui-sref="brandadmin.setting({id:object.brand._id})"
+      >
         <i class="bx bx-cog"></i>
         <span class="link_name">Setting</span>
       </a>

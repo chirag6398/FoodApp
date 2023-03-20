@@ -8,11 +8,14 @@ app.controller("superAdminController", [
   "$state",
   "$rootScope",
   function ($scope, $location, adminApi, $state, $rootScope) {
+    $scope.object = {
+      superAdmin: null,
+    };
     adminApi.getAdminPage();
 
     $rootScope.$on("passData", function (err, data) {
       console.log(data);
-      $scope.superAdmin = data;
+      $scope.object.superAdmin = data;
     });
 
     $rootScope.$on("notEligible", function (err, isEligible) {

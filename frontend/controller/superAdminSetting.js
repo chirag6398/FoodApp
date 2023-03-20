@@ -7,33 +7,41 @@ app.controller("superAdminSettingController", [
   "$stateParams",
   "$rootScope",
   function ($scope, adminApi, $stateParams, $rootScope) {
+    $scope.object = {
+      btnText: "Create",
+      admin: null,
+      btnText1: "update",
+      btnText2: "change",
+    };
+    adminApi.getAdminPage();
     $rootScope.$on("passData", function (err, data) {
-      console.log(data);
       $scope.btnText = "Create";
-      $scope.admin = data;
-      console.log($scope.admin);
-      $scope.superAdminId = data._id;
+      $scope.object.admin = data;
     });
-
-    $scope.btnText1 = "update";
-    $scope.btnText2 = "change";
 
     $scope.updateAdmin = function ($event, adminId) {
       $event.preventDefault();
-      $scope.btnText1 = "processing";
-      adminApi.updateAdmin($scope.admin, adminId, function (err, result) {
-        console.log(result);
-        if (result) $scope.btnText1 = "successfull";
-      });
+      $scope.object.btnText1 = "processing";
+      adminApi.updateAdmin(
+        $scope.object.admin,
+        $stateParams.id,
+        function (err, result) {
+          console.log(result);
+          if (result) $scope.object.btnText1 = "successfull";
+        }
+      );
     };
-    $scope.changePassword = function ($event, adminId) {
+    $scope.changePassword = function ($event) {
       $event.preventDefault();
-      $scope.btnText2 = "changing";
-      adminApi.updatePassword($scope.admin, adminId, function (err, result) {
-        console.log(result);
-        $scope.btnText2 = "changed";
-      });
+      $scope.object.btnText2 = "changing";
+      adminApi.updatePassword(
+        $scope.object.admin,
+        $stateParams.id,
+        function (err, result) {
+          console.log(result);
+          $scope.object.btnText2 = "changed";
+        }
+      );
     };
-    $scope.adminId = $stateParams.id;
   },
 ]);
