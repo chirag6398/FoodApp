@@ -12,6 +12,7 @@ app.service("outletAdminService", function (outletApi, $stateParams) {
   this.getProducts = function (categoryId, outletId, cb) {
     outletApi.getProductByCategory({ categoryId, outletId }, cb);
   };
+
   this.createOutletAgent = function (agent, outlet, cb) {
     outletApi.createOutletAgent(
       {
@@ -38,6 +39,11 @@ app.service("outletAdminService", function (outletApi, $stateParams) {
   this.saveTableView = function (id, tables, cb) {
     outletApi.saveTableView({ _id: id, tables: tables }, cb);
   };
+
+  this.addProductToOutlet = function (product, outletId, cb) {
+    outletApi.addProductToOutlet(product, outletId, cb);
+  };
+
   this.isExistTable = function (table, tables) {
     var ind = tables.findIndex(function (value) {
       return +value.number === table.number;

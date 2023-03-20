@@ -138,5 +138,62 @@ app.factory("outletApi", function ($http, $rootScope) {
       });
   };
 
+  obj.addProductToOutlet = function (product, outletId, cb) {
+    var data = {
+      ...product,
+      outletId,
+    };
+
+    $http
+      .post("http://localhost:5000/api/outlet/addProductToOutlet", data, {
+        headers: {
+          Authorization: window.localStorage.getItem("Authorization"),
+        },
+      })
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb(err, null);
+      });
+  };
+
+  obj.getOutletProducts = function (id, cb) {
+    $http
+      .get("http://localhost:5000/api/outlet/getProduct/" + id, {
+        headers: {
+          Authorization: window.localStorage.getItem("Authorization"),
+        },
+      })
+      .then(function (response) {
+        // console.log(response)
+        cb(null, response);
+      })
+      .catch(function (err) {
+        // console.log(err);
+        cb(err, null);
+      });
+  };
+
+  obj.removeOutletProduct = function (product, outletId, cb) {
+    var data = {
+      ...product,
+      outletId,
+    };
+
+    $http
+      .post("http://localhost:5000/api/outlet/removeOutletProduct", data, {
+        headers: {
+          Authorization: window.localStorage.getItem("Authorization"),
+        },
+      })
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        // console.log(err,null);
+      });
+  };
+
   return obj;
 });

@@ -7,14 +7,28 @@ app.controller("brandProductsController", [
   "outletAdminService",
   "apiHandler",
   "$rootScope",
-  function ($scope, outletApi, outletAdminService, apiHandler, $rootScope) {
+  "$timeout",
+  function (
+    $scope,
+    outletApi,
+    outletAdminService,
+    apiHandler,
+    $rootScope,
+    $timeout
+  ) {
     $scope.object = {
       brand: null,
       outlet: null,
       superCategories: null,
       subCategories: null,
     };
-    outletApi.getOutletAdminPage();
+
+    $timeout(function () {
+      if ($scope.object.brand === null) {
+        outletApi.getOutletAdminPage();
+      }
+    }, 1300);
+
     $rootScope.$on("passData", function (err, data) {
       if (data) {
         console.log(data);
@@ -58,12 +72,13 @@ app.controller("brandProductsController", [
 
     $scope.addProduct = function (product) {
       console.log(product);
-      apiHandler.addProductToOutlet(
+      outletAdminService.addProductToOutlet(
         product,
-        $scope.outletId,
+        $scope.object.outlet._id,
         function (err, result) {
-          console.log(result);
-          console.log(err);
+          if (result) {
+            alert("product added ");
+          }
         }
       );
     };

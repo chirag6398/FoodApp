@@ -6,37 +6,34 @@ app.controller("loginController", [
   "$state",
   "$location",
   "apiHandler",
-  "$rootScope",
-  function ($scope, $state, $location, apiHandler, $rootScope) {
-    $scope.disabledFlag = false;
-    $scope.buttonText = "submit";
-    $scope.isSuccess = false;
+  function ($scope, $state, $location, apiHandler) {
+    $scope.object = {
+      disabledFlag: false,
+      buttonText: "submit",
+      lgn: {},
+    };
     $scope.submitHandler = function ($event) {
       $event.preventDefault();
-      $scope.disabledFlag = true;
-      $scope.buttonText = "processing";
+      $scope.object.disabledFlag = true;
+      $scope.object.buttonText = "processing";
 
-      apiHandler.postLogin($scope.lgn, function (err, result) {
+      apiHandler.postLogin($scope.object.lgn, function (err, result) {
         if (err) {
-          $scope.buttonText = "Retry";
-          $scope.disabledFlag = false;
+          $scope.object.buttonText = "Retry";
+          $scope.object.disabledFlag = false;
         } else {
-          $scope.buttonText = "successfull";
+          $scope.object.buttonText = "successfull";
           window.localStorage.setItem(
             "Authorization",
             "Bearer " + result.token
           );
-          $scope.isSuccess = true;
           if (result.userType === "superAdmin") {
-            $rootScope.admin = result.admin;
             $state.go("superAdmin.analysis");
           } else if (result.userType === "brandAdmin") {
             $state.go("brandadmin.dashboard");
           } else if (result.userType === "outletAdmin") {
-            $rootScope.admin = result.admin;
             $state.go("outletAdmin.outletAdminDashboard");
           } else if (result.userType === "outletAgent") {
-            $rootScope.admin = result.admin;
             $location.path("outletAgent");
           }
         }

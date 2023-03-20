@@ -8,16 +8,18 @@ app.controller("outletAdminController", [
   "outletApi",
   "$rootScope",
   function ($scope, $state, $location, outletApi, $rootScope) {
+    $scope.object = {
+      outlet: null,
+      brand: null,
+    };
+
     outletApi.getOutletAdminPage();
 
     $rootScope.$on("passData", function (err, data) {
       if (data) {
         console.log(data);
-        $scope.outletName = data.data.outletData.name;
-
-        $rootScope.outletId = data.data.outletData._id;
-        $scope.brandId = data.data.brandId;
-        $scope.brandLogo = data.data.outletData.brand.logo;
+        $scope.object.outlet = data.data.outletData;
+        $scope.object.brand = data.data.outletData.brand;
       }
     });
 

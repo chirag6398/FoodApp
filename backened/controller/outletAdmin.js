@@ -94,7 +94,7 @@ module.exports = {
       });
   },
   addProductToOutlet: function (req, res) {
-    // console.log(req.body);
+    console.log(req.body);
     // console.log(req.body)
     mongoose.startSession().then(function (session) {
       session.startTransaction();
@@ -138,10 +138,10 @@ module.exports = {
             .commitTransaction()
             .then(function () {
               session.endSession();
-              return res.status(result);
+              return res.send(result);
             })
             .catch(function (err) {
-              console.log(err);
+              return res.status(404).send(err);
             });
         })
         .catch(function (error) {
@@ -151,6 +151,7 @@ module.exports = {
             .then(function () {
               console.log("transaction aborted");
               session.endSession();
+              return res.status(500).send({ error: error });
             })
             .catch(function (err) {
               console.log(err);

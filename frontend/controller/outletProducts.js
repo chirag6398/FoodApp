@@ -1,34 +1,47 @@
-
 ///<reference path="../module/module.js"/>
 ///<reference path="../factory/apicall.js"/>
 
+app.controller("outletAdminProductsController", [
+  "$scope",
+  "$http",
+  "$location",
+  "outletApi",
+  "$rootScope",
+  function ($scope, $http, $location, outletApi, $rootScope) {
+    $scope.object = {
+      outlet: null,
+      brand: null,
+      products: null,
+    };
 
+    outletApi.getOutletAdminPage();
+    $rootScope.$on("passData", function (err, data) {
+      if (data) {
+        $scope.object.outlet = data.data.outletData;
 
-app.controller("outletAdminProductsController",["$scope","$http","$location","apiHandler","$rootScope",function($scope,$http,$location,apiHandler,$rootScope){
-//    console.log($rootScope.outletId);
-   apiHandler.getOutletAdminPage(function(err,result){
-    console.log(result);
-    $scope.outletName=result.data.outletData.outletName;
-
-    $rootScope.outletId=result.data.outletData._id;
-    $scope.brandId=result.data.brandId;
-
-    apiHandler.getOutletProducts($rootScope.outletId,function(err,result){
-        if(result){
-            $scope.products=result.data;
-        }
-        console.log($scope.products)
+        $scope.object.brand = data.data.outletData.brand;
+        outletApi.getOutletProducts(
+          $scope.object.outlet._id,
+          function (err, result) {
+            if (result) {
+              $scope.object.products = result.data;
+            }
+            console.log($scope.object.products);
+          }
+        );
+      }
     });
-    
-});
 
-    
-
-    $scope.removeProduct=function(product){
-        console.log(product,$rootScope.outletId);
-        apiHandler.removeOutletProduct(product,$rootScope.outletId,function(err,result){
-            console.log(result);
-        })
-    }
-
-}])
+    $scope.removeProduct = function (product) {
+      outletApi.removeOutletProduct(
+        product,
+        $scope.object.outlet._id,
+        function (err, result) {
+          if (result) {
+            alert("product removed");
+          }
+        }
+      );
+    };
+  },
+]);
