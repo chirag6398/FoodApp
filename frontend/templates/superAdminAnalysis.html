@@ -4,29 +4,66 @@
       <div class="subBox">
         <p><i title="brands" class="bx bx-building"></i></p>
         <span> Total Brands </span>
-        <p style="font-weight: 900; opacity: 0.8">{{brandCnt}}</p>
+        <p style="font-weight: 900; opacity: 0.8">{{object.brandCnt}}</p>
       </div>
     </div>
     <div class="box">
       <div class="subBox">
         <p><i title="employees" class="fa fa-users" aria-hidden="true"></i></p>
         <span> Total Users </span>
-        <p style="font-weight: 900; opacity: 0.8">{{userCnt}}</p>
+        <p style="font-weight: 900; opacity: 0.8">{{object.userCnt}}</p>
       </div>
     </div>
     <div class="box">
       <div class="subBox">
         <p><i title="Outlets" class="bx bx-cart"></i></p>
         <span> Total Outlets </span>
-        <p style="font-weight: 900; opacity: 0.8">{{outletCnt}}</p>
+        <p style="font-weight: 900; opacity: 0.8">{{object.outletCnt}}</p>
       </div>
     </div>
     <div class="box">
       <div class="subBox">
         <p><i title="Outlets" class="bx bx-cart"></i></p>
         <span> Total Revenue for last month </span>
-        <p style="font-weight: 900; opacity: 0.8">Rs.{{totalRevenue}}</p>
+        <p style="font-weight: 900; opacity: 0.8">Rs.{{object.totalRevenue}}</p>
       </div>
+    </div>
+  </div>
+
+  <div style="display: flex; justify-content: space-evenly; flex-wrap: wrap">
+    <div
+      style="
+        width: 495px;
+        padding: 10px;
+        border: 1px solid lightgray;
+        margin: 10px;
+        border-radius: 3px;
+      "
+    >
+      <h3>
+        Top Brand from Last Month:<span style="opacity: 0.8"
+          >{{object.topBrandName}}</span
+        >
+      </h3>
+      <canvas id="myChart3" area-label="chart"></canvas>
+    </div>
+    <div
+      style="
+        min-width: 238px;
+        padding: 10px;
+        border: 1px solid lightgray;
+        margin: 10px;
+        border-radius: 3px;
+      "
+    >
+      <span style="font-weight: 900; opacity: 0.8; padding: 5px">
+        Top Brands of Last Months
+      </span>
+      <ul class="list-group">
+        <li class="list-group-item" ng-repeat="brands in object.topBrands">
+          {{brands._id}}
+        </li>
+      </ul>
     </div>
   </div>
 
@@ -49,7 +86,7 @@
           <a
             class="list-group-item list-group-item-action"
             style="min-width: 275px"
-            ng-repeat="brand in brands | filter:search"
+            ng-repeat="brand in object.brands | filter:search"
           >
             <div class="dropright analysis__brandList">
               <div
@@ -88,7 +125,7 @@
                       style="cursor: pointer"
                       ng-click="fetchOutletGraphData(outlet._id,outlet.name)"
                       class="list-group-item"
-                      ng-repeat="outlet in outlets"
+                      ng-repeat="outlet in object.outlets"
                     >
                       {{outlet.name}}
                     </li>
@@ -100,11 +137,29 @@
         </div>
       </div>
     </div>
-    <div style="width: 495px" ng-show="brandDates">
+    <div
+      style="
+        width: 425px;
+        padding: 10px;
+        border: 1px solid lightgray;
+        margin: 10px;
+        border-radius: 3px;
+      "
+      ng-show="object.brandDates.length>1"
+    >
       <h3>Brand: Last Month Revenue Analysis</h3>
       <canvas id="myChart1" area-label="chart"></canvas>
     </div>
-    <div style="width: 495px" ng-show="outletDates">
+    <div
+      style="
+        width: 425px;
+        padding: 10px;
+        border: 1px solid lightgray;
+        margin: 10px;
+        border-radius: 3px;
+      "
+      ng-show="object.outletDates.length>1"
+    >
       <h3>Outlet Last Month Revenue Analysis</h3>
       <canvas id="myChart2" area-label="chart"></canvas>
     </div>

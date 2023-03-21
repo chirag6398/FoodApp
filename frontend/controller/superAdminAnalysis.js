@@ -4,26 +4,59 @@
 app.controller("superAdminAnalysisController", [
   "$scope",
   "superAdminDashBoardApi",
-  "$location",
+  "superAdminService",
   "$rootScope",
-  function ($scope, superAdminDashBoardApi, $location, $rootScope) {
+  function ($scope, superAdminDashBoardApi, superAdminService, $rootScope) {
+    $scope.object = {
+      dates: [0],
+      topBrandName: null,
+      revenue: [0],
+      brandCnt: 0,
+      outletCnt: 0,
+      userCnt: 0,
+      brands: null,
+      totalRevenue: 0,
+      topBrands: null,
+      outlets: null,
+      brandDates: [0],
+      brandRevenue: [0],
+      outletDates: [0],
+      outletRevenue: [0],
+      chart1: null,
+      chart2: null,
+      chart3: null,
+    };
+
     superAdminDashBoardApi.getBasicData(function (err, result) {
-      if (result) {
+      if (result && result.data) {
         console.log(result);
-        $scope.brandCnt = result.data[0][0].count;
-        $scope.outletCnt = result.data[1][0].count;
-        $scope.userCnt = result.data[2][0].count;
-        $scope.brands = result.data[3];
-        $scope.totalRevenue = result.data[5][0].lastMonthRevenue;
+        $scope.object.brandCnt = result.data[0][0].count;
+        $scope.object.outletCnt = result.data[1][0].count;
+        $scope.object.userCnt = result.data[2][0].count;
+        $scope.object.brands = result.data[3];
+        $scope.object.totalRevenue = result.data[5][0].lastMonthRevenue;
+        $scope.object.topBrands = result.data[4];
+
+        result.data[6].forEach(function (value) {
+          $scope.object.dates.push(value._id);
+          $scope.object.revenue.push(value.totalRevenue);
+          $scope.object.topBrandName = value.name;
+        });
+
+        $scope.object.chart1 = superAdminService.displayGraph(
+          $scope.object.dates,
+          $scope.object.revenue,
+          $scope.object.topBrandName,
+          document.getElementById("myChart3").getContext("2d"),
+          $scope.object.chart1
+        );
       }
     });
 
     $scope.setOutletData = function (outlets) {
       console.log(outlets);
-      $scope.outlets = outlets;
+      $scope.object.outlets = outlets;
     };
-
-    var myChart1 = null;
 
     $scope.fechGraphData = function (brandId, brandName) {
       console.log(brandId);
@@ -32,77 +65,48 @@ app.controller("superAdminAnalysisController", [
         function (err, result) {
           console.log(err, result);
           if (result.data.length) {
-            $scope.brandDates = [0];
-            $scope.brandRevenue = [0];
             result.data.forEach(function (element) {
-              $scope.brandDates.push(element._id);
-              $scope.brandRevenue.push(element.totalRevenue);
+              $scope.object.brandDates.push(element._id);
+              $scope.object.brandRevenue.push(element.totalRevenue);
             });
-            console.log($scope.brandDates, $scope.brandRevenue);
-            if (myChart1) {
-              myChart1.destroy();
+
+            if ($scope.object.chart2) {
+              $scope.object.chart2.destroy();
             }
-            var ctx1 = document.getElementById("myChart1").getContext("2d");
-            myChart1 = new Chart(ctx1, {
-              type: "line",
-              data: {
-                labels: $scope.brandDates,
-                datasets: [
-                  {
-                    data: $scope.brandRevenue,
-                    label: brandName,
-                    fill: true,
-                    backgroundColor: "rgba(220,220,220,0.5)",
-                    borderColor: "rgba(220,220,220,1)",
-                    pointBackgroundColor: "rgba(220,220,220,1)",
-                    pointBorderColor: "#fff",
-                    pointHoverBackgroundColor: "#fff",
-                    pointHoverBorderColor: "rgba(220,220,220,1)",
-                  },
-                ],
-              },
-            });
+
+            $scope.object.chart2 = superAdminService.displayGraph(
+              $scope.object.brandDates,
+              $scope.object.brandRevenue,
+              brandName,
+              document.getElementById("myChart1").getContext("2d"),
+              $scope.object.chart2
+            );
           }
         }
       );
     };
-    var myChart2 = undefined;
+
     $scope.fetchOutletGraphData = function (outletId, outletName) {
       superAdminDashBoardApi.fetchOutletGraphData(
         outletId,
         function (err, result) {
-          console.log(err, result);
-          if (myChart2 !== undefined) {
-            myChart2.destroy();
-          }
           if (result.data.length) {
-            $scope.outletDates = [0];
-            $scope.outletRevenue = [0];
             result.data.forEach(function (element) {
-              $scope.outletDates.push(element._id);
-              $scope.outletRevenue.push(element.totalRevenue);
+              $scope.object.outletDates.push(element._id);
+              $scope.object.outletRevenue.push(element.totalRevenue);
             });
-            console.log($scope.outletDates, $scope.outletRevenue);
-            var ctx2 = document.getElementById("myChart2").getContext("2d");
-            myChart2 = new Chart(ctx2, {
-              type: "line",
-              data: {
-                labels: $scope.outletDates,
-                datasets: [
-                  {
-                    data: $scope.outletRevenue,
-                    label: outletName,
-                    fill: true,
-                    backgroundColor: "rgba(220,220,220,0.5)",
-                    borderColor: "rgba(220,220,220,1)",
-                    pointBackgroundColor: "rgba(220,220,220,1)",
-                    pointBorderColor: "#fff",
-                    pointHoverBackgroundColor: "#fff",
-                    pointHoverBorderColor: "rgba(220,220,220,1)",
-                  },
-                ],
-              },
-            });
+
+            if ($scope.object.chart3) {
+              $scope.object.chart3.destroy();
+            }
+
+            $scope.object.chart3 = superAdminService.displayGraph(
+              $scope.object.outletDates,
+              $scope.object.outletRevenue,
+              outletName,
+              document.getElementById("myChart2").getContext("2d"),
+              $scope.object.chart3
+            );
           }
         }
       );

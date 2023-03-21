@@ -37,7 +37,7 @@ app.controller("superAdminBrandDataController", [
 
     $scope.updateName = function () {
       superAdminService.updateName(
-        $scope.object._id,
+        $scope.object.brand._id,
         $scope.object.data.name,
         function (err, result) {
           if (result) {
@@ -48,8 +48,9 @@ app.controller("superAdminBrandDataController", [
     };
 
     $scope.updateLocation = function () {
-      adminApi.updateLocation(
-        { location: $scope.data.location, _id: brandId },
+      superAdminService.updateLocation(
+        $scope.data.location,
+        $scope.object.brand._id,
         function (err, result) {
           if (result) {
             console.log(result);
@@ -60,8 +61,9 @@ app.controller("superAdminBrandDataController", [
       );
     };
     $scope.updateContactInfo = function () {
-      adminApi.updateContactInfo(
-        { contactInfo: $scope.data.contactInfo, _id: brandId },
+      superAdminService.updateContactInfo(
+        $scope.data.contactInfo,
+        $scope.object.brand._id,
         function (err, result) {
           if (result) {
             console.log(result);

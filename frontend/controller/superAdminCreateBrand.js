@@ -9,10 +9,8 @@ function getBrandIndxById(brands, id) {
 app.controller("superAdminCreateBrandController", [
   "$scope",
   "adminApi",
-  "$rootScope",
-  "$timeout",
-  function ($scope, adminApi, $rootScope, $timeout) {
-    var timeout = null;
+  "superAdminService",
+  function ($scope, adminApi, superAdminService) {
     $scope.object = {
       brands: [],
       searchBrand: "",
@@ -23,92 +21,76 @@ app.controller("superAdminCreateBrandController", [
       pages: null,
       searchTextResult: [],
       selectedBrand: null,
+      btnText: "Create",
+      btnText1: "Add Admin",
+      admin: {},
+      brand: null,
     };
 
     $scope.searchTextHandler = function () {
-      if (timeout) {
-        $timeout.cancel(timeout);
-      }
-      timeout = $timeout(function () {
-        adminApi.searchBrandBySearchText(
-          $scope.object.searchBrand,
-          function (err, result) {
-            console.log(err, result);
-            if (result) {
-              $scope.object.searchTextResult = result.data;
-            } else {
-              $scope.object.searchTextResult = [];
-            }
+      superAdminService.searchBrandDebouncing(
+        $scope.object.searchBrand,
+        function (err, result) {
+          console.log(err, result);
+          if (result) {
+            $scope.object.searchTextResult = result.data;
+          } else {
+            $scope.object.searchTextResult = [];
           }
-        );
-      }, 800);
+        }
+      );
     };
     $scope.setSearchResult = function (res) {
       $scope.object.brands = [res];
       $scope.object.selectedBrand = res;
       $scope.object.searchTextResult = [];
-      // $scope.object.searchBrand = "";
     };
 
-    $rootScope.$on("passData", function (err, data) {
-      // console.log(data);
-      if (data) {
-        $scope.btnText = "Create";
-        $scope.superAdminId = data._id;
-        // $scope.isAccess = true;
-      } else {
-      }
-    });
-
-    $scope.btnText = "Add Admin";
-
-    adminApi.getBrands(
-      { limit: $scope.object.limit, page: $scope.object.page },
+    superAdminService.getBrands(
+      $scope.object.limit,
+      $scope.object.page,
       function (err, result) {
         if (result) {
-          console.log(result);
           $scope.object.brands = result.data;
           $scope.object.totalBrands = result.count;
-          $scope.object.totalPage = Math.ceil(
-            $scope.object.totalBrands / $scope.object.limit
+
+          $scope.object.pages = superAdminService.getPages(
+            $scope.object.totalBrands,
+            $scope.object.limit
           );
-          $scope.object.pages = new Array($scope.object.totalPage).fill(0);
-          // console.log($scope.object.totalPage);
         }
       }
     );
 
     $scope.getBrandHandler = function (page, limit) {
-      adminApi.getBrands({ limit: limit, page: page }, function (err, result) {
+      superAdminService.getBrands(limit, page, function (err, result) {
         if (result) {
-          console.log(result);
           $scope.object.brands = result.data;
           $scope.object.page = page;
         }
       });
     };
 
-    $scope.admin = {};
     $scope.setBasicBrandData = function (brand) {
-      $scope.brandId = brand._id;
-      $scope.brandName = brand.name;
+      $scope.object.brand = brand;
     };
-    $scope.createBrandAdmin = function ($event, brandId, brandName) {
+
+    $scope.createBrandAdmin = function ($event) {
       $event.preventDefault();
-      $scope.btnText = "processing";
+      $scope.object.btnText1 = "processing";
 
       adminApi.postAddBrandAdmin(
-        $scope.admin,
-        $scope.brandId,
-        $scope.brandName,
+        $scope.object.admin,
+        $scope.object.brand._id,
+        $scope.object.brand.name,
         function (err, result) {
           if (result) {
             console.log(result);
-            $scope.btnText = "successful";
-            $scope.admin = {};
+            $scope.object.btnText1 = "successful";
+            $scope.object.admin = {};
             $("#exampleModal").modal("hide");
           } else {
-            $scope.btnText = "failed try later";
+            $scope.object.btnText1 = "failed try later";
 
             console.log(err);
           }
@@ -117,12 +99,9 @@ app.controller("superAdminCreateBrandController", [
     };
 
     $scope.deactivateBrand = function (brandId) {
-      console.log(brandId);
       adminApi.deactivateBrand(brandId, function (err, result) {
-        console.log(err, result);
         if (result) {
           var indx = getBrandIndxById($scope.object.brands, brandId);
-
           $scope.object.brands[indx].isActive = false;
           alert("brand deactivated");
         }
@@ -130,12 +109,9 @@ app.controller("superAdminCreateBrandController", [
     };
 
     $scope.activateBrand = function (brandId) {
-      console.log(brandId);
       adminApi.activateBrand(brandId, function (err, result) {
-        console.log(err, result);
         if (result) {
           var indx = getBrandIndxById($scope.object.brands, brandId);
-
           $scope.object.brands[indx].isActive = true;
           alert("brand activated");
         }
@@ -145,9 +121,7 @@ app.controller("superAdminCreateBrandController", [
     $scope.deleteBrand = function (brandId) {
       adminApi.deleteBrand(brandId, function (err, result) {
         if (result) {
-          console.log(result);
           var indx = getBrandIndxById($scope.object.brands, brandId);
-
           $scope.object.brands[indx].isDeleted = true;
           alert("brand deleted successfully");
         } else {
@@ -158,31 +132,22 @@ app.controller("superAdminCreateBrandController", [
 
     $scope.createBrand = function ($event) {
       $event.preventDefault();
-      $scope.btnText = "creating...";
+      $scope.object.btnText = "creating...";
+      console.log($scope.object.brand);
+      superAdminService.createBrand(
+        $scope.object.brand,
+        function (err, result) {
+          console.log("result", result);
 
-      var brandData = new FormData();
-
-      brandData.append("name", $scope.brand.name);
-      brandData.append("file", $scope.brand.logo);
-      brandData.append("number", $scope.brand.number);
-      brandData.append("email", $scope.brand.email);
-      brandData.append("address", $scope.brand.address);
-      brandData.append("city", $scope.brand.city);
-      brandData.append("description", $scope.brand.description);
-      brandData.append("pinCode", $scope.brand.pinCode);
-
-      adminApi.createBrand(brandData, function (err, result) {
-        console.log("result", result);
-
-        console.log($scope.brands);
-        if (result) {
-          $scope.btnText = "created";
-          $scope.object.brands.push(result.data);
-          $("#createBrand").modal("hide");
-        } else {
-          $scope.btnText = "failed";
+          if (result) {
+            $scope.btnText = "created";
+            $scope.object.brands.unshift(result.data);
+            $("#createBrand").modal("hide");
+          } else {
+            $scope.btnText = "failed";
+          }
         }
-      });
+      );
     };
   },
 ]);
