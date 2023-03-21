@@ -7,13 +7,14 @@ app.controller("updatebrandadminController", [
   "adminApi",
   "$stateParams",
   function ($scope, $location, adminApi, $stateParams) {
-    console.log($stateParams.id); //user id
+    $scope.object = {
+      admin: null,
+      btnText: "update",
+    };
 
     adminApi.getUserById($stateParams.id, function (err, result) {
-      console.log(result);
-      $scope.btnText = "update";
       if (result) {
-        $scope.admin = {
+        $scope.object.admin = {
           userName: result.data.userName,
           firstName: result.data.firstName,
           lastName: result.data.lastName,
@@ -27,14 +28,14 @@ app.controller("updatebrandadminController", [
 
     $scope.updateBrandAdmin = function ($event) {
       $event.preventDefault();
-      $scope.btnText = "processing";
-      console.log($scope.admin);
+      $scope.object.btnText = "processing";
+      console.log($scope.object.admin);
       adminApi.updateAdmin(
-        $scope.admin,
+        $scope.object.admin,
         $stateParams.id,
         function (err, result) {
           if (result) {
-            $scope.btnText = "updated";
+            $scope.object.btnText = "updated";
             alert("update successfully");
           }
         }

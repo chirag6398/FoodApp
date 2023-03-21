@@ -36,23 +36,37 @@ module.exports = {
       });
   },
   getUsers: function (req, res) {
-    var limit = req.params.limit || 5;
-    var pageNo = req.params.page || 1;
-    var skipNo = (pageNo - 1) * limit;
+    var filter = {
+      isActive: true,
+      isDeleted: false,
+      userType: { $ne: "superAdmin" },
+    };
+    // console.log(filter);
+
+    var limit = req.query.limit;
+    var pageNo = req.query.pageNo;
+    var skip = (pageNo - 1) * limit;
+
+    if (req.query.email) {
+      filter["email"] = req.query.email;
+    }
+    if (req.query.brandName) {
+      filter["brand.name"] = req.query.brandName;
+    }
+    if (req.query.userType) {
+      filter["userType"] = req.query.userType;
+    }
+    if (req.query.number) {
+      filter["number"] = +req.query.number;
+    }
+
     return employeeModel
-      .find(
-        {
-          userType: { $ne: "superAdmin" },
-          isActive: true,
-          isDeleted: false,
-        },
-        { password: 0, createdAt: 0, updatedAt: 0 }
-      )
-      .skip(skipNo)
+      .find(filter, { password: 0, createdAt: 0, updatedAt: 0 })
+      .skip(skip)
       .limit(limit)
       .sort({ "brand.name": 1 })
       .then(function (result) {
-        employeeModel.countDocuments(function (err, count) {
+        employeeModel.countDocuments(filter, function (err, count) {
           return res.send({ data: result, count: count });
         });
       })
@@ -126,4 +140,5 @@ module.exports = {
         return res.status(404).send(err);
       });
   },
+  // applyFilterOnUsers: function (req, res) {},
 };

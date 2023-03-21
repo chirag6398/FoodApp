@@ -21,15 +21,10 @@ module.exports = {
           });
           admin
             .save()
-            .then(function (result) {
-              // console.log(result);
-            })
+            .then(function (result) {})
             .catch(function (err) {
               console.log(err);
             });
-        } else {
-          // console.log(result)
-          // console.log("admin is already created");
         }
       })
       .catch(function (err) {

@@ -35,6 +35,8 @@ app.controller("outletAgentController", [
       isSelected: 0,
       payableAmount: 0,
       allotedTables: null,
+      isLoading: true,
+      cartProducts: [],
     };
 
     outletAgentFactory.getOutletAgentPage(function (err, result) {
@@ -53,6 +55,7 @@ app.controller("outletAgentController", [
           $scope.object.productsData.categoryProducts[
             $scope.object.productsData.categories[0]
           ];
+        $scope.object.isLoading = false;
       } else {
         $location.path("login");
       }
@@ -132,6 +135,16 @@ app.controller("outletAgentController", [
       $scope.object.cart = outletAgentService.addToCart(
         $scope.object.cart,
         product
+      );
+      $scope.object.cartProducts = outletAgentService.cartsProducts(
+        $scope.object.cart
+      );
+
+      outletAgentService.getRecommendedProduct(
+        $scope.object.cartProducts,
+        function (err, result) {
+          console.log(err, result);
+        }
       );
 
       $scope.object.amount = outletAgentService.totalPrice($scope.object.cart);

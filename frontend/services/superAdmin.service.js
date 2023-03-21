@@ -21,8 +21,8 @@ app.service("superAdminService", function (adminApi, $timeout) {
     }, 800);
   };
 
-  this.getUsers = function (limit, page, cb) {
-    adminApi.getUsers({ limit: limit, page: page }, cb);
+  this.getUsers = function (filter, limit, page, cb) {
+    adminApi.getUsers(filter, limit, page, cb);
   };
 
   this.getPages = function (totalCount, limit) {
@@ -92,4 +92,8 @@ app.service("superAdminService", function (adminApi, $timeout) {
 
     adminApi.createBrand(brandData, cb);
   };
+
+  // this.applyFilterOnUsers = function (filter, limit, pageNo, cb) {
+  //   adminApi.applyFilterOnUsers(filter, limit, pageNo, cb);
+  // };
 });

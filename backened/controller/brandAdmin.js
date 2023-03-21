@@ -40,8 +40,6 @@ module.exports = {
       "brand._id": req.body.brandId,
       "brand.name": req.body.brandName,
       "brand.logo": req.body.brandLogo,
-      // taxes: [{ name: "GST", percent: 2.5 }],
-      // table: [{ number: 1, capacity: 4 }],
     });
 
     outlet
@@ -94,7 +92,6 @@ module.exports = {
         userType: "outletAdmin",
         "outlet._id": req.body.outletId,
         "outlet.name": req.body.outletName,
-        // "outlet.location": req.body.location,
         "brand._id": req.body.brandId,
         "brand.name": req.body.brandName,
         "outlet.type": req.body.outletType,

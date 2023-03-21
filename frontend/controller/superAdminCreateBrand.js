@@ -25,6 +25,7 @@ app.controller("superAdminCreateBrandController", [
       btnText1: "Add Admin",
       admin: {},
       brand: null,
+      isLoading: true,
     };
 
     $scope.searchTextHandler = function () {
@@ -32,6 +33,7 @@ app.controller("superAdminCreateBrandController", [
         $scope.object.searchBrand,
         function (err, result) {
           console.log(err, result);
+
           if (result) {
             $scope.object.searchTextResult = result.data;
           } else {
@@ -50,6 +52,7 @@ app.controller("superAdminCreateBrandController", [
       $scope.object.limit,
       $scope.object.page,
       function (err, result) {
+        $scope.object.isLoading = false;
         if (result) {
           $scope.object.brands = result.data;
           $scope.object.totalBrands = result.count;

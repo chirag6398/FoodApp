@@ -10,9 +10,11 @@ app.controller("superAdminBrandDataController", [
     $scope.object = {
       brand: null,
       data: null,
+      isLoading: true,
     };
     adminApi.getBrand($stateParams.id, function (err, result) {
       if (result) {
+        $scope.object.isLoading = false;
         $scope.object.brand = result;
         $scope.object.data = $scope.object.brand;
       } else {

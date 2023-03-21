@@ -292,13 +292,21 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(err, null);
       });
   };
-  obj.getUsers = function (data, cb) {
+  obj.getUsers = function (filter, limit, pageNo, cb) {
     $http
       .get(
-        "http://localhost:5000/api/employee/getUsers/" +
-          data.limit +
-          "/" +
-          data.page
+        "http://localhost:5000/api/employee/getUsers?brandName=" +
+          filter.brandName +
+          "&userType=" +
+          filter.userType +
+          "&email=" +
+          filter.email +
+          "&number=" +
+          filter.number +
+          "&limit=" +
+          limit +
+          "&pageNo=" +
+          pageNo
       )
       .then(function (response) {
         cb(null, response);
@@ -337,5 +345,31 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(err, null);
       });
   };
+
+  // obj.applyFilterOnUsers = function (filter, limit, pageNo, cb) {
+  //   console.log(filter);
+
+  //   $http
+  //     .get(
+  //       "http://localhost:5000/api/employee/applyFilterOnUsers?brandName=" +
+  //         filter.brandName +
+  //         "&userType=" +
+  //         filter.userType +
+  //         "&email=" +
+  //         filter.email +
+  //         "&number=" +
+  //         filter.number +
+  //         "&limit=" +
+  //         limit +
+  //         "&pageNo=" +
+  //         pageNo
+  //     )
+  //     .then(function (response) {
+  //       cb(null, response);
+  //     })
+  //     .catch(function (err) {
+  //       cb(err, null);
+  //     });
+  // };
   return obj;
 });

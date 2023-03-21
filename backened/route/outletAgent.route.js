@@ -15,6 +15,12 @@ outletAgentRoute.get(
   passport.authenticate("jwt", { session: false }),
   outletAgentController.getProductByName
 );
+
+outletAgentRoute.get(
+  "/api/outletAgent/getRecommendedProduct",
+  passport.authenticate("jwt", { session: false }),
+  outletAgentController.getRecommendedProduct
+);
 // outletAgentRoute.get("/api/outletAgent/getCategory/:id",passport.authenticate('jwt',{session: false }),outletAgentController.getCategory);
 
 // outletAgentRoute.post("/api/outlet/brandProducts",passport.authenticate('jwt',{session: false }),outletAgentController.brandProducts);

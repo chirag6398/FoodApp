@@ -8,15 +8,15 @@ app.controller("superAdminSettingController", [
   "$rootScope",
   function ($scope, adminApi, $stateParams, $rootScope) {
     $scope.object = {
-      btnText: "Create",
       admin: null,
       btnText1: "update",
       btnText2: "change",
+      isLoading: true,
     };
     adminApi.getAdminPage();
     $rootScope.$on("passData", function (err, data) {
-      $scope.btnText = "Create";
       $scope.object.admin = data;
+      $scope.object.isLoading = false;
     });
 
     $scope.updateAdmin = function ($event, adminId) {

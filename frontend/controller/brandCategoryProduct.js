@@ -53,11 +53,12 @@ app.controller("categoryProductController", [
 
     $scope.createProduct = function ($event) {
       $event.preventDefault();
-
+      $scope.object.btnText = "adding";
       brandAdminService.addProduct(
         $scope.object.product,
         function (err, result) {
           if (result) {
+            $scope.object.btnText = "added";
             console.log(result.data);
             $scope.object.products.push(result.data);
             $("#exampleModal").modal("hide");

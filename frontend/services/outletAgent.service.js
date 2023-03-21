@@ -188,4 +188,16 @@ app.service("outletAgentService", function (outletAgentFactory) {
       return value._id === id;
     });
   };
+
+  this.cartsProducts = function (products) {
+    var productsName = [];
+    products.forEach(function (value) {
+      productsName.push(value.name);
+    });
+    return productsName;
+  };
+
+  this.getRecommendedProduct = function (products, cb) {
+    outletAgentFactory.getRecommendedProduct(products, cb);
+  };
 });

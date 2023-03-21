@@ -1,6 +1,5 @@
 var brandModel = require("../model/brand.model");
 var employeeModel = require("../model/employee.model");
-// var validation = require("../service/validation.service");
 var async = require("async");
 var outletModel = require("../model/outlet.model");
 var categoryModel = require("../model/category.model");
@@ -8,6 +7,7 @@ var awsService = require("../service/awsS3.service");
 var superCategory = require("../model/superCategory.model");
 var mongoose = require("mongoose");
 var productModel = require("../model/product.model");
+// var validateBrand = require("../service/validation.service").validateBrand;
 
 module.exports = {
   getBrands: function (req, res) {
@@ -48,8 +48,6 @@ module.exports = {
   },
 
   createBrand: function (req, res) {
-    console.log(req.body);
-    console.log(req.file);
     if (req.file) {
       return awsService
         .uploadToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
@@ -147,23 +145,6 @@ module.exports = {
           mongoose.startSession().then(function (session) {
             session.startTransaction();
 
-            // var data1 = brandModel.findByIdAndUpdate(
-            //   { _id: req.body._id },
-            //   {
-            //     logo: image,
-            //   },
-            //   {
-            //     session,
-            //   }
-            // );
-
-            // var data2 = outletModel.updateMany(
-            //   { "brand._id": req.body._id },
-            //   {
-            //     "brand.logo": image,
-            //   }
-            // );
-
             async.parallel(
               [
                 function (callback) {
@@ -227,32 +208,6 @@ module.exports = {
                 }
               }
             );
-            // Promise.all([data1, data2])
-            //   .then(function (result) {
-            //     console.log("parallel processing", result);
-            //     session
-            //       .commitTransaction()
-            //       .then(function () {
-            //         session.endSession();
-            //         return res.status(result);
-            //       })
-            //       .catch(function (err) {
-            //         console.log(err);
-            //       });
-            //   })
-            //   .catch(function (error) {
-            //     console.log("error in parallel processing", error);
-            //     session
-            //       .abortTransaction()
-            //       .then(function () {
-            //         console.log("transaction aborted");
-            //         session.endSession();
-            //       })
-            //       .catch(function (err) {
-            //         console.log(err);
-            //         return res.status(500).send({ error: error });
-            //       });
-            //   });
           });
         })
         .catch(function (err) {

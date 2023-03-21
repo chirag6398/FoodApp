@@ -15,6 +15,12 @@ app.controller("superAdminUsersController", [
       totalPage: 1,
       searchUser: "",
       searchTextResult: [],
+      filter: {
+        userType: "",
+        email: "",
+        number: "",
+        brandName: "",
+      },
     };
 
     $scope.searchTextHandler = function () {
@@ -31,6 +37,7 @@ app.controller("superAdminUsersController", [
     };
 
     superAdminService.getUsers(
+      $scope.object.filter,
       $scope.object.limit,
       $scope.object.page,
       function (err, result) {
@@ -47,20 +54,39 @@ app.controller("superAdminUsersController", [
     );
 
     $scope.getUserHandler = function (page, limit) {
-      superAdminService.getUsers(limit, page, function (err, result) {
-        if (result) {
-          console.log(result);
-          $scope.object.users = result.data.data;
-          $scope.object.totalCount = result.data.count;
-          $scope.object.page = page;
-          $scope.object.pages = superAdminService.getPages(
-            $scope.object.totalCount,
-            $scope.object.limit
-          );
-        } else {
-          alert("something is wrong");
+      superAdminService.getUsers(
+        $scope.object.filter,
+        limit,
+        page,
+        function (err, result) {
+          if (result) {
+            console.log(result);
+            $scope.object.users = result.data.data;
+            $scope.object.totalCount = result.data.count;
+            $scope.object.page = page;
+            $scope.object.pages = superAdminService.getPages(
+              $scope.object.totalCount,
+              $scope.object.limit
+            );
+          } else {
+            alert("something is wrong");
+          }
         }
-      });
+      );
     };
+
+    // $scope.applyFilter = function () {
+    //   console.log($scope.object.filter);
+
+    //   superAdminService.applyFilterOnUsers(
+    //     $scope.object.filter,
+    //     $scope.object.limit,
+    //     1,
+    //     function (err, result) {
+    //       console.log(err, result);
+    //       $scope.object.users = result.data.data;
+    //     }
+    //   );
+    // };
   },
 ]);

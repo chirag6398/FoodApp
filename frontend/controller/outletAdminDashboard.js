@@ -25,6 +25,7 @@ app.controller("outletAdminDashboardController", [
       outletDates: [0],
       outletRevenue: [0],
       outlet: null,
+      isLoading: true,
     };
 
     $timeout(function () {
@@ -36,10 +37,12 @@ app.controller("outletAdminDashboardController", [
     $rootScope.$on("passData", function (err, data) {
       if (data) {
         $scope.object.outlet = data.data.outletData;
+
         outletAdminDashBoardApi.getBasicData(
           $scope.object.outlet._id,
           function (err, result) {
             console.log(result);
+            $scope.object.isLoading = false;
             $scope.object.totalProduct = result.data[0][0].productCount;
             $scope.object.totalEmployees = result.data[1][0].employeeCount;
             $scope.object.totalRevenue = result.data[2][0].totalRevenue;

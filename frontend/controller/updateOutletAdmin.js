@@ -7,14 +7,15 @@ app.controller("updateOutletAdminController", [
   "apiHandler",
   "$stateParams",
   function ($scope, $location, apiHandler, $stateParams) {
-    console.log($stateParams.id); //user id
+    $scope.object = {
+      btnText: "update",
+      admin: null,
+    };
+    console.log($stateParams.id);
 
     apiHandler.getUserById($stateParams.id, function (response) {
-      console.log(response);
-
-      $scope.btnText = "update";
       if (response.status == 200) {
-        $scope.admin = {
+        $scope.object.admin = {
           userName: response.data.userName,
           firstName: response.data.firstName,
           lastName: response.data.lastName,
@@ -28,12 +29,15 @@ app.controller("updateOutletAdminController", [
 
     $scope.updateAdmin = function ($event) {
       $event.preventDefault();
-      console.log($scope.admin);
-      apiHandler.updateAdmin($scope.admin, $stateParams.id, function (result) {
-        if (result.status == 200) {
-          alert("update successfully");
+      apiHandler.updateAdmin(
+        $scope.object.admin,
+        $stateParams.id,
+        function (result) {
+          if (result.status == 200) {
+            alert("update successfully");
+          }
         }
-      });
+      );
     };
   },
 ]);

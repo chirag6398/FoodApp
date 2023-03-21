@@ -199,12 +199,10 @@
         </div>
       </div>
     </div>
-    <!-- <div class="data__description">
-            <div>
-                <span>
-                    {{object.brand.description}}
-                </span>
-            </div>
-        </div> -->
   </div>
 </div>
+<div
+  ng-if="object.isLoading"
+  class="loader"
+  style="width: 100%; height: 100vh; position: absolute; opacity: 0.5"
+></div>

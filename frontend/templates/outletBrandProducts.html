@@ -45,7 +45,7 @@
   <div ng-if="object.subCategories" style="padding: 10px">
     <h4>Sub Categories</h4>
   </div>
-  <div style="display: flex; flex-wrap: wrap; gap: 15px">
+  <div id="subCategory" style="display: flex; flex-wrap: wrap; gap: 15px">
     <div class="spr__brandCard" ng-repeat="subCategory in object.subCategories">
       <div
         style="
@@ -81,7 +81,7 @@
     </div>
   </div>
 
-  <div ng-if="products" class="products">
+  <div id="products" ng-if="object.products" class="products">
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
@@ -97,7 +97,7 @@
         <tr
           ng-if="product"
           style="cursor: pointer"
-          ng-repeat="product in products"
+          ng-repeat="product in object.products"
         >
           <th scope="row">{{$index}}</th>
           <td>
@@ -124,3 +124,8 @@
     </table>
   </div>
 </div>
+<div
+  ng-if="object.isLoading"
+  class="loader"
+  style="width: 100%; height: 100vh; position: absolute; opacity: 0.5"
+></div>

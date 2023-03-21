@@ -10,11 +10,19 @@
         placeholder="Search user by user name"
       />
     </div>
-    <div ng-if="object.searchTextResult.length!==0">
+    <div
+      style="
+        position: absolute;
+        max-height: 325px;
+        overflow-y: scroll;
+        width: 400px;
+        box-shadow: #fffe 0px 0px 0px 1px;
+      "
+      ng-if="object.searchTextResult.length!==0"
+    >
       <div class="list-group">
-        <!-- {{object.searchTextResult}} -->
         <a
-          style="cursor: pointer"
+          style="cursor: pointer; background: #ededed"
           ng-repeat="res in object.searchTextResult"
           class="list-group-item list-group-item-action"
           ng-click="setSearchResult(res)"
@@ -28,6 +36,53 @@
       </div>
     </div>
   </div>
+
+  <div
+    style="
+      display: flex;
+      justify-content: flex-start;
+      padding: 10px;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    "
+  >
+    <div>
+      <input
+        class="form-control"
+        type="text"
+        ng-model="object.filter.brandName"
+        placeholder="brand name"
+      />
+    </div>
+    <div>
+      <select class="form-control" ng-model="object.filter.userType">
+        <option value="brandAdmin">Brand Admin</option>
+        <option value="outletAdmin">Outlet Admin</option>
+        <option value="outletAgent">Outlet Agent</option>
+      </select>
+    </div>
+    <div>
+      <input
+        class="form-control"
+        type="number"
+        placeholder="enter number"
+        ng-model="object.filter.number"
+      />
+    </div>
+    <div>
+      <input
+        class="form-control"
+        type="email"
+        placeholder="enter email"
+        ng-model="object.filter.email"
+      />
+    </div>
+    <div style="cursor: pointer" ng-click="getUserHandler(1,object.limit)">
+      <i class="bx bx-filter-alt"></i>
+    </div>
+  </div>
+
   <div>
     <table class="table">
       <thead class="thead-dark">

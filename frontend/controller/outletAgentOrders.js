@@ -20,6 +20,7 @@ app.controller("outletAgentOrdersController", [
       amount: 0,
       allotedTable: null,
       swapBtn: "Apply swaps",
+      isLoading: true,
     };
 
     outletAgentFactory.getOutletAgentPage(function (err, result) {
@@ -32,7 +33,7 @@ app.controller("outletAgentOrdersController", [
         function (err, result) {
           if (result) {
             $scope.object.orders = result.data;
-
+            $scope.object.isLoading = false;
             $scope.object.orders.forEach(function (value) {
               value.totalQuantity = value.items.reduce(function (accum, value) {
                 return accum + value.quantity;

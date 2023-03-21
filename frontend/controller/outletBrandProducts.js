@@ -21,6 +21,8 @@ app.controller("brandProductsController", [
       outlet: null,
       superCategories: null,
       subCategories: null,
+      isLoading: true,
+      products: null,
     };
 
     $timeout(function () {
@@ -37,6 +39,7 @@ app.controller("brandProductsController", [
         outletAdminService.getSuperCategories(
           $scope.object.brand._id,
           function (err, result) {
+            $scope.object.isLoading = false;
             console.log(err, result);
             $scope.object.superCategories = result.data;
           }
@@ -45,9 +48,12 @@ app.controller("brandProductsController", [
     });
 
     $scope.getSubCategory = function (id) {
+      $scope.object.isLoading = true;
       outletAdminService.getSubCategory(id, function (err, result) {
         console.log(err, result);
         if (result) {
+          $scope.object.isLoading = false;
+          outletAdminService.scrollToSubCategory();
           $scope.object.subCategories = result.data;
           if ($scope.object.subCategories.length == 0) {
             alert("no sub category");
@@ -57,12 +63,15 @@ app.controller("brandProductsController", [
     };
 
     $scope.getProducts = function (id) {
+      $scope.object.isLoading = true;
       outletAdminService.getProducts(
         id,
         $scope.object.outlet._id,
         function (err, result) {
+          $scope.object.isLoading = false;
+          outletAdminService.scrollToProducts();
           if (result.data.length) {
-            $scope.products = result.data;
+            $scope.object.products = result.data;
           } else if (result) {
             alert("all products of this category already added");
           }
@@ -71,12 +80,18 @@ app.controller("brandProductsController", [
     };
 
     $scope.addProduct = function (product) {
-      console.log(product);
+      $scope.object.isLoading = true;
       outletAdminService.addProductToOutlet(
         product,
         $scope.object.outlet._id,
         function (err, result) {
+          $scope.object.isLoading = false;
           if (result) {
+            var indx = outletAdminService.getIndx(
+              $scope.object.products,
+              product
+            );
+            $scope.object.products.splice(indx, 1);
             alert("product added ");
           }
         }

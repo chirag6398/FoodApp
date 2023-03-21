@@ -25,11 +25,13 @@ app.controller("superAdminAnalysisController", [
       chart1: null,
       chart2: null,
       chart3: null,
+      isLoading: true,
     };
 
     superAdminDashBoardApi.getBasicData(function (err, result) {
       if (result && result.data) {
         console.log(result);
+        $scope.object.isLoading = false;
         $scope.object.brandCnt = result.data[0][0].count;
         $scope.object.outletCnt = result.data[1][0].count;
         $scope.object.userCnt = result.data[2][0].count;

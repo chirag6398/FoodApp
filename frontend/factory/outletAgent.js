@@ -160,5 +160,24 @@ app.factory("outletAgentFactory", function ($http, $rootScope, $timeout) {
     }, 800);
   };
 
+  obj.getRecommendedProduct = function (products, cb) {
+    $http
+      .get(
+        "http://localhost:5000/api/outletAgent/getRecommendedProduct?products=" +
+          products,
+        {
+          headers: {
+            Authorization: window.localStorage.getItem("Authorization"),
+          },
+        }
+      )
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb(err, null);
+      });
+  };
+
   return obj;
 });

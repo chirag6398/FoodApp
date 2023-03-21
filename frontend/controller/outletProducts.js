@@ -12,6 +12,7 @@ app.controller("outletAdminProductsController", [
       outlet: null,
       brand: null,
       products: null,
+      isLoading: true,
     };
 
     outletApi.getOutletAdminPage();
@@ -24,6 +25,7 @@ app.controller("outletAdminProductsController", [
           $scope.object.outlet._id,
           function (err, result) {
             if (result) {
+              $scope.object.isLoading = false;
               $scope.object.products = result.data;
             }
             console.log($scope.object.products);
