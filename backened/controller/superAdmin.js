@@ -21,6 +21,7 @@ module.exports = {
     if (req.user.userType === "superAdmin") {
       outletModel
         .find({})
+        .sort({ name: 1 })
         .then(function (result) {
           return res.status(200).send({ data: result, status: 200 });
         })
@@ -104,6 +105,7 @@ module.exports = {
   getOutlets: function (req, res) {
     outletModel
       .find({})
+      .sort({ "brand.name": 1 })
       .then(function (result) {
         return res.send(result);
       })

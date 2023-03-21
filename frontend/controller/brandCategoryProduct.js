@@ -25,6 +25,7 @@ app.controller("categoryProductController", [
 
     brandAdminService.getProductsInBrand(function (err, result) {
       if (result) {
+        console.log(result);
         $scope.object.products = result.data;
       }
     });
@@ -59,7 +60,7 @@ app.controller("categoryProductController", [
           if (result) {
             console.log(result.data);
             $scope.object.products.push(result.data);
-            $("exampleModal").modal("hide");
+            $("#exampleModal").modal("hide");
           } else {
             alert("product not created");
             console.log(err);

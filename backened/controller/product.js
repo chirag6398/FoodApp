@@ -26,10 +26,10 @@ module.exports = {
               var product = new productModel({
                 name: req.body.name,
                 price: req.body.price,
-                "category.name": req.body.categoryName,
+                "superCategory.category.name": req.body.categoryName,
                 brand: result.brand,
                 superCategory: result.superCategory,
-                "category._id": req.body.categoryId,
+                "superCategory.category._id": req.body.categoryId,
                 description: req.body.description,
                 img: image,
               });
@@ -62,7 +62,7 @@ module.exports = {
       productModel
         .find(
           {
-            "category._id": req.body.categoryId,
+            "superCategory.category._id": req.body.categoryId,
           },
           {
             createdAt: 0,

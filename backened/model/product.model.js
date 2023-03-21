@@ -17,18 +17,7 @@ var ProductSchema = new mongoose.Schema(
       required: true,
     },
     //used to find products of perticular category under same brand
-    category: {
-      _id: {
-        type: mongoose.Schema.Types.ObjectId,
 
-        required: true,
-      },
-      name: {
-        type: String,
-        required: true,
-        lowercase: true,
-      },
-    },
     superCategory: {
       _id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -39,6 +28,17 @@ var ProductSchema = new mongoose.Schema(
         type: String,
         required: true,
         lowercase: true,
+      },
+      category: {
+        _id: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+        },
+        name: {
+          type: String,
+          required: true,
+          lowercase: true,
+        },
       },
     },
     brand: {

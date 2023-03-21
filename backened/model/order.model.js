@@ -33,16 +33,16 @@ var OrderSchema = new mongoose.Schema(
             required: true,
             lowercase: true,
           },
-        },
-        category: {
-          _id: {
-            type: mongoose.Schema.Types.ObjectId,
-            required: true,
-          },
-          name: {
-            type: String,
-            required: true,
-            lowercase: true,
+          category: {
+            _id: {
+              type: mongoose.Schema.Types.ObjectId,
+              required: true,
+            },
+            name: {
+              type: String,
+              required: true,
+              lowercase: true,
+            },
           },
         },
         name: {

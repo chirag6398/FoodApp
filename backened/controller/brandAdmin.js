@@ -357,13 +357,20 @@ module.exports = {
           );
 
           var data2 = productModel.updateMany(
-            { "category._id": req.body._id },
-            { "category.name": req.body.name }
+            { "superCategory.category._id": req.body._id },
+            { "superCategory.category.name": req.body.name }
           );
           var data3 = outletModel.updateMany(
             { "brand._id": req.body.brandId },
-            { "products.$[elem].product.category.name": req.body.name },
-            { arrayFilters: [{ "elem.product.category._id": req.body._id }] }
+            {
+              "products.$[elem].product.superCategory.category.name":
+                req.body.name,
+            },
+            {
+              arrayFilters: [
+                { "elem.product.superCategory.category._id": req.body._id },
+              ],
+            }
           );
 
           Promise.all([data1, data2, data3])
@@ -393,8 +400,14 @@ module.exports = {
       );
       var data3 = outletModel.updateMany(
         { "brand._id": req.body.brandId },
-        { "products.$[elem].product.category.name": req.body.name },
-        { arrayFilters: [{ "elem.product.category._id": req.body._id }] }
+        {
+          "products.$[elem].product.superCategory.category.name": req.body.name,
+        },
+        {
+          arrayFilters: [
+            { "elem.product.superCategory.category._id": req.body._id },
+          ],
+        }
       );
 
       Promise.all([data1, data2, data3])

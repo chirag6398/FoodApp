@@ -43,7 +43,7 @@ module.exports = {
 
     return productModel
       .find({
-        "category._id": req.body.categoryId,
+        "superCategory.category._id": req.body.categoryId,
         "outlet._id": { $ne: req.body.outletId },
       })
       .then(function (result) {
@@ -109,8 +109,10 @@ module.exports = {
                   name: req.body.name,
                   price: req.body.price,
                   description: req.body.description,
-                  "category._id": req.body.category._id,
-                  "category.name": req.body.category.name,
+                  "superCategory.category._id":
+                    req.body.superCategory.category._id,
+                  "superCategory.category.name":
+                    req.body.superCategory.category.name,
                   "superCategory._id": req.body.superCategory._id,
                   "superCategory.name": req.body.superCategory.name,
                   _id: req.body._id,
@@ -175,8 +177,8 @@ module.exports = {
         },
         {
           $group: {
-            _id: "$products.product.category._id",
-            name: { $first: "$products.product.category.name" },
+            _id: "$products.product.superCategory.category._id",
+            name: { $first: "$products.product.superCategory.category.name" },
             brandLogo: { $first: "$brand.logo" },
             products: { $push: "$products.product" },
           },

@@ -5,7 +5,8 @@ app.service("outletAgentService", function (outletAgentFactory) {
     var categoryProducts = {};
     var categories = [];
     products.forEach(function (value) {
-      var categoryName = value.product.category.name;
+      console.log(value);
+      var categoryName = value.product.superCategory.category.name;
       var product = value.product;
       var indx = categories.findIndex(function (value) {
         return value === categoryName;

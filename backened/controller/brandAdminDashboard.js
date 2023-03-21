@@ -90,7 +90,7 @@ module.exports = {
       },
       {
         $group: {
-          _id: "$items.category.name",
+          _id: "$items.superCategory.category.name",
           totalQuantity: { $sum: "$items.quantity" },
         },
       },

@@ -66,16 +66,7 @@ var OutletSchema = new mongoose.Schema(
             type: String,
             lowercase: true,
           },
-          category: {
-            _id: {
-              type: mongoose.Schema.Types.ObjectId,
-            },
-            name: {
-              type: String,
-              trim: true,
-              lowercase: true,
-            },
-          },
+
           superCategory: {
             _id: {
               type: mongoose.Schema.Types.ObjectId,
@@ -84,6 +75,16 @@ var OutletSchema = new mongoose.Schema(
               type: String,
               trim: true,
               lowercase: true,
+            },
+            category: {
+              _id: {
+                type: mongoose.Schema.Types.ObjectId,
+              },
+              name: {
+                type: String,
+                trim: true,
+                lowercase: true,
+              },
             },
           },
           _id: {
