@@ -20,13 +20,17 @@ function validateAddress(address) {
 }
 
 function validateNumber(number) {
-  const re = /^[0-9]{10}$/;
+  const re = /^[0-9]{10,10}$/;
   return re.test(number);
 }
 
+function validatePrice(price) {
+  var re = /^[1-9][0-9]{5}$/;
+  return re.test(price);
+}
+
 function validateEmail(email) {
-  var re =
-    /^([a-z A-Z 0-9 \. -]+)@([0-9 a-z A-Z -]+).([a-z]{2,8})(.[a-z]{2,4})?$/;
+  var re = /^([a-z A-Z 0-9 \. -]+)@([0-9 a-z A-Z -]+).([a-z]{2,8})$/;
 
   return re.test(email);
 }
@@ -116,19 +120,24 @@ module.exports = {
   },
   validateBrand: function (req, res, cb) {
     var body = req.body;
-    var file = body.file;
+    // var file = body.file;
     var name = body.name;
     var email = body.email;
     var city = body.city;
     var address = body.address;
     var number = body.number;
+    var pinCode = body.pinCode;
 
-    if (!file) {
-      return res.status(404).send({ err: "file not found" });
-    }
+    // console.log(body);
+    // if (!file) {
+    //   return res.status(404).send({ err: "file not found" });
+    // }
 
     if (!validateEmail(email)) {
       return res.status(403).send({ message: "please enter valid email" });
+    }
+    if (!validateNumber(number)) {
+      return res.status(403).send({ message: "please enter valid number" });
     }
 
     if (!validateAddress(address)) {
@@ -139,10 +148,6 @@ module.exports = {
       return res.status(403).send({ message: "please enter valid name" });
     }
 
-    if (!validateNumber(number)) {
-      return res.status(403).send({ message: "please enter valid number" });
-    }
-
     if (!validateCity(city)) {
       return res.status(403).send({ message: "please enter valid city" });
     }
@@ -151,10 +156,13 @@ module.exports = {
       return res.status(403).send({ message: "please enter valid pinCode" });
     }
 
+    console.log("called cb");
+
     cb();
   },
   validateOutlet: function (req, res, cb) {
     var body = req.body;
+    console.log(req.body, req.file);
     var name = body.name;
     var type = body.type;
     var email = body.email;
@@ -162,6 +170,7 @@ module.exports = {
     var address = body.address;
     var description = body.description;
     var number = body.number;
+    var pinCode = body.pinCode;
 
     if (!name || !email || !city || !address || !description || !number) {
       return res.status(404).send({ err: "plz fill all fields" });
@@ -199,12 +208,12 @@ module.exports = {
   },
   validateCategory: function (req, res, cb) {
     var body = req.body;
-    var file = body.file;
+    // var file = body.file;
     var name = body.name;
 
-    if (!file) {
-      return res.status(404).send({ err: "file not found" });
-    }
+    // if (!file) {
+    //   return res.status(404).send({ err: "file not found" });
+    // }
 
     if (!validateName(name)) {
       return res.status(403).send({ message: "please enter valid name" });
@@ -214,16 +223,38 @@ module.exports = {
   },
   validateSuperCategory: function (req, res, cb) {
     var body = req.body;
-    var file = body.file;
+    // var file = body.file;
     var name = body.name;
 
-    if (!file) {
-      return res.status(404).send({ err: "file not found" });
-    }
+    // if (!file) {
+    //   return res.status(404).send({ err: "file not found" });
+    // }
 
     if (!validateName(name)) {
       return res.status(403).send({ message: "please enter valid name" });
     }
+
+    cb();
+  },
+  validateProduct: function (req, res, cb) {
+    var file = req.file;
+    var body = req.body;
+    var name = body.name;
+    var price = body.price;
+
+    // if (!file) {
+    //   return res.status(404).send({ err: "file not found" });
+    // }
+
+    if (!validateName(name)) {
+      return res.status(403).send({ message: "please enter valid name" });
+    }
+
+    if (!validatePrice(price)) {
+      return res.status(403).send({ message: "please enter valid price" });
+    }
+
+    cb();
 
     cb();
   },

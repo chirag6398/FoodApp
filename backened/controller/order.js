@@ -7,27 +7,28 @@ var endDate = moment().toDate();
 
 module.exports = {
   createOrder: function (req, res) {
-    console.log("data", req.body);
+    var body = req.body;
+
     var order = undefined;
-    if (req.body.type === "dine-in") {
+    if (body.type === "dine-in") {
       order = new orderModel({
-        customer: req.body.customer,
-        items: req.body.item,
-        outlet: req.body.outlet,
-        orderId: req.body.orderId,
-        tableNumber: req.body.allotedTables,
-        type: req.body.type,
+        customer: body.customer,
+        items: body.item,
+        outlet: body.outlet,
+        orderId: body.orderId,
+        tableNumber: body.allotedTables,
+        type: body.type,
         status: "pending",
-        brand: req.body.brand,
+        brand: body.brand,
       });
 
       var data1 = order.save();
       var data2 = outletModel.updateOne(
-        { _id: req.body.outlet._id },
+        { _id: body.outlet._id },
         { $set: { "table.$[elem].isAvailable": false } },
         {
           new: true,
-          arrayFilters: [{ "elem.number": { $in: req.body.allotedTables } }],
+          arrayFilters: [{ "elem.number": { $in: body.allotedTables } }],
         }
       );
 
@@ -43,13 +44,13 @@ module.exports = {
         });
     } else {
       order = new orderModel({
-        customer: req.body.customer,
-        items: req.body.item,
-        outlet: req.body.outlet,
-        orderId: req.body.orderId,
-        type: req.body.type,
+        customer: body.customer,
+        items: body.item,
+        outlet: body.outlet,
+        orderId: body.orderId,
+        type: body.type,
         status: "pending",
-        brand: req.body.brand,
+        brand: body.brand,
       });
 
       var data1 = order.save();

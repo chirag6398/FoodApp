@@ -133,38 +133,42 @@ module.exports = {
   },
 
   addCategory: function (req, res) {
-    return awsService
-      .uploadToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
-      .then(function (data) {
-        console.log(data);
-        var image = data.Location;
+    if (req.file) {
+      return awsService
+        .uploadToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
+        .then(function (data) {
+          console.log(data);
+          var image = data.Location;
 
-        var category = new categoryModel({
-          name: req.body.name,
-          "brand._id": req.body.brandId,
-          "superCategory._id": req.body.superCategoryId,
-          logo: image,
-          "brand.name": req.body.brandName,
-          "superCategory.name": req.body.superCategoryName,
-        });
-
-        category
-          .save()
-          .then(function (result) {
-            console.log("added category", result);
-            return res.status(200).send(result);
-          })
-          .catch(function (err) {
-            console.log(err);
-            return res
-              .status(500)
-              .send({ error: "internal server error", status: 500 });
+          var category = new categoryModel({
+            name: req.body.name,
+            "brand._id": req.body.brandId,
+            "superCategory._id": req.body.superCategoryId,
+            logo: image,
+            "brand.name": req.body.brandName,
+            "superCategory.name": req.body.superCategoryName,
           });
-      })
-      .catch(function (err) {
-        console.log(err);
-        return res.status(500).send({ error: err, status: 500 });
-      });
+
+          category
+            .save()
+            .then(function (result) {
+              console.log("added category", result);
+              return res.status(200).send(result);
+            })
+            .catch(function (err) {
+              console.log(err);
+              return res
+                .status(500)
+                .send({ error: "internal server error", status: 500 });
+            });
+        })
+        .catch(function (err) {
+          console.log(err);
+          return res.status(500).send({ error: err, status: 500 });
+        });
+    } else {
+      return res.status(404).send({ err: "file not found" });
+    }
   },
 
   getCategory: function (req, res) {
@@ -185,30 +189,34 @@ module.exports = {
   },
 
   addSuperCategory: function (req, res) {
-    return awsService
-      .uploadToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
-      .then(function (data) {
-        var image = data.Location;
-        var superCategory = new superCategoryModel({
-          name: req.body.name,
-          logo: image,
-          "brand.name": req.body.brandName,
-          "brand._id": req.body.brandId,
-        });
-        superCategory
-          .save()
-          .then(function (result) {
-            return res.send(result);
-          })
-          .catch(function (err) {
-            console.log(err);
-            return res.status(401).send({ error: err });
+    if (req.file) {
+      return awsService
+        .uploadToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
+        .then(function (data) {
+          var image = data.Location;
+          var superCategory = new superCategoryModel({
+            name: req.body.name,
+            logo: image,
+            "brand.name": req.body.brandName,
+            "brand._id": req.body.brandId,
           });
-      })
-      .catch(function (err) {
-        console.log(err);
-        return res.status(500).send({ error: err, status: 500 });
-      });
+          superCategory
+            .save()
+            .then(function (result) {
+              return res.send(result);
+            })
+            .catch(function (err) {
+              console.log(err);
+              return res.status(401).send({ error: err });
+            });
+        })
+        .catch(function (err) {
+          console.log(err);
+          return res.status(500).send({ error: err, status: 500 });
+        });
+    } else {
+      return res.status(404).send({ err: "file not found" });
+    }
   },
 
   getSuperCategory: function (req, res) {

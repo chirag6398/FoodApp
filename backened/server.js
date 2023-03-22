@@ -4,6 +4,7 @@ var passport = require("passport");
 var cors = require("cors");
 var morgan = require("morgan");
 var dotenv = require("dotenv");
+var bodyParser = require("body-parser");
 // var validation = require("./service/validation.service").validateBrand;
 
 dotenv.config({ path: "./.env" });
@@ -17,6 +18,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
 // app.use(validation);
 app.use(require("./route/employee.route"));
 app.use(require("./route/superAdmin.route"));

@@ -44,37 +44,42 @@ module.exports = {
 
   createBrand: function (req, res) {
     var body = req.body;
-    return awsService
-      .uploadToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
-      .then(function (data) {
-        console.log(data);
-        var image = data.Location;
+    console.log("controller", req.file);
+    if (req.file) {
+      return awsService
+        .uploadToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
+        .then(function (data) {
+          console.log(data);
+          var image = data.Location;
 
-        var brand = new brandModel({
-          name: body.name,
-          logo: image,
-          "contactInfo.email": body.email,
-          "contactInfo.number": body.number,
-          "location.city": body.city,
-          "location.pinCode": body.pinCode,
-          "location.address": body.address,
-          description: body.description,
-        });
-
-        brand
-          .save()
-          .then(function (result) {
-            return res.send({ message: "created with image", data: result });
-          })
-          .catch(function (err) {
-            console.log(err);
-            return res.status(401).send({ error: err });
+          var brand = new brandModel({
+            name: body.name,
+            logo: image,
+            "contactInfo.email": body.email,
+            "contactInfo.number": body.number,
+            "location.city": body.city,
+            "location.pinCode": body.pinCode,
+            "location.address": body.address,
+            description: body.description,
           });
-      })
-      .catch(function (err) {
-        console.log(err);
-        return res.status(500).send({ error: err, status: 500 });
-      });
+
+          brand
+            .save()
+            .then(function (result) {
+              return res.send({ message: "created with image", data: result });
+            })
+            .catch(function (err) {
+              console.log(err);
+              return res.status(401).send({ error: err });
+            });
+        })
+        .catch(function (err) {
+          console.log(err);
+          return res.status(500).send({ error: err, status: 500 });
+        });
+    } else {
+      return res.status(404).send({ err: "file not found" });
+    }
   },
 
   deactivateBrand: function (req, res) {

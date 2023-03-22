@@ -2,35 +2,29 @@ var productModel = require("../model/product.model");
 var categoryModal = require("../model/category.model");
 var outletModel = require("../model/outlet.model");
 var s3Services = require("../service/awsS3.service");
-// var superCategoryModel=require("../")
-var mongoose = require("mongoose");
-
-// var uploadToS3=require("../service/awsS3.service");
 
 module.exports = {
   addProduct: function (req, res) {
+    var body = req.body;
+    var file = req.file;
     categoryModal
-      .findById({ _id: req.body.categoryId }, { brand: 1, superCategory: 1 })
+      .findById({ _id: body.categoryId }, { brand: 1, superCategory: 1 })
       .then(function (result) {
-        if (req.file) {
+        if (file) {
           return s3Services
-            .uploadToS3(
-              req.file.buffer,
-              req.file.originalname,
-              req.file.mimetype
-            )
+            .uploadToS3(file.buffer, file.originalname, file.mimetype)
             .then(function (data) {
               console.log(data);
               var image = data.Location;
 
               var product = new productModel({
-                name: req.body.name,
-                price: req.body.price,
-                "superCategory.category.name": req.body.categoryName,
+                name: body.name,
+                price: body.price,
+                "superCategory.category.name": body.categoryName,
                 brand: result.brand,
                 superCategory: result.superCategory,
-                "superCategory.category._id": req.body.categoryId,
-                description: req.body.description,
+                "superCategory.category._id": body.categoryId,
+                description: body.description,
                 img: image,
               });
               product
@@ -48,9 +42,7 @@ module.exports = {
               return res.status(500).send({ error: err, status: 500 });
             });
         } else {
-          return res
-            .status(500)
-            .send({ message: "internal error", status: 500 });
+          return res.status(404).send({ err: "file not found" });
         }
       })
       .catch(function (err) {
@@ -84,19 +76,21 @@ module.exports = {
     }
   },
   updateProduct: function (req, res) {
-    console.log(req.file, req.body);
-    if (req.file) {
+    var file = req.file;
+    var body = req.body;
+
+    if (file) {
       return s3Services
-        .updateToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
+        .updateToS3(file.buffer, file.originalname, file.mimetype)
         .then(function (data) {
           var image = data.Location;
 
           var up1 = productModel.findByIdAndUpdate(
-            { _id: req.body._id },
+            { _id: body._id },
             {
-              name: req.body.name,
-              price: req.body.price,
-              description: req.body.description,
+              name: body.name,
+              price: body.price,
+              description: body.description,
               img: image,
             }
           );
@@ -104,19 +98,19 @@ module.exports = {
           var up2 = outletModel.updateMany(
             {
               $and: [
-                { "brand._id": req.body.brandId },
-                { "products.product._id": req.body._id },
+                { "brand._id": body.brandId },
+                { "products.product._id": body._id },
               ],
             },
             {
               $set: {
-                "products.$[el].product.price": req.body.price,
-                "products.$[el].product.name": req.body.name,
-                "products.$[el].product.description": req.body.description,
+                "products.$[el].product.price": body.price,
+                "products.$[el].product.name": body.name,
+                "products.$[el].product.description": body.description,
                 "products.$[el].product.img": image,
               },
             },
-            { arrayFilters: [{ "el.product._id": req.body._id }] }
+            { arrayFilters: [{ "el.product._id": body._id }] }
           );
 
           Promise.all([up1, up2])
@@ -134,29 +128,29 @@ module.exports = {
         });
     } else {
       var up1 = productModel.findByIdAndUpdate(
-        { _id: req.body._id },
+        { _id: body._id },
         {
-          name: req.body.name,
-          price: req.body.price,
-          description: req.body.description,
+          name: body.name,
+          price: body.price,
+          description: body.description,
         }
       );
 
       var up2 = outletModel.updateMany(
         {
           $and: [
-            { "brand._id": req.body.brandId },
-            { "products.product._id": req.body._id },
+            { "brand._id": body.brandId },
+            { "products.product._id": body._id },
           ],
         },
         {
           $set: {
-            "products.$[el].product.price": req.body.price,
-            "products.$[el].product.name": req.body.name,
-            "products.$[el].product.description": req.body.description,
+            "products.$[el].product.price": body.price,
+            "products.$[el].product.name": body.name,
+            "products.$[el].product.description": body.description,
           },
         },
-        { arrayFilters: [{ "el.product._id": req.body._id }] }
+        { arrayFilters: [{ "el.product._id": body._id }] }
       );
 
       Promise.all([up1, up2])

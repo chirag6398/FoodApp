@@ -1,17 +1,5 @@
 var employeeModel = require("../model/employee.model");
-var bcrypt = require("bcrypt");
-
-function hashPassword(password, next) {
-  bcrypt.genSalt(10, function (saltError, salt) {
-    if (saltError) {
-      return next(saltError, null);
-    } else {
-      bcrypt.hash(password, salt, function (hashError, hash) {
-        return next(null, hash);
-      });
-    }
-  });
-}
+var hashPassword = require("../service/common.service").hashPassword;
 
 module.exports = {
   logInHandler: function (req, res) {
@@ -41,23 +29,24 @@ module.exports = {
       isDeleted: false,
       userType: { $ne: "superAdmin" },
     };
-    // console.log(filter);
 
-    var limit = req.query.limit;
-    var pageNo = req.query.pageNo;
+    var query = req.query;
+
+    var limit = query.limit;
+    var pageNo = query.pageNo;
     var skip = (pageNo - 1) * limit;
 
-    if (req.query.email) {
-      filter["email"] = req.query.email;
+    if (query.email) {
+      filter["email"] = query.email;
     }
-    if (req.query.brandName) {
-      filter["brand.name"] = req.query.brandName;
+    if (query.brandName) {
+      filter["brand.name"] = query.brandName;
     }
-    if (req.query.userType) {
-      filter["userType"] = req.query.userType;
+    if (query.userType) {
+      filter["userType"] = query.userType;
     }
-    if (req.query.number) {
-      filter["number"] = +req.query.number;
+    if (query.number) {
+      filter["number"] = +query.number;
     }
 
     return employeeModel
@@ -75,16 +64,16 @@ module.exports = {
       });
   },
   updateUser: function (req, res) {
-    console.log(req.body);
+    var body = req.body;
     employeeModel
       .findOneAndUpdate(
-        { _id: req.body.id },
+        { _id: body.id },
         {
-          userName: req.body.userName,
-          firstName: req.body.firstName,
-          email: req.body.email,
-          number: req.body.number,
-          lastName: req.body.lastName,
+          userName: body.userName,
+          firstName: body.firstName,
+          email: body.email,
+          number: body.number,
+          lastName: body.lastName,
         }
       )
       .then(function (result) {
@@ -98,13 +87,13 @@ module.exports = {
       });
   },
   updatePassword: function (req, res) {
-    console.log(req.body);
-    hashPassword(req.body.password, function (err, hashedPassword) {
+    var body = req.body;
+    hashPassword(body.password, function (err, hashedPassword) {
       if (err) {
         return res.status(500).send({ message: "internal error" });
       } else {
         employeeModel
-          .findOneAndUpdate({ _id: req.body.id }, { password: hashedPassword })
+          .findOneAndUpdate({ _id: body.id }, { password: hashedPassword })
           .then(function (result) {
             console.log(result, hashedPassword);
             return res.send({ message: "updated" });
@@ -140,5 +129,4 @@ module.exports = {
         return res.status(404).send(err);
       });
   },
-  // applyFilterOnUsers: function (req, res) {},
 };
