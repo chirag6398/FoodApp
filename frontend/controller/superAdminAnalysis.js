@@ -28,6 +28,8 @@ app.controller("superAdminAnalysisController", [
       isLoading: true,
     };
 
+    superAdminService.displayMap();
+
     superAdminDashBoardApi.getBasicData(function (err, result) {
       if (result && result.data) {
         console.log(result);

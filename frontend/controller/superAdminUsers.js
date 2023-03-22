@@ -21,12 +21,15 @@ app.controller("superAdminUsersController", [
         number: "",
         brandName: "",
       },
+      isLoading: true,
     };
 
     $scope.searchTextHandler = function () {
+      // $scope.object.isLoading = true;
       superAdminService.debouncing(
         $scope.object.searchUser,
         function (err, result) {
+          // $scope.object.isLoading = false;
           if (result) {
             $scope.object.searchTextResult = result.data;
           } else {
@@ -43,6 +46,7 @@ app.controller("superAdminUsersController", [
       function (err, result) {
         if (result) {
           console.log(result);
+          $scope.object.isLoading = false;
           $scope.object.users = result.data.data;
           $scope.object.totalCount = result.data.count;
           $scope.object.pages = superAdminService.getPages(

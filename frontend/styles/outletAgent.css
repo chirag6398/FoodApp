@@ -248,3 +248,48 @@ h5{
 .agt__tableGreen{
     background: #75d875;
 }
+.agt__cart div.ng-enter {
+    transition: 0.4s linear all;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+
+  
+  .agt__cart div.ng-enter.ng-enter-active {
+    opacity: 1;
+    transform: translateY(0px);
+}
+.agt__products1 div.ng-enter {
+    transition: 0.4s ease-in-out all;
+    opacity: 0;
+    transform: translateZ(30px)
+  }
+
+
+.agt__products1 div.ng-enter.ng-enter-active {
+    opacity: 1;
+    transform: translateZ(0px);
+}
+
+.agt__bill.ng-enter {
+    transition: 0.4s linear all;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  
+.agt__bill.ng-enter.ng-enter-active {
+    opacity: 1;
+    transform: translateY(0px);
+}
+
+.agt__order.ng-enter {
+    transition: 0.4s linear all;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  
+.agt__order.ng-enter.ng-enter-active {
+    opacity: 1;
+    transform: translateY(0px);
+}

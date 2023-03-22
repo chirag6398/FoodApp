@@ -310,7 +310,8 @@
         <div
           ng-if="object.cart.length>0"
           class="agt__itemCart"
-          ng-repeat="item in object.cart"
+          ng-repeat="item in
+          object.cart"
         >
           <div>
             <div style="display: flex; align-items: center; gap: 3px">
@@ -347,7 +348,7 @@
         display: flex;
         gap: 3px;
         width: 300px;
-        height: 158px;
+        height: 175px;
         overflow-x: scroll;
         align-items: center;
       "
@@ -363,6 +364,8 @@
           padding: 3px;
           box-shadow: #fffe 0px 0px 0px 1px;
           height: min-content;
+          min-height: 105px;
+          cursor: pointer;
         "
       >
         <img

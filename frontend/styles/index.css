@@ -8,10 +8,18 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
+  
+}
+*::-webkit-scrollbar {
+  display: none;
 }
 .dim{
   opacity: 0.5;
 }
+
+
+
+
 .sidebar{
   position: fixed;
   top: 0;

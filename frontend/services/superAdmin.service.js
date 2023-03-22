@@ -93,6 +93,18 @@ app.service("superAdminService", function (adminApi, $timeout) {
     adminApi.createBrand(brandData, cb);
   };
 
+  this.displayMap = function () {
+    var map = L.map("map").setView([37.7749, -122.4194], 10);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        "Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors",
+      maxZoom: 18,
+    }).addTo(map);
+
+    var marker = L.marker([37.7749, -122.4194]).addTo(map);
+    marker.bindPopup("Brand Name");
+  };
+
   // this.applyFilterOnUsers = function (filter, limit, pageNo, cb) {
   //   adminApi.applyFilterOnUsers(filter, limit, pageNo, cb);
   // };

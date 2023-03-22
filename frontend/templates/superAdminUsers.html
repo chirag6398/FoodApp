@@ -1,4 +1,7 @@
-<div style="display: flex; flex-direction: column; width: 100%; padding: 20px">
+<div
+  ng-class="{'dim':object.isLoading}"
+  style="display: flex; flex-direction: column; width: 100%; padding: 20px"
+>
   <div style="margin-bottom: 15px">
     <div class="mt-3 inputs">
       <i class="fa fa-search"></i>
@@ -142,3 +145,8 @@
     </nav>
   </div>
 </div>
+<div
+  ng-if="object.isLoading"
+  class="loader"
+  style="width: 100%; height: -webkit-fill-available; position: absolute"
+></div>

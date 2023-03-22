@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.30/angular-ui-router.min.js"
       integrity="sha512-HdDqpFK+5KwK5gZTuViiNt6aw/dBc3d0pUArax73z0fYN8UXiSozGNTo3MFx4pwbBPldf5gaMUq/EqposBQyWQ=="
@@ -32,6 +32,8 @@
       rel="stylesheet"
     />
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-animate.min.js"></script>
     <link rel="stylesheet" href="./styles//index.css" />
     <link rel="stylesheet" href="./styles//login.css" />
     <link rel="stylesheet" href="./styles/superAdmin.css" />
@@ -40,11 +42,18 @@
     <link rel="stylesheet" href="./styles/data.css" />
     <link rel="stylesheet" href="./styles/setting.css" />
     <link rel="stylesheet" href="./styles/analysis.css" />
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
     <title>FoodApp</title>
   </head>
 
   <body ng-controller="mainController">
+    <!-- <a ui-sref="login">login</a> -->
     <div>
       <ui-view></ui-view>
     </div>

@@ -1,6 +1,6 @@
 // /<reference path="../services/"/>
 
-var app = angular.module("myModule", ["ui.router"]);
+var app = angular.module("myModule", ["ui.router", "ngAnimate"]);
 
 app.controller("mainController", [
   "$scope",

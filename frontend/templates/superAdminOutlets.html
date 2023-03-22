@@ -1,4 +1,7 @@
-<div style="display: flex; width: 100%; padding: 20px">
+<div
+  ng-class="{'dim':object.isLoading}"
+  style="display: flex; width: 100%; padding: 20px"
+>
   <table class="table table-bordered table-hover">
     <thead class="thead-dark">
       <tr>
@@ -27,5 +30,5 @@
 <div
   ng-if="object.isLoading"
   class="loader"
-  style="width: 100%; height: 100vh; position: absolute; opacity: 0.5"
+  style="width: 100%; height: -webkit-fill-available; position: absolute"
 ></div>
