@@ -55,20 +55,6 @@ module.exports = {
         return res.status(500).send({ error: err });
       });
   },
-  // brandProducts: function (req, res) {
-  //   console.log(req.body);
-
-  //   return categoryModel
-  //     .find({ "brand._id": req.body.brandId })
-  //     .then(function (result) {
-  //       console.log(result);
-  //       return res.send(result);
-  //     })
-  //     .catch(function (err) {
-  //       console.log(err);
-  //       return res.status(500).send({ error: err });
-  //     });
-  // },
   getSuperCategories: function (req, res) {
     superCategoryModel
       .find({ "brand._id": req.params.id })
@@ -94,29 +80,27 @@ module.exports = {
       });
   },
   addProductToOutlet: function (req, res) {
-    console.log(req.body);
-    // console.log(req.body)
+    var body = req.body;
     mongoose.startSession().then(function (session) {
       session.startTransaction();
 
       Promise.all([
         outletModel.findByIdAndUpdate(
-          { _id: req.body.outletId },
+          { _id: body.outletId },
           {
             $push: {
               products: {
                 product: {
-                  name: req.body.name,
-                  price: req.body.price,
-                  description: req.body.description,
-                  "superCategory.category._id":
-                    req.body.superCategory.category._id,
+                  name: body.name,
+                  price: body.price,
+                  description: body.description,
+                  "superCategory.category._id": body.superCategory.category._id,
                   "superCategory.category.name":
-                    req.body.superCategory.category.name,
-                  "superCategory._id": req.body.superCategory._id,
-                  "superCategory.name": req.body.superCategory.name,
-                  _id: req.body._id,
-                  img: req.body.img,
+                    body.superCategory.category.name,
+                  "superCategory._id": body.superCategory._id,
+                  "superCategory.name": body.superCategory.name,
+                  _id: body._id,
+                  img: body.img,
                 },
               },
             },
@@ -124,11 +108,11 @@ module.exports = {
           { session }
         ),
         productModel.findByIdAndUpdate(
-          { _id: req.body._id },
+          { _id: body._id },
           {
             $push: {
               outlet: {
-                _id: req.body.outletId,
+                _id: body.outletId,
               },
             },
           }
@@ -199,15 +183,15 @@ module.exports = {
   },
 
   removeOutletProduct: function (req, res) {
-    console.log(req.body);
+    var body = req.body;
 
     outletModel
       .updateOne(
-        { _id: req.body.outletId },
+        { _id: body.outletId },
         {
           $pull: {
             products: {
-              "product.name": req.body.name,
+              "product.name": body.name,
             },
           },
         }
@@ -215,11 +199,11 @@ module.exports = {
       .then(function (result1) {
         productModel
           .updateOne(
-            { name: req.body.name },
+            { name: body.name },
             {
               $pull: {
                 outlet: {
-                  _id: req.body.outletId,
+                  _id: body.outletId,
                 },
               },
             }
@@ -239,23 +223,21 @@ module.exports = {
       });
   },
   createOutletAgent: function (req, res) {
-    console.log(req.body);
-    // var valid = validation.validateUserData(req, res);
-    // console.log(valid);
-    // if (valid) {
+    var body = req.body;
+
     var outletAgent = new employeeModel({
-      userName: req.body.userName,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      number: req.body.number,
-      password: req.body.password,
-      outlet: req.body.outlet,
+      userName: body.userName,
+      firstName: body.firstName,
+      lastName: body.lastName,
+      email: body.email,
+      number: body.number,
+      password: body.password,
+      outlet: body.outlet,
       userType: "outletAgent",
-      brand: req.body.brand,
-      "location.address": req.body.address,
-      "location.pinCode": req.body.pinCode,
-      "location.city": req.body.city,
+      brand: body.brand,
+      "location.address": body.address,
+      "location.pinCode": body.pinCode,
+      "location.city": body.city,
     });
 
     return outletAgent
@@ -277,17 +259,17 @@ module.exports = {
     // }
   },
   updateOutletData: function (req, res) {
-    console.log(req.body);
+    var body = req.body;
 
     outletModel
       .findOneAndUpdate(
-        { _id: req.body._id },
+        { _id: body._id },
         {
-          name: req.body.name,
-          type: req.body.type,
-          description: req.body.description,
-          "contactInfo.number": req.body.number,
-          "contactInfo.email": req.body.email,
+          name: body.name,
+          type: body.type,
+          description: body.description,
+          "contactInfo.number": body.number,
+          "contactInfo.email": body.email,
         }
       )
       .then(function (result) {
@@ -299,8 +281,6 @@ module.exports = {
       });
   },
   togleOutlet: function (req, res) {
-    console.log(req.body);
-
     outletModel
       .findOne(
         { _id: mongoose.Types.ObjectId(req.body.outletId) },
@@ -322,7 +302,6 @@ module.exports = {
       });
   },
   addTax: function (req, res) {
-    console.log(req.body);
     outletModel
       .findOneAndUpdate(
         { _id: req.body._id },

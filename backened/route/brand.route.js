@@ -2,6 +2,7 @@ var brandRoute = require("express").Router();
 var brandController = require("../controller/brand.js");
 var passport = require("passport");
 var multer = require("multer");
+var validateBrand = require("../service/validation.service").validateBrand;
 
 var passportJwt = require("../passport/passportjwt");
 
@@ -36,6 +37,7 @@ brandRoute.get(
 brandRoute.post(
   "/api/brand/createBrand",
   uploadProductImg.single("file"),
+  validateBrand,
   brandController.createBrand
 );
 brandRoute.post(

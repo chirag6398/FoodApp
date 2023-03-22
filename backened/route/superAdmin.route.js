@@ -2,7 +2,7 @@ var superAdminRoute = require("express").Router();
 var superAdminController = require("../controller/superAdmin.js");
 var passport = require("passport");
 var multer = require("multer");
-
+var validateUser = require("../service/validation.service").validateUserData;
 var passportJwt = require("../passport/passportjwt");
 
 passportJwt.initializer(passport);
@@ -41,6 +41,7 @@ superAdminRoute.get(
 superAdminRoute.post(
   "/api/superAdmin/addBrandAdmin",
   passport.authenticate("jwt", { session: false }),
+  validateUser,
   superAdminController.addBrandAdmin
 );
 

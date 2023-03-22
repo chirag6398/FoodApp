@@ -88,7 +88,7 @@
           <i class="fa fa-search"></i>
           <input
             type="text"
-            ng-model="searchText"
+            ng-model="object.searchText"
             ng-change="searchTextHandler()"
             class="form-control1 form-control"
             placeholder="Search Tasks..."
@@ -99,7 +99,7 @@
             <li
               style="display: flex; gap: 12px; align-items: center"
               class="list-group-item"
-              ng-repeat="res in searchTextResult"
+              ng-repeat="res in object.searchTextResult"
             >
               <div style="width: 120px; justify-content: center; display: flex">
                 <img
@@ -704,12 +704,7 @@
 <div
   ng-if="object.isLoading"
   class="loader"
-  style="
-    width: 100%;
-    height: -webkit-fill-available;
-    position: absolute;
-    opacity: 0.5;
-  "
+  style="width: 100%; height: -webkit-fill-available; position: absolute"
 ></div>
 
 <!-- <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"

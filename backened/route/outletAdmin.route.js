@@ -3,6 +3,8 @@ var outletAdminController = require("../controller/outletAdmin.js");
 var passport = require("passport");
 var passportJwt = require("../passport/passportjwt");
 
+var validateUser = require("../service/validation.service").validateUserData;
+
 passportJwt.initializer(passport);
 
 outletAdminRoute.get(
@@ -60,6 +62,7 @@ outletAdminRoute.post(
 outletAdminRoute.post(
   "/api/outletAdmin/createOutletAgent",
   passport.authenticate("jwt", { session: false }),
+  validateUser,
   outletAdminController.createOutletAgent
 );
 outletAdminRoute.put(

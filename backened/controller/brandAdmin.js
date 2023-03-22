@@ -1,12 +1,12 @@
 var brandModel = require("../model/brand.model");
 var productModel = require("../model/product.model");
 var outletModel = require("../model/outlet.model");
-var validation = require("../service/validation.service");
 var employeeModel = require("../model/employee.model");
 var superCategoryModel = require("../model/superCategory.model");
 var categoryModel = require("../model/category.model");
 var mongoose = require("mongoose");
 var awsService = require("../service/awsS3.service");
+
 module.exports = {
   getBrandAdminPage: function (req, res) {
     if (req.user.userType == "brandAdmin") {
@@ -26,8 +26,6 @@ module.exports = {
   },
 
   createOutlet: function (req, res) {
-    console.log(req.body);
-
     var outlet = new outletModel({
       name: req.body.name,
       type: req.body.type,
@@ -74,8 +72,6 @@ module.exports = {
   },
 
   createOutletAdmin: function (req, res) {
-    console.log(req.body);
-
     if (
       req.body.outletId &&
       req.body.brandId &&
@@ -137,43 +133,38 @@ module.exports = {
   },
 
   addCategory: function (req, res) {
-    console.log(req.body, req.file);
+    return awsService
+      .uploadToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
+      .then(function (data) {
+        console.log(data);
+        var image = data.Location;
 
-    if (req.file) {
-      return awsService
-        .uploadToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
-        .then(function (data) {
-          console.log(data);
-          var image = data.Location;
-
-          var category = new categoryModel({
-            name: req.body.name,
-            "brand._id": req.body.brandId,
-            "superCategory._id": req.body.superCategoryId,
-            logo: image,
-            "brand.name": req.body.brandName,
-            "superCategory.name": req.body.superCategoryName,
-          });
-
-          category
-            .save()
-            .then(function (result) {
-              console.log("added category", result);
-              return res.status(200).send(result);
-            })
-            .catch(function (err) {
-              console.log(err);
-              return res
-                .status(500)
-                .send({ error: "internal server error", status: 500 });
-            });
-        })
-        .catch(function (err) {
-          console.log(err);
-          return res.status(500).send({ error: err, status: 500 });
+        var category = new categoryModel({
+          name: req.body.name,
+          "brand._id": req.body.brandId,
+          "superCategory._id": req.body.superCategoryId,
+          logo: image,
+          "brand.name": req.body.brandName,
+          "superCategory.name": req.body.superCategoryName,
         });
-    } else {
-    }
+
+        category
+          .save()
+          .then(function (result) {
+            console.log("added category", result);
+            return res.status(200).send(result);
+          })
+          .catch(function (err) {
+            console.log(err);
+            return res
+              .status(500)
+              .send({ error: "internal server error", status: 500 });
+          });
+      })
+      .catch(function (err) {
+        console.log(err);
+        return res.status(500).send({ error: err, status: 500 });
+      });
   },
 
   getCategory: function (req, res) {
@@ -194,40 +185,33 @@ module.exports = {
   },
 
   addSuperCategory: function (req, res) {
-    console.log(req.body);
-    console.log(req.file);
-    if (req.file) {
-      return awsService
-        .uploadToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
-        .then(function (data) {
-          var image = data.Location;
-          var superCategory = new superCategoryModel({
-            name: req.body.name,
-            logo: image,
-            "brand.name": req.body.brandName,
-            "brand._id": req.body.brandId,
-          });
-          superCategory
-            .save()
-            .then(function (result) {
-              return res.send(result);
-            })
-            .catch(function (err) {
-              console.log(err);
-              return res.status(401).send({ error: err });
-            });
-        })
-        .catch(function (err) {
-          console.log(err);
-          return res.status(500).send({ error: err, status: 500 });
+    return awsService
+      .uploadToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
+      .then(function (data) {
+        var image = data.Location;
+        var superCategory = new superCategoryModel({
+          name: req.body.name,
+          logo: image,
+          "brand.name": req.body.brandName,
+          "brand._id": req.body.brandId,
         });
-    } else {
-      return res.status(401).send({ message: "try later" });
-    }
+        superCategory
+          .save()
+          .then(function (result) {
+            return res.send(result);
+          })
+          .catch(function (err) {
+            console.log(err);
+            return res.status(401).send({ error: err });
+          });
+      })
+      .catch(function (err) {
+        console.log(err);
+        return res.status(500).send({ error: err, status: 500 });
+      });
   },
 
   getSuperCategory: function (req, res) {
-    // console.log(req.params.id)
     superCategoryModel
       .find({ "brand._id": mongoose.Types.ObjectId(req.params.id) })
       .then(function (result) {

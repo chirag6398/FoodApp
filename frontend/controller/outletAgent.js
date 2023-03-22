@@ -38,8 +38,10 @@ app.controller("outletAgentController", [
       isLoading: true,
       cartProducts: [],
       recommendedProducts: [],
+      searchText: "",
+      searchTextResult: [],
     };
-
+    // toastNotifications.info("hi");
     outletAgentFactory.getOutletAgentPage(function (err, result) {
       console.log(err, result);
       if (result) {
@@ -67,15 +69,16 @@ app.controller("outletAgentController", [
     }, 1000);
 
     $scope.searchTextHandler = function () {
+      // console.log($scope.object.searchText);
       outletAgentFactory.debouncing(
-        $scope.searchText,
-        $scope.outletId,
+        $scope.object.searchText,
+        $scope.object.outlet._id,
         function (err, result) {
           console.log(err, result);
           if (result) {
-            $scope.searchTextResult = result.data;
+            $scope.object.searchTextResult = result.data;
           } else {
-            $scope.searchTextResult = [];
+            $scope.object.searchTextResult = [];
           }
         }
       );

@@ -1,11 +1,7 @@
-var brandModel = require("../model/brand.model");
 var orderModel = require("../model/order.model");
 var employeeModel = require("../model/employee.model");
 var outletModel = require("../model/outlet.model");
-var categoryModel = require("../model/category.model");
-var superCategory = require("../model/superCategory.model");
 var mongoose = require("mongoose");
-var productModel = require("../model/product.model");
 var moment = require("moment");
 
 var startDate = moment().subtract(1, "month").toDate();

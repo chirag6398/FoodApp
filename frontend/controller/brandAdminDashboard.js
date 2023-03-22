@@ -22,6 +22,7 @@ app.controller("brandAdminDashboardController", [
       brandRevenue: [0],
       outletDates: [0],
       outletRevenue: [0],
+      isLoading: true,
     };
     $timeout(function () {
       if ($scope.object.brand === null) {
@@ -33,6 +34,7 @@ app.controller("brandAdminDashboardController", [
       if (result) {
         console.log(result);
         $scope.object.brand = result.data.data;
+        $scope.object.isLoading = false;
         brandAdminDashBoardApi.getBasicData(
           $scope.object.brand._id,
           function (err, result) {

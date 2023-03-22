@@ -2,10 +2,8 @@ var employeeRoute = require("express").Router();
 var employeeController = require("../controller/employee.js");
 var passport = require("passport");
 var passportLocal = require("../passport/passportLocal");
-// var passportJwt=require("../passport/passportjwt");
 
 passportLocal.initializer(passport);
-// passportJwt.initializer(passport);
 
 employeeRoute.get(
   "/api/employee/getUserById/:id",
@@ -21,11 +19,6 @@ employeeRoute.get(
   "/api/employee/searchUserBySearchText/:searchText",
   employeeController.searchUserBySearchText
 );
-
-// employeeRoute.get(
-//   "/api/employee/applyFilterOnUsers",
-//   employeeController.applyFilterOnUsers
-// );
 
 employeeRoute.put("/api/employee/updateUser", employeeController.updateUser);
 employeeRoute.put(

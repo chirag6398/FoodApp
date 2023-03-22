@@ -7,86 +7,77 @@ var awsService = require("../service/awsS3.service");
 var superCategory = require("../model/superCategory.model");
 var mongoose = require("mongoose");
 var productModel = require("../model/product.model");
-// var validateBrand = require("../service/validation.service").validateBrand;
 
 module.exports = {
   getBrands: function (req, res) {
-    if (req.user.userType === "superAdmin") {
-      var limitSize = req.params.limit || 5;
-      var pageNo = req.params.page || 1;
-      var skipValue = (pageNo - 1) * limitSize;
+    var limitSize = req.params.limit || 5;
+    var pageNo = req.params.page || 1;
+    var skipValue = (pageNo - 1) * limitSize;
 
-      brandModel
-        .find({ isDeleted: false })
-        .skip(skipValue)
-        .limit(limitSize)
-        .sort({ name: "asc" })
-        .then(function (result) {
-          brandModel.countDocuments({}, function (err, count) {
-            if (count) {
-              console.log(result, count);
-              return res.status(200).send({ data: result, count: count });
-            } else {
-              return res.status(500).send({
-                message: "internal server error",
-                error: err,
-                status: 500,
-              });
-            }
-          });
-        })
-        .catch(function (err) {
-          return res.status(500).send({
-            message: "internal server error",
-            error: err,
-            status: 500,
-          });
+    brandModel
+      .find({ isDeleted: false })
+      .skip(skipValue)
+      .limit(limitSize)
+      .sort({ name: "asc" })
+      .then(function (result) {
+        brandModel.countDocuments({}, function (err, count) {
+          if (count) {
+            console.log(result, count);
+            return res.status(200).send({ data: result, count: count });
+          } else {
+            return res.status(500).send({
+              message: "internal server error",
+              error: err,
+              status: 500,
+            });
+          }
         });
-    } else {
-      return res.status(401).send({ message: "unauthorized user" });
-    }
+      })
+      .catch(function (err) {
+        return res.status(500).send({
+          message: "internal server error",
+          error: err,
+          status: 500,
+        });
+      });
   },
 
   createBrand: function (req, res) {
-    if (req.file) {
-      return awsService
-        .uploadToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
-        .then(function (data) {
-          console.log(data);
-          var image = data.Location;
+    var body = req.body;
+    return awsService
+      .uploadToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
+      .then(function (data) {
+        console.log(data);
+        var image = data.Location;
 
-          var brand = new brandModel({
-            name: req.body.name,
-            logo: image,
-            "contactInfo.email": req.body.email,
-            "contactInfo.number": req.body.number,
-            "location.city": req.body.city,
-            "location.pinCode": req.body.pinCode,
-            "location.address": req.body.address,
-            description: req.body.description,
-          });
-
-          brand
-            .save()
-            .then(function (result) {
-              return res.send({ message: "created with image", data: result });
-            })
-            .catch(function (err) {
-              console.log(err);
-              return res.status(401).send({ error: err });
-            });
-        })
-        .catch(function (err) {
-          console.log(err);
-          return res.status(500).send({ error: err, status: 500 });
+        var brand = new brandModel({
+          name: body.name,
+          logo: image,
+          "contactInfo.email": body.email,
+          "contactInfo.number": body.number,
+          "location.city": body.city,
+          "location.pinCode": body.pinCode,
+          "location.address": body.address,
+          description: body.description,
         });
-    } else {
-      return res.status(500).send({ message: "not created try later" });
-    }
+
+        brand
+          .save()
+          .then(function (result) {
+            return res.send({ message: "created with image", data: result });
+          })
+          .catch(function (err) {
+            console.log(err);
+            return res.status(401).send({ error: err });
+          });
+      })
+      .catch(function (err) {
+        console.log(err);
+        return res.status(500).send({ error: err, status: 500 });
+      });
   },
 
   deactivateBrand: function (req, res) {
-    console.log(req.body);
     req.body.brandId = mongoose.Types.ObjectId(req.body.brandId);
     brandModel
       .findByIdAndUpdate({ _id: req.body.brandId }, { isActive: false })
@@ -111,8 +102,6 @@ module.exports = {
   },
 
   deleteBrand: function (req, res) {
-    console.log(req.body);
-
     brandModel
       .findByIdAndUpdate({ _id: req.body.brandId }, { isDeleted: true })
       .then(function (result) {

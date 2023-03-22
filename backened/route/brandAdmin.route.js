@@ -3,6 +3,13 @@ var brandAdminController = require("../controller/brandAdmin.js");
 var passport = require("passport");
 var multer = require("multer");
 var passportJwt = require("../passport/passportjwt");
+const { validateBrand } = require("../service/validation.service");
+var validateOutlet = require("../service/validation.service").validateOutlet;
+var validateUser = require("../service/validation.service").validateUserData;
+var validateSuperCategory =
+  require("../service/validation.service").validateSuperCategory;
+var validateCategory =
+  require("../service/validation.service").validateCategory;
 
 passportJwt.initializer(passport);
 const uploadProductImg = multer({
@@ -55,16 +62,19 @@ brandAdminRoute.get(
 brandAdminRoute.post(
   "/api/brandAdmin/createOutlet",
   passport.authenticate("jwt", { session: false }),
+  validateOutlet,
   brandAdminController.createOutlet
 );
 brandAdminRoute.post(
   "/api/brandAdmin/createOutletAdmin",
   passport.authenticate("jwt", { session: false }),
+  validateUser,
   brandAdminController.createOutletAdmin
 );
 brandAdminRoute.post(
   "/api/brandAdmin/addCategory",
   uploadProductImg.single("file"),
+  validateCategory,
   brandAdminController.addCategory
 );
 brandAdminRoute.post(
@@ -80,6 +90,7 @@ brandAdminRoute.post(
 brandAdminRoute.post(
   "/api/brandAdmin/addSuperCategory",
   uploadProductImg.single("file"),
+  validateSuperCategory,
   brandAdminController.addSuperCategory
 );
 

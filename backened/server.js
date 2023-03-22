@@ -4,6 +4,7 @@ var passport = require("passport");
 var cors = require("cors");
 var morgan = require("morgan");
 var dotenv = require("dotenv");
+// var validation = require("./service/validation.service").validateBrand;
 
 dotenv.config({ path: "./.env" });
 
@@ -16,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
-
+// app.use(validation);
 app.use(require("./route/employee.route"));
 app.use(require("./route/superAdmin.route"));
 app.use(require("./route/brandAdmin.route"));

@@ -1,4 +1,4 @@
-<div style="display: flex; flex-wrap: wrap">
+<div ng-class="{'dim':object.isLoading}" style="display: flex; flex-wrap: wrap">
   <div>
     <div id="container1">
       <div class="box">
@@ -26,54 +26,83 @@
       </div>
     </div>
 
-    <div ng-show="object.brandDates.length>1">
-      <h3>Brand Last Month Revenue Analysis</h3>
-      <canvas id="myChart1" area-label="chart"></canvas>
+    <div
+      style="
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        border: 1px solid lightgray;
+        border-radius: 3px;
+        background: #fdfdfd;
+        margin: 10px;
+        padding: 10px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+      "
+    >
+      <div style="width: 500px" ng-show="object.brandDates.length>1">
+        <h3>Brand Last Month Revenue Analysis</h3>
+        <canvas id="myChart1" area-label="chart"></canvas>
+      </div>
+      <div>more analysis</div>
     </div>
 
-    <div class="row">
-      <div class="col-4">
-        <div class="list-group" id="list-tab" role="tablist">
-          <input
-            type="text"
-            style="margin-bottom: 10px"
-            ng-model="search.name"
-            placeholder="type outlet name"
-            class="form-control"
-          />
-          <a
-            class="list-group-item list-group-item-action"
-            style="min-width: 200px"
-            ng-repeat="outlet in object.outlets | filter:search"
-          >
-            <div class="analysis__brandList">
-              <div
-                ng-click="fetchOutletGraphData(outlet._id)"
-                style="
-                  display: flex;
-                  cursor: pointer;
-                  flex-wrap: wrap;
-                  align-items: center;
-                "
-              >
-                <div>
-                  <img
-                    style="object-fit: contain; height: 50px"
-                    src="{{brand.logo}}"
-                    slt="..."
-                  />
+    <div
+      style="
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        border: 1px solid lightgray;
+        border-radius: 3px;
+        background: #fdfdfd;
+        margin: 10px;
+        padding: 10px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+      "
+    >
+      <div class="row">
+        <div style="min-width: 354px" class="col-4">
+          <div class="list-group" id="list-tab" role="tablist">
+            <input
+              type="text"
+              style="margin-bottom: 10px"
+              ng-model="search.name"
+              placeholder="type outlet name"
+              class="form-control"
+            />
+            <a
+              class="list-group-item list-group-item-action"
+              style="min-width: 200px"
+              ng-repeat="outlet in object.outlets | filter:search"
+            >
+              <div class="analysis__brandList">
+                <div
+                  ng-click="fetchOutletGraphData(outlet._id)"
+                  style="
+                    display: flex;
+                    cursor: pointer;
+                    flex-wrap: wrap;
+                    align-items: center;
+                  "
+                >
+                  <div>
+                    <img
+                      style="object-fit: contain; height: 50px"
+                      src="{{brand.logo}}"
+                      slt="..."
+                    />
+                  </div>
+                  <div>{{outlet.name}}</div>
                 </div>
-                <div>{{outlet.name}}</div>
               </div>
-            </div>
-          </a>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div ng-show="object.outletDates.length>1">
-      <h3>Outlet Last Month Revenue Analysis</h3>
-      <canvas id="myChart2" area-label="chart"></canvas>
+      <div style="width: 450px" ng-show="object.outletDates.length>1">
+        <h3>Outlet Last Month Revenue Analysis</h3>
+        <canvas id="myChart2" area-label="chart"></canvas>
+      </div>
     </div>
   </div>
 
@@ -158,3 +187,14 @@
     </div>
   </div>
 </div>
+<div
+  ng-if="object.isLoading"
+  class="loader"
+  style="
+    width: 100%;
+    position: absolute;
+    top: 141px;
+    height: -webkit-fill-available;
+    opacity: 0.5;
+  "
+></div>
