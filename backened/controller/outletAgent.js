@@ -70,10 +70,9 @@ module.exports = {
         },
         {
           $match: {
-            "items.name": { $in: products },
+            "items.name": { $all: products },
           },
         },
-
         {
           $unwind: "$items",
         },
@@ -89,8 +88,9 @@ module.exports = {
         },
         {
           $group: {
-            _id: "$items.name",
-            price: { $first: "$items.name" },
+            _id: "$items._id",
+            name: { $first: "$items.name" },
+            price: { $first: "$items.price" },
             img: { $first: "$items.img" },
             count: { $sum: 1 },
           },

@@ -1,4 +1,4 @@
-<div style="width: inherit">
+<div ng-class="{'dim':object.isLoading}" style="width: inherit">
   <div>
     <table class="table">
       <thead class="thead-dark">
@@ -270,3 +270,13 @@
     </div>
   </div>
 </div>
+<div
+  ng-if="object.isLoading"
+  class="loader"
+  style="
+    width: 100%;
+    height: -webkit-fill-available;
+    position: absolute;
+    opacity: 0.5;
+  "
+></div>

@@ -1,4 +1,4 @@
-<div class="agt__extDiv">
+<div ng-class="{'dim':object.isLoading}" class="agt__extDiv">
   <div class="agt__nav">
     <div class="agt__navComponent agt__activeNav" ui-sref="outletAgent">
       Home
@@ -45,10 +45,10 @@
               ng-class="{'agt__tableGreen':table.isAvailable}"
               ng-repeat="table in object.tables"
             >
-              <p style="font-weight: 900">{{table.number}}</p>
-              <p style="text-align: center; width: -webkit-fill-available">
+              <span style="font-weight: 900">{{table.number}}</span>
+              <span style="text-align: center; width: -webkit-fill-available">
                 {{table.capacity}}
-              </p>
+              </span>
             </div>
           </div>
         </div>
@@ -113,7 +113,7 @@
           </ul>
         </div>
       </div>
-      <p class="agt__itemsNumbering"></p>
+      <span class="agt__itemsNumbering"></span>
       <div class="items">
         <!-- {{products}} -->
         <div
@@ -319,10 +319,10 @@
                 src="{{item.img}}"
                 alt="loading"
               />
-              <p>{{item.name}}</p>
+              <span>{{item.name}}</span>
             </div>
 
-            <p>Rs.{{item.price}}</p>
+            <span>Rs.{{item.price}}</span>
           </div>
           <div style=" display: flex; align-items: center; justify-content:
           space-around; width: 72px;"">
@@ -333,6 +333,47 @@
           <div ng-click=" plus(item)" style="cursor: pointer">
             <i class="fas fa-plus"></i>
           </div>
+        </div>
+      </div>
+    </div>
+    <div
+      ng-if="object.recommendedProducts.length>0"
+      class="agt__recommendation"
+      style="
+        padding: 5px;
+        border: 1px solid lightgray;
+        border-radius: 3px;
+        box-shadow: #fffe 0px 0px 0px 1px;
+        display: flex;
+        gap: 3px;
+        width: 300px;
+        height: 158px;
+        overflow-x: scroll;
+        align-items: center;
+      "
+    >
+      <div
+        ng-repeat="item in object.recommendedProducts"
+        style="
+          display: flex;
+          align-items: center;
+          gap: 3px;
+          border: 1px solid lightgray;
+          border-radius: 3px;
+          padding: 3px;
+          box-shadow: #fffe 0px 0px 0px 1px;
+          height: min-content;
+        "
+      >
+        <img
+          style="object-fit: contain; height: 60px; width: 60px"
+          src="{{item.img}}"
+          alt="loading"
+        />
+        <div>
+          <span style="font-weight: 500; opacity: 0.7">{{item.name}}</span>
+          <br />
+          <span style="font-weight: 500; opacity: 0.7">Rs.{{item.price}}</span>
         </div>
       </div>
     </div>
@@ -348,6 +389,7 @@
         <div>Sub Total</div>
         <div>Rs.{{object.amount}}</div>
       </div>
+
       <div
         style="
           display: flex;
@@ -659,7 +701,12 @@
 <div
   ng-if="object.isLoading"
   class="loader"
-  style="width: 100%; height: 100vh; position: absolute; opacity: 0.5"
+  style="
+    width: 100%;
+    height: -webkit-fill-available;
+    position: absolute;
+    opacity: 0.5;
+  "
 ></div>
 
 <!-- <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"

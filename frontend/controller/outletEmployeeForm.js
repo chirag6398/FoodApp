@@ -22,6 +22,7 @@ app.controller("outletEmployeeFormController", [
       outlet: null,
       btnText: "create agent",
       agent: {},
+      isLoading: true,
     };
 
     $rootScope.$on("passData", function (err, data) {
@@ -31,6 +32,7 @@ app.controller("outletEmployeeFormController", [
         outletAdminService.getOutletAgentEmployees(
           $scope.object.outlet._id,
           function (err, result) {
+            $scope.object.isLoading = false;
             console.log(err, result);
             if (result) {
               $scope.object.agents = result.data;

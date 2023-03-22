@@ -37,6 +37,7 @@ app.controller("outletAgentController", [
       allotedTables: null,
       isLoading: true,
       cartProducts: [],
+      recommendedProducts: [],
     };
 
     outletAgentFactory.getOutletAgentPage(function (err, result) {
@@ -144,6 +145,7 @@ app.controller("outletAgentController", [
         $scope.object.cartProducts,
         function (err, result) {
           console.log(err, result);
+          $scope.object.recommendedProducts = result.data;
         }
       );
 
