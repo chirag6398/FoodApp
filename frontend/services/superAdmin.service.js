@@ -94,18 +94,85 @@ app.service("superAdminService", function (adminApi, $timeout) {
   };
 
   this.displayMap = function () {
-    var map = L.map("map").setView([37.7749, -122.4194], 10);
+    var map = L.map("map").setView([28.6425088, 77.185024], 10);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
         "Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors",
       maxZoom: 18,
     }).addTo(map);
 
-    var marker = L.marker([37.7749, -122.4194]).addTo(map);
-    marker.bindPopup("Brand Name");
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+
+        console.log("Latitude: " + latitude);
+        console.log("Longitude: " + longitude);
+        var marker = L.marker([latitude, longitude]).addTo(map);
+        marker.bindPopup("Your Location");
+      });
+    } else {
+      var marker = L.marker([37.7749, -122.4194]).addTo(map);
+      marker.bindPopup("Mc Donalds");
+    }
   };
 
-  // this.applyFilterOnUsers = function (filter, limit, pageNo, cb) {
-  //   adminApi.applyFilterOnUsers(filter, limit, pageNo, cb);
-  // };
+  var monthDetails = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+  this.createGraphData = function (data, month) {
+    console.log(data);
+    var dates = [0];
+    var revenue = [0];
+    var month = new Date().getMonth();
+    for (var i = 1; i <= monthDetails[month]; i++) {
+      dates.push(i);
+      revenue.push(0);
+    }
+    data.forEach(function (value) {
+      var date = +value._id.substr(0, 2);
+      revenue[date] = value.totalRevenue;
+    });
+    return {
+      dates,
+      revenue,
+    };
+  };
+
+  this.compareGraph = function (d1, r1, name1, d2, r2, name2, ctx, chart) {
+    chart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: d1,
+        datasets: [
+          {
+            data: r1,
+            label: name1,
+            borderColor: "red",
+            borderWidth: 1,
+            fill: true,
+            lineTention: 0.5,
+          },
+          {
+            data: r2,
+            label: name2,
+            borderColor: "green",
+            borderWidth: 1,
+            lineTention: 0.5,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+              },
+            },
+          ],
+        },
+      },
+    });
+    return chart;
+  };
 });

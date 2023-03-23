@@ -8,8 +8,9 @@ var mongoose = require("mongoose");
 var productModel = require("../model/product.model");
 var moment = require("moment");
 var async = require("async");
+var today = moment();
 
-var startDate = moment().subtract(1, "month").toDate();
+var startDate = today.startOf("month").toDate();
 var yesterDay = moment().subtract(1, "day").toDate();
 var endDate = moment().toDate();
 module.exports = {
@@ -72,12 +73,6 @@ module.exports = {
           revenue: {
             $sum: "$totalRevenue",
           },
-          // brands: {
-          //   $push: {
-          //     brand: "$_id.brand",
-          //     revenue: "$totalRevenue",
-          //   },
-          // },
         },
       },
       {
@@ -86,13 +81,6 @@ module.exports = {
       {
         $limit: 4,
       },
-      // {
-      //   $project: {
-      //     _id: 0,
-      //     date: "$_id",
-      //     brands: { $slice: ["$brands", 4] },
-      //   },
-      // },
     ];
 
     var pipeline3 = [
@@ -117,51 +105,6 @@ module.exports = {
       },
     ];
 
-    // var pipeline4 = [
-    //   {
-    //     $match: {
-    //       createdAt: {
-    //         $gte: startDate,
-    //         $lt: endDate,
-    //       },
-    //     },
-    //   },
-    //   {
-    //     $unwind: "$items",
-    //   },
-    //   {
-    //     $group: {
-    //       _id: {
-    //         brand: "$brand.name",
-    //         date: { $dateToString: { format: "%d-%m-%Y", date: "$createdAt" } },
-    //       },
-    //       brandName: { $first: "$brand.name" },
-    //       totalRevenue: {
-    //         $sum: { $multiply: ["$items.quantity", "$items.price"] },
-    //       },
-    //     },
-    //   },
-    //   {
-    //     $sort: { totalRevenue: -1 },
-    //   },
-    //   {
-    //     $group: {
-    //       _id: "$_id.date",
-    //       name: { $first: "$_id.brand" },
-    //       revenues: {
-    //         $push: "$totalRevenue",
-    //       },
-    //     },
-    //   },
-    //   {
-    //     $project: {
-    //       _id: 0,
-    //       date: "$_id",
-    //       name: "$name",
-    //       brands: { $slice: ["$revenues", 1] },
-    //     },
-    //   },
-    // ];
     var data1 = brandModel.aggregate(pipeline);
     var data2 = outletModel.aggregate(pipeline);
     var data3 = employeeModel.aggregate(pipeline);
@@ -198,56 +141,113 @@ module.exports = {
                 $sort: { totalRevenue: -1 },
               },
               {
-                $limit: 1,
+                $limit: 2,
               },
             ])
             .exec(function (err, result) {
               if (result) {
+                // console.log("top 2 brands", result);
                 cb(null, result);
               }
             });
         },
         function fetchingGrapgh(result, cb) {
-          // console.log(result);
-          if (result) {
-            orderModel
-              .aggregate([
-                {
-                  $match: {
-                    "brand._id": mongoose.Types.ObjectId(result[0]._id),
+          if (result.length) {
+            var topBrand = orderModel.aggregate([
+              {
+                $match: {
+                  "brand._id": mongoose.Types.ObjectId(result[0]._id),
+                },
+              },
+              {
+                $match: {
+                  createdAt: {
+                    $gte: startDate,
+                    $lt: endDate,
                   },
                 },
-                {
-                  $match: {
-                    createdAt: {
-                      $gte: startDate,
-                      $lt: endDate,
-                    },
+              },
+              {
+                $unwind: "$items",
+              },
+              {
+                $group: {
+                  _id: {
+                    $dateToString: { format: "%d-%m-%Y", date: "$createdAt" },
+                  },
+                  name: { $first: "$brand.name" },
+                  totalRevenue: {
+                    $sum: { $multiply: ["$items.quantity", "$items.price"] },
                   },
                 },
-                {
-                  $unwind: "$items",
+              },
+              {
+                $sort: { _id: 1 },
+              },
+            ]);
+
+            var topBrandOutletCnt = outletModel
+              .find({ "brand._id": result[0]._id, isDeleted: false })
+              .count();
+
+            var topBrandEmployeeCnt = employeeModel
+              .find({ "brand._id": result[0]._id, isDeleted: false })
+              .count();
+
+            var topSecondBrand = orderModel.aggregate([
+              {
+                $match: {
+                  "brand._id": mongoose.Types.ObjectId(result[1]._id),
                 },
-                {
-                  $group: {
-                    _id: {
-                      $dateToString: { format: "%d-%m-%Y", date: "$createdAt" },
-                    },
-                    name: { $first: "$brand.name" },
-                    totalRevenue: {
-                      $sum: { $multiply: ["$items.quantity", "$items.price"] },
-                    },
+              },
+              {
+                $match: {
+                  createdAt: {
+                    $gte: startDate,
+                    $lt: endDate,
                   },
                 },
-                {
-                  $sort: { _id: 1 },
+              },
+              {
+                $unwind: "$items",
+              },
+              {
+                $group: {
+                  _id: {
+                    $dateToString: { format: "%d-%m-%Y", date: "$createdAt" },
+                  },
+                  name: { $first: "$brand.name" },
+                  totalRevenue: {
+                    $sum: { $multiply: ["$items.quantity", "$items.price"] },
+                  },
                 },
-              ])
-              .exec(function (err, result) {
-                if (result) {
-                  cb(null, result);
-                }
-              });
+              },
+              {
+                $sort: { _id: 1 },
+              },
+            ]);
+
+            var topSecondBrandOutletCnt = outletModel
+              .find({ "brand._id": result[1]._id, isDeleted: false })
+              .count();
+
+            var topSecondBrandEmployeeCnt = employeeModel
+              .find({ "brand._id": result[1]._id, isDeleted: false })
+              .count();
+
+            Promise.all([
+              topBrand,
+              topBrandOutletCnt,
+              topBrandEmployeeCnt,
+              topSecondBrand,
+              topSecondBrandOutletCnt,
+              topSecondBrandEmployeeCnt,
+            ]).then(function (result) {
+              // console.log(result);
+              cb(null, result);
+            });
+          } else if (result) {
+            cb(null, result);
           }
         },
       ],
@@ -255,18 +255,17 @@ module.exports = {
         if (result) {
           Promise.all([data1, data2, data3, data4, data5, data6])
             .then(function (result1) {
-              // console.log(result);
-              return res.send(result1.concat([result]));
+              return res.send(result1.concat(result));
             })
             .catch(function (err) {
               console.log(err);
               return res.status(404).send(err);
             });
+        } else {
+          return res.status(404).send(err);
         }
       }
     );
-
-    // var data7 = orderModel.aggregate(pipeline4);
   },
   getBrandData: function (req, res) {
     var pipeline1 = [
@@ -379,5 +378,161 @@ module.exports = {
         // console.log(err);
         return res.status(500).send(err);
       });
+  },
+  getDataOfTopTwoBrands: function (req, res) {
+    console.log(req.params.month);
+    var month = req.params.month;
+    var year = 2023;
+    var sDate = moment({ year, month }).startOf("month").toDate();
+    var eDate = moment({ year, month }).endOf("month").toDate();
+
+    console.log(sDate, eDate);
+
+    async.waterfall(
+      [
+        function fetchingTopBrand(cb) {
+          orderModel
+            .aggregate([
+              {
+                $match: {
+                  createdAt: {
+                    $gte: sDate,
+                    $lt: eDate,
+                  },
+                },
+              },
+              {
+                $unwind: "$items",
+              },
+              {
+                $group: {
+                  _id: "$brand._id",
+                  name: { $first: "$brand.name" },
+                  totalRevenue: {
+                    $sum: { $multiply: ["$items.quantity", "$items.price"] },
+                  },
+                },
+              },
+              {
+                $sort: { totalRevenue: -1 },
+              },
+              {
+                $limit: 2,
+              },
+            ])
+            .exec(function (err, result) {
+              if (result) {
+                cb(null, result);
+              }
+            });
+        },
+        function fetchingGrapgh(result, cb) {
+          if (result.length) {
+            var topBrand = orderModel.aggregate([
+              {
+                $match: {
+                  "brand._id": mongoose.Types.ObjectId(result[0]._id),
+                },
+              },
+              {
+                $match: {
+                  createdAt: {
+                    $gte: sDate,
+                    $lt: eDate,
+                  },
+                },
+              },
+              {
+                $unwind: "$items",
+              },
+              {
+                $group: {
+                  _id: {
+                    $dateToString: { format: "%d-%m-%Y", date: "$createdAt" },
+                  },
+                  name: { $first: "$brand.name" },
+                  totalRevenue: {
+                    $sum: { $multiply: ["$items.quantity", "$items.price"] },
+                  },
+                },
+              },
+              {
+                $sort: { _id: 1 },
+              },
+            ]);
+
+            var topBrandOutletCnt = outletModel
+              .find({ "brand._id": result[0]._id, isDeleted: false })
+              .count();
+
+            var topBrandEmployeeCnt = employeeModel
+              .find({ "brand._id": result[0]._id, isDeleted: false })
+              .count();
+
+            var topSecondBrand = orderModel.aggregate([
+              {
+                $match: {
+                  "brand._id": mongoose.Types.ObjectId(result[1]._id),
+                },
+              },
+              {
+                $match: {
+                  createdAt: {
+                    $gte: sDate,
+                    $lt: eDate,
+                  },
+                },
+              },
+              {
+                $unwind: "$items",
+              },
+              {
+                $group: {
+                  _id: {
+                    $dateToString: { format: "%d-%m-%Y", date: "$createdAt" },
+                  },
+                  name: { $first: "$brand.name" },
+                  totalRevenue: {
+                    $sum: { $multiply: ["$items.quantity", "$items.price"] },
+                  },
+                },
+              },
+              {
+                $sort: { _id: 1 },
+              },
+            ]);
+
+            var topSecondBrandOutletCnt = outletModel
+              .find({ "brand._id": result[1]._id, isDeleted: false })
+              .count();
+
+            var topSecondBrandEmployeeCnt = employeeModel
+              .find({ "brand._id": result[1]._id, isDeleted: false })
+              .count();
+
+            Promise.all([
+              topBrand,
+              topBrandOutletCnt,
+              topBrandEmployeeCnt,
+              topSecondBrand,
+              topSecondBrandOutletCnt,
+              topSecondBrandEmployeeCnt,
+            ]).then(function (result) {
+              cb(null, result);
+            });
+          } else if (result) {
+            cb(null, result);
+          }
+        },
+      ],
+      function (err, result) {
+        console.log(err, result);
+        if (result) {
+          return res.send(result);
+        } else {
+          return res.status(404).send(err);
+        }
+      }
+    );
   },
 };

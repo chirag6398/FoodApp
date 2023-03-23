@@ -117,30 +117,32 @@
       aria-label="Page navigation example"
     >
       <ul class="pagination justify-content-end">
-        <li
-          class="page-item"
+        <button
+          class="page-item btn"
           ng-click="getUserHandler(object.page-1,object.limit)"
+          ng-disabled="object.page===object.one"
           ng-class="{'disabled':object.page===1}"
         >
           <a class="page-link">Previous</a>
-        </li>
-        <li
-          class="page-item"
+        </button>
+        <button
+          class="page-item btn"
           ng-click="getUserHandler($index+1,object.limit)"
-          ng-class="{'disabled':object.page===$index+1}"
+          ng-disabled="$index+1===object.page"
+          ng-class="{'disabled':$index+1===object.page}"
           ng-repeat="page in object.pages track by $index"
         >
           <a class="page-link">{{$index+1}}</a>
-        </li>
+        </button>
 
-        <li class="page-item">
-          <a
-            class="page-link"
-            ng-click="getUserHandler(object.page+1,object.limit)"
-            ng-class="{'disabled':object.page===object.totalPage}"
-            >Next</a
-          >
-        </li>
+        <button
+          ng-click="getUserHandler(object.page+1,object.limit)"
+          ng-disabled="object.page===object.totalPage"
+          ng-class="{'disabled':object.page===object.totalPage}"
+          class="page-item btn"
+        >
+          <a class="page-link">Next</a>
+        </button>
       </ul>
     </nav>
   </div>

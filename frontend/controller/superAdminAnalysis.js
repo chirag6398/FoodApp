@@ -10,7 +10,15 @@ app.controller("superAdminAnalysisController", [
     $scope.object = {
       dates: [0],
       topBrandName: null,
+      topSecondBrandName: null,
+      topBrandOutletCnt: 0,
+      topBrandEmployeeCnt: 0,
+      topSecondBrandName: null,
+      topSecondBrandOutletCnt: 0,
+      topSecondBrandEmployeeCnt: 0,
       revenue: [0],
+      topSecondBrandDates: [0],
+      topSecondBrandRevenue: [0],
       brandCnt: 0,
       outletCnt: 0,
       userCnt: 0,
@@ -26,6 +34,20 @@ app.controller("superAdminAnalysisController", [
       chart2: null,
       chart3: null,
       isLoading: true,
+      months: [
+        "Jan",
+        "Feb",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
     };
 
     superAdminService.displayMap();
@@ -40,17 +62,34 @@ app.controller("superAdminAnalysisController", [
         $scope.object.brands = result.data[3];
         $scope.object.totalRevenue = result.data[5][0].lastMonthRevenue;
         $scope.object.topBrands = result.data[4];
+        $scope.object.topBrandOutletCnt = result.data[7];
+        $scope.object.topBrandEmployeeCnt = result.data[8];
+        $scope.object.topSecondBrandOutletCnt = result.data[10];
+        $scope.object.topSecondBrandEmployeeCnt = result.data[11];
 
-        result.data[6].forEach(function (value) {
-          $scope.object.dates.push(value._id);
-          $scope.object.revenue.push(value.totalRevenue);
-          $scope.object.topBrandName = value.name;
-        });
+        $scope.object.graphData = superAdminService.createGraphData(
+          result.data[6]
+        );
 
-        $scope.object.chart1 = superAdminService.displayGraph(
+        $scope.object.dates = $scope.object.graphData.dates;
+        $scope.object.revenue = $scope.object.graphData.revenue;
+        $scope.object.topBrandName = result.data[6][0].name;
+
+        $scope.object.graphData = superAdminService.createGraphData(
+          result.data[9]
+        );
+
+        $scope.object.topSecondBrandDates = $scope.object.graphData.dates;
+        $scope.object.topSecondBrandRevenue = $scope.object.graphData.revenue;
+        $scope.object.topSecondBrandName = result.data[9][0].name;
+
+        $scope.object.chart1 = superAdminService.compareGraph(
           $scope.object.dates,
           $scope.object.revenue,
           $scope.object.topBrandName,
+          $scope.object.topSecondBrandDates,
+          $scope.object.topSecondBrandRevenue,
+          $scope.object.topSecondBrandName,
           document.getElementById("myChart3").getContext("2d"),
           $scope.object.chart1
         );
@@ -64,15 +103,19 @@ app.controller("superAdminAnalysisController", [
 
     $scope.fechGraphData = function (brandId, brandName) {
       console.log(brandId);
+      $scope.object.isLoading = true;
       superAdminDashBoardApi.fetchBrandGraphData(
         brandId,
         function (err, result) {
+          $scope.object.isLoading = false;
           console.log(err, result);
           if (result.data.length) {
-            result.data.forEach(function (element) {
-              $scope.object.brandDates.push(element._id);
-              $scope.object.brandRevenue.push(element.totalRevenue);
-            });
+            $scope.object.graphData = superAdminService.createGraphData(
+              result.data
+            );
+
+            $scope.object.brandDates = $scope.object.graphData.dates;
+            $scope.object.brandRevenue = $scope.object.graphData.revenue;
 
             if ($scope.object.chart2) {
               $scope.object.chart2.destroy();
@@ -91,14 +134,18 @@ app.controller("superAdminAnalysisController", [
     };
 
     $scope.fetchOutletGraphData = function (outletId, outletName) {
+      $scope.object.isLoading = true;
       superAdminDashBoardApi.fetchOutletGraphData(
         outletId,
         function (err, result) {
+          $scope.object.isLoading = false;
           if (result.data.length) {
-            result.data.forEach(function (element) {
-              $scope.object.outletDates.push(element._id);
-              $scope.object.outletRevenue.push(element.totalRevenue);
-            });
+            $scope.object.graphData = superAdminService.createGraphData(
+              result.data
+            );
+
+            $scope.object.outletDates = $scope.object.graphData.dates;
+            $scope.object.outletRevenue = $scope.object.graphData.revenue;
 
             if ($scope.object.chart3) {
               $scope.object.chart3.destroy();
@@ -110,6 +157,76 @@ app.controller("superAdminAnalysisController", [
               outletName,
               document.getElementById("myChart2").getContext("2d"),
               $scope.object.chart3
+            );
+          }
+        }
+      );
+    };
+
+    $scope.getDataOfTopTwoBrands = function (month) {
+      $scope.object.isLoading = true;
+      superAdminDashBoardApi.getDataOfTopTwoBrands(
+        month,
+        function (err, result) {
+          console.log(err, result);
+          $scope.object.isLoading = false;
+          if (result.data.length) {
+            $scope.object.graphData = superAdminService.createGraphData(
+              result.data[0]
+            );
+
+            $scope.object.dates = $scope.object.graphData.dates;
+            $scope.object.revenue = $scope.object.graphData.revenue;
+            $scope.object.topBrandName = result.data[0][0].name;
+            if (result.data.length >= 3)
+              $scope.object.graphData = superAdminService.createGraphData(
+                result.data[3]
+              );
+
+            $scope.object.topSecondBrandDates = $scope.object.graphData.dates;
+            $scope.object.topSecondBrandRevenue =
+              $scope.object.graphData.revenue;
+            $scope.object.topSecondBrandName = result.data[3][0].name;
+
+            if ($scope.object.chart1) {
+              $scope.object.chart1.destroy();
+            }
+            $scope.object.chart1 = superAdminService.compareGraph(
+              $scope.object.dates,
+              $scope.object.revenue,
+              $scope.object.topBrandName,
+              $scope.object.topSecondBrandDates,
+              $scope.object.topSecondBrandRevenue,
+              $scope.object.topSecondBrandName,
+              document.getElementById("myChart3").getContext("2d"),
+              $scope.object.chart1
+            );
+          } else {
+            $scope.object.graphData = superAdminService.createGraphData([]);
+
+            $scope.object.dates = $scope.object.graphData.dates;
+            $scope.object.revenue = $scope.object.graphData.revenue;
+            $scope.object.topBrandName = "None";
+
+            $scope.object.graphData = superAdminService.createGraphData([]);
+
+            $scope.object.topSecondBrandDates = $scope.object.graphData.dates;
+            $scope.object.topSecondBrandRevenue =
+              $scope.object.graphData.revenue;
+            $scope.object.topSecondBrandName = "None";
+
+            if ($scope.object.chart1) {
+              $scope.object.chart1.destroy();
+            }
+            $scope.object.chart1 = superAdminService.compareGraph(
+              $scope.object.dates,
+              $scope.object.revenue,
+              $scope.object.topBrandName,
+              $scope.object.topSecondBrandDates,
+              $scope.object.topSecondBrandRevenue,
+              $scope.object.topSecondBrandName,
+              document.getElementById("myChart3").getContext("2d"),
+              $scope.object.chart1
             );
           }
         }

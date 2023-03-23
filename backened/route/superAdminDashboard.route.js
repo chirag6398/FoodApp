@@ -21,6 +21,12 @@ superAdminDashboardRoute.get(
 );
 
 superAdminDashboardRoute.get(
+  "/api/superAdmin/getDataOfTopTwoBrands/:month",
+  passport.authenticate("jwt", { session: false }),
+  superAdminDashboardController.getDataOfTopTwoBrands
+);
+
+superAdminDashboardRoute.get(
   "/api/superAdmin/getBrandGraphData/:id",
   passport.authenticate("jwt", { session: false }),
   superAdminDashboardController.getBrandGraphData

@@ -13,6 +13,7 @@ app.controller("superAdminUsersController", [
       totalCount: 0,
       users: [],
       totalPage: 1,
+      one: 1,
       searchUser: "",
       searchTextResult: [],
       filter: {
@@ -49,6 +50,9 @@ app.controller("superAdminUsersController", [
           $scope.object.isLoading = false;
           $scope.object.users = result.data.data;
           $scope.object.totalCount = result.data.count;
+          $scope.object.totalPage = Math.ceil(
+            $scope.object.totalCount / $scope.object.limit
+          );
           $scope.object.pages = superAdminService.getPages(
             $scope.object.totalCount,
             $scope.object.limit
@@ -58,16 +62,22 @@ app.controller("superAdminUsersController", [
     );
 
     $scope.getUserHandler = function (page, limit) {
+      $scope.object.isLoading = true;
       superAdminService.getUsers(
         $scope.object.filter,
         limit,
         page,
         function (err, result) {
+          $scope.object.isLoading = false;
           if (result) {
             console.log(result);
             $scope.object.users = result.data.data;
             $scope.object.totalCount = result.data.count;
             $scope.object.page = page;
+
+            $scope.object.totalPage = Math.ceil(
+              $scope.object.totalCount / $scope.object.limit
+            );
             $scope.object.pages = superAdminService.getPages(
               $scope.object.totalCount,
               $scope.object.limit

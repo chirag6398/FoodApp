@@ -59,6 +59,61 @@
       </h3>
       <canvas id="myChart3" area-label="chart"></canvas>
     </div>
+    <div class="analysis__displayColumn">
+      <div class="dropdown show">
+        <a
+          class="btn btn-secondary dropdown-toggle"
+          href="#"
+          role="button"
+          id="dropdownMenuLink"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Select Month
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a
+            class="dropdown-item"
+            style="cursor: pointer"
+            ng-repeat="month in object.months"
+            ng-click="getDataOfTopTwoBrands($index)"
+            >{{month}}</a
+          >
+        </div>
+      </div>
+
+      <div class="analysis__smallBox">
+        <div>
+          <span> Total Outlets(1st): </span>
+          <span style="font-weight: 900; opacity: 0.8">
+            {{object.topBrandOutletCnt}}
+          </span>
+        </div>
+        <div>
+          <span> Total Outlets(2nd): </span>
+          <span style="font-weight: 900; opacity: 0.8">
+            {{object.topSecondBrandOutletCnt}}
+          </span>
+        </div>
+      </div>
+      <div class="analysis__smallBox">
+        <div>
+          <span> Total Employees(1st): </span>
+          <span style="font-weight: 900; opacity: 0.8">
+            {{object.topBrandEmployeeCnt}}
+          </span>
+        </div>
+        <div>
+          <span> Total Employees(2nd): </span>
+          <span style="font-weight: 900; opacity: 0.8">
+            {{object.topSecondBrandEmployeeCnt}}
+          </span>
+        </div>
+      </div>
+    </div>
+
     <div
       style="
         min-width: 238px;

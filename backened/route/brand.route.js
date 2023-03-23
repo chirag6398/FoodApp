@@ -36,7 +36,6 @@ brandRoute.get(
 
 brandRoute.post(
   "/api/brand/createBrand",
-
   uploadProductImg.single("file"),
   validateBrand,
   brandController.createBrand
