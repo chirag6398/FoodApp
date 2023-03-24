@@ -103,23 +103,23 @@ app.controller("superAdminAnalysisController", [
 
     $scope.fechGraphData = function (brandId, brandName) {
       console.log(brandId);
+
       $scope.object.isLoading = true;
       superAdminDashBoardApi.fetchBrandGraphData(
         brandId,
         function (err, result) {
           $scope.object.isLoading = false;
           console.log(err, result);
-          if (result.data.length) {
+          if (result.data) {
             $scope.object.graphData = superAdminService.createGraphData(
               result.data
             );
-
-            $scope.object.brandDates = $scope.object.graphData.dates;
-            $scope.object.brandRevenue = $scope.object.graphData.revenue;
-
             if ($scope.object.chart2) {
               $scope.object.chart2.destroy();
             }
+
+            $scope.object.brandDates = $scope.object.graphData.dates;
+            $scope.object.brandRevenue = $scope.object.graphData.revenue;
 
             $scope.object.chart2 = superAdminService.displayGraph(
               $scope.object.brandDates,
@@ -135,11 +135,12 @@ app.controller("superAdminAnalysisController", [
 
     $scope.fetchOutletGraphData = function (outletId, outletName) {
       $scope.object.isLoading = true;
+
       superAdminDashBoardApi.fetchOutletGraphData(
         outletId,
         function (err, result) {
           $scope.object.isLoading = false;
-          if (result.data.length) {
+          if (result.data) {
             $scope.object.graphData = superAdminService.createGraphData(
               result.data
             );

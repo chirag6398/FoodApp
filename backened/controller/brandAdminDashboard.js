@@ -323,4 +323,48 @@ module.exports = {
         return res.status(500).send(err);
       });
   },
+  getGraphData: function (req, res) {
+    var id = req.query.id;
+    var month = req.query.month;
+    var year = 2023;
+    var sDate = moment({ year, month }).startOf("month").toDate();
+    var eDate = moment({ year, month }).endOf("month").toDate();
+    var pipeline = [
+      {
+        $match: {
+          "brand._id": mongoose.Types.ObjectId(id),
+        },
+      },
+      {
+        $match: {
+          createdAt: {
+            $gte: sDate,
+            $lt: eDate,
+          },
+        },
+      },
+      {
+        $unwind: "$items",
+      },
+      {
+        $group: {
+          _id: { $dateToString: { format: "%d-%m-%Y", date: "$createdAt" } },
+          totalRevenue: {
+            $sum: { $multiply: ["$items.quantity", "$items.price"] },
+          },
+        },
+      },
+      {
+        $sort: { _id: 1 },
+      },
+    ];
+
+    return orderModel.aggregate(pipeline).exec(function (err, result) {
+      if (result) {
+        return res.send(result);
+      } else {
+        return res.status(404).send(err);
+      }
+    });
+  },
 };

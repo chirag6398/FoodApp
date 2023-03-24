@@ -276,17 +276,21 @@ module.exports = {
     });
   },
   getOutletSale: function (req, res) {
+    var month = req.query.month;
+    var year = 2023;
+    var sDate = moment({ year, month }).startOf("month").toDate();
+    var eDate = moment({ year, month }).endOf("month").toDate();
     var pipeline = [
       {
         $match: {
-          "outlet._id": mongoose.Types.ObjectId(req.params.id),
+          "outlet._id": mongoose.Types.ObjectId(req.query.id),
         },
       },
       {
         $match: {
           createdAt: {
-            $gte: startDate,
-            $lt: endDate,
+            $gte: sDate,
+            $lt: eDate,
           },
         },
       },

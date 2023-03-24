@@ -139,5 +139,36 @@ app.controller("brandAdminDashboardController", [
         }
       );
     };
+
+    $scope.getBrandGraph = function (month) {
+      $scope.object.month = month;
+      brandAdminDashBoardApi.getGraphData(
+        $scope.object.brand._id,
+        month,
+        function (err, result) {
+          if (result) {
+            $scope.object.activity = brandAdminService.getGraphData(
+              $scope.object.month,
+              result.data
+            );
+
+            $scope.object.brandDates = $scope.object.activity.dates;
+            $scope.object.brandRevenue = $scope.object.activity.activity;
+
+            if ($scope.object.myChart1) {
+              $scope.object.myChart1.destroy();
+            }
+
+            $scope.object.myChart1 = superAdminService.displayGraph(
+              $scope.object.brandDates,
+              $scope.object.brandRevenue,
+              $scope.object.brand.name,
+              document.getElementById("myChart1").getContext("2d"),
+              $scope.object.myChart1
+            );
+          }
+        }
+      );
+    };
   },
 ]);

@@ -56,6 +56,7 @@ module.exports = {
       .sort({ "brand.name": 1 })
       .then(function (result) {
         employeeModel.countDocuments(filter, function (err, count) {
+          console.log(result, filter);
           return res.send({ data: result, count: count });
         });
       })

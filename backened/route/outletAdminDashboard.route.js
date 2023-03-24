@@ -13,7 +13,7 @@ outletAdminDashboardRoute.get(
 );
 
 outletAdminDashboardRoute.get(
-  "/api/outletAdmin/getOutletSale/:id",
+  "/api/outletAdmin/getOutletSale",
   passport.authenticate("jwt", { session: false }),
   outletAdminDashboardController.getOutletSale
 );
