@@ -30,17 +30,121 @@
     </div>
   </div>
 
-  <div ng-show="object.outletDates.length>1">
-    <h3>Outlet Last Month Revenue Analysis</h3>
-    <canvas id="myChart" area-label="chart"></canvas>
+  <div
+    style="
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      border: 1px solid lightgray;
+      border-radius: 3px;
+      background: #fdfdfd;
+      margin: 10px;
+      padding: 10px;
+      width: 100%;
+      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    "
+  >
+    <div
+      style="
+        width: 460px;
+        padding: 10px;
+        border: 1px solid lightgray;
+        margin: 10px;
+        border-radius: 3px;
+      "
+      ng-show="object.outletDates.length>1"
+    >
+      <h3>Outlet Last Month Revenue Analysis</h3>
+      <canvas id="myChart" area-label="chart"></canvas>
+    </div>
+    <div
+      style="
+        width: 460px;
+        padding: 10px;
+        border: 1px solid lightgray;
+        margin: 10px;
+        border-radius: 3px;
+        display: flex;
+        flex-direction: column;
+      "
+    >
+      <div style="display: flex; justify-content: space-between">
+        <span>
+          Outlet Activity :
+          <span style="font-weight: 900; opacity: 0.7"
+            >{{object.months[object.month]}}</span
+          >
+        </span>
+        <div class="dropdown show">
+          <a
+            class="btn btn-secondary dropdown-toggle"
+            href="#"
+            role="button"
+            id="dropdownMenuLink"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Select Month
+          </a>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a
+              class="dropdown-item"
+              style="cursor: pointer"
+              ng-repeat="month in object.months"
+              ng-click="getOrderActivity($index)"
+              >{{month}}</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <div
+        style="
+          width: 222px;
+          height: 133px;
+          padding: 10px;
+          border: 1px solid lightgray;
+          margin: 10px;
+          border-radius: 3px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        "
+      >
+        <div style="display: flex; gap: 5px; flex-wrap: wrap">
+          <div
+            style="
+              height: 15px;
+              width: 15px;
+              background: black;
+
+              border-radius: 2px;
+              cursor: pointer;
+            "
+            title="{{object.orderCnts[$index+1]}}"
+            ng-style="{background:+object.orderCnts[$index+1].substr(0,1)>=object.one?'green':'lightgreen'}"
+            ng-repeat="day in object.orderDates"
+          >
+            <!-- {{}} -->
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
   <div
     style="
       display: flex;
       gap: 10px;
+      width: 100%;
       flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
+      justify-content: space-between;
+      padding: 10px;
+      border: 1px solid lightgray;
+      margin: 10px;
+      border-radius: 3px;
     "
   >
     <div>
@@ -103,6 +207,7 @@
             <a
               class="list-group-item list-group-item-action"
               style="min-width: 300px"
+              ng-if="category.categoryName"
               ng-repeat="category in object.topTenCategories "
             >
               <div class="analysis__brandList">

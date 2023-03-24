@@ -19,7 +19,13 @@
 
 
 
+.dark{
+  background-color: black;
+}
 
+.light{
+  background-color: #97bf0d;
+}
 .sidebar{
   position: fixed;
   top: 0;

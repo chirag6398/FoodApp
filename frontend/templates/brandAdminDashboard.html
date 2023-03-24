@@ -39,11 +39,54 @@
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
       "
     >
-      <div style="width: 500px" ng-show="object.brandDates.length>1">
+      <div
+        style="
+          width: 500px;
+          display: flex;
+          flex-direction: column;
+          padding: 10px;
+          border: 1px solid lightgray;
+          border-radius: 3px;
+        "
+        ng-show="object.brandDates.length>1"
+      >
         <h3>Brand Last Month Revenue Analysis</h3>
         <canvas id="myChart1" area-label="chart"></canvas>
       </div>
-      <div>more analysis</div>
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            border: 1px solid lightgray;
+            border-radius: 3px;
+          "
+        >
+          <span style="font-weight: 900; opacity: 0.6"> Top Outlet Data </span>
+          <span> {{object.topOutlet.name}} </span>
+          <span style="font-weight: 900; opacity: 0.6"
+            >Rs. {{object.topOutlet.totalRevenue}}
+          </span>
+        </div>
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            border: 1px solid lightgray;
+            border-radius: 3px;
+          "
+        >
+          <span style="font-weight: 900; opacity: 0.6">
+            Bottom Outlet Data
+          </span>
+          <span> {{object.bottomOutlet.name}} </span>
+          <span style="font-weight: 900; opacity: 0.6"
+            >Rs. {{object.bottomOutlet.totalRevenue}}
+          </span>
+        </div>
+      </div>
     </div>
 
     <div
@@ -76,7 +119,7 @@
             >
               <div class="analysis__brandList">
                 <div
-                  ng-click="fetchOutletGraphData(outlet._id)"
+                  ng-click="fetchOutletGraphData(outlet._id,outlet.name)"
                   style="
                     display: flex;
                     cursor: pointer;
@@ -97,6 +140,23 @@
             </a>
           </div>
         </div>
+      </div>
+      <div
+        ng-show="object.outletDates.length===1"
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid lightgray;
+          border-radius: 3px;
+          background: #fdfdfd;
+
+          padding: 10px;
+        "
+      >
+        <span style="font-weight: 900; opacity: 0.7">
+          Select outlet from left to view chart
+        </span>
       </div>
 
       <div style="width: 450px" ng-show="object.outletDates.length>1">

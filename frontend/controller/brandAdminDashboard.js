@@ -6,7 +6,17 @@ app.controller("brandAdminDashboardController", [
   "brandApi",
   "brandAdminDashBoardApi",
   "$timeout",
-  function ($scope, $rootScope, brandApi, brandAdminDashBoardApi, $timeout) {
+  "brandAdminService",
+  "superAdminService",
+  function (
+    $scope,
+    $rootScope,
+    brandApi,
+    brandAdminDashBoardApi,
+    $timeout,
+    brandAdminService,
+    superAdminService
+  ) {
     $scope.object = {
       myChart1: null,
       myChart2: null,
@@ -23,6 +33,21 @@ app.controller("brandAdminDashboardController", [
       outletDates: [0],
       outletRevenue: [0],
       isLoading: true,
+      months: [
+        "Jan",
+        "Feb",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+      month: null,
     };
     $timeout(function () {
       if ($scope.object.brand === null) {
@@ -46,41 +71,35 @@ app.controller("brandAdminDashboardController", [
             $scope.object.topTenCategories = result.data[3];
             $scope.object.topTenProducts = result.data[4];
             $scope.object.brandGraphData = result.data[5];
+            $scope.object.topOutlet = result.data[7][0];
+            $scope.object.bottomOutlet = result.data[6][0];
 
-            $scope.object.brandGraphData.forEach(function (element) {
-              $scope.object.brandDates.push(element._id);
-              $scope.object.brandRevenue.push(element.totalRevenue);
-            });
+            $scope.object.month = new Date().getMonth();
+            $scope.object.activity = brandAdminService.getGraphData(
+              $scope.object.month,
+              $scope.object.brandGraphData
+            );
+
+            $scope.object.brandDates = $scope.object.activity.dates;
+            $scope.object.brandRevenue = $scope.object.activity.activity;
+
             if ($scope.object.myChart1) {
               $scope.object.myChart1.destroy();
             }
 
-            var ctx1 = document.getElementById("myChart1").getContext("2d");
-            $scope.object.myChart1 = new Chart(ctx1, {
-              type: "line",
-              data: {
-                labels: $scope.object.brandDates,
-                datasets: [
-                  {
-                    data: $scope.object.brandRevenue,
-                    label: "Dataset",
-                    fill: true,
-                    backgroundColor: "rgba(220,220,220,0.5)",
-                    borderColor: "rgba(220,220,220,1)",
-                    pointBackgroundColor: "rgba(220,220,220,1)",
-                    pointBorderColor: "#fff",
-                    pointHoverBackgroundColor: "#fff",
-                    pointHoverBorderColor: "rgba(220,220,220,1)",
-                  },
-                ],
-              },
-            });
+            $scope.object.myChart1 = superAdminService.displayGraph(
+              $scope.object.brandDates,
+              $scope.object.brandRevenue,
+              $scope.object.brand.name,
+              document.getElementById("myChart1").getContext("2d"),
+              $scope.object.myChart1
+            );
           }
         );
       }
     });
 
-    $scope.fetchOutletGraphData = function (outletId) {
+    $scope.fetchOutletGraphData = function (outletId, outletName) {
       brandAdminDashBoardApi.fetchOutletGraphData(
         outletId,
         function (err, result) {
@@ -90,31 +109,25 @@ app.controller("brandAdminDashboardController", [
               $scope.object.myChart2.destroy();
             }
 
-            result.data.forEach(function (element) {
-              $scope.object.outletDates.push(element._id);
-              $scope.object.outletRevenue.push(element.totalRevenue);
-            });
+            $scope.object.activity = brandAdminService.getGraphData(
+              $scope.object.month,
+              result.data
+            );
 
-            var ctx2 = document.getElementById("myChart2").getContext("2d");
-            $scope.object.myChart2 = new Chart(ctx2, {
-              type: "line",
-              data: {
-                labels: $scope.object.outletDates,
-                datasets: [
-                  {
-                    data: $scope.object.outletRevenue,
-                    label: "Dataset",
-                    fill: true,
-                    backgroundColor: "rgba(220,220,220,0.5)",
-                    borderColor: "rgba(220,220,220,1)",
-                    pointBackgroundColor: "rgba(220,220,220,1)",
-                    pointBorderColor: "#fff",
-                    pointHoverBackgroundColor: "#fff",
-                    pointHoverBorderColor: "rgba(220,220,220,1)",
-                  },
-                ],
-              },
-            });
+            $scope.object.outletDates = $scope.object.activity.dates;
+            $scope.object.outletRevenue = $scope.object.activity.activity;
+
+            if ($scope.object.myChart2) {
+              $scope.object.myChart2.destroy();
+            }
+
+            $scope.object.myChart2 = superAdminService.displayGraph(
+              $scope.object.outletDates,
+              $scope.object.outletRevenue,
+              outletName,
+              document.getElementById("myChart2").getContext("2d"),
+              $scope.object.myChart2
+            );
           }
         }
       );

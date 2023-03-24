@@ -210,6 +210,7 @@ app.controller("outletAgentController", [
             $scope.object.cart = [];
             $scope.object.amount = 0;
             $scope.object.saved = false;
+            $scope.object.recommendedProducts = [];
             $scope.object.orderBtn = "placed order";
             $scope.object.btnText = "Enter";
             $scope.object.customer = {};

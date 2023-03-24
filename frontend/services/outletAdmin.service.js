@@ -71,5 +71,46 @@ app.service(
         return element._id === value._id;
       });
     };
+
+    var monthDetails = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    this.getActivityData = function (month, data) {
+      var dates = [0];
+      var activity = [""];
+      for (var i = 1; i <= monthDetails[month]; i++) {
+        dates.push(i);
+        var str = "0 orders booked on " + i;
+        activity.push(str);
+      }
+      if (data) {
+        data.forEach(function (value) {
+          var date = +value._id.substr(0, 2);
+          activity[date - 1] = value.count + " orders booked on " + date;
+        });
+      }
+      return {
+        dates,
+        activity,
+      };
+    };
+
+    this.getOutletGraphData = function (month, data) {
+      var dates = [0];
+      var activity = [0];
+      for (var i = 1; i <= monthDetails[month]; i++) {
+        dates.push(i);
+
+        activity.push(0);
+      }
+      if (data) {
+        data.forEach(function (value) {
+          var date = +value._id.substr(0, 2);
+          activity[date] = value.totalRevenue;
+        });
+      }
+      return {
+        dates,
+        activity,
+      };
+    };
   }
 );

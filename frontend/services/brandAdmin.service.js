@@ -71,4 +71,26 @@ app.service("brandAdminService", function (brandApi, $stateParams) {
       return value._id === id;
     });
   };
+
+  var monthDetails = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+  this.getGraphData = function (month, data) {
+    var dates = [0];
+    var activity = [0];
+    for (var i = 1; i <= monthDetails[month]; i++) {
+      dates.push(i);
+
+      activity.push(0);
+    }
+    if (data) {
+      data.forEach(function (value) {
+        var date = +value._id.substr(0, 2);
+        activity[date] = value.totalRevenue;
+      });
+    }
+    return {
+      dates,
+      activity,
+    };
+  };
 });

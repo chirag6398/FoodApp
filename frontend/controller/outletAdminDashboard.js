@@ -2,18 +2,20 @@
 
 app.controller("outletAdminDashboardController", [
   "$scope",
-  "$location",
+  "superAdminService",
   "outletAdminDashBoardApi",
   "$rootScope",
   "outletApi",
   "$timeout",
+  "outletAdminService",
   function (
     $scope,
-    $location,
+    superAdminService,
     outletAdminDashBoardApi,
     $rootScope,
     outletApi,
-    $timeout
+    $timeout,
+    outletAdminService
   ) {
     $scope.object = {
       myChart1: null,
@@ -26,6 +28,23 @@ app.controller("outletAdminDashboardController", [
       outletRevenue: [0],
       outlet: null,
       isLoading: true,
+      orderDates: [],
+      orderCnts: [],
+      months: [
+        "Jan",
+        "Feb",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
+      month: null,
     };
 
     $timeout(function () {
@@ -33,7 +52,8 @@ app.controller("outletAdminDashboardController", [
         outletApi.getOutletAdminPage();
       }
     }, 1300);
-
+    $scope.object.two = 2;
+    $scope.object.one = 1;
     $rootScope.$on("passData", function (err, data) {
       if (data) {
         $scope.object.outlet = data.data.outletData;
@@ -50,43 +70,58 @@ app.controller("outletAdminDashboardController", [
             $scope.object.topTenProducts = result.data[4];
             $scope.object.outletDates = [0];
             $scope.object.outletRevenue = [0];
-            result.data[5].forEach(function (element) {
-              $scope.object.outletDates.push(element._id);
-              $scope.object.outletRevenue.push(element.totalRevenue);
-            });
+            $scope.object.month = new Date().getMonth();
+            $scope.object.activity = outletAdminService.getOutletGraphData(
+              $scope.object.month,
+              result.data[5]
+            );
+
+            $scope.object.outletDates = $scope.object.activity.dates;
+            $scope.object.outletRevenue = $scope.object.activity.activity;
+
+            $scope.object.activity = outletAdminService.getActivityData(
+              $scope.object.month,
+              result.data[6]
+            );
+            $scope.object.orderDates = $scope.object.activity.dates;
+            $scope.object.orderCnts = $scope.object.activity.activity;
+            console.log($scope.object.orderCnts);
+
             if ($scope.object.myChart1) {
               $scope.object.myChart1.destroy();
             }
-            console.log($scope.object.outletDates, $scope.object.outletRevenue);
-            var ctx2 = document.getElementById("myChart").getContext("2d");
-            $scope.object.myChart1 = new Chart(ctx2, {
-              type: "line",
-              data: {
-                labels: $scope.object.outletDates,
-                datasets: [
-                  {
-                    data: $scope.object.outletRevenue,
-                    label: "Dataset",
-                    fill: true,
-                    backgroundColor: "rgba(220,220,220,0.5)",
-                    borderColor: "rgba(220,220,220,1)",
-                    pointBackgroundColor: "rgba(220,220,220,1)",
-                    pointBorderColor: "#fff",
-                    pointHoverBackgroundColor: "#fff",
-                    pointHoverBorderColor: "rgba(220,220,220,1)",
-                  },
-                ],
-              },
-            });
+
+            $scope.object.myChart1 = superAdminService.displayGraph(
+              $scope.object.outletDates,
+              $scope.object.outletRevenue,
+              $scope.object.outlet.name,
+              document.getElementById("myChart").getContext("2d"),
+              $scope.object.myChart1
+            );
           }
         );
       }
     });
 
-    $rootScope.$on("notEligible", function (err, isEligible) {
-      if (!isEligible) {
-        $location.path("login");
-      }
-    });
+    $scope.getOrderActivity = function (month) {
+      $scope.object.month = month;
+
+      outletAdminDashBoardApi.getOrderActivity(
+        month,
+        $scope.object.outlet._id,
+        function (err, result) {
+          console.log(err, result);
+          if (result) {
+            $scope.object.activity = outletAdminService.getActivityData(
+              month,
+              result.data
+            );
+
+            $scope.object.orderDates = $scope.object.activity.dates;
+            $scope.object.orderCnts = $scope.object.activity.activity;
+          }
+        }
+      );
+    };
   },
 ]);

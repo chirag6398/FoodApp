@@ -12,4 +12,16 @@ outletAdminDashboardRoute.get(
   outletAdminDashboardController.getBasicData
 );
 
+outletAdminDashboardRoute.get(
+  "/api/outletAdmin/getOutletSale/:id",
+  passport.authenticate("jwt", { session: false }),
+  outletAdminDashboardController.getOutletSale
+);
+
+outletAdminDashboardRoute.get(
+  "/api/outletAdmin/getOrderActivity",
+  passport.authenticate("jwt", { session: false }),
+  outletAdminDashboardController.getOrderActivity
+);
+
 module.exports = outletAdminDashboardRoute;
