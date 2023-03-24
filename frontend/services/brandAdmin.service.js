@@ -93,4 +93,22 @@ app.service("brandAdminService", function (brandApi, $stateParams) {
       activity,
     };
   };
+
+  this.getOrderAnalysis = function (data) {
+    var orderAnalysis = {
+      totalOrders: 0,
+      successRate: 0,
+      cancellationRate: 0,
+    };
+
+    if (data.length === 2) {
+      orderAnalysis.totalOrders = data[0].count + data[1].count;
+      orderAnalysis.successRate =
+        (data[0].count / orderAnalysis.totalOrders) * 100;
+      orderAnalysis.cancellationRate =
+        (data[1].count / orderAnalysis.totalOrders) * 100;
+    }
+
+    return orderAnalysis;
+  };
 });

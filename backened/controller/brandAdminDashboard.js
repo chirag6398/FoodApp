@@ -277,8 +277,43 @@ module.exports = {
         $sort: { _id: 1 },
       },
     ];
-    orderModel
-      .aggregate(pipeline)
+    var pipeline1 = [
+      {
+        $match: {
+          "outlet._id": mongoose.Types.ObjectId(req.params.id),
+        },
+      },
+      {
+        $match: {
+          createdAt: {
+            $gte: startDate,
+            $lt: endDate,
+          },
+        },
+      },
+      {
+        $match: {
+          status: { $in: ["served", "cancelled"] },
+        },
+      },
+      {
+        $unwind: "$items",
+      },
+      {
+        $group: {
+          _id: "$status",
+          totalRevenue: {
+            $sum: { $multiply: ["$items.quantity", "$items.price"] },
+          },
+          count: { $sum: 1 },
+        },
+      },
+    ];
+
+    var d1 = orderModel.aggregate(pipeline);
+    var d2 = orderModel.aggregate(pipeline1);
+
+    Promise.all([d1, d2])
       .then(function (result) {
         console.log(result);
         return res.send(result);

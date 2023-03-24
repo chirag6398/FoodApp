@@ -22,7 +22,7 @@ app.service("brandAdminDashBoardApi", function ($http) {
   this.fetchOutletGraphData = function (id, cb) {
     $http
       .get(
-        "http://localhost:5000/api/superAdmin/getOutletGraphData/" + id,
+        "http://localhost:5000/api/brandAdmin/getOutletGraphData/" + id,
 
         {
           headers: {

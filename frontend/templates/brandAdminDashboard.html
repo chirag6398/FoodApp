@@ -1,6 +1,6 @@
 <div ng-class="{'dim':object.isLoading}" style="display: flex; flex-wrap: wrap">
-  <div>
-    <div id="container1">
+  <div style="width: 100%">
+    <div style="justify-content: space-between" id="container1">
       <div class="box">
         <div class="subBox">
           <p><i title="outlets" class="bx bx-building"></i></p>
@@ -20,7 +20,7 @@
       <div class="box">
         <div class="subBox">
           <p><i title="Total Revenue" class="bx bx-cart"></i></p>
-          <span> Last Month Revenue </span>
+          <span>Total Revenue </span>
           <p id="totalPay">Rs. {{object.totalRevenue}}</p>
         </div>
       </div>
@@ -99,6 +99,7 @@
         background: #fdfdfd;
         margin: 10px;
         padding: 10px;
+        gap: 5px;
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
       "
     >
@@ -150,7 +151,6 @@
           border: 1px solid lightgray;
           border-radius: 3px;
           background: #fdfdfd;
-
           padding: 10px;
         "
       >
@@ -159,9 +159,70 @@
         </span>
       </div>
 
-      <div style="width: 450px" ng-show="object.outletDates.length>1">
-        <h3>Outlet Last Month Revenue Analysis</h3>
-        <canvas id="myChart2" area-label="chart"></canvas>
+      <div
+        style="
+          border: 1px solid lightgray;
+          border-radius: 3px;
+          background: #fdfdfd;
+          padding: 10px;
+        "
+        ng-show="object.outletDates.length>1"
+      >
+        <div style="width: 450px">
+          <h3>Outlet Last Month Revenue Analysis</h3>
+          <canvas id="myChart2" area-label="chart"></canvas>
+        </div>
+        <div style="display: flex; gap: 5px; flex-wrap: wrap">
+          <!-- <h6>Orders Data :</h6> -->
+          <div
+            style="
+              width: 174px;
+              height: 74px;
+              border: 1px solid lightgray;
+              border-radius: 3px;
+              background: #fdfdfd;
+              padding: 10px;
+            "
+            ng-repeat="data in object.outletOrdersData"
+          >
+            <span> {{data._id}} </span>
+            <span style="font-weight: 900; opacity: 0.7">
+              Rs. {{data.totalRevenue}}
+            </span>
+          </div>
+          <div
+            style="
+              width: 174px;
+              height: 74px;
+              border: 1px solid lightgray;
+              border-radius: 3px;
+              background: #fdfdfd;
+              padding: 10px;
+            "
+          >
+            <span style="font-weight: 900; opacity: 0.7; color: green">
+              {{object.ordersAnalysis.successRate}}
+
+              <i class="bx bx-up-arrow-alt"></i>
+            </span>
+          </div>
+          <div
+            style="
+              width: 174px;
+              height: 74px;
+              border: 1px solid lightgray;
+              border-radius: 3px;
+              background: #fdfdfd;
+              padding: 10px;
+            "
+          >
+            <span style="font-weight: 900; opacity: 0.7; color: red">
+              {{object.ordersAnalysis.cancellationRate}}
+
+              <i class="bx bx-down-arrow-alt"></i>
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -226,6 +287,7 @@
           <a
             class="list-group-item list-group-item-action"
             style="min-width: 300px"
+            ng-if="category._id"
             ng-repeat="category in object.topTenCategories | filter:search"
           >
             <div class="analysis__brandList">

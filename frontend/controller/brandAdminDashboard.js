@@ -105,13 +105,20 @@ app.controller("brandAdminDashboardController", [
         function (err, result) {
           console.log(err, result);
           if (result.data) {
+            $scope.object.outletOrdersData = result.data[1];
+            $scope.object.ordersAnalysis = brandAdminService.getOrderAnalysis(
+              result.data[1]
+            );
+
+            console.log($scope.object.ordersAnalysis);
+
             if ($scope.object.myChart2) {
               $scope.object.myChart2.destroy();
             }
 
             $scope.object.activity = brandAdminService.getGraphData(
               $scope.object.month,
-              result.data
+              result.data[0]
             );
 
             $scope.object.outletDates = $scope.object.activity.dates;
