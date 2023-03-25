@@ -2,189 +2,41 @@ var brandModel = require("../model/brand.model");
 var orderModel = require("../model/order.model");
 var employeeModel = require("../model/employee.model");
 var outletModel = require("../model/outlet.model");
-var categoryModel = require("../model/category.model");
-var superCategory = require("../model/superCategory.model");
-var mongoose = require("mongoose");
-var productModel = require("../model/product.model");
+var pipelines = require("../pipelines/superAdminDashBoard");
 var moment = require("moment");
 var async = require("async");
 var today = moment();
 
 var startDate = today.startOf("month").toDate();
-var yesterDay = moment().subtract(1, "day").toDate();
 var endDate = moment().toDate();
+
 module.exports = {
   getBasicData: function (req, res) {
-    var pipeline = [
-      {
-        $group: {
-          _id: null,
-          count: {
-            $sum: 1,
-          },
-        },
-      },
-    ];
-
-    var pipeline1 = [
-      {
-        $group: {
-          _id: "$brand._id",
-          name: { $first: "$brand.name" },
-          logo: { $first: "$brand.logo" },
-          outlets: { $push: { name: "$name", _id: "$_id" } },
-        },
-      },
-      {
-        $sort: { name: 1 },
-      },
-    ];
-
-    var pipeline2 = [
-      {
-        $match: {
-          createdAt: {
-            $gte: startDate,
-            $lt: endDate,
-          },
-        },
-      },
-      {
-        $unwind: "$items",
-      },
-      {
-        $group: {
-          _id: {
-            brand: "$brand.name",
-            date: { $dateToString: { format: "%d-%m-%Y", date: "$createdAt" } },
-          },
-          brandName: { $first: "$brand.name" },
-          totalRevenue: {
-            $sum: { $multiply: ["$items.quantity", "$items.price"] },
-          },
-        },
-      },
-      {
-        $sort: { totalRevenue: -1 },
-      },
-      {
-        $group: {
-          _id: "$_id.brand",
-          revenue: {
-            $sum: "$totalRevenue",
-          },
-        },
-      },
-      {
-        $sort: { revenue: -1 },
-      },
-      {
-        $limit: 4,
-      },
-    ];
-
-    var pipeline3 = [
-      {
-        $match: {
-          createdAt: {
-            $gte: startDate,
-            $lt: endDate,
-          },
-        },
-      },
-      {
-        $unwind: "$items",
-      },
-      {
-        $group: {
-          _id: null,
-          lastMonthRevenue: {
-            $sum: { $multiply: ["$items.quantity", "$items.price"] },
-          },
-        },
-      },
-    ];
-
-    var data1 = brandModel.aggregate(pipeline);
-    var data2 = outletModel.aggregate(pipeline);
-    var data3 = employeeModel.aggregate(pipeline);
-    var data4 = outletModel.aggregate(pipeline1);
-    var data5 = orderModel.aggregate(pipeline2);
-    var data6 = orderModel.aggregate(pipeline3);
+    var data1 = brandModel.aggregate(pipelines.pipelineCnt);
+    var data2 = outletModel.aggregate(pipelines.pipelineCnt);
+    var data3 = employeeModel.aggregate(pipelines.pipelineCnt);
+    var data4 = outletModel.aggregate(pipelines.pipelineGroupBrandWithOutlets);
+    var data5 = orderModel.aggregate(pipelines.topBrands(startDate, endDate));
+    var data6 = orderModel.aggregate(
+      pipelines.lastMonthRevenue(startDate, endDate)
+    );
 
     async.waterfall(
       [
         function fetchingTopBrand(cb) {
           orderModel
-            .aggregate([
-              {
-                $match: {
-                  createdAt: {
-                    $gte: startDate,
-                    $lt: endDate,
-                  },
-                },
-              },
-              {
-                $unwind: "$items",
-              },
-              {
-                $group: {
-                  _id: "$brand._id",
-                  name: { $first: "$brand.name" },
-                  totalRevenue: {
-                    $sum: { $multiply: ["$items.quantity", "$items.price"] },
-                  },
-                },
-              },
-              {
-                $sort: { totalRevenue: -1 },
-              },
-              {
-                $limit: 2,
-              },
-            ])
+            .aggregate(pipelines.topTwoBrands(startDate, endDate))
             .exec(function (err, result) {
               if (result) {
-                // console.log("top 2 brands", result);
                 cb(null, result);
               }
             });
         },
         function fetchingGrapgh(result, cb) {
           if (result.length) {
-            var topBrand = orderModel.aggregate([
-              {
-                $match: {
-                  "brand._id": mongoose.Types.ObjectId(result[0]._id),
-                },
-              },
-              {
-                $match: {
-                  createdAt: {
-                    $gte: startDate,
-                    $lt: endDate,
-                  },
-                },
-              },
-              {
-                $unwind: "$items",
-              },
-              {
-                $group: {
-                  _id: {
-                    $dateToString: { format: "%d-%m-%Y", date: "$createdAt" },
-                  },
-                  name: { $first: "$brand.name" },
-                  totalRevenue: {
-                    $sum: { $multiply: ["$items.quantity", "$items.price"] },
-                  },
-                },
-              },
-              {
-                $sort: { _id: 1 },
-              },
-            ]);
+            var topBrand = orderModel.aggregate(
+              pipelines.graphData(result[0]._id, startDate, endDate)
+            );
 
             var topBrandOutletCnt = outletModel
               .find({ "brand._id": result[0]._id, isDeleted: false })
@@ -194,38 +46,9 @@ module.exports = {
               .find({ "brand._id": result[0]._id, isDeleted: false })
               .count();
 
-            var topSecondBrand = orderModel.aggregate([
-              {
-                $match: {
-                  "brand._id": mongoose.Types.ObjectId(result[1]._id),
-                },
-              },
-              {
-                $match: {
-                  createdAt: {
-                    $gte: startDate,
-                    $lt: endDate,
-                  },
-                },
-              },
-              {
-                $unwind: "$items",
-              },
-              {
-                $group: {
-                  _id: {
-                    $dateToString: { format: "%d-%m-%Y", date: "$createdAt" },
-                  },
-                  name: { $first: "$brand.name" },
-                  totalRevenue: {
-                    $sum: { $multiply: ["$items.quantity", "$items.price"] },
-                  },
-                },
-              },
-              {
-                $sort: { _id: 1 },
-              },
-            ]);
+            var topSecondBrand = orderModel.aggregate(
+              pipelines.graphData(result[1]._id, startDate, endDate)
+            );
 
             var topSecondBrandOutletCnt = outletModel
               .find({ "brand._id": result[1]._id, isDeleted: false })
@@ -243,7 +66,6 @@ module.exports = {
               topSecondBrandOutletCnt,
               topSecondBrandEmployeeCnt,
             ]).then(function (result) {
-              // console.log(result);
               cb(null, result);
             });
           } else if (result) {
@@ -267,67 +89,10 @@ module.exports = {
       }
     );
   },
-  getBrandData: function (req, res) {
-    var pipeline1 = [
-      {
-        $match: {
-          createdAt: {
-            $gte: startDate,
-            $lt: endDate,
-          },
-        },
-      },
-      {
-        $group: {
-          _id: { $dateToString: { format: "%d-%m-%Y", date: "$createdAt" } },
-
-          count: {
-            $sum: 1,
-          },
-        },
-      },
-    ];
-
-    var data1 = brandModel.aggregate(pipeline1);
-
-    var data2 = outletModel.aggregate(pipeline1);
-
-    Promise.all([data1, data2])
-      .then(function (result) {})
-      .catch(function (err) {});
-  },
+  getBrandData: function (req, res) {},
   getBrandGraphData: function (req, res) {
-    var pipeline = [
-      {
-        $match: {
-          "brand._id": mongoose.Types.ObjectId(req.params.id),
-        },
-      },
-      {
-        $match: {
-          createdAt: {
-            $gte: startDate,
-            $lt: endDate,
-          },
-        },
-      },
-      {
-        $unwind: "$items",
-      },
-      {
-        $group: {
-          _id: { $dateToString: { format: "%d-%m-%Y", date: "$createdAt" } },
-          totalRevenue: {
-            $sum: { $multiply: ["$items.quantity", "$items.price"] },
-          },
-        },
-      },
-      {
-        $sort: { _id: 1 },
-      },
-    ];
     orderModel
-      .aggregate(pipeline)
+      .aggregate(pipelines.graphData(req.params.id, startDate, endDate))
       .then(function (result) {
         // console.log(result);
         return res.send(result);
@@ -338,38 +103,8 @@ module.exports = {
       });
   },
   getOutletGraphData: function (req, res) {
-    // console.log(req.params.id);
-    var pipeline = [
-      {
-        $match: {
-          "outlet._id": mongoose.Types.ObjectId(req.params.id),
-        },
-      },
-      {
-        $match: {
-          createdAt: {
-            $gte: startDate,
-            $lt: endDate,
-          },
-        },
-      },
-      {
-        $unwind: "$items",
-      },
-      {
-        $group: {
-          _id: { $dateToString: { format: "%d-%m-%Y", date: "$createdAt" } },
-          totalRevenue: {
-            $sum: { $multiply: ["$items.quantity", "$items.price"] },
-          },
-        },
-      },
-      {
-        $sort: { _id: 1 },
-      },
-    ];
     orderModel
-      .aggregate(pipeline)
+      .aggregate(pipelines.outletGraphData(req.params.id, startDate, endDate))
       .then(function (result) {
         // console.log(result);
         return res.send(result);
@@ -392,34 +127,7 @@ module.exports = {
       [
         function fetchingTopBrand(cb) {
           orderModel
-            .aggregate([
-              {
-                $match: {
-                  createdAt: {
-                    $gte: sDate,
-                    $lt: eDate,
-                  },
-                },
-              },
-              {
-                $unwind: "$items",
-              },
-              {
-                $group: {
-                  _id: "$brand._id",
-                  name: { $first: "$brand.name" },
-                  totalRevenue: {
-                    $sum: { $multiply: ["$items.quantity", "$items.price"] },
-                  },
-                },
-              },
-              {
-                $sort: { totalRevenue: -1 },
-              },
-              {
-                $limit: 2,
-              },
-            ])
+            .aggregate(pipelines.topTwoBrands(sDate, eDate))
             .exec(function (err, result) {
               if (result) {
                 cb(null, result);
@@ -428,38 +136,9 @@ module.exports = {
         },
         function fetchingGrapgh(result, cb) {
           if (result.length) {
-            var topBrand = orderModel.aggregate([
-              {
-                $match: {
-                  "brand._id": mongoose.Types.ObjectId(result[0]._id),
-                },
-              },
-              {
-                $match: {
-                  createdAt: {
-                    $gte: sDate,
-                    $lt: eDate,
-                  },
-                },
-              },
-              {
-                $unwind: "$items",
-              },
-              {
-                $group: {
-                  _id: {
-                    $dateToString: { format: "%d-%m-%Y", date: "$createdAt" },
-                  },
-                  name: { $first: "$brand.name" },
-                  totalRevenue: {
-                    $sum: { $multiply: ["$items.quantity", "$items.price"] },
-                  },
-                },
-              },
-              {
-                $sort: { _id: 1 },
-              },
-            ]);
+            var topBrand = orderModel.aggregate(
+              pipelines.graphData(result[0]._id, sDate, eDate)
+            );
 
             var topBrandOutletCnt = outletModel
               .find({ "brand._id": result[0]._id, isDeleted: false })
@@ -469,38 +148,9 @@ module.exports = {
               .find({ "brand._id": result[0]._id, isDeleted: false })
               .count();
 
-            var topSecondBrand = orderModel.aggregate([
-              {
-                $match: {
-                  "brand._id": mongoose.Types.ObjectId(result[1]._id),
-                },
-              },
-              {
-                $match: {
-                  createdAt: {
-                    $gte: sDate,
-                    $lt: eDate,
-                  },
-                },
-              },
-              {
-                $unwind: "$items",
-              },
-              {
-                $group: {
-                  _id: {
-                    $dateToString: { format: "%d-%m-%Y", date: "$createdAt" },
-                  },
-                  name: { $first: "$brand.name" },
-                  totalRevenue: {
-                    $sum: { $multiply: ["$items.quantity", "$items.price"] },
-                  },
-                },
-              },
-              {
-                $sort: { _id: 1 },
-              },
-            ]);
+            var topSecondBrand = orderModel.aggregate(
+              pipelines.graphData(result[1]._id, sDate, eDate)
+            );
 
             var topSecondBrandOutletCnt = outletModel
               .find({ "brand._id": result[1]._id, isDeleted: false })
