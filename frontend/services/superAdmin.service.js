@@ -25,6 +25,10 @@ app.service("superAdminService", function (adminApi, $timeout) {
     adminApi.getUsers(filter, limit, page, cb);
   };
 
+  this.getOutlets = function (filter, limit, page, cb) {
+    adminApi.getOutlets(filter, limit, page, cb);
+  };
+
   this.getPages = function (totalCount, limit) {
     var totalPage = Math.ceil(totalCount / limit);
     var pages = new Array(totalPage).fill(0);

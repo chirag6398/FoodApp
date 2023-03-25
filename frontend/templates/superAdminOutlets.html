@@ -1,19 +1,66 @@
 <div
   ng-class="{'dim':object.isLoading}"
-  style="display: flex; width: 100%; padding: 20px"
+  style="
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+  "
 >
+  <div
+    style="
+      display: flex;
+      justify-content: flex-start;
+      padding: 10px;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    "
+  >
+    <div>
+      <input
+        class="form-control"
+        type="text"
+        ng-model="object.filter.brandName"
+        placeholder="brand name"
+      />
+    </div>
+    <div>
+      <input
+        class="form-control"
+        type="number"
+        placeholder="enter number"
+        ng-model="object.filter.number"
+      />
+    </div>
+
+    <div>
+      <input
+        class="form-control"
+        type="email"
+        placeholder="enter email"
+        ng-model="object.filter.email"
+      />
+    </div>
+    <div style="cursor: pointer" ng-click="getOutletHandler(1,object.limit)">
+      <i class="bx bx-filter-alt"></i>
+    </div>
+  </div>
   <table class="table table-bordered table-hover">
     <thead class="thead-dark">
       <tr>
         <th scope="col">#</th>
         <th scope="col">Brand logo</th>
-        <th scope="col">name</th>
-        <th scope="col">brand name(logo)</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Number</th>
+        <th scope="col">Brand name</th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="outlet in object.outlets">
-        <th scope="row">{{$index}}</th>
+        <th scope="row">{{(object.page-1)*object.limit+$index+1}}</th>
         <td>
           <img
             style="object-fit: contain; height: 80px"
@@ -22,10 +69,47 @@
           />
         </td>
         <td>{{outlet.name}}</td>
+        <td>{{outlet.contactInfo.email}}</td>
+        <td>{{outlet.contactInfo.number}}</td>
         <td>{{outlet.brand.name}}</td>
       </tr>
     </tbody>
   </table>
+</div>
+<div>
+  <nav
+    style="display: flex; align-items: center; justify-content: center"
+    aria-label="Page navigation example"
+  >
+    <ul style="display: flex; gap: 4px" class="pagination justify-content-end">
+      <button
+        class="page-item btn"
+        ng-click="getOutletHandler(object.page-1,object.limit)"
+        ng-disabled="object.page===object.one"
+        ng-class="{'disabled':object.page===1}"
+      >
+        <a class="page-link">Previous</a>
+      </button>
+      <button
+        class="page-item btn"
+        ng-click="getOutletHandler($index+1,object.limit)"
+        ng-disabled="$index+1===object.page"
+        ng-class="{'disabled':$index+1===object.page}"
+        ng-repeat="page in object.pages track by $index"
+      >
+        <a class="page-link">{{$index+1}}</a>
+      </button>
+
+      <button
+        ng-click="getOutletHandler(object.page+1,object.limit)"
+        ng-disabled="object.page===object.totalPage"
+        ng-class="{'disabled':object.page===object.totalPage}"
+        class="page-item btn"
+      >
+        <a class="page-link">Next</a>
+      </button>
+    </ul>
+  </nav>
 </div>
 <div
   ng-if="object.isLoading"

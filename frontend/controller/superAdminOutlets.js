@@ -2,20 +2,74 @@
 
 app.controller("superAdminOutletsController", [
   "$scope",
-  "adminApi",
+  "superAdminService",
   "$rootScope",
-  function ($scope, adminApi, $rootScope) {
+  function ($scope, superAdminService, $rootScope) {
     $scope.object = {
       outlets: null,
       isLoading: true,
+      filter: {
+        email: "",
+        brandName: "",
+        number: "",
+      },
+      limit: 5,
+      page: 1,
+      pages: null,
+      totalCount: 0,
+      totalPage: 1,
+      one: 1,
+      searchOutlet: "",
+      searchTextResult: [],
     };
 
-    adminApi.getOutlets(function (err, result) {
-      console.log(result, err);
-      if (result) {
-        $scope.object.isLoading = false;
-        $scope.object.outlets = result.data;
+    superAdminService.getOutlets(
+      $scope.object.filter,
+      $scope.object.limit,
+      $scope.object.page,
+      function (err, result) {
+        console.log(result, err);
+        if (result) {
+          $scope.object.isLoading = false;
+          $scope.object.outlets = result.data.data;
+          $scope.object.totalCount = result.data.count;
+          $scope.object.totalPage = Math.ceil(
+            $scope.object.totalCount / $scope.object.limit
+          );
+          $scope.object.pages = superAdminService.getPages(
+            $scope.object.totalCount,
+            $scope.object.limit
+          );
+        }
       }
-    });
+    );
+
+    $scope.getOutletHandler = function (page, limit) {
+      $scope.object.isLoading = true;
+      superAdminService.getOutlets(
+        $scope.object.filter,
+        limit,
+        page,
+        function (err, result) {
+          $scope.object.isLoading = false;
+          if (result) {
+            console.log(result);
+            $scope.object.outlets = result.data.data;
+            $scope.object.totalCount = result.data.count;
+            $scope.object.page = page;
+
+            $scope.object.totalPage = Math.ceil(
+              $scope.object.totalCount / $scope.object.limit
+            );
+            $scope.object.pages = superAdminService.getPages(
+              $scope.object.totalCount,
+              $scope.object.limit
+            );
+          } else {
+            alert("something is wrong");
+          }
+        }
+      );
+    };
   },
 ]);

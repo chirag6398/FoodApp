@@ -94,11 +94,37 @@ module.exports = {
   },
 
   getOutlets: function (req, res) {
+    var filter = {
+      isActive: true,
+      isDeleted: false,
+    };
+
+    var query = req.query;
+
+    var limit = query.limit || 5;
+    var pageNo = query.pageNo || 1;
+    var skip = (pageNo - 1) * limit;
+
+    if (query.email) {
+      filter["contactInfo.email"] = query.email;
+    }
+    if (query.number) {
+      filter["contactInfo.number"] = +query.number;
+    }
+    if (query.brandName) {
+      filter["brand.name"] = query.brandName;
+    }
+
     outletModel
-      .find({})
+      .find(filter)
       .sort({ "brand.name": 1 })
+      .skip(skip)
+      .limit(limit)
       .then(function (result) {
-        return res.send(result);
+        outletModel.countDocuments(filter, function (err, count) {
+          return res.send({ data: result, count: count });
+        });
+        // return res.send(result);
       })
       .catch(function (err) {
         return res.status(500).send({ error: err });

@@ -378,7 +378,45 @@
     </table>
   </div>
 
-  <nav
+  <div ng-if="!object.selectedBrand">
+    <nav
+      style="display: flex; align-items: center; justify-content: center"
+      aria-label="Page navigation example"
+    >
+      <ul
+        style="display: flex; gap: 4px"
+        class="pagination justify-content-end"
+      >
+        <button
+          class="page-item btn"
+          ng-click="getBrandHandler(object.page-1,object.limit)"
+          ng-disabled="object.page===object.one"
+          ng-class="{'disabled':object.page===1}"
+        >
+          <a class="page-link">Previous</a>
+        </button>
+        <button
+          class="page-item btn"
+          ng-click="getBrandHandler($index+1,object.limit)"
+          ng-disabled="$index+1===object.page"
+          ng-class="{'disabled':$index+1===object.page}"
+          ng-repeat="page in object.pages track by $index"
+        >
+          <a class="page-link">{{$index+1}}</a>
+        </button>
+
+        <button
+          ng-click="getBrandHandler(object.page+1,object.limit)"
+          ng-disabled="object.page===object.totalPage"
+          ng-class="{'disabled':object.page===object.totalPage}"
+          class="page-item btn"
+        >
+          <a class="page-link">Next</a>
+        </button>
+      </ul>
+    </nav>
+  </div>
+  <!-- <nav
     ng-if="!object.selectedBrand"
     style="display: flex; align-items: center; justify-content: center"
     aria-label="Page navigation example"
@@ -409,7 +447,7 @@
         >
       </li>
     </ul>
-  </nav>
+  </nav> -->
 </div>
 
 <div>

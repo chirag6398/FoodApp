@@ -173,13 +173,25 @@ app.factory("adminApi", function ($http, $rootScope) {
       });
   };
 
-  obj.getOutlets = function (cb) {
+  obj.getOutlets = function (filter, limit, page, cb) {
     $http
-      .get("http://localhost:5000/api/superAdmin/getOutlets", {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .get(
+        "http://localhost:5000/api/superAdmin/getOutlets?brandName=" +
+          filter.brandName +
+          "&email=" +
+          filter.email +
+          "&pageNo=" +
+          page +
+          "&limit=" +
+          limit +
+          "&number=" +
+          filter.number,
+        {
+          headers: {
+            Authorization: window.localStorage.getItem("Authorization"),
+          },
+        }
+      )
       .then(function (response) {
         cb(null, response);
       })

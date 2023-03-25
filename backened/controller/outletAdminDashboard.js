@@ -133,7 +133,7 @@ module.exports = {
         $sort: { totalQuantity: -1 },
       },
       {
-        $limit: 5,
+        $limit: 4,
       },
     ];
     var pipeline5 = [
@@ -219,6 +219,71 @@ module.exports = {
         },
       },
     ];
+    var pipeline8 = [
+      {
+        $match: {
+          "outlet._id": mongoose.Types.ObjectId(req.params.id),
+        },
+      },
+      {
+        $match: {
+          createdAt: {
+            $gte: startDate,
+            $lt: endDate,
+          },
+        },
+      },
+      {
+        $match: {
+          status: { $in: ["served", "cancelled"] },
+        },
+      },
+      {
+        $unwind: "$items",
+      },
+      {
+        $group: {
+          _id: "$status",
+          totalRevenue: {
+            $sum: { $multiply: ["$items.quantity", "$items.price"] },
+          },
+          count: { $sum: 1 },
+        },
+      },
+    ];
+
+    var pipeline9 = [
+      {
+        $match: {
+          "outlet._id": mongoose.Types.ObjectId(req.params.id),
+        },
+      },
+      {
+        $match: {
+          createdAt: {
+            $gte: startDate,
+            $lt: endDate,
+          },
+        },
+      },
+      {
+        $unwind: "$items",
+      },
+      {
+        $group: {
+          _id: "$items._id",
+          productName: { $first: "$items.name" },
+          img: { $first: "$items.img" },
+          totalQuantity: { $sum: "$items.quantity" },
+        },
+      },
+      {
+        $sort: { totalQuantity: 1 },
+      },
+      {
+        $limit: 3,
+      },
+    ];
 
     var data1 = outletModel.aggregate(pipeline);
     var data2 = employeeModel.aggregate(pipeline1);
@@ -227,8 +292,10 @@ module.exports = {
     var data5 = orderModel.aggregate(pipeline4);
     var data6 = orderModel.aggregate(pipeline5);
     var data7 = orderModel.aggregate(pipeline7);
+    var data8 = orderModel.aggregate(pipeline8);
+    var data9 = orderModel.aggregate(pipeline9);
 
-    Promise.all([data1, data2, data3, data4, data5, data6, data7])
+    Promise.all([data1, data2, data3, data4, data5, data6, data7, data8, data9])
       .then(function (result) {
         // console.log(result[3]);
         return res.send(result);

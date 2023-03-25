@@ -25,6 +25,7 @@ app.controller("superAdminCreateBrandController", [
       btnText1: "Add Admin",
       admin: {},
       brand: null,
+      one: 1,
       isLoading: true,
     };
 
@@ -56,7 +57,9 @@ app.controller("superAdminCreateBrandController", [
         if (result) {
           $scope.object.brands = result.data;
           $scope.object.totalBrands = result.count;
-
+          $scope.object.totalPage = Math.ceil(
+            $scope.object.totalBrands / $scope.object.limit
+          );
           $scope.object.pages = superAdminService.getPages(
             $scope.object.totalBrands,
             $scope.object.limit
@@ -70,6 +73,9 @@ app.controller("superAdminCreateBrandController", [
         if (result) {
           $scope.object.brands = result.data;
           $scope.object.page = page;
+          $scope.object.totalPage = Math.ceil(
+            $scope.object.totalBrands / $scope.object.limit
+          );
         }
       });
     };

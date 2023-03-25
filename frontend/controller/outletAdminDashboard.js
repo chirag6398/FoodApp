@@ -69,8 +69,10 @@ app.controller("outletAdminDashboardController", [
             $scope.object.totalRevenue = result.data[2][0].totalRevenue;
             $scope.object.topTenCategories = result.data[3];
             $scope.object.topTenProducts = result.data[4];
-            $scope.object.outletDates = [0];
-            $scope.object.outletRevenue = [0];
+            $scope.object.ordersAnalysis = outletAdminService.getOrderAnalysis(
+              result.data[7]
+            );
+            $scope.object.bottomProducts = result.data[8];
             $scope.object.month = new Date().getMonth();
             $scope.object.month1 = $scope.object.month;
             $scope.object.activity = outletAdminService.getOutletGraphData(

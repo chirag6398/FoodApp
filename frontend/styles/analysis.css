@@ -46,12 +46,13 @@
 }
 .box{
     height: fit-content;
-    min-width: 200px;
+    /* min-width: 200px; */
     border: 1px solid gray;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     padding: 20px;
     border-radius: 10px;
     margin: 20px;
+    min-height: 146px;
     
     min-width: 271px;
 
