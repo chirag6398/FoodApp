@@ -234,14 +234,39 @@ module.exports = {
   },
 
   getBrandUsers: function (req, res) {
-    console.log(req.params.id);
+    var query = req.query;
+    var tmp = ["superAdmin", "brandAdmin"];
+    var filter = {
+      isActive: true,
+      isDeleted: false,
+      userType: { $nin: tmp },
+      "brand._id": query.id,
+    };
+
+    var limit = query.limit;
+    var pageNo = query.pageNo;
+    var skip = (pageNo - 1) * limit;
+
+    if (query.email) {
+      filter["email"] = query.email;
+    }
+    if (query.userType) {
+      filter["userType"] = query.userType;
+    }
+    if (query.number) {
+      filter["number"] = +query.number;
+    }
+
     employeeModel
-      .find({
-        "brand._id": req.params.id,
-        userType: { $nin: ["superAdmin", "brandAdmin"] },
-      })
+      .find(filter)
+      .skip(skip)
+      .limit(limit)
+      .sort({ name: 1 })
       .then(function (result) {
-        return res.send(result);
+        employeeModel.countDocuments(filter, function (err, count) {
+          // console.log(result, filter);
+          return res.send({ data: result, count: count });
+        });
       })
       .catch(function (err) {
         console.log(err);

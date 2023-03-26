@@ -57,7 +57,12 @@ app.service("brandAdminService", function (brandApi, $stateParams) {
 
     brandApi.addProduct(formData, cb);
   };
+  this.getPages = function (totalCount, limit) {
+    var totalPage = Math.ceil(totalCount / limit);
+    var pages = new Array(totalPage).fill(0);
 
+    return pages;
+  };
   this.getProductsInBrand = function (cb) {
     brandApi.getProductsInBrand(
       {

@@ -42,7 +42,7 @@ brandAdminRoute.get(
   brandAdminController.getSuperCategory
 );
 brandAdminRoute.get(
-  "/api/brandAdmin/getBrandUsers/:id",
+  "/api/brandAdmin/getBrandUsers",
   passport.authenticate("jwt", { session: false }),
   brandAdminController.getBrandUsers
 );

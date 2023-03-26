@@ -344,6 +344,24 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(err, null);
       });
   };
+  obj.searchOutletBySearchText = function (searchText, cb) {
+    $http
+      .get(
+        "http://localhost:5000/api/outlet/searchOutletBySearchText/" +
+          searchText,
+        {
+          headers: {
+            Authorization: window.localStorage.getItem("Authorization"),
+          },
+        }
+      )
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb(err, null);
+      });
+  };
   obj.searchUserBySearchText = function (searchText, cb) {
     $http
       .get(

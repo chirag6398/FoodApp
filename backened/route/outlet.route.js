@@ -23,4 +23,10 @@ outletRoute.put(
   outletController.deleteOutlet
 );
 
+outletRoute.get(
+  "/api/outlet/searchOutletBySearchText/:searchText",
+  passport.authenticate("jwt", { session: false }),
+  outletController.searchOutletBySearchText
+);
+
 module.exports = outletRoute;

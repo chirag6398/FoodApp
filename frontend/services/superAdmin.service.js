@@ -3,6 +3,7 @@
 app.service("superAdminService", function (adminApi, $timeout) {
   var timeout1 = null;
   var timeout2 = null;
+  var timeout3 = null;
   this.debouncing = function (searchUser, cb) {
     if (timeout1) {
       $timeout.cancel(timeout1);
@@ -12,11 +13,20 @@ app.service("superAdminService", function (adminApi, $timeout) {
     }, 800);
   };
 
-  this.searchBrandDebouncing = function (searchBrand, cb) {
-    if (timeout1) {
-      $timeout.cancel(timeout1);
+  this.outletDebouncing = function (searchOutlet, cb) {
+    if (timeout2) {
+      $timeout.cancel(timeout2);
     }
-    timeout1 = $timeout(function () {
+    timeout2 = $timeout(function () {
+      adminApi.searchOutletBySearchText(searchOutlet, cb);
+    }, 800);
+  };
+
+  this.searchBrandDebouncing = function (searchBrand, cb) {
+    if (timeout3) {
+      $timeout.cancel(timeout3);
+    }
+    timeout3 = $timeout(function () {
       adminApi.searchBrandBySearchText(searchBrand, cb);
     }, 800);
   };

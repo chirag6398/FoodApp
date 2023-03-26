@@ -217,13 +217,27 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
       });
   };
 
-  obj.getBrandUsers = function (id, cb) {
+  obj.getBrandUsers = function (id, filter, limit, pageNo, cb) {
     $http
-      .get("http://localhost:5000/api/brandAdmin/getBrandUsers/" + id, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .get(
+        "http://localhost:5000/api/brandAdmin/getBrandUsers?id=" +
+          id +
+          "&userType=" +
+          filter.userType +
+          "&email=" +
+          filter.email +
+          "&number=" +
+          filter.number +
+          "&limit=" +
+          limit +
+          "&pageNo=" +
+          pageNo,
+        {
+          headers: {
+            Authorization: window.localStorage.getItem("Authorization"),
+          },
+        }
+      )
       .then(function (response) {
         cb(null, response);
       }),

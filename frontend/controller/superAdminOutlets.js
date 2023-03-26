@@ -44,6 +44,20 @@ app.controller("superAdminOutletsController", [
       }
     );
 
+    $scope.searchTextHandler = function () {
+      superAdminService.outletDebouncing(
+        $scope.object.searchOutlet,
+        function (err, result) {
+          // $scope.object.isLoading = false;
+          if (result) {
+            $scope.object.searchTextResult = result.data;
+          } else {
+            $scope.object.searchTextResult = [];
+          }
+        }
+      );
+    };
+
     $scope.getOutletHandler = function (page, limit) {
       $scope.object.isLoading = true;
       superAdminService.getOutlets(
