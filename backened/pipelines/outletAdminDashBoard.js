@@ -250,4 +250,27 @@ module.exports = {
       },
     ];
   },
+  groupByOrderType: function (id, startDate, endDate) {
+    return [
+      {
+        $match: {
+          "outlet._id": mongoose.Types.ObjectId(id),
+        },
+      },
+      {
+        $match: {
+          createdAt: {
+            $gte: startDate,
+            $lt: endDate,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: "$type",
+          count: { $sum: 1 },
+        },
+      },
+    ];
+  },
 };

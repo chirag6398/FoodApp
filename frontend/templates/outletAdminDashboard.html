@@ -194,6 +194,22 @@
           </div>
         </div>
       </div>
+      <div style="display: flex; gap: 5px">
+        <div
+          style="
+            width: 174px;
+            height: 74px;
+            border: 1px solid lightgray;
+            border-radius: 3px;
+            background: #fdfdfd;
+            padding: 10px;
+          "
+          ng-repeat="res in object.orderTypeAnalysis"
+        >
+          <span> {{res._id}}: </span>
+          <span style="font-weight: 900; opacity: 0.7"> {{res.count}} </span>
+        </div>
+      </div>
     </div>
   </div>
 

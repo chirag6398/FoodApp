@@ -46,6 +46,7 @@ app.controller("outletAdminDashboardController", [
       ],
       month: null,
       month1: null,
+      orderTypeAnalysis: null,
     };
 
     $timeout(function () {
@@ -72,6 +73,7 @@ app.controller("outletAdminDashboardController", [
             $scope.object.ordersAnalysis = outletAdminService.getOrderAnalysis(
               result.data[7]
             );
+            $scope.object.orderTypeAnalysis = result.data[9];
             $scope.object.bottomProducts = result.data[8];
             $scope.object.month = new Date().getMonth();
             $scope.object.month1 = $scope.object.month;
@@ -117,11 +119,12 @@ app.controller("outletAdminDashboardController", [
           if (result) {
             $scope.object.activity = outletAdminService.getActivityData(
               month,
-              result.data
+              result.data[0]
             );
 
             $scope.object.orderDates = $scope.object.activity.dates;
             $scope.object.orderCnts = $scope.object.activity.activity;
+            $scope.object.orderTypeAnalysis = result.data[1];
           }
         }
       );

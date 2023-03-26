@@ -34,8 +34,22 @@ module.exports = {
     var data9 = orderModel.aggregate(
       pipelines.bottomProducts(id, startDate, endDate)
     );
+    var data10 = orderModel.aggregate(
+      pipelines.groupByOrderType(id, startDate, endDate)
+    );
 
-    Promise.all([data1, data2, data3, data4, data5, data6, data7, data8, data9])
+    Promise.all([
+      data1,
+      data2,
+      data3,
+      data4,
+      data5,
+      data6,
+      data7,
+      data8,
+      data9,
+      data10,
+    ])
       .then(function (result) {
         return res.send(result);
       })
@@ -51,14 +65,17 @@ module.exports = {
     var sDate = moment({ year, month }).startOf("month").toDate();
     var eDate = moment({ year, month }).endOf("month").toDate();
 
-    orderModel
-      .aggregate(pipelines.ordersBooked(id, sDate, eDate))
-      .exec(function (err, result) {
-        if (result) {
-          return res.send(result);
-        } else {
-          return res.status(404).send(err);
-        }
+    var data1 = orderModel.aggregate(pipelines.ordersBooked(id, sDate, eDate));
+    var data2 = orderModel.aggregate(
+      pipelines.groupByOrderType(id, sDate, eDate)
+    );
+    Promise.all([data1, data2])
+      .then(function (result) {
+        return res.send(result);
+      })
+      .catch(function (err) {
+        console.log(err);
+        return res.status(404).send(err);
       });
   },
   getOutletSale: function (req, res) {

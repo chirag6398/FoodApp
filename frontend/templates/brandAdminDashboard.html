@@ -39,51 +39,62 @@
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
       "
     >
-      <span>
-        Brand Activity :
-        <span style="font-weight: 900; opacity: 0.7"
-          >{{object.months[object.month]}}</span
+      <div>
+        <div
+          style="
+            width: 500px;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            border: 1px solid lightgray;
+            border-radius: 3px;
+          "
+          ng-show="object.brandDates.length>1"
         >
-      </span>
-      <div
-        style="
-          width: 500px;
-          display: flex;
-          flex-direction: column;
-          padding: 10px;
-          border: 1px solid lightgray;
-          border-radius: 3px;
-        "
-        ng-show="object.brandDates.length>1"
-      >
-        <h3>Brand Last Month Revenue Analysis</h3>
-        <canvas id="myChart1" area-label="chart"></canvas>
-      </div>
-      <div style="display: flex; justify-content: space-between; gap: 5px">
-        <div class="dropdown show">
-          <a
-            class="btn btn-secondary dropdown-toggle"
-            href="#"
-            role="button"
-            id="dropdownMenuLink"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              gap: 5px;
+            "
           >
-            Select Month
-          </a>
+            <span>
+              Brand Activity :
+              <span style="font-weight: 900; opacity: 0.7"
+                >{{object.months[object.month]}}</span
+              >
+            </span>
+            <div class="dropdown show">
+              <a
+                class="btn btn-secondary dropdown-toggle"
+                href="#"
+                role="button"
+                id="dropdownMenuLink"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Select Month
+              </a>
 
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a
-              class="dropdown-item"
-              style="cursor: pointer"
-              ng-repeat="month in object.months"
-              ng-click="getBrandGraph($index)"
-              >{{month}}</a
-            >
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a
+                  class="dropdown-item"
+                  style="cursor: pointer"
+                  ng-repeat="month in object.months"
+                  ng-click="getBrandGraph($index)"
+                  >{{month}}</a
+                >
+              </div>
+            </div>
           </div>
+
+          <h3>Brand Last Month Revenue Analysis</h3>
+          <canvas id="myChart1" area-label="chart"></canvas>
         </div>
       </div>
+
       <div style="display: flex; flex-direction: column; gap: 10px">
         <div
           style="
