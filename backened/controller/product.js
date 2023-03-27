@@ -7,7 +7,7 @@ module.exports = {
   addProduct: function (req, res) {
     var body = req.body;
     var file = req.file;
-    categoryModal
+    return categoryModal
       .findById({ _id: body.categoryId }, { brand: 1, superCategory: 1 })
       .then(function (result) {
         if (file) {
@@ -27,7 +27,7 @@ module.exports = {
                 description: body.description,
                 img: image,
               });
-              product
+              return product
                 .save()
                 .then(function (result) {
                   return res.status(200).send(result);

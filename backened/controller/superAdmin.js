@@ -108,7 +108,7 @@ module.exports = {
     if (query.email) {
       filter["contactInfo.email"] = query.email;
     }
-    if (query.number) {
+    if (query.number && query.number !== "null") {
       filter["contactInfo.number"] = +query.number;
     }
     if (query.brandName) {

@@ -45,7 +45,7 @@ module.exports = {
     if (query.userType) {
       filter["userType"] = query.userType;
     }
-    if (query.number) {
+    if (query.number && query.number !== "null") {
       filter["number"] = +query.number;
     }
 

@@ -63,7 +63,7 @@ app.controller("brandAdminUsersController", [
           $scope.object.isLoading = false;
           if (result) {
             console.log(result);
-            $scope.object.outlets = result.data.data;
+            $scope.object.users = result.data.data;
             $scope.object.totalCount = result.data.count;
             $scope.object.page = page;
 

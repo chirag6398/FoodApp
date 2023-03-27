@@ -224,6 +224,7 @@ module.exports = {
   },
   createOutletAgent: function (req, res) {
     var body = req.body;
+    console.log(body);
 
     var outletAgent = new employeeModel({
       userName: body.userName,
@@ -246,7 +247,11 @@ module.exports = {
         console.log(result);
         return res
           .status(200)
-          .send({ message: "admin created successfully", status: 200 });
+          .send({
+            message: "admin created successfully",
+            data: result,
+            status: 200,
+          });
       })
       .catch(function (err) {
         console.log(err);

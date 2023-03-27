@@ -226,7 +226,7 @@
                 >
                 <input
                   type="password"
-                  ng-disabled="!agent.password"
+                  ng-disabled="!object.agent.password"
                   name="cpassword"
                   ng-required="true"
                   ng-minlength="5"
@@ -240,7 +240,7 @@
                   >Please fill this field</span
                 >
                 <span
-                  ng-show="agentData.cpassword.$dirty && !(agentData.cpassword.$error.required) && agent.password && agent.password!=agent.cpassword"
+                  ng-show="agentData.cpassword.$dirty && !(agentData.cpassword.$error.required) && object.agent.password && object.agent.password!=object.agent.cpassword"
                   >confirm password is not matching password</span
                 >
                 <!-- <span ng-show=""></span> -->

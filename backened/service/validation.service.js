@@ -4,7 +4,7 @@ function validateName(name) {
 }
 
 function validateUserName(userName) {
-  const re = /^[a-z A-Z 0-9]$/;
+  const re = /^[a-z A-Z 0-9]{3,30}$/;
 
   return re.test(userName);
 }
@@ -25,7 +25,7 @@ function validateNumber(number) {
 }
 
 function validatePrice(price) {
-  var re = /^[1-9][0-9]{5}$/;
+  var re = /^([1-9]{1})([0-9]{1,4})?$/;
   return re.test(price);
 }
 
@@ -61,6 +61,7 @@ function validatePassword(password) {
 module.exports = {
   validateUserData: function (req, res, cb) {
     var body = req.body;
+    console.log(body);
 
     var userName = body.userName;
     var firstName = body.firstName;
@@ -75,13 +76,13 @@ module.exports = {
     if (!validateUserName(userName)) {
       return res
         .status(403)
-        .send({ message: "length of name must be greater then 3" });
+        .send({ message: "length of userName must be greater then 3" });
     }
 
     if (!validateName(firstName)) {
       return res
         .status(403)
-        .send({ message: "length of userName must be greater then 3" });
+        .send({ message: "length of first must be greater then 3" });
     }
 
     if (!validateEmail(email)) {
@@ -237,24 +238,19 @@ module.exports = {
     cb();
   },
   validateProduct: function (req, res, cb) {
-    var file = req.file;
     var body = req.body;
     var name = body.name;
     var price = body.price;
 
-    // if (!file) {
-    //   return res.status(404).send({ err: "file not found" });
-    // }
+    console.log(name, validateName(name));
 
-    if (!validateName(name)) {
-      return res.status(403).send({ message: "please enter valid name" });
-    }
+    // if (!validateName(name)) {
+    //   return res.status(403).send({ message: "please enter valid name" });
+    // }
 
     if (!validatePrice(price)) {
       return res.status(403).send({ message: "please enter valid price" });
     }
-
-    cb();
 
     cb();
   },

@@ -22,8 +22,8 @@ productRoute.get(
 
 productRoute.post(
   "/api/product/addProduct",
-  validateProduct,
   uploadProductImg.single("file"),
+  validateProduct,
   productController.addProduct
 );
 

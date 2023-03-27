@@ -253,7 +253,7 @@ module.exports = {
     if (query.userType) {
       filter["userType"] = query.userType;
     }
-    if (query.number) {
+    if (query.number && query.number !== "null") {
       filter["number"] = +query.number;
     }
 
@@ -264,7 +264,7 @@ module.exports = {
       .sort({ name: 1 })
       .then(function (result) {
         employeeModel.countDocuments(filter, function (err, count) {
-          // console.log(result, filter);
+          console.log(result, filter);
           return res.send({ data: result, count: count });
         });
       })
