@@ -34,6 +34,7 @@ app.controller("superAdminAnalysisController", [
       chart2: null,
       chart3: null,
       chart4: null,
+      chart5: null,
       isLoading: true,
       months: [
         "Jan",
@@ -64,39 +65,55 @@ app.controller("superAdminAnalysisController", [
         $scope.object.brands = result.data[3];
         $scope.object.totalRevenue = result.data[5][0].lastMonthRevenue;
         $scope.object.topBrands = result.data[4];
+        $scope.object.topBrandOutletCnt = result.data[9];
+        $scope.object.topBrandEmployeeCnt = result.data[10];
+        $scope.object.topSecondBrandOutletCnt = result.data[12];
+        $scope.object.topSecondBrandEmployeeCnt = result.data[13];
+
         $scope.object.outletsRanking = superAdminService.outletRanking(
           result.data[6]
         );
+        $scope.object.userPerBrand = superAdminService.userPerBrand(
+          result.data[7]
+        );
+
         if ($scope.object.chart4) {
           $scope.object.chart4.destroy();
         }
-        $scope.object.chart4 = superAdminService.displayBarGraph(
+
+        $scope.object.chart4 = superAdminService.displayTypeGraph(
           $scope.object.outletsRanking.names,
           $scope.object.outletsRanking.revenue,
+          "doughnut",
+          "rankings",
           document.getElementById("myChart4").getContext("2d"),
           $scope.object.chart4
         );
 
-        $scope.object.topBrandOutletCnt = result.data[8];
-        $scope.object.topBrandEmployeeCnt = result.data[9];
-        $scope.object.topSecondBrandOutletCnt = result.data[11];
-        $scope.object.topSecondBrandEmployeeCnt = result.data[12];
+        $scope.object.chart5 = superAdminService.displayTypeGraph(
+          $scope.object.userPerBrand.names,
+          $scope.object.userPerBrand.cnts,
+          "pie",
+          "UserPerBrand",
+          document.getElementById("myChart5").getContext("2d"),
+          $scope.object.chart5
+        );
 
         $scope.object.graphData = superAdminService.createGraphData(
-          result.data[7]
+          result.data[8]
         );
 
         $scope.object.dates = $scope.object.graphData.dates;
         $scope.object.revenue = $scope.object.graphData.revenue;
-        $scope.object.topBrandName = result.data[7][0].name;
+        $scope.object.topBrandName = result.data[8][0].name;
 
         $scope.object.graphData = superAdminService.createGraphData(
-          result.data[10]
+          result.data[11]
         );
 
         $scope.object.topSecondBrandDates = $scope.object.graphData.dates;
         $scope.object.topSecondBrandRevenue = $scope.object.graphData.revenue;
-        $scope.object.topSecondBrandName = result.data[10][0].name;
+        $scope.object.topSecondBrandName = result.data[11][0].name;
 
         $scope.object.chart1 = superAdminService.compareGraph(
           $scope.object.dates,

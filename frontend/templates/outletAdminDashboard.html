@@ -187,11 +187,9 @@
               cursor: pointer;
             "
             title="{{object.orderCnts[$index+1]}}"
-            ng-style="{background:+object.orderCnts[$index+1].substr(0,1)>=object.one?'green':'lightgreen'}"
+            ng-style="{background:+object.orderCnts[$index+1].substr(0,1)>=object.one?'green':'#d6dde4'}"
             ng-repeat="day in object.orderDates"
-          >
-            <!-- {{}} -->
-          </div>
+          ></div>
         </div>
       </div>
       <div style="display: flex; gap: 5px">

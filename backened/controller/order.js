@@ -8,7 +8,6 @@ var endDate = moment().toDate();
 module.exports = {
   createOrder: function (req, res) {
     var body = req.body;
-
     var order = undefined;
     if (body.type === "dine-in") {
       order = new orderModel({

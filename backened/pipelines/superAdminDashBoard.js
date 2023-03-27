@@ -221,4 +221,20 @@ module.exports = {
       },
     ];
   },
+  userPerBrand: function () {
+    return [
+      {
+        $match: {
+          userType: { $ne: "superAdmin" },
+        },
+      },
+      {
+        $group: {
+          _id: "$brand._id",
+          name: { $first: "$brand.name" },
+          employeeCnt: { $sum: 1 },
+        },
+      },
+    ];
+  },
 };

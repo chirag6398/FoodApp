@@ -1,4 +1,6 @@
 var mongoose = require("mongoose");
+var moment = require("moment");
+
 module.exports = {
   productCnt: function (id) {
     return [
@@ -276,4 +278,40 @@ module.exports = {
       },
     ];
   },
+  // dineInAnalysis: function (id) {
+  //   var sDate = moment().subtract(1, "week").startOf("week").toDate();
+  //   var eDate = moment().subtract(1, "week").endOf("week").toDate();
+  //   return [
+  //     {
+  //       $match: {
+  //         "outlet._id": mongoose.Types.ObjectId(id),
+  //       },
+  //     },
+  //     // {
+  //     //   $match: {
+  //     //     createdAt: {
+  //     //       $gte: sDate,
+  //     //       $lt: eDate,
+  //     //     },
+  //     //   },
+  //     // },
+  //     {
+  //       $match: {
+  //         type: "dine-in",
+  //       },
+  //     },
+  //     {
+  //       $group: {
+  //         _id: { $dateToString: { format: "%d-%m-%Y", date: "$createdAt" } },
+  //         dineInCnt: { $sum: 1 },
+  //       },
+  //     },
+  //     {
+  //       $sort: { dineInCnt: -1 },
+  //     },
+  //     {
+  //       $limit: 1,
+  //     },
+  //   ];
+  // },
 };

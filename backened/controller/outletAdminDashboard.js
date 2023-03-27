@@ -37,6 +37,7 @@ module.exports = {
     var data10 = orderModel.aggregate(
       pipelines.groupByOrderType(id, startDate, endDate)
     );
+    // var data11 = orderModel.aggregate(pipelines.dineInAnalysis(id));
 
     Promise.all([
       data1,

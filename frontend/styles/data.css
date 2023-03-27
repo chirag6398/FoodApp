@@ -8,9 +8,7 @@
 .data__mainDiv{
     width: 100%;
 }
-.data__heading{
 
-}
 .data__logo{
     object-fit: contain;
     height: 200px;

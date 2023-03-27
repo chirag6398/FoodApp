@@ -23,6 +23,7 @@ module.exports = {
     var data7 = orderModel.aggregate(
       pipelines.outletRanking(startDate, endDate)
     );
+    var data8 = employeeModel.aggregate(pipelines.userPerBrand());
 
     async.waterfall(
       [
@@ -78,7 +79,7 @@ module.exports = {
       ],
       function (err, result) {
         if (result) {
-          Promise.all([data1, data2, data3, data4, data5, data6, data7])
+          Promise.all([data1, data2, data3, data4, data5, data6, data7, data8])
             .then(function (result1) {
               return res.send(result1.concat(result));
             })

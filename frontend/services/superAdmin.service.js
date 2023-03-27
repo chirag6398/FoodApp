@@ -65,6 +65,20 @@ app.service("superAdminService", function (adminApi, $timeout) {
     adminApi.updateContactInfo({ contactInfo: contactInfo, _id: brandId }, cb);
   };
 
+  this.userPerBrand = function (data) {
+    var names = [];
+    var cnts = [];
+    data.forEach(function (value) {
+      names.push(value.name);
+      cnts.push(value.employeeCnt);
+    });
+
+    return {
+      names,
+      cnts,
+    };
+  };
+
   this.displayGraph = function (dates, revenue, name, ctx, chart) {
     chart = new Chart(ctx, {
       type: "line",
@@ -74,13 +88,8 @@ app.service("superAdminService", function (adminApi, $timeout) {
           {
             data: revenue,
             label: name,
-            fill: true,
-            backgroundColor: "rgba(220,220,220,0.5)",
-            borderColor: "rgba(220,220,220,1)",
-            pointBackgroundColor: "rgba(220,220,220,1)",
-            pointBorderColor: "#fff",
-            pointHoverBackgroundColor: "#fff",
-            pointHoverBorderColor: "rgba(220,220,220,1)",
+            borderColor: "rgb(75, 192, 192)",
+            tension: 0.3,
           },
         ],
       },
@@ -162,16 +171,14 @@ app.service("superAdminService", function (adminApi, $timeout) {
             data: r1,
             label: name1,
             borderColor: "red",
-            borderWidth: 1,
-            fill: true,
-            lineTention: 0.5,
+            tension: 0.2,
           },
           {
             data: r2,
             label: name2,
             borderColor: "green",
-            borderWidth: 1,
-            lineTention: 0.5,
+            fill: true,
+            tension: 0.2,
           },
         ],
       },
@@ -204,16 +211,16 @@ app.service("superAdminService", function (adminApi, $timeout) {
     };
   };
 
-  this.displayBarGraph = function (names, revenue, ctx, chart) {
+  this.displayTypeGraph = function (names, revenue, type, name, ctx, chart) {
     console.log("names", names);
     chart = new Chart(ctx, {
-      type: "bar",
+      type: type,
       data: {
         labels: names,
         datasets: [
           {
             data: revenue,
-            label: "rankings",
+            label: name,
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
               "rgba(255, 159, 64, 0.2)",

@@ -1,11 +1,11 @@
 ///<reference path="../module/module.js"/>
 
 app.service("outletAgentService", function (outletAgentFactory) {
-  this.groupProductByCategories = function (products) {
+  var obj = {};
+  obj.groupProductByCategories = function (products) {
     var categoryProducts = {};
     var categories = [];
     products.forEach(function (value) {
-      console.log(value);
       var categoryName = value.product.superCategory.category.name;
       var product = value.product;
       var indx = categories.findIndex(function (value) {
@@ -24,32 +24,25 @@ app.service("outletAgentService", function (outletAgentFactory) {
 
     return { categories, categoryProducts };
   };
-  this.addToCart = function (cart, product) {
-    if (cart.length === 0) {
+  obj.addToCart = function (cart, product) {
+    if (cart === undefined) cart = [];
+    var exist = cart.findIndex(function (value) {
+      return value._id === product._id;
+    });
+
+    if (exist >= 0) {
+      cart[exist].quantity += 1;
+    } else {
       cart.push({
         ...product,
         quantity: 1,
       });
-    } else {
-      var exist = cart.findIndex(function (value) {
-        return value._id === product._id;
-      });
-      console.log(exist);
-      if (exist >= 0) {
-        cart[exist].quantity += 1;
-      } else {
-        cart.push({
-          ...product,
-          quantity: 1,
-        });
-      }
     }
-    console.log(cart);
 
     return cart;
   };
 
-  this.removeFromCart = function (cart, product) {
+  obj.removeFromCart = function (cart, product) {
     var exist = cart.findIndex(function (value) {
       return value._id === product._id;
     });
@@ -68,7 +61,7 @@ app.service("outletAgentService", function (outletAgentFactory) {
     return cart;
   };
 
-  this.removeItem = function (cart, product) {
+  obj.removeItem = function (cart, product) {
     var updatedCart = cart.filter(function (value) {
       return value._id != product._id;
     });
@@ -76,7 +69,7 @@ app.service("outletAgentService", function (outletAgentFactory) {
     return updatedCart;
   };
 
-  this.totalPrice = function (cart) {
+  obj.totalPrice = function (cart) {
     var amount = 0;
 
     cart.forEach(function (value) {
@@ -86,14 +79,14 @@ app.service("outletAgentService", function (outletAgentFactory) {
     return amount;
   };
 
-  this.generateOrderId = function () {
+  obj.generateOrderId = function () {
     const timestamp = new Date().getTime();
     const randomNumber = Math.floor(Math.random() * 10000);
     const orderId = "ORDERNO-" + timestamp + "-" + randomNumber;
     return orderId;
   };
 
-  this.updateTablesIndexes = function (tables, allotedTables) {
+  obj.updateTablesIndexes = function (tables, allotedTables) {
     var indexes = [];
     allotedTables.forEach(function (tableNumber) {
       for (var x = 0; x < tables.length; x++) {
@@ -107,7 +100,7 @@ app.service("outletAgentService", function (outletAgentFactory) {
     return indexes;
   };
 
-  this.addTaxes = function (taxes, amount) {
+  obj.addTaxes = function (taxes, amount) {
     var extraAmount = 0;
     taxes.forEach(function (value) {
       extraAmount += (amount * value.percent) / 100;
@@ -115,7 +108,7 @@ app.service("outletAgentService", function (outletAgentFactory) {
     return extraAmount;
   };
 
-  this.isTableAvailable = function (count, tables) {
+  obj.isTableAvailable = function (count, tables) {
     var allotedTables = [];
 
     for (var x of tables) {
@@ -138,7 +131,7 @@ app.service("outletAgentService", function (outletAgentFactory) {
     return count === 0 ? allotedTables : false;
   };
 
-  this.placeOrder = function (
+  obj.placeOrder = function (
     customer,
     type,
     orderNo,
@@ -176,20 +169,20 @@ app.service("outletAgentService", function (outletAgentFactory) {
     });
   };
 
-  this.checkExistanceOfTable = function (table, data) {
+  obj.checkExistanceOfTable = function (table, data) {
     var ind = table.findIndex(function (value) {
       return value === data.number;
     });
 
     return ind;
   };
-  this.getIndxById = function (orders, id) {
+  obj.getIndxById = function (orders, id) {
     return orders.findIndex(function (value) {
       return value._id === id;
     });
   };
 
-  this.cartsProducts = function (products) {
+  obj.cartsProducts = function (products) {
     var productsName = [];
     products.forEach(function (value) {
       productsName.push(value.name);
@@ -197,7 +190,73 @@ app.service("outletAgentService", function (outletAgentFactory) {
     return productsName;
   };
 
-  this.getRecommendedProduct = function (products, cb) {
+  obj.getRecommendedProduct = function (products, cb) {
     outletAgentFactory.getRecommendedProduct(products, cb);
   };
+
+  obj.getOutletAgentPage = function (cb) {
+    outletAgentFactory.getOutletAgentPage(function (err, result) {
+      console.log(err, result);
+      if (result) {
+        var data = result.data;
+        var brand = data.outlet.brand;
+        var tables = data.outlet.table;
+        var outlet = data.outlet;
+        var admin = data.agent;
+        var taxes = data.outlet.taxes;
+        var productsData = obj.groupProductByCategories(outlet.products);
+
+        var products =
+          productsData.categoryProducts[productsData.categories[0]];
+
+        var currentTime = null;
+        var orderNo = obj.generateOrderId();
+        var customer = {};
+        var cart = [];
+        var amount = 0;
+        var btnText = "Enter";
+        var orderBtn = "place order";
+        var type = null;
+        var saved = false;
+        var isSelected = 0;
+        var payableAmount = 0;
+        var allotedTables = null;
+
+        var cartProducts = [];
+        var recommendedProducts = [];
+        var searchText = "";
+        var searchTextResult = [];
+        cb(null, {
+          brand,
+          tables,
+          outlet,
+          admin,
+          taxes,
+          productsData,
+          products,
+          currentTime,
+          orderNo,
+          customer,
+          cart,
+          amount,
+          btnText,
+          orderBtn,
+          type,
+          saved,
+          isSelected,
+          payableAmount,
+          allotedTables,
+
+          cartProducts,
+          recommendedProducts,
+          searchText,
+          searchTextResult,
+        });
+      } else {
+        cb(err, null);
+      }
+    });
+  };
+
+  return obj;
 });

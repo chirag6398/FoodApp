@@ -1,4 +1,4 @@
-<div ng-class="{'dim':object.isLoading}" class="agt__extDiv">
+<div ng-class="{'dim':isLoading}" class="agt__extDiv">
   <div class="agt__nav">
     <div class="agt__navComponent agt__activeNav" ui-sref="outletAgent">
       Home
@@ -78,7 +78,6 @@
   <div class="agt__mainDiv">
     <div class="agt__leftSide">
       <div class="agt__header">
-        <!-- <div style="opacity: 0.6; font-weight: 600">{{orderNo}}</div> -->
         <div style="opacity: 0.6; font-weight: 600">
           {{object.currentTime | date:'mediumTime'}}
         </div>
@@ -702,7 +701,7 @@
   </div>
 </div>
 <div
-  ng-if="object.isLoading"
+  ng-if="isLoading"
   class="loader"
   style="width: 100%; height: -webkit-fill-available; position: absolute"
 ></div>

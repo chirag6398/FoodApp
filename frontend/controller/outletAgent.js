@@ -15,61 +15,21 @@ app.controller("outletAgentController", [
     outletAgentService,
     $interval
   ) {
-    $scope.object = {
-      tables: [],
-      brand: null,
-      outlet: null,
-      admin: null,
-      taxes: [],
-      currentTime: null,
-      orderNo: null,
-      customer: {},
-      cart: [],
-      amount: 0,
-      btnText: "Enter",
-      orderBtn: "place order",
-      type: null,
-      saved: false,
-      productsData: null,
-      products: null,
-      isSelected: 0,
-      payableAmount: 0,
-      allotedTables: null,
-      isLoading: true,
-      cartProducts: [],
-      recommendedProducts: [],
-      searchText: "",
-      searchTextResult: [],
-    };
-    // toastNotifications.info("hi");
-    outletAgentFactory.getOutletAgentPage(function (err, result) {
+    $scope.isLoading = true;
+    outletAgentService.getOutletAgentPage(function (err, result) {
       console.log(err, result);
+      $scope.isLoading = false;
       if (result) {
-        $scope.object.brand = result.data.outlet.brand;
-        $scope.object.tables = result.data.outlet.table;
-        $scope.object.outlet = result.data.outlet;
-        $scope.object.admin = result.data.agent;
-        $scope.object.taxes = result.data.outlet.taxes;
-        $scope.object.productsData =
-          outletAgentService.groupProductByCategories(
-            $scope.object.outlet.products
-          );
-        $scope.object.products =
-          $scope.object.productsData.categoryProducts[
-            $scope.object.productsData.categories[0]
-          ];
-        $scope.object.isLoading = false;
+        $scope.object = result;
+        $interval(function () {
+          $scope.object.currentTime = new Date();
+        }, 1000);
       } else {
         $location.path("login");
       }
     });
 
-    $interval(function () {
-      $scope.object.currentTime = new Date();
-    }, 1000);
-
     $scope.searchTextHandler = function () {
-      // console.log($scope.object.searchText);
       outletAgentFactory.debouncing(
         $scope.object.searchText,
         $scope.object.outlet._id,
@@ -106,8 +66,6 @@ app.controller("outletAgentController", [
         }
       );
     };
-
-    $scope.object.orderNo = outletAgentService.generateOrderId();
 
     $scope.setOrderType = function (type) {
       if (type === "Dine-in") {

@@ -13,9 +13,6 @@
     height: 100vh;
     justify-content: space-between;
     align-items: center;
-    /* min-width: 100vw; */
-    /* width: max-content; */
-    /* background: #16161a; */
 }
 .agt__nav{
     height: 98vh;
@@ -245,18 +242,20 @@ h5{
     gap: 5px;
     background: lightblue;
 }
+
 .agt__tableGreen{
     background: #75d875;
 }
+
 .agt__cart div.ng-enter {
     transition: 0.4s linear all;
     opacity: 0;
     transform: translateY(30px);
-  }
+}
 
 
   
-  .agt__cart div.ng-enter.ng-enter-active {
+.agt__cart div.ng-enter.ng-enter-active {
     opacity: 1;
     transform: translateY(0px);
 }
