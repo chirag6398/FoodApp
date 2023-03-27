@@ -20,6 +20,11 @@ employeeRoute.get(
   employeeController.searchUserBySearchText
 );
 
+employeeRoute.get(
+  "/api/employee/searchUserBySearchTextAndBrandId",
+  employeeController.searchUserBySearchTextAndBrandId
+);
+
 employeeRoute.put("/api/employee/updateUser", employeeController.updateUser);
 employeeRoute.put(
   "/api/employee/updatePassword",

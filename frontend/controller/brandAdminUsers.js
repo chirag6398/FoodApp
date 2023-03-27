@@ -21,7 +21,7 @@ app.controller("brandAdminUsersController", [
       totalCount: 0,
       totalPage: 1,
       one: 1,
-      searchOutlet: "",
+      searchUser: "",
       searchTextResult: [],
     };
     brandApi.getBrandAdminPage();
@@ -52,6 +52,23 @@ app.controller("brandAdminUsersController", [
       }
     });
 
+    $scope.searchTextHandler = function () {
+      brandAdminService.debouncing(
+        $scope.object.searchUser,
+        $scope.object.brand._id,
+        function (err, result) {
+          if (result) {
+            $scope.object.searchTextResult = result.data;
+          } else {
+            $scope.object.searchTextResult = [];
+          }
+        }
+      );
+      if ($scope.object.searchUser === "") {
+        $scope.object.searchTextResult = [];
+      }
+    };
+
     $scope.getUserHandler = function (page, limit) {
       $scope.object.isLoading = true;
       brandApi.getBrandUsers(
@@ -70,7 +87,7 @@ app.controller("brandAdminUsersController", [
             $scope.object.totalPage = Math.ceil(
               $scope.object.totalCount / $scope.object.limit
             );
-            $scope.object.pages = superAdminService.getPages(
+            $scope.object.pages = brandAdminService.getPages(
               $scope.object.totalCount,
               $scope.object.limit
             );

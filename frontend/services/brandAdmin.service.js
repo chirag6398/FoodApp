@@ -1,6 +1,15 @@
 ///<reference path="../module/module.js"/>
 
-app.service("brandAdminService", function (brandApi, $stateParams) {
+app.service("brandAdminService", function (brandApi, $stateParams, $timeout) {
+  var timeout1 = null;
+  this.debouncing = function (searchUser, id, cb) {
+    if (timeout1) {
+      $timeout.cancel(timeout1);
+    }
+    timeout1 = $timeout(function () {
+      if (searchUser) brandApi.searchUserBySearchText(searchUser, id, cb);
+    }, 800);
+  };
   this.addSuperCategory = function (superCategory, brand, cb) {
     var formData = new FormData();
     formData.append("name", superCategory.name);

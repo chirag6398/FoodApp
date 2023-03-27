@@ -1,6 +1,6 @@
 var employeeModel = require("../model/employee.model");
 var hashPassword = require("../service/common.service").hashPassword;
-
+var mongoose = require("mongoose");
 module.exports = {
   logInHandler: function (req, res) {
     if (req.user._doc === undefined) {
@@ -122,6 +122,24 @@ module.exports = {
 
     employeeModel
       .find({ userName: { $regex: regex } })
+      .then(function (result) {
+        return res.send(result);
+      })
+      .catch(function (err) {
+        console.log(err);
+        return res.status(404).send(err);
+      });
+  },
+  searchUserBySearchTextAndBrandId: function (req, res) {
+    var query = req.query;
+
+    var regex = new RegExp(query.searchText, "i");
+
+    employeeModel
+      .find({
+        "brand._id": mongoose.Types.ObjectId(query.id),
+        userName: { $regex: regex },
+      })
       .then(function (result) {
         return res.send(result);
       })

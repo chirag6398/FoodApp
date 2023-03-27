@@ -3,6 +3,22 @@
 app.factory("brandApi", function ($http, $rootScope, setAdminData) {
   var obj = {};
 
+  obj.searchUserBySearchText = function (searchText, id, cb) {
+    $http
+      .get(
+        "http://localhost:5000/api/employee/searchUserBySearchTextAndBrandId?searchText=" +
+          searchText +
+          "&id=" +
+          id
+      )
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb(err, null);
+      });
+  };
+
   obj.getBrandAdminPage = function () {
     $http
       .get("http://localhost:5000/api/brandAdmin/getBrandAdminPage", {
