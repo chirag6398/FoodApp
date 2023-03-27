@@ -108,6 +108,27 @@ app.service("brandAdminService", function (brandApi, $stateParams, $timeout) {
     };
   };
 
+  var monthDetails = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  this.getActivityData = function (month, data) {
+    var dates = [0];
+    var activity = [""];
+    for (var i = 1; i <= monthDetails[month]; i++) {
+      dates.push(i);
+      var str = "0 orders booked on " + i;
+      activity.push(str);
+    }
+    if (data) {
+      data.forEach(function (value) {
+        var date = +value._id.substr(0, 2);
+        activity[date - 1] = value.count + " orders booked on " + date;
+      });
+    }
+    return {
+      dates,
+      activity,
+    };
+  };
+
   this.getOrderAnalysis = function (data) {
     var orderAnalysis = {
       totalOrders: 0,
@@ -121,6 +142,16 @@ app.service("brandAdminService", function (brandApi, $stateParams, $timeout) {
         (data[0].count / orderAnalysis.totalOrders) * 100;
       orderAnalysis.cancellationRate =
         (data[1].count / orderAnalysis.totalOrders) * 100;
+    } else if (data.length == 1) {
+      if (data[0]._id === "served") {
+        orderAnalysis.totalOrders = data[0].count;
+        orderAnalysis.successRate =
+          (data[0].count / orderAnalysis.totalOrders) * 100;
+      } else {
+        orderAnalysis.totalOrders = data[0].count;
+        orderAnalysis.cancellationRate =
+          (data[0].count / orderAnalysis.totalOrders) * 100;
+      }
     }
 
     return orderAnalysis;

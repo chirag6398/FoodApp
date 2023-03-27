@@ -285,6 +285,33 @@ module.exports = {
           totalRevenue: {
             $sum: { $multiply: ["$items.quantity", "$items.price"] },
           },
+
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { _id: -1 },
+      },
+    ];
+  },
+  ordersBooked: function (id, startDate, endDate) {
+    return [
+      {
+        $match: {
+          "brand._id": mongoose.Types.ObjectId(id),
+        },
+      },
+      {
+        $match: {
+          createdAt: {
+            $gte: startDate,
+            $lt: endDate,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: { $dateToString: { format: "%d-%m-%Y", date: "$createdAt" } },
           count: { $sum: 1 },
         },
       },

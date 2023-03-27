@@ -33,6 +33,7 @@ app.controller("brandAdminDashboardController", [
       outletDates: [0],
       outletRevenue: [0],
       isLoading: true,
+      one: 1,
       months: [
         "Jan",
         "Feb",
@@ -47,6 +48,8 @@ app.controller("brandAdminDashboardController", [
         "Nov",
         "Dec",
       ],
+      orderDates: [],
+      orderCnts: [],
       month: null,
     };
     $timeout(function () {
@@ -59,10 +62,11 @@ app.controller("brandAdminDashboardController", [
       if (result) {
         console.log(result);
         $scope.object.brand = result.data.data;
-        $scope.object.isLoading = false;
+
         brandAdminDashBoardApi.getBasicData(
           $scope.object.brand._id,
           function (err, result) {
+            $scope.object.isLoading = false;
             console.log(err, result);
             $scope.object.outlets = result.data[0][0].names;
             $scope.object.totalOutlets = result.data[1][0].count;
@@ -82,6 +86,14 @@ app.controller("brandAdminDashboardController", [
 
             $scope.object.brandDates = $scope.object.activity.dates;
             $scope.object.brandRevenue = $scope.object.activity.activity;
+
+            $scope.object.activity = brandAdminService.getActivityData(
+              $scope.object.month,
+              result.data[8]
+            );
+            console.log($scope.object.activity);
+            $scope.object.orderDates = $scope.object.activity.dates;
+            $scope.object.orderCnts = $scope.object.activity.activity;
 
             if ($scope.object.myChart1) {
               $scope.object.myChart1.destroy();
@@ -146,14 +158,21 @@ app.controller("brandAdminDashboardController", [
         $scope.object.brand._id,
         month,
         function (err, result) {
-          if (result) {
+          if (result.data) {
             $scope.object.activity = brandAdminService.getGraphData(
               $scope.object.month,
-              result.data
+              result.data[0]
             );
 
             $scope.object.brandDates = $scope.object.activity.dates;
             $scope.object.brandRevenue = $scope.object.activity.activity;
+            $scope.object.activity = brandAdminService.getActivityData(
+              $scope.object.month,
+              result.data[1]
+            );
+            console.log($scope.object.activity);
+            $scope.object.orderDates = $scope.object.activity.dates;
+            $scope.object.orderCnts = $scope.object.activity.activity;
 
             if ($scope.object.myChart1) {
               $scope.object.myChart1.destroy();

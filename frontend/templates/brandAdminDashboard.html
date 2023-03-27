@@ -42,7 +42,7 @@
       <div>
         <div
           style="
-            width: 500px;
+            width: 700px;
             display: flex;
             flex-direction: column;
             padding: 10px;
@@ -89,9 +89,42 @@
               </div>
             </div>
           </div>
+          <div style="display: flex; gap: 5px">
+            <div>
+              <h3>Brand Last Month Revenue Analysis</h3>
+              <canvas id="myChart1" area-label="chart"></canvas>
+            </div>
 
-          <h3>Brand Last Month Revenue Analysis</h3>
-          <canvas id="myChart1" area-label="chart"></canvas>
+            <div
+              style="
+                width: 222px;
+                height: 133px;
+                padding: 10px;
+                border: 1px solid lightgray;
+                margin: 10px;
+                border-radius: 3px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+              "
+            >
+              <div style="display: flex; gap: 5px; flex-wrap: wrap">
+                <div
+                  style="
+                    height: 15px;
+                    width: 15px;
+                    background: black;
+
+                    border-radius: 2px;
+                    cursor: pointer;
+                  "
+                  title="{{object.orderCnts[$index+1]}}"
+                  ng-style="{background:+object.orderCnts[$index+1].substr(0,1)>=object.one?'green':'lightgreen'}"
+                  ng-repeat="day in object.orderDates"
+                ></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
