@@ -9,12 +9,31 @@ app.service(
       $anchorScroll();
     };
 
+    this.displayGraph = function (dates, revenue, name, ctx, chart) {
+      chart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: dates,
+          datasets: [
+            {
+              data: revenue,
+              label: name,
+              borderColor: "rgb(75, 192, 192)",
+              tension: 0.3,
+            },
+          ],
+        },
+      });
+      return chart;
+    };
+
     this.scrollToProducts = function () {
       $location.hash("product");
 
       $anchorScroll.yOffset = 60;
       $anchorScroll("product");
     };
+
     this.getSuperCategories = function (id, cb) {
       outletApi.getSuperCategories(id, cb);
     };

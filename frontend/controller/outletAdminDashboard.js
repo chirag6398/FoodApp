@@ -2,7 +2,6 @@
 
 app.controller("outletAdminDashboardController", [
   "$scope",
-  "superAdminService",
   "outletAdminDashBoardApi",
   "$rootScope",
   "outletApi",
@@ -10,7 +9,6 @@ app.controller("outletAdminDashboardController", [
   "outletAdminService",
   function (
     $scope,
-    superAdminService,
     outletAdminDashBoardApi,
     $rootScope,
     outletApi,
@@ -96,7 +94,7 @@ app.controller("outletAdminDashboardController", [
               $scope.object.myChart1.destroy();
             }
 
-            $scope.object.myChart1 = superAdminService.displayGraph(
+            $scope.object.myChart1 = outletAdminService.displayGraph(
               $scope.object.outletDates,
               $scope.object.outletRevenue,
               $scope.object.outlet.name,
@@ -149,7 +147,7 @@ app.controller("outletAdminDashboardController", [
               $scope.object.myChart1.destroy();
             }
 
-            $scope.object.myChart1 = superAdminService.displayGraph(
+            $scope.object.myChart1 = outletAdminService.displayGraph(
               $scope.object.outletDates,
               $scope.object.outletRevenue,
               $scope.object.outlet.name,

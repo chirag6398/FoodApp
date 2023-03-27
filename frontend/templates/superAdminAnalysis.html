@@ -45,72 +45,76 @@
   >
     <div
       style="
-        width: 495px;
+        width: 800px;
         padding: 10px;
         border: 1px solid lightgray;
         margin: 10px;
         border-radius: 3px;
+        display: flex;
+        flex-wrap: wrap;
       "
     >
-      <h3>
-        Top Brand from Last Month:<span style="opacity: 0.8"
-          >{{object.topBrandName}}</span
-        >
-      </h3>
-      <canvas id="myChart3" area-label="chart"></canvas>
-    </div>
-    <div class="analysis__displayColumn">
-      <div class="dropdown show">
-        <a
-          class="btn btn-secondary dropdown-toggle"
-          href="#"
-          role="button"
-          id="dropdownMenuLink"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          Select Month
-        </a>
-
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      <div class="analysis__displayColumn">
+        <div class="dropdown show">
           <a
-            class="dropdown-item"
-            style="cursor: pointer"
-            ng-repeat="month in object.months"
-            ng-click="getDataOfTopTwoBrands($index)"
-            >{{month}}</a
+            class="btn btn-secondary dropdown-toggle"
+            href="#"
+            role="button"
+            id="dropdownMenuLink"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
           >
-        </div>
-      </div>
+            Select Month
+          </a>
 
-      <div class="analysis__smallBox">
-        <div>
-          <span> Total Outlets(1st): </span>
-          <span style="font-weight: 900; opacity: 0.8">
-            {{object.topBrandOutletCnt}}
-          </span>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a
+              class="dropdown-item"
+              style="cursor: pointer"
+              ng-repeat="month in object.months"
+              ng-click="getDataOfTopTwoBrands($index)"
+              >{{month}}</a
+            >
+          </div>
         </div>
-        <div>
-          <span> Total Outlets(2nd): </span>
-          <span style="font-weight: 900; opacity: 0.8">
-            {{object.topSecondBrandOutletCnt}}
-          </span>
+
+        <div class="analysis__smallBox">
+          <div>
+            <span> Total Outlets(1st): </span>
+            <span style="font-weight: 900; opacity: 0.8">
+              {{object.topBrandOutletCnt}}
+            </span>
+          </div>
+          <div>
+            <span> Total Outlets(2nd): </span>
+            <span style="font-weight: 900; opacity: 0.8">
+              {{object.topSecondBrandOutletCnt}}
+            </span>
+          </div>
+        </div>
+        <div class="analysis__smallBox">
+          <div>
+            <span> Total Employees(1st): </span>
+            <span style="font-weight: 900; opacity: 0.8">
+              {{object.topBrandEmployeeCnt}}
+            </span>
+          </div>
+          <div>
+            <span> Total Employees(2nd): </span>
+            <span style="font-weight: 900; opacity: 0.8">
+              {{object.topSecondBrandEmployeeCnt}}
+            </span>
+          </div>
         </div>
       </div>
-      <div class="analysis__smallBox">
-        <div>
-          <span> Total Employees(1st): </span>
-          <span style="font-weight: 900; opacity: 0.8">
-            {{object.topBrandEmployeeCnt}}
-          </span>
-        </div>
-        <div>
-          <span> Total Employees(2nd): </span>
-          <span style="font-weight: 900; opacity: 0.8">
-            {{object.topSecondBrandEmployeeCnt}}
-          </span>
-        </div>
+      <div>
+        <h3>
+          Top Brand from Last Month:<span style="opacity: 0.8"
+            >{{object.topBrandName}}</span
+          >
+        </h3>
+        <canvas id="myChart3" area-label="chart"></canvas>
       </div>
     </div>
 
@@ -134,7 +138,24 @@
       </ul>
     </div>
   </div>
-
+  <div
+    style="
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      border: 1px solid lightgray;
+      border-radius: 3px;
+      background: #fdfdfd;
+      margin: 10px;
+      padding: 10px;
+      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    "
+  >
+    <div style="width: 500px">
+      <h3>Top 5 outlet Rankings</h3>
+      <canvas id="myChart4" area-label="chart"></canvas>
+    </div>
+  </div>
   <div
     style="
       display: flex;

@@ -194,4 +194,31 @@ module.exports = {
       },
     ];
   },
+  outletRanking: function (startDate, endDate) {
+    return [
+      {
+        $match: {
+          createdAt: {
+            $gte: startDate,
+            $lt: endDate,
+          },
+        },
+      },
+      {
+        $unwind: "$items",
+      },
+      {
+        $group: {
+          _id: "$outlet._id",
+          name: { $first: "$outlet.name" },
+          totalRevenue: {
+            $sum: { $multiply: ["$items.quantity", "$items.price"] },
+          },
+        },
+      },
+      {
+        $sort: { _id: 1 },
+      },
+    ];
+  },
 };
