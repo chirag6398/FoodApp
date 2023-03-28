@@ -17,97 +17,34 @@ app.controller("brandAdminDashboardController", [
     brandAdminService,
     superAdminService
   ) {
-    $scope.object = {
-      myChart1: null,
-      myChart2: null,
-      brand: null,
-      outlets: null,
-      totalOutlets: null,
-      totalEmployees: null,
-      totalRevenue: null,
-      topTenCategories: null,
-      topTenProducts: null,
-      brandGraphData: null,
-      brandDates: [0],
-      brandRevenue: [0],
-      outletDates: [0],
-      outletRevenue: [0],
-      isLoading: true,
-      one: 1,
-      months: [
-        "Jan",
-        "Feb",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
-      orderDates: [],
-      orderCnts: [],
-      month: null,
-    };
     $timeout(function () {
-      if ($scope.object.brand === null) {
+      if ($scope.object.myChart1 === null) {
         brandApi.getBrandAdminPage();
       }
     }, 1300);
 
+    $scope.isLoading = true;
+
     $rootScope.$on("passData", function (err, result) {
       if (result) {
         console.log(result);
-        $scope.object.brand = result.data.data;
+        brandAdminService.getBasicData(result, function (err, result) {
+          console.log(result);
+          $scope.isLoading = false;
+          $scope.object = result;
 
-        brandAdminDashBoardApi.getBasicData(
-          $scope.object.brand._id,
-          function (err, result) {
-            $scope.object.isLoading = false;
-            console.log(err, result);
-            $scope.object.outlets = result.data[0][0].names;
-            $scope.object.totalOutlets = result.data[1][0].count;
-            $scope.object.totalEmployees = result.data[1][0].count;
-            $scope.object.totalRevenue = result.data[2][0].totalRevenue;
-            $scope.object.topTenCategories = result.data[3];
-            $scope.object.topTenProducts = result.data[4];
-            $scope.object.brandGraphData = result.data[5];
-            $scope.object.topOutlet = result.data[7][0];
-            $scope.object.bottomOutlet = result.data[6][0];
-
-            $scope.object.month = new Date().getMonth();
-            $scope.object.activity = brandAdminService.getGraphData(
-              $scope.object.month,
-              $scope.object.brandGraphData
-            );
-
-            $scope.object.brandDates = $scope.object.activity.dates;
-            $scope.object.brandRevenue = $scope.object.activity.activity;
-
-            $scope.object.activity = brandAdminService.getActivityData(
-              $scope.object.month,
-              result.data[8]
-            );
-            console.log($scope.object.activity);
-            $scope.object.orderDates = $scope.object.activity.dates;
-            $scope.object.orderCnts = $scope.object.activity.activity;
-
-            if ($scope.object.myChart1) {
-              $scope.object.myChart1.destroy();
-            }
-
-            $scope.object.myChart1 = superAdminService.displayGraph(
-              $scope.object.brandDates,
-              $scope.object.brandRevenue,
-              $scope.object.brand.name,
-              document.getElementById("myChart1").getContext("2d"),
-              $scope.object.myChart1
-            );
+          if ($scope.object.myChart1) {
+            $scope.object.myChart1.destroy();
           }
-        );
+
+          $scope.object.myChart1 = superAdminService.displayGraph(
+            $scope.object.brandDates,
+            $scope.object.brandRevenue,
+            $scope.object.brand.name,
+            document.getElementById("myChart1").getContext("2d"),
+            $scope.object.myChart1
+          );
+        });
       }
     });
 

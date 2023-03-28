@@ -1,4 +1,4 @@
-<div ng-class="{'dim':object.isLoading}" style="display: flex; flex-wrap: wrap">
+<div ng-class="{'dim':isLoading}" style="display: flex; flex-wrap: wrap">
   <div style="width: 100%">
     <div style="justify-content: space-between" id="container1">
       <div class="box">
@@ -403,7 +403,7 @@
   </div>
 </div>
 <div
-  ng-if="object.isLoading"
+  ng-if="isLoading"
   class="loader"
   style="
     width: 100%;
