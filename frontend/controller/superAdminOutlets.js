@@ -58,6 +58,12 @@ app.controller("superAdminOutletsController", [
       );
     };
 
+    $scope.setSearchResult = function (res) {
+      $scope.object.outlets = [res];
+      $scope.object.selectedOutlet = res;
+      $scope.object.searchTextResult = [];
+    };
+
     $scope.getOutletHandler = function (page, limit) {
       $scope.object.isLoading = true;
       superAdminService.getOutlets(

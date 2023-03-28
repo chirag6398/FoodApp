@@ -91,6 +91,7 @@ module.exports = {
             _id: "$items._id",
             name: { $first: "$items.name" },
             price: { $first: "$items.price" },
+            superCategory: { $first: "$items.superCategory" },
             img: { $first: "$items.img" },
             count: { $sum: 1 },
           },

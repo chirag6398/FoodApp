@@ -69,6 +69,12 @@ app.controller("brandAdminUsersController", [
       }
     };
 
+    $scope.setSearchResult = function (res) {
+      $scope.object.users = [res];
+      $scope.object.selectedUser = res;
+      $scope.object.searchTextResult = [];
+    };
+
     $scope.getUserHandler = function (page, limit) {
       $scope.object.isLoading = true;
       brandApi.getBrandUsers(

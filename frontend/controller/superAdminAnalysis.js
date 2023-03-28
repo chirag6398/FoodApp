@@ -7,75 +7,13 @@ app.controller("superAdminAnalysisController", [
   "superAdminService",
   "$rootScope",
   function ($scope, superAdminDashBoardApi, superAdminService, $rootScope) {
-    $scope.object = {
-      dates: [0],
-      topBrandName: null,
-      topSecondBrandName: null,
-      topBrandOutletCnt: 0,
-      topBrandEmployeeCnt: 0,
-      topSecondBrandName: null,
-      topSecondBrandOutletCnt: 0,
-      topSecondBrandEmployeeCnt: 0,
-      revenue: [0],
-      topSecondBrandDates: [0],
-      topSecondBrandRevenue: [0],
-      brandCnt: 0,
-      outletCnt: 0,
-      userCnt: 0,
-      brands: null,
-      totalRevenue: 0,
-      topBrands: null,
-      outlets: null,
-      brandDates: [0],
-      brandRevenue: [0],
-      outletDates: [0],
-      outletRevenue: [0],
-      chart1: null,
-      chart2: null,
-      chart3: null,
-      chart4: null,
-      chart5: null,
-      isLoading: true,
-      months: [
-        "Jan",
-        "Feb",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
-      outletsRanking: null,
-    };
-
     superAdminService.displayMap();
-
-    superAdminDashBoardApi.getBasicData(function (err, result) {
-      if (result && result.data) {
+    $scope.isLoading = true;
+    superAdminService.getBasicData(function (err, result) {
+      $scope.isLoading = false;
+      if (result) {
         console.log(result);
-        $scope.object.isLoading = false;
-        $scope.object.brandCnt = result.data[0][0].count;
-        $scope.object.outletCnt = result.data[1][0].count;
-        $scope.object.userCnt = result.data[2][0].count;
-        $scope.object.brands = result.data[3];
-        $scope.object.totalRevenue = result.data[5][0].lastMonthRevenue;
-        $scope.object.topBrands = result.data[4];
-        $scope.object.topBrandOutletCnt = result.data[9];
-        $scope.object.topBrandEmployeeCnt = result.data[10];
-        $scope.object.topSecondBrandOutletCnt = result.data[12];
-        $scope.object.topSecondBrandEmployeeCnt = result.data[13];
-
-        $scope.object.outletsRanking = superAdminService.outletRanking(
-          result.data[6]
-        );
-        $scope.object.userPerBrand = superAdminService.userPerBrand(
-          result.data[7]
-        );
+        $scope.object = result;
 
         if ($scope.object.chart4) {
           $scope.object.chart4.destroy();
@@ -99,22 +37,6 @@ app.controller("superAdminAnalysisController", [
           $scope.object.chart5
         );
 
-        $scope.object.graphData = superAdminService.createGraphData(
-          result.data[8]
-        );
-
-        $scope.object.dates = $scope.object.graphData.dates;
-        $scope.object.revenue = $scope.object.graphData.revenue;
-        $scope.object.topBrandName = result.data[8][0].name;
-
-        $scope.object.graphData = superAdminService.createGraphData(
-          result.data[11]
-        );
-
-        $scope.object.topSecondBrandDates = $scope.object.graphData.dates;
-        $scope.object.topSecondBrandRevenue = $scope.object.graphData.revenue;
-        $scope.object.topSecondBrandName = result.data[11][0].name;
-
         $scope.object.chart1 = superAdminService.compareGraph(
           $scope.object.dates,
           $scope.object.revenue,
@@ -136,11 +58,11 @@ app.controller("superAdminAnalysisController", [
     $scope.fechGraphData = function (brandId, brandName) {
       console.log(brandId);
 
-      $scope.object.isLoading = true;
+      $scope.isLoading = true;
       superAdminDashBoardApi.fetchBrandGraphData(
         brandId,
         function (err, result) {
-          $scope.object.isLoading = false;
+          $scope.isLoading = false;
           console.log(err, result);
           if (result.data) {
             $scope.object.graphData = superAdminService.createGraphData(
@@ -166,12 +88,12 @@ app.controller("superAdminAnalysisController", [
     };
 
     $scope.fetchOutletGraphData = function (outletId, outletName) {
-      $scope.object.isLoading = true;
+      $scope.isLoading = true;
 
       superAdminDashBoardApi.fetchOutletGraphData(
         outletId,
         function (err, result) {
-          $scope.object.isLoading = false;
+          $scope.isLoading = false;
           if (result.data) {
             $scope.object.graphData = superAdminService.createGraphData(
               result.data
@@ -197,12 +119,12 @@ app.controller("superAdminAnalysisController", [
     };
 
     $scope.getDataOfTopTwoBrands = function (month) {
-      $scope.object.isLoading = true;
+      $scope.isLoading = true;
       superAdminDashBoardApi.getDataOfTopTwoBrands(
         month,
         function (err, result) {
           console.log(err, result);
-          $scope.object.isLoading = false;
+          $scope.isLoading = false;
           if (result.data.length) {
             $scope.object.graphData = superAdminService.createGraphData(
               result.data[0]

@@ -50,6 +50,7 @@
       <select class="form-control" ng-model="object.filter.userType">
         <option value="outletAdmin">Outlet Admin</option>
         <option value="outletAgent">Outlet Agent</option>
+        <option value="">None</option>
       </select>
     </div>
     <div>
@@ -95,7 +96,7 @@
     </tbody>
   </table>
 </div>
-<div>
+<div ng-if="!object.selectedUser">
   <nav
     style="display: flex; align-items: center; justify-content: center"
     aria-label="Page navigation example"

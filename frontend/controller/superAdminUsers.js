@@ -40,6 +40,12 @@ app.controller("superAdminUsersController", [
       );
     };
 
+    $scope.setSearchResult = function (res) {
+      $scope.object.users = [res];
+      $scope.object.selectedUser = res;
+      $scope.object.searchTextResult = [];
+    };
+
     superAdminService.getUsers(
       $scope.object.filter,
       $scope.object.limit,
