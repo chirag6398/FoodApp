@@ -2,14 +2,16 @@
 
 app.service(
   "outletAdminService",
-  function (outletApi, $stateParams, $anchorScroll, $location) {
-    this.scrollToSubCategory = function () {
+  function (outletApi, outletAdminDashBoardApi, $anchorScroll, $location) {
+    var obj = {};
+
+    obj.scrollToSubCategory = function () {
       $location.hash("subCategory");
 
       $anchorScroll();
     };
 
-    this.displayGraph = function (dates, revenue, name, ctx, chart) {
+    obj.displayGraph = function (dates, revenue, name, ctx, chart) {
       chart = new Chart(ctx, {
         type: "line",
         data: {
@@ -27,26 +29,26 @@ app.service(
       return chart;
     };
 
-    this.scrollToProducts = function () {
+    obj.scrollToProducts = function () {
       $location.hash("product");
 
       $anchorScroll.yOffset = 60;
       $anchorScroll("product");
     };
 
-    this.getSuperCategories = function (id, cb) {
+    obj.getSuperCategories = function (id, cb) {
       outletApi.getSuperCategories(id, cb);
     };
 
-    this.getSubCategory = function (id, cb) {
+    obj.getSubCategory = function (id, cb) {
       outletApi.getSubCategory(id, cb);
     };
 
-    this.getProducts = function (categoryId, outletId, cb) {
+    obj.getProducts = function (categoryId, outletId, cb) {
       outletApi.getProductByCategory({ categoryId, outletId }, cb);
     };
 
-    this.createOutletAgent = function (agent, outlet, cb) {
+    obj.createOutletAgent = function (agent, outlet, cb) {
       outletApi.createOutletAgent(
         {
           ...agent,
@@ -61,23 +63,23 @@ app.service(
       );
     };
 
-    this.getOutletAgentEmployees = function (id, cb) {
+    obj.getOutletAgentEmployees = function (id, cb) {
       outletApi.getOutletAgentEmployees(id, cb);
     };
 
-    this.addTax = function (id, tax, cb) {
+    obj.addTax = function (id, tax, cb) {
       outletApi.addTax({ _id: id, tax: tax }, cb);
     };
 
-    this.saveTableView = function (id, tables, cb) {
+    obj.saveTableView = function (id, tables, cb) {
       outletApi.saveTableView({ _id: id, tables: tables }, cb);
     };
 
-    this.addProductToOutlet = function (product, outletId, cb) {
+    obj.addProductToOutlet = function (product, outletId, cb) {
       outletApi.addProductToOutlet(product, outletId, cb);
     };
 
-    this.isExistTable = function (table, tables) {
+    obj.isExistTable = function (table, tables) {
       var ind = tables.findIndex(function (value) {
         return +value.number === table.number;
       });
@@ -85,14 +87,14 @@ app.service(
       return ind >= 0;
     };
 
-    this.getIndx = function (array, value) {
+    obj.getIndx = function (array, value) {
       return array.findIndex(function (element) {
         return element._id === value._id;
       });
     };
 
     var monthDetails = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    this.getActivityData = function (month, data) {
+    obj.getActivityData = function (month, data) {
       var dates = [0];
       var activity = [""];
       for (var i = 1; i <= monthDetails[month]; i++) {
@@ -112,7 +114,7 @@ app.service(
       };
     };
 
-    this.getOutletGraphData = function (month, data) {
+    obj.getOutletGraphData = function (month, data) {
       var dates = [0];
       var activity = [0];
       for (var i = 1; i <= monthDetails[month]; i++) {
@@ -132,7 +134,7 @@ app.service(
       };
     };
 
-    this.getOrderAnalysis = function (data) {
+    obj.getOrderAnalysis = function (data) {
       var orderAnalysis = {
         totalOrders: 0,
         successRate: 0,
@@ -149,5 +151,78 @@ app.service(
 
       return orderAnalysis;
     };
+
+    obj.getBasicData = function (outlet, cb) {
+      var months = [
+        "Jan",
+        "Feb",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      var one = 1;
+      var myChart1 = null;
+
+      outletAdminDashBoardApi.getBasicData(outlet._id, function (err, result) {
+        if (result) {
+          console.log(result);
+          var data = result.data;
+
+          var totalProduct = data[0][0].productCount;
+          var totalEmployees = data[1][0].employeeCount;
+          var totalRevenue = data[2][0].totalRevenue;
+          var topTenCategories = data[3];
+          var topTenProducts = data[4];
+          var ordersAnalysis = obj.getOrderAnalysis(data[7]);
+          var orderTypeAnalysis = data[9];
+          var bottomProducts = data[8];
+          var topWeekProducts = data[10];
+          var topCustomer = data[11];
+          var month = new Date().getMonth();
+          var month1 = month;
+          var activity = obj.getOutletGraphData(month, data[5]);
+
+          var outletDates = activity.dates;
+          var outletRevenue = activity.activity;
+
+          activity = obj.getActivityData(month, data[6]);
+          var orderDates = activity.dates;
+          var orderCnts = activity.activity;
+
+          cb(null, {
+            totalEmployees,
+            totalProduct,
+            totalRevenue,
+            topTenCategories,
+            topTenProducts,
+            ordersAnalysis,
+            orderTypeAnalysis,
+            bottomProducts,
+            month,
+            month1,
+            outletDates,
+            outletRevenue,
+            orderDates,
+            orderCnts,
+            months,
+            one,
+            myChart1,
+            outlet,
+            topWeekProducts,
+            topCustomer,
+          });
+        } else {
+          cb(err, null);
+        }
+      });
+    };
+    return obj;
   }
 );

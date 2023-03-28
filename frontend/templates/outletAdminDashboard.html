@@ -1,5 +1,5 @@
 <div
-  ng-class="{'dim':object.isLoading}"
+  ng-class="{'dim':isLoading}"
   style="display: flex; flex-wrap: wrap; gap: 10px"
 >
   <div>
@@ -224,7 +224,14 @@
       border-radius: 3px;
     "
   >
-    <div>
+    <div
+      style="
+        padding: 10px;
+        border: 1px solid lightgray;
+        margin: 10px;
+        border-radius: 3px;
+      "
+    >
       <div style="margin-right: 10px">
         <div class="row">
           <div class="col-4">
@@ -268,7 +275,14 @@
         </div>
       </div>
     </div>
-    <div>
+    <div
+      style="
+        padding: 10px;
+        border: 1px solid lightgray;
+        margin: 10px;
+        border-radius: 3px;
+      "
+    >
       <div style="margin-right: 10px">
         <div class="row">
           <div class="col-4">
@@ -312,7 +326,65 @@
         </div>
       </div>
     </div>
-    <div>
+    <div
+      style="
+        padding: 10px;
+        border: 1px solid lightgray;
+        margin: 10px;
+        border-radius: 3px;
+      "
+    >
+      <div style="margin-right: 10px">
+        <div class="row">
+          <div class="col-4">
+            <div class="list-group" id="list-tab" role="tablist">
+              <span
+                style="
+                  width: 300px;
+                  font-weight: bolder;
+                  opacity: 0.6;
+                  margin-bottom: 10px;
+                "
+                >Previous Week Top Products</span
+              >
+              <a
+                class="list-group-item list-group-item-action"
+                style="min-width: 300px"
+                ng-repeat="res in object.topWeekProducts "
+              >
+                <div class="analysis__brandList">
+                  <div
+                    style="
+                      display: flex;
+                      cursor: pointer;
+                      flex-wrap: wrap;
+                      align-items: center;
+                    "
+                  >
+                    <div style="width: 100px; text-align: center">
+                      <img
+                        style="object-fit: contain; height: 50px"
+                        src="{{res.product.img}}"
+                        slt="..."
+                      />
+                    </div>
+                    <div>{{res.product.name}}</div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      style="
+        padding: 10px;
+        border: 1px solid lightgray;
+        margin: 10px;
+        border-radius: 3px;
+      "
+    >
       <div class="row">
         <div class="col-4">
           <div class="list-group" id="list-tab" role="tablist">
@@ -348,11 +420,58 @@
         </div>
       </div>
     </div>
+    <div
+      style="
+        padding: 10px;
+        border: 1px solid lightgray;
+        margin: 10px;
+        border-radius: 3px;
+      "
+    >
+      <div style="margin-right: 10px">
+        <div class="row">
+          <div class="col-4">
+            <div class="list-group" id="list-tab" role="tablist">
+              <span
+                style="
+                  width: 300px;
+                  font-weight: bolder;
+                  opacity: 0.6;
+                  margin-bottom: 10px;
+                "
+                >Top List Of Customers</span
+              >
+              <a
+                class="list-group-item list-group-item-action"
+                style="min-width: 300px"
+                ng-repeat="res in object.topCustomer "
+              >
+                <div class="analysis__brandList">
+                  <div
+                    style="
+                      display: flex;
+                      cursor: pointer;
+                      flex-wrap: wrap;
+                      align-items: center;
+                    "
+                  >
+                    <div style="width: 100px; text-align: center">
+                      <span>{{res.customer.name}}</span>
+                    </div>
+                    <div>{{res.customer.number}}</div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
 <div
-  ng-if="object.isLoading"
+  ng-if="isLoading"
   class="loader"
   style="
     width: 100%;

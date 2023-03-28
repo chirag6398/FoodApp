@@ -278,40 +278,76 @@ module.exports = {
       },
     ];
   },
-  // dineInAnalysis: function (id) {
-  //   var sDate = moment().subtract(1, "week").startOf("week").toDate();
-  //   var eDate = moment().subtract(1, "week").endOf("week").toDate();
-  //   return [
-  //     {
-  //       $match: {
-  //         "outlet._id": mongoose.Types.ObjectId(id),
-  //       },
-  //     },
-  //     // {
-  //     //   $match: {
-  //     //     createdAt: {
-  //     //       $gte: sDate,
-  //     //       $lt: eDate,
-  //     //     },
-  //     //   },
-  //     // },
-  //     {
-  //       $match: {
-  //         type: "dine-in",
-  //       },
-  //     },
-  //     {
-  //       $group: {
-  //         _id: { $dateToString: { format: "%d-%m-%Y", date: "$createdAt" } },
-  //         dineInCnt: { $sum: 1 },
-  //       },
-  //     },
-  //     {
-  //       $sort: { dineInCnt: -1 },
-  //     },
-  //     {
-  //       $limit: 1,
-  //     },
-  //   ];
-  // },
+  topWeekProducts: function (id) {
+    var sDate = moment().subtract(1, "week").startOf("week").toDate();
+    var eDate = moment().subtract(1, "week").endOf("week").toDate();
+    return [
+      {
+        $match: {
+          "outlet._id": mongoose.Types.ObjectId(id),
+        },
+      },
+      {
+        $match: {
+          createdAt: {
+            $gte: sDate,
+            $lt: eDate,
+          },
+        },
+      },
+      {
+        $unwind: "$items",
+      },
+      {
+        $group: {
+          _id: "$items._id",
+          product: {
+            $first: "$items",
+          },
+          cnt: { $sum: "$items.quantity" },
+        },
+      },
+      {
+        $sort: { cnt: -1 },
+      },
+      {
+        $limit: 3,
+      },
+    ];
+  },
+  topCustomers: function (id, startDate, endDate) {
+    return [
+      {
+        $match: {
+          "outlet._id": mongoose.Types.ObjectId(id),
+        },
+      },
+      {
+        $match: {
+          createdAt: {
+            $gte: startDate,
+            $lt: endDate,
+          },
+        },
+      },
+      {
+        $unwind: "$items",
+      },
+      {
+        $group: {
+          _id: "$customer.name",
+          customer: {
+            $first: "$customer",
+          },
+          cnt: { $sum: { $multiply: ["$items.quantity", "$items.price"] } },
+        },
+      },
+      {
+        $sort: { cnt: -1 },
+      },
+      {
+        $limit: 3,
+      },
+    ];
+  },
 };

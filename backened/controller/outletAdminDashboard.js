@@ -37,8 +37,10 @@ module.exports = {
     var data10 = orderModel.aggregate(
       pipelines.groupByOrderType(id, startDate, endDate)
     );
-    // var data11 = orderModel.aggregate(pipelines.dineInAnalysis(id));
-
+    var data11 = orderModel.aggregate(pipelines.topWeekProducts(id));
+    var data12 = orderModel.aggregate(
+      pipelines.topCustomers(id, startDate, endDate)
+    );
     Promise.all([
       data1,
       data2,
@@ -50,6 +52,8 @@ module.exports = {
       data8,
       data9,
       data10,
+      data11,
+      data12,
     ])
       .then(function (result) {
         return res.send(result);
