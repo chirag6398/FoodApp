@@ -189,4 +189,18 @@ module.exports = {
       }
     );
   },
+  searchDashBoardBrandBySearchText: function (req, res) {
+    outletModel
+      .aggregate(
+        pipelines.pipelineGroupBrandWithOutletsBySearchText(
+          req.params.searchText
+        )
+      )
+      .then(function (result) {
+        return res.send(result);
+      })
+      .catch(function (err) {
+        return res.status(500).send(err);
+      });
+  },
 };

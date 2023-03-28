@@ -8,12 +8,14 @@ app.controller("outletAgentController", [
   "outletAgentFactory",
   "outletAgentService",
   "$interval",
+  "$state",
   function (
     $scope,
     $location,
     outletAgentFactory,
     outletAgentService,
-    $interval
+    $interval,
+    $state
   ) {
     $scope.isLoading = true;
     outletAgentService.getOutletAgentPage(function (err, result) {
@@ -190,6 +192,11 @@ app.controller("outletAgentController", [
         ];
 
       console.log($scope.object.products);
+    };
+
+    $scope.logOutHandler = function () {
+      window.localStorage.removeItem("Authorization");
+      $state.go("login");
     };
   },
 ]);

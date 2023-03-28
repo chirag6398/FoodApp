@@ -28,7 +28,31 @@ module.exports = {
     {
       $sort: { name: 1 },
     },
+    {
+      $limit: 5,
+    },
   ],
+  pipelineGroupBrandWithOutletsBySearchText: function (searchText) {
+    var regex = new RegExp(searchText, "i");
+    return [
+      {
+        $match: {
+          "brand.name": { $regex: regex },
+        },
+      },
+      {
+        $group: {
+          _id: "$brand._id",
+          name: { $first: "$brand.name" },
+          logo: { $first: "$brand.logo" },
+          outlets: { $push: { name: "$name", _id: "$_id" } },
+        },
+      },
+      {
+        $sort: { name: 1 },
+      },
+    ];
+  },
   topBrands: function (startDate, endDate) {
     return [
       {

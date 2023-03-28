@@ -50,6 +50,27 @@ app.controller("superAdminAnalysisController", [
       }
     });
 
+    $scope.searchTextHandler = function () {
+      superAdminService.searchDashboardBrandDebouncing(
+        $scope.object.searchBrand,
+        function (err, result) {
+          console.log(err, result);
+
+          if (result) {
+            $scope.object.searchTextResult = result.data;
+          } else {
+            $scope.object.searchTextResult = [];
+          }
+        }
+      );
+    };
+
+    $scope.setSearchResult = function (res) {
+      $scope.object.brands = [res];
+      $scope.object.selectedBrand = res;
+      $scope.object.searchTextResult = [];
+    };
+
     $scope.setOutletData = function (outlets) {
       console.log(outlets);
       $scope.object.outlets = outlets;

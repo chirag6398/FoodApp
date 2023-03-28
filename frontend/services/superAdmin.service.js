@@ -21,6 +21,7 @@ app.service(
     var timeout1 = null;
     var timeout2 = null;
     var timeout3 = null;
+    var timeout4 = null;
     obj.debouncing = function (searchUser, cb) {
       if (timeout1) {
         $timeout.cancel(timeout1);
@@ -48,8 +49,18 @@ app.service(
       }, 800);
     };
 
+    obj.searchDashboardBrandDebouncing = function (searchBrand, cb) {
+      if (timeout4) {
+        $timeout.cancel(timeout4);
+      }
+      timeout4 = $timeout(function () {
+        adminApi.searchDashBoardBrandBySearchText(searchBrand, cb);
+      }, 800);
+    };
+
     obj.getBasicData = function (cb) {
       superAdminDashBoardApi.getBasicData(function (err, result) {
+        console.log(result);
         if (result && result.data) {
           var data = result.data;
           var brandCnt = data[0][0].count;

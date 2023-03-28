@@ -180,13 +180,49 @@
           id="list-tab"
           role="tablist"
         >
-          <input
+          <!-- <input
             type="text"
             style="margin-bottom: 10px; min-width: 275px"
             ng-model="search.name"
             placeholder="type brand name"
             class="form-control"
-          />
+          /> -->
+          <div style="margin-bottom: 15px">
+            <div class="mt-3 inputs">
+              <i class="fa fa-search"></i>
+              <input
+                type="text"
+                ng-model="object.searchBrand"
+                ng-change="searchTextHandler()"
+                class="form-control1 form-control"
+                placeholder="Search Brand by name"
+              />
+            </div>
+            <div ng-if="object.searchTextResult.length!==0">
+              <div class="list-group">
+                <!-- {{object.searchTextResult}} -->
+                <a
+                  style="cursor: pointer"
+                  ng-repeat="res in object.searchTextResult"
+                  class="list-group-item list-group-item-action"
+                  ng-click="setSearchResult(res)"
+                >
+                  <div style="display: flex; align-items: center; gap: 20px">
+                    <div>
+                      <img
+                        style="object-fit: contain; height: 80px; width: 80px"
+                        src="{{res.logo}}"
+                        alt="loading"
+                      />
+                    </div>
+                    <div>
+                      <span>{{res.name}}</span>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
           <a
             class="list-group-item list-group-item-action"
             style="min-width: 275px"

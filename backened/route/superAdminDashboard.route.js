@@ -36,6 +36,13 @@ superAdminDashboardRoute.get(
 );
 
 superAdminDashboardRoute.get(
+  "/api/superAdmin/searchDashBoardBrandBySearchText/:searchText",
+  passport.authenticate("jwt", { session: false }),
+  middleware,
+  superAdminDashboardController.searchDashBoardBrandBySearchText
+);
+
+superAdminDashboardRoute.get(
   "/api/superAdmin/getOutletGraphData/:id",
   passport.authenticate("jwt", { session: false }),
   middleware,

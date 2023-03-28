@@ -3,13 +3,15 @@
 app.factory("adminApi", function ($http, $rootScope) {
   var obj = {};
 
+  var config = {
+    headers: {
+      Authorization: window.localStorage.getItem("Authorization"),
+    },
+  };
+
   obj.getBrand = function (id, cb) {
     $http
-      .get("http://localhost:5000/api/brand/getBrand/" + id, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .get("http://localhost:5000/api/brand/getBrand/" + id, config)
       .then(function (response) {
         cb(null, response.data);
       })
@@ -48,11 +50,7 @@ app.factory("adminApi", function ($http, $rootScope) {
 
   obj.getAdminPage = function () {
     $http
-      .get("http://localhost:5000/api/superAdmin/getAdminPage", {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .get("http://localhost:5000/api/superAdmin/getAdminPage", config)
       .then(function (response) {
         $rootScope.$emit("passData", response.data.user);
       })
@@ -68,11 +66,7 @@ app.factory("adminApi", function ($http, $rootScope) {
           data.limit +
           "/" +
           data.page,
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
+        config
       )
       .then(function (response) {
         cb(null, response.data);
@@ -90,11 +84,7 @@ app.factory("adminApi", function ($http, $rootScope) {
     };
     console.log(data);
     $http
-      .post("http://localhost:5000/api/superAdmin/addBrandAdmin", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .post("http://localhost:5000/api/superAdmin/addBrandAdmin", data, config)
       .then(function (response) {
         console.log(response);
         cb(null, response);
@@ -106,11 +96,7 @@ app.factory("adminApi", function ($http, $rootScope) {
 
   obj.getUserById = function (id, cb) {
     $http
-      .get("http://localhost:5000/api/employee/getUserById/" + id, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .get("http://localhost:5000/api/employee/getUserById/" + id, config)
       .then(function (response) {
         cb(null, response);
       })
@@ -126,11 +112,7 @@ app.factory("adminApi", function ($http, $rootScope) {
     };
     // console.log(data);
     $http
-      .put("http://localhost:5000/api/employee/updateUser", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .put("http://localhost:5000/api/employee/updateUser", data, config)
       .then(function (response) {
         cb(null, response);
       })
@@ -145,11 +127,7 @@ app.factory("adminApi", function ($http, $rootScope) {
       id: id,
     };
     $http
-      .put("http://localhost:5000/api/employee/updatePassword", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .put("http://localhost:5000/api/employee/updatePassword", data, config)
       .then(function (response) {
         cb(null, response);
       })
@@ -160,11 +138,7 @@ app.factory("adminApi", function ($http, $rootScope) {
 
   obj.getSuperCategories = function (cb) {
     $http
-      .get("http://localhost:5000/api/superAdmin/getSuperCategory", {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .get("http://localhost:5000/api/superAdmin/getSuperCategory", config)
       .then(function (response) {
         cb(null, response);
       })
@@ -186,11 +160,7 @@ app.factory("adminApi", function ($http, $rootScope) {
           limit +
           "&number=" +
           filter.number,
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
+        config
       )
       .then(function (response) {
         cb(null, response);
@@ -203,11 +173,7 @@ app.factory("adminApi", function ($http, $rootScope) {
   obj.updateBrandName = function (data, cb) {
     console.log(data);
     $http
-      .post("http://localhost:5000/api/brand/updateBrandName", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .post("http://localhost:5000/api/brand/updateBrandName", data, config)
       .then(function (response) {
         cb(null, response);
       })
@@ -218,11 +184,7 @@ app.factory("adminApi", function ($http, $rootScope) {
 
   obj.updateLocation = function (data, cb) {
     $http
-      .post("http://localhost:5000/api/superAdmin/updateLocation", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .post("http://localhost:5000/api/superAdmin/updateLocation", data, config)
       .then(function (response) {
         cb(null, response);
       })
@@ -233,11 +195,11 @@ app.factory("adminApi", function ($http, $rootScope) {
 
   obj.updateContactInfo = function (data, cb) {
     $http
-      .post("http://localhost:5000/api/superAdmin/updateContactInfo", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .post(
+        "http://localhost:5000/api/superAdmin/updateContactInfo",
+        data,
+        config
+      )
       .then(function (response) {
         cb(null, response);
       })
@@ -252,11 +214,7 @@ app.factory("adminApi", function ($http, $rootScope) {
       .put(
         "http://localhost:5000/api/brand/deactivateBrand",
         { brandId },
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
+        config
       )
       .then(function (response) {
         cb(null, response);
@@ -268,15 +226,7 @@ app.factory("adminApi", function ($http, $rootScope) {
   obj.activateBrand = function (brandId, cb) {
     console.log(brandId);
     $http
-      .put(
-        "http://localhost:5000/api/brand/activateBrand",
-        { brandId },
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
-      )
+      .put("http://localhost:5000/api/brand/activateBrand", { brandId }, config)
       .then(function (response) {
         cb(null, response);
       })
@@ -288,15 +238,7 @@ app.factory("adminApi", function ($http, $rootScope) {
   obj.deleteBrand = function (brandId, cb) {
     console.log(brandId);
     $http
-      .post(
-        "http://localhost:5000/api/brand/deleteBrand",
-        { brandId },
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
-      )
+      .post("http://localhost:5000/api/brand/deleteBrand", { brandId }, config)
       .then(function (response) {
         cb(null, response);
       })
@@ -331,11 +273,7 @@ app.factory("adminApi", function ($http, $rootScope) {
     $http
       .get(
         "http://localhost:5000/api/brand/searchBrandBySearchText/" + searchText,
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
+        config
       )
       .then(function (response) {
         cb(null, response);
@@ -349,11 +287,7 @@ app.factory("adminApi", function ($http, $rootScope) {
       .get(
         "http://localhost:5000/api/outlet/searchOutletBySearchText/" +
           searchText,
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
+        config
       )
       .then(function (response) {
         cb(null, response);
@@ -362,6 +296,22 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(err, null);
       });
   };
+
+  obj.searchDashBoardBrandBySearchText = function (searchText, cb) {
+    $http
+      .get(
+        "http://localhost:5000/api/superAdmin/searchDashBoardBrandBySearchText/" +
+          searchText,
+        config
+      )
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb(err, null);
+      });
+  };
+
   obj.searchUserBySearchText = function (searchText, cb) {
     $http
       .get(
@@ -376,30 +326,5 @@ app.factory("adminApi", function ($http, $rootScope) {
       });
   };
 
-  // obj.applyFilterOnUsers = function (filter, limit, pageNo, cb) {
-  //   console.log(filter);
-
-  //   $http
-  //     .get(
-  //       "http://localhost:5000/api/employee/applyFilterOnUsers?brandName=" +
-  //         filter.brandName +
-  //         "&userType=" +
-  //         filter.userType +
-  //         "&email=" +
-  //         filter.email +
-  //         "&number=" +
-  //         filter.number +
-  //         "&limit=" +
-  //         limit +
-  //         "&pageNo=" +
-  //         pageNo
-  //     )
-  //     .then(function (response) {
-  //       cb(null, response);
-  //     })
-  //     .catch(function (err) {
-  //       cb(err, null);
-  //     });
-  // };
   return obj;
 });
