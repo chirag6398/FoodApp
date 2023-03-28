@@ -2,7 +2,6 @@ var brandModel = require("../model/brand.model");
 var employeeModel = require("../model/employee.model");
 var outletModel = require("../model/outlet.model");
 var superCategory = require("../model/superCategory.model");
-var mongoose = require("mongoose");
 
 module.exports = {
   getAdminPage: function (req, res) {
@@ -14,23 +13,19 @@ module.exports = {
   },
 
   getBrandOutlets: function (req, res) {
-    if (req.user.userType === "superAdmin") {
-      outletModel
-        .find({})
-        .sort({ name: 1 })
-        .then(function (result) {
-          return res.status(200).send({ data: result, status: 200 });
-        })
-        .catch(function (err) {
-          return res.status(500).send({
-            message: "internal server error",
-            error: err,
-            status: 500,
-          });
+    outletModel
+      .find({})
+      .sort({ name: 1 })
+      .then(function (result) {
+        return res.status(200).send({ data: result, status: 200 });
+      })
+      .catch(function (err) {
+        return res.status(500).send({
+          message: "internal server error",
+          error: err,
+          status: 500,
         });
-    } else {
-      return res.status(401).send({ message: "unauthorized user" });
-    }
+      });
   },
 
   addBrandAdmin: function (req, res) {

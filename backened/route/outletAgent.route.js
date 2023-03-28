@@ -2,31 +2,28 @@ var outletAgentRoute = require("express").Router();
 var outletAgentController = require("../controller/outletAgent.js");
 var passport = require("passport");
 var passportJwt = require("../passport/passportjwt");
+var middleware = require("../auth/middleware").isOutletAgent;
 
 passportJwt.initializer(passport);
 
 outletAgentRoute.get(
   "/api/outletAgent/getOutletAgentPage",
   passport.authenticate("jwt", { session: false }),
+  middleware,
   outletAgentController.getOutletAgentPage
 );
 outletAgentRoute.get(
   "/api/outletAgent/getProductByName/:_id/:searchText",
   passport.authenticate("jwt", { session: false }),
+  middleware,
   outletAgentController.getProductByName
 );
 
 outletAgentRoute.get(
   "/api/outletAgent/getRecommendedProduct",
   passport.authenticate("jwt", { session: false }),
+  middleware,
   outletAgentController.getRecommendedProduct
 );
-// outletAgentRoute.get("/api/outletAgent/getCategory/:id",passport.authenticate('jwt',{session: false }),outletAgentController.getCategory);
-
-// outletAgentRoute.post("/api/outlet/brandProducts",passport.authenticate('jwt',{session: false }),outletAgentController.brandProducts);
-// outletAgentRoute.post("/api/outlet/categoryProduct",passport.authenticate('jwt',{session: false }),outletAgentController.categoryProduct);
-// outletAgentRoute.post("/api/outlet/addProductToOutlet",passport.authenticate('jwt',{session: false }),outletAgentController.addProductToOutlet);
-// outletAgentRoute.post("/api/outlet/removeOutletProduct",passport.authenticate('jwt',{session: false }),outletAgentController.removeOutletProduct);
-// outletAgentRoute.post("/api/outletAgent/createOutletAgent",passport.authenticate('jwt',{session: false }),outletAgentController.createOutletAgent);
 
 module.exports = outletAgentRoute;
