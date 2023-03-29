@@ -34,7 +34,7 @@ app.controller("outletAdminSettingController", [
           if (result) {
             $scope.object.taxes = result.data.taxes;
           } else {
-            alert("something went wrong try later");
+            alert("something went wrong try later/already exist");
           }
         }
       );
@@ -63,6 +63,41 @@ app.controller("outletAdminSettingController", [
             alert("table added");
           } else {
             alert("try later not added");
+          }
+        }
+      );
+    };
+
+    $scope.editTax = function (tax) {
+      $scope.object.updateTax = { ...tax };
+    };
+
+    $scope.removeTax = function (tax) {
+      outletApi.removeTax(
+        $scope.object.outlet._id,
+        tax._id,
+        function (err, result) {
+          console.log(err, result);
+          if (result) {
+            alert("tax removed");
+          } else {
+            alert("something went wrong");
+          }
+        }
+      );
+    };
+
+    $scope.updateTax = function () {
+      outletApi.updateTax(
+        $scope.object.outlet._id,
+        $scope.object.updateTax,
+        function (err, result) {
+          console.log(err, result);
+          if (result) {
+            alert("updated successfully");
+            $("#exampleModal").modal("hide");
+          } else {
+            alert("failed");
           }
         }
       );

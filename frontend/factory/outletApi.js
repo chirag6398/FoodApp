@@ -30,7 +30,7 @@ app.factory("outletApi", function ($http, $rootScope) {
         cb(null, response);
       })
       .catch(function (err) {
-        // console.log(err,null);
+        cb(err, null);
         cb(err, null);
       });
   };
@@ -191,7 +191,53 @@ app.factory("outletApi", function ($http, $rootScope) {
         cb(null, response);
       })
       .catch(function (err) {
-        // console.log(err,null);
+        cb(err, null);
+      });
+  };
+
+  obj.removeTax = function (_id, taxId, cb) {
+    $http
+      .put(
+        "http://localhost:5000/api/outletAdmin/removeTax?_id=" +
+          _id +
+          "&taxId=" +
+          taxId,
+        {
+          headers: {
+            Authorization: window.localStorage.getItem("Authorization"),
+          },
+        }
+      )
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb(err, null);
+      });
+  };
+
+  obj.updateTax = function (_id, tax, cb) {
+    $http
+      .put(
+        "http://localhost:5000/api/outletAdmin/updateTax?_id=" +
+          _id +
+          "&taxId=" +
+          tax._id +
+          "&taxName=" +
+          tax.name +
+          "&taxPerCent=" +
+          tax.percent,
+        {
+          headers: {
+            Authorization: window.localStorage.getItem("Authorization"),
+          },
+        }
+      )
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb(err, null);
       });
   };
 

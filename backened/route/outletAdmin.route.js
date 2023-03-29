@@ -43,20 +43,29 @@ outletAdminRoute.get(
   outletAdminController.getSubCategories
 );
 
+outletAdminRoute.put(
+  "/api/outletAdmin/removeTax",
+  outletAdminController.removeTax
+);
+outletAdminRoute.put(
+  "/api/outletAdmin/updateTax",
+  outletAdminController.updateTax
+);
+
 // outletAdminRoute.get("/api/outletAdmin/getCategory/:id",passport.authenticate('jwt',{session: false }),outletAdminController.getCategory);
 
 // outletAdminRoute.post(
 //   "/api/outlet/brandProducts",
 //   passport.authenticate("jwt", { session: false }),
-middleware,
-  //   outletAdminController.brandProducts
-  // );
-  outletAdminRoute.post(
-    "/api/outlet/categoryProduct",
-    passport.authenticate("jwt", { session: false }),
-    middleware,
-    outletAdminController.categoryProduct
-  );
+// middleware,
+//   outletAdminController.brandProducts
+// );
+outletAdminRoute.post(
+  "/api/outlet/categoryProduct",
+  passport.authenticate("jwt", { session: false }),
+  middleware,
+  outletAdminController.categoryProduct
+);
 outletAdminRoute.post(
   "/api/outlet/addProductToOutlet",
   passport.authenticate("jwt", { session: false }),

@@ -245,13 +245,11 @@ module.exports = {
       .save()
       .then(function (result) {
         console.log(result);
-        return res
-          .status(200)
-          .send({
-            message: "admin created successfully",
-            data: result,
-            status: 200,
-          });
+        return res.status(200).send({
+          message: "admin created successfully",
+          data: result,
+          status: 200,
+        });
       })
       .catch(function (err) {
         console.log(err);
@@ -307,18 +305,31 @@ module.exports = {
       });
   },
   addTax: function (req, res) {
+    var body = req.body;
+    var regex = new RegExp(body.tax.name, "i");
     outletModel
-      .findOneAndUpdate(
-        { _id: req.body._id },
-        { $push: { taxes: req.body.tax } },
-        { new: true, projection: { taxes: 1 } }
-      )
+      .findOne({ _id: body._id, "taxes.name": { $regex: regex } }, { taxes: 1 })
       .then(function (result) {
-        console.log(result);
-        return res.send(result);
+        if (result) {
+          return res.status(400).send({ message: "tax name already exist" });
+        } else {
+          outletModel
+            .findOneAndUpdate(
+              { _id: body._id },
+              { $push: { taxes: body.tax } },
+              { new: true, projection: { taxes: 1 } }
+            )
+            .then(function (result) {
+              console.log(result);
+              return res.send(result);
+            })
+            .catch(function (err) {
+              return res.status(404).send(err);
+            });
+        }
       })
       .catch(function (err) {
-        return res.status(404).send(err);
+        return res.status(400).send(err);
       });
   },
   getTaxes: function (req, res) {
@@ -329,7 +340,48 @@ module.exports = {
         return res.send(result);
       })
       .catch(function (err) {
-        return res.status(404).send(err);
+        return res.status(500).send(err);
+      });
+  },
+  removeTax: function (req, res) {
+    var query = req.query;
+
+    outletModel
+      .updateOne({ _id: query._id }, { $pull: { taxes: { _id: query.taxId } } })
+      .then(function (result) {
+        console.log(result);
+        return res.send(result);
+      })
+      .catch(function (err) {
+        return res.status(500).send(err);
+      });
+  },
+  updateTax: function (req, res) {
+    var query = req.query;
+    outletModel
+      .updateOne(
+        { _id: query._id },
+        {
+          $set: {
+            "taxes.$[elem].name": query.taxName,
+            "taxes.$[elem].percent": +query.taxPerCent,
+          },
+        },
+        {
+          arrayFilters: [
+            {
+              "elem._id": query.taxId,
+            },
+          ],
+        }
+      )
+      .then(function (result) {
+        console.log(result);
+        return res.send(result);
+      })
+      .catch(function (err) {
+        console.log(err);
+        return res.status(500).send(err);
       });
   },
 };

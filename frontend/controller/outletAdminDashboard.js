@@ -18,7 +18,8 @@ app.controller("outletAdminDashboardController", [
     $scope.isLoading = true;
 
     $timeout(function () {
-      if ($scope.object.myChart1) {
+      // console.log($scope.object.myChart1);
+      if ($scope.object.myChart1 === undefined) {
         outletApi.getOutletAdminPage();
       }
     }, 1300);
