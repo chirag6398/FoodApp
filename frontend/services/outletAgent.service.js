@@ -105,6 +105,7 @@ app.service("outletAgentService", function (outletAgentFactory) {
     taxes.forEach(function (value) {
       extraAmount += (amount * value.percent) / 100;
     });
+    console.log(extraAmount);
     return extraAmount;
   };
 
@@ -159,6 +160,7 @@ app.service("outletAgentService", function (outletAgentFactory) {
       },
       allotedTables: allotedTables,
     };
+    console.log(data);
 
     outletAgentFactory.placeOrder(data, function (err, result) {
       if (result) {
@@ -190,8 +192,8 @@ app.service("outletAgentService", function (outletAgentFactory) {
     return productsName;
   };
 
-  obj.getRecommendedProduct = function (products, cb) {
-    outletAgentFactory.getRecommendedProduct(products, cb);
+  obj.getRecommendedProduct = function (products, id, cb) {
+    outletAgentFactory.getRecommendedProduct(products, id, cb);
   };
 
   obj.getOutletAgentPage = function (cb) {
@@ -246,7 +248,6 @@ app.service("outletAgentService", function (outletAgentFactory) {
           isSelected,
           payableAmount,
           allotedTables,
-
           cartProducts,
           recommendedProducts,
           searchText,

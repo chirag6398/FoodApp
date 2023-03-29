@@ -160,11 +160,13 @@ app.factory("outletAgentFactory", function ($http, $rootScope, $timeout) {
     }, 800);
   };
 
-  obj.getRecommendedProduct = function (products, cb) {
+  obj.getRecommendedProduct = function (products, id, cb) {
     $http
       .get(
         "http://localhost:5000/api/outletAgent/getRecommendedProduct?products=" +
-          products,
+          products +
+          "&id=" +
+          id,
         {
           headers: {
             Authorization: window.localStorage.getItem("Authorization"),

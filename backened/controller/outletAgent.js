@@ -57,9 +57,15 @@ module.exports = {
   getRecommendedProduct: function (req, res) {
     console.log(req.query.products);
     var products = req.query.products.split(",");
+    var id = req.query.id;
     console.log(products);
     orderModel
       .aggregate([
+        {
+          $match: {
+            "outlet._id": mongoose.Types.ObjectId(id),
+          },
+        },
         {
           $match: {
             createdAt: {
@@ -85,6 +91,11 @@ module.exports = {
         },
         {
           $unwind: "$items",
+        },
+        {
+          $match: {
+            "items.name": { $nin: products },
+          },
         },
         {
           $group: {

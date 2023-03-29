@@ -11,11 +11,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       url: "/superAdmin",
       templateUrl: "./templates/superAdmin.html",
       controller: "superAdminController",
-      resolve: {
-        data: function () {
-          return "parentController Loaded";
-        },
-      },
     })
     .state("superAdmin.createBrand", {
       url: "/createBrand",
@@ -31,11 +26,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       url: "/setting/:id",
       templateUrl: "./templates/superAdminSetting.html",
       controller: "superAdminSettingController",
-      resolve: {
-        data: function () {
-          return "childController Loaded";
-        },
-      },
     })
     .state("superAdmin.analysis", {
       url: "/Analysis",
@@ -108,20 +98,10 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       templateUrl: "./templates/brandAdminOutletData.html",
       controller: "brandAdminOutletDataController",
     })
-    .state("delete", {
-      url: "/delete/:id",
-      templateUrl: "./templates/delete.html",
-      controller: "deleteController",
-    })
     .state("changePassword", {
       url: "/changePassword/:id",
       templateUrl: "./templates/changePassword.html",
       controller: "changePasswordController",
-    })
-    .state("updateSelf", {
-      url: "/updateSelf/:id",
-      templateUrl: "./templates/updateSelf.html",
-      controller: "updateSelfController",
     })
     .state("outletAdmin.products", {
       url: "/products",
@@ -168,6 +148,4 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       templateUrl: "./templates/superAdminBrandData.html",
       controller: "superAdminBrandDataController",
     });
-
-  // $urlRouterProvider.otherwise('/login');
 });

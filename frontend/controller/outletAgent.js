@@ -39,6 +39,7 @@ app.controller("outletAgentController", [
           console.log(err, result);
           if (result) {
             $scope.object.searchTextResult = result.data;
+            console.log(result.data);
           } else {
             $scope.object.searchTextResult = [];
           }
@@ -103,14 +104,18 @@ app.controller("outletAgentController", [
       $scope.object.cartProducts = outletAgentService.cartsProducts(
         $scope.object.cart
       );
-
-      outletAgentService.getRecommendedProduct(
-        $scope.object.cartProducts,
-        function (err, result) {
-          console.log(err, result);
-          $scope.object.recommendedProducts = result.data;
-        }
-      );
+      if ($scope.object.cartProducts.length < 3) {
+        outletAgentService.getRecommendedProduct(
+          $scope.object.cartProducts,
+          $scope.object.outlet._id,
+          function (err, result) {
+            console.log(err, result);
+            $scope.object.recommendedProducts = result.data;
+          }
+        );
+      } else {
+        $scope.object.recommendedProducts = [];
+      }
 
       $scope.object.amount = outletAgentService.totalPrice($scope.object.cart);
       $scope.object.payableAmount =
@@ -125,6 +130,9 @@ app.controller("outletAgentController", [
       );
 
       $scope.object.amount = outletAgentService.totalPrice($scope.object.cart);
+      $scope.object.payableAmount =
+        $scope.object.amount +
+        outletAgentService.addTaxes($scope.object.taxes, $scope.object.amount);
     };
 
     $scope.minus = function (product) {
@@ -133,12 +141,18 @@ app.controller("outletAgentController", [
         product
       );
 
+      if ($scope.object.cart.length === 0)
+        $scope.object.recommendedProducts = [];
+
       $scope.object.amount = outletAgentService.totalPrice($scope.object.cart);
+      $scope.object.payableAmount =
+        $scope.object.amount +
+        outletAgentService.addTaxes($scope.object.taxes, $scope.object.amount);
     };
 
     $scope.orderHandler = function () {
       $scope.object.orderBtn = "placing...";
-
+      // console.log($scope.object.type);
       outletAgentService.placeOrder(
         $scope.object.customer,
         $scope.object.type,
@@ -175,6 +189,7 @@ app.controller("outletAgentController", [
             $scope.object.btnText = "Enter";
             $scope.object.customer = {};
             $scope.object.type = null;
+            $scope.object.recommendedProducts = [];
           } else {
             console.log(err);
             alert("sorry order is not placed try later");
