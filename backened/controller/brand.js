@@ -7,7 +7,6 @@ var awsService = require("../service/awsS3.service");
 var superCategory = require("../model/superCategory.model");
 var mongoose = require("mongoose");
 var productModel = require("../model/product.model");
-
 module.exports = {
   getBrands: function (req, res) {
     var limitSize = req.params.limit || 5;
@@ -107,10 +106,68 @@ module.exports = {
   },
 
   deleteBrand: function (req, res) {
-    brandModel
-      .findByIdAndUpdate({ _id: req.body.brandId }, { isDeleted: true })
-      .then(function (result) {
-        return res.send({ message: "deleted" });
+    mongoose
+      .startSession()
+      .then(function (session) {
+        session
+          .withTransaction(function () {
+            return async.parallel([
+              function (callback) {
+                brandModel
+                  .findByIdAndUpdate(
+                    { _id: req.body.brandId },
+                    { isDeleted: true },
+                    {
+                      session,
+                    }
+                  )
+                  .then(function (result) {
+                    callback(null, result);
+                  })
+                  .catch(function (err) {
+                    callback(err);
+                  });
+              },
+              function (callback) {
+                outletModel
+                  .updateMany(
+                    { "brand._id": req.body.brandId },
+                    { isDeleted: true },
+                    { session }
+                  )
+                  .then(function (result) {
+                    callback(null, result);
+                  })
+                  .catch(function (err) {
+                    callback(err);
+                  });
+              },
+              function (callback) {
+                employeeModel
+                  .updateMany(
+                    { "brand._id": req.body.brandId },
+                    { isDeleted: true },
+                    { session }
+                  )
+                  .then(function (result) {
+                    callback(null, result);
+                  })
+                  .catch(function (err) {
+                    callback(err);
+                  });
+              },
+            ]);
+          })
+          .then(function (result) {
+            console.log("commited", result);
+            session.endSession();
+            return res.send(result);
+          })
+          .catch(function (err) {
+            console.log("aborted", err);
+            session.endSession();
+            return res.status(500).send({ message: "not updated" });
+          });
       })
       .catch(function (err) {
         return res.status(500).send({ error: err });
@@ -129,6 +186,7 @@ module.exports = {
       });
   },
   changeLogo: function (req, res) {
+    console.log(req.body);
     if (req.file) {
       return awsService
         .uploadToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
@@ -165,7 +223,8 @@ module.exports = {
                       { "brand._id": req.body._id },
                       {
                         "brand.logo": image,
-                      }
+                      },
+                      { session }
                     )
                     .then(function (result) {
                       callback(null, result);
@@ -177,7 +236,7 @@ module.exports = {
               ],
               function (err, result) {
                 if (err) {
-                  console.log("error in parallel processing", error);
+                  console.log("error in parallel processing", err);
                   session
                     .abortTransaction()
                     .then(function () {
@@ -185,8 +244,9 @@ module.exports = {
                       session.endSession();
                     })
                     .catch(function (err) {
+                      session.endSession();
                       console.log(err);
-                      return res.status(500).send({ error: error });
+                      return res.status(500).send({ error: err });
                     });
                 } else {
                   session
@@ -197,6 +257,7 @@ module.exports = {
                       return res.send(result);
                     })
                     .catch(function (err) {
+                      session.endSession();
                       console.log(err);
                     });
                 }

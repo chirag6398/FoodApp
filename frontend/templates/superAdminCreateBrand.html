@@ -12,7 +12,6 @@
     </div>
     <div ng-if="object.searchTextResult.length!==0">
       <div class="list-group">
-        <!-- {{object.searchTextResult}} -->
         <a
           style="cursor: pointer"
           ng-repeat="res in object.searchTextResult"
@@ -36,7 +35,7 @@
     </div>
   </div>
   <div style="display: flex; align-items: center; justify-content: center">
-    <table style="max-width: 700px" class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover">
       <thead>
         <tr>
           <th ng-if="!object.selectedBrand" scope="col">S.No</th>
@@ -54,14 +53,14 @@
         <tr
           style="cursor: pointer"
           ng-show="!brand.isDeleted"
-          ng-repeat="brand in object.brands"
+          ng-repeat="brand in object.brands track by brand.name"
         >
           <th ng-if="!object.selectedBrand" scope="row">
             {{(object.page-1)*object.limit+$index+1}}
           </th>
           <td>
             <img
-              style="object-fit: contain; height: 50px"
+              style="object-fit: contain; height: 60px; width: 60px"
               src="{{brand.logo}}"
               alt="..."
             />
@@ -72,7 +71,7 @@
               <button
                 ng-disabled="!brand.isActive"
                 type="button"
-                class="btn btn-primary"
+                class="btn btn-secondary"
                 data-toggle="modal"
                 data-target="#exampleModal"
                 data-whatever="@mdo"
@@ -318,7 +317,7 @@
                             type="submit"
                             ng-disabled="adminData.$invalid"
                             ng-click="createBrandAdmin($event)"
-                            class="btn btn-primary"
+                            class="btn btn-secondary"
                           >
                             {{object.btnText1}}
                           </button>
@@ -333,7 +332,7 @@
               <button
                 ng-disabled="!brand.isActive"
                 ui-sref="updatebrandadmin({id:brand.brandAdminId})"
-                class="btn btn-primary"
+                class="btn btn-secondary"
               >
                 Update Admin
               </button>
@@ -344,7 +343,7 @@
               ng-disabled="!brand.isActive"
               ng-click="deactivateBrand(brand._id)"
               type="button"
-              class="btn btn-warning"
+              class="btn btn-secondary"
             >
               Deactivate
             </button>
@@ -354,7 +353,7 @@
               ng-disabled="brand.isActive"
               ng-click="activateBrand(brand._id)"
               type="button"
-              class="btn btn-warning"
+              class="btn btn-secondary"
             >
               Activate
             </button>

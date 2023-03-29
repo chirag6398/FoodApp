@@ -111,7 +111,7 @@ module.exports = {
           $sort: { count: -1 },
         },
         {
-          $limit: 4,
+          $limit: 3,
         },
       ])
       .exec(function (err, result) {

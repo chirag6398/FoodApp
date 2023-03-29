@@ -16,7 +16,7 @@
         ng-model="object.searchOutlet"
         ng-change="searchTextHandler()"
         class="form-control1 form-control"
-        placeholder="Search user by user name"
+        placeholder="Search outlet by name"
       />
     </div>
     <div
@@ -92,6 +92,7 @@
         <th scope="col">Name</th>
         <th scope="col">Email</th>
         <th scope="col">Number</th>
+        <th scope="col">Address</th>
         <th scope="col">Brand name</th>
       </tr>
     </thead>
@@ -100,7 +101,7 @@
         <th scope="row">{{(object.page-1)*object.limit+$index+1}}</th>
         <td>
           <img
-            style="object-fit: contain; height: 80px"
+            style="object-fit: contain; height: 60px; width: 60px"
             src="{{outlet.brand.logo}}"
             alt="working"
           />
@@ -108,6 +109,13 @@
         <td>{{outlet.name}}</td>
         <td>{{outlet.contactInfo.email}}</td>
         <td>{{outlet.contactInfo.number}}</td>
+        <td>
+          <div>
+            <span> {{outlet.location.address}} </span>
+            <span> -({{outlet.location.pinCode}}) </span>
+            <span> ,{{outlet.location.city}} </span>
+          </div>
+        </td>
         <td>{{outlet.brand.name}}</td>
       </tr>
     </tbody>

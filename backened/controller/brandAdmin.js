@@ -524,6 +524,7 @@ module.exports = {
         }
       )
       .then(function (result) {
+        console.log(result);
         return res.send(result);
       })
       .catch(function (err) {

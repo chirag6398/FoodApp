@@ -1,6 +1,4 @@
 ///<reference path="../module/module.js"/>
-///<reference path="../factory/apicall.js"/>
-///<reference path="../services/brandAdmin.service.js"/>
 
 app.controller("outletAgentController", [
   "$scope",

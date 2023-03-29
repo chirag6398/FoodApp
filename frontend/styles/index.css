@@ -17,6 +17,12 @@
   opacity: 0.5;
 }
 
+td{
+  font-size: 15px !important;
+    opacity: 0.8;
+    font-weight: 500;
+}
+
 
 
 .dark{

@@ -24,7 +24,7 @@ app.controller("superAdminBrandDataController", [
 
     $scope.changeLogo = function ($event) {
       superAdminService.changeLogo(
-        $scope.object._id,
+        $scope.object.brand._id,
         $scope.object.data.logo,
         function (err, result) {
           if (result) {
