@@ -4,7 +4,8 @@ app.controller("outletAgentOrdersController", [
   "$scope",
   "outletAgentFactory",
   "outletAgentService",
-  function ($scope, outletAgentFactory, outletAgentService) {
+  "$stateParams",
+  function ($scope, outletAgentFactory, outletAgentService, $stateParams) {
     $scope.object = {
       orders: [],
       activeIndex: [],
@@ -22,6 +23,8 @@ app.controller("outletAgentOrdersController", [
       swapBtn: "Apply swaps",
       isLoading: true,
     };
+
+    console.log($stateParams.id);
 
     outletAgentFactory.getOutletAgentPage(function (err, result) {
       $scope.object.outlet = result.data.outlet;

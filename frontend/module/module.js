@@ -9,5 +9,6 @@ app.controller("mainController", [
   function ($scope, $location, $state) {
     // $location.path("login");
     // $state.go("login");
+    // $scope.socket = io("http://localhost:5000");
   },
 ]);

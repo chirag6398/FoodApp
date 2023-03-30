@@ -3,7 +3,12 @@
     <div class="agt__navComponent agt__activeNav" ui-sref="outletAgent">
       Home
     </div>
-    <div class="agt__navComponent" ui-sref="outletAgentOrders">Orders</div>
+    <div
+      class="agt__navComponent"
+      ui-sref="outletAgentOrders({id:object.outlet._id})"
+    >
+      Orders
+    </div>
     <div
       data-toggle="modal"
       data-target="#tables"

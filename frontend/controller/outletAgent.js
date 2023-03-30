@@ -7,15 +7,22 @@ app.controller("outletAgentController", [
   "outletAgentService",
   "$interval",
   "$state",
+  "toastNotifications",
+  "socketService",
   function (
     $scope,
     $location,
     outletAgentFactory,
     outletAgentService,
     $interval,
-    $state
+    $state,
+    toastNotifications,
+    socketService
   ) {
     $scope.isLoading = true;
+    socketService.socketConnect();
+    // socketService.socket.emit("hello", "hi");
+    // toastNotifications.success("hi");
     outletAgentService.getOutletAgentPage(function (err, result) {
       console.log(err, result);
       $scope.isLoading = false;
@@ -161,7 +168,8 @@ app.controller("outletAgentController", [
         $scope.object.allotedTables,
         function (err, result) {
           if (result) {
-            alert("order placed");
+            toastNotifications.success("order placed successfull");
+
             console.log(
               result,
               $scope.object.tables,
@@ -209,6 +217,7 @@ app.controller("outletAgentController", [
 
     $scope.logOutHandler = function () {
       window.localStorage.removeItem("Authorization");
+      toastNotifications.success("Logout successfull");
       $state.go("login");
     };
   },

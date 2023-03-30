@@ -134,7 +134,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       controller: "outletAgentController",
     })
     .state("outletAgentOrders", {
-      url: "/orders",
+      url: "/orders/:id",
       templateUrl: "./templates/outletAgentOrders.html",
       controller: "outletAgentOrdersController",
     })

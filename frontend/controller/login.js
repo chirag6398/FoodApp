@@ -6,7 +6,8 @@ app.controller("loginController", [
   "$state",
   "$location",
   "apiHandler",
-  function ($scope, $state, $location, apiHandler) {
+  "toastNotifications",
+  function ($scope, $state, $location, apiHandler, toastNotifications) {
     $scope.object = {
       disabledFlag: false,
       buttonText: "submit",
@@ -21,8 +22,10 @@ app.controller("loginController", [
         if (err) {
           $scope.object.buttonText = "Retry";
           $scope.object.disabledFlag = false;
+          toastNotifications.error("Login Failed");
         } else {
           $scope.object.buttonText = "successfull";
+          toastNotifications.success("login successfull");
           window.localStorage.setItem(
             "Authorization",
             "Bearer " + result.token

@@ -5,7 +5,7 @@ var cors = require("cors");
 var morgan = require("morgan");
 var dotenv = require("dotenv");
 var bodyParser = require("body-parser");
-// var validation = require("./service/validation.service").validateBrand;
+var socketConnection = require("./middleware/socketIoMiddleware");
 
 dotenv.config({ path: "./.env" });
 
@@ -20,9 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// parse application/json
 app.use(bodyParser.json());
-// app.use(validation);
 app.use(require("./route/employee.route"));
 app.use(require("./route/superAdmin.route"));
 app.use(require("./route/brandAdmin.route"));
@@ -36,10 +34,16 @@ app.use(require("./route/outletAdminDashboard.route"));
 app.use(require("./route/outlet.route"));
 app.use(require("./route/brand.route"));
 
-app.listen(port, function (err) {
+var server = app.listen(port, function (err) {
   if (err) {
     console.log(err);
   } else {
     console.log("server started at port number : " + port);
   }
+});
+
+var io = socketConnection.init(server);
+
+io.on("connection", function (socket) {
+  console.log(socket.id);
 });
