@@ -18,17 +18,7 @@ app.factory("apiHandler", function ($http) {
         });
       })
       .catch(function (err) {
-        if (err.status === 401) {
-          cb(
-            {
-              message: "please enter correct username and password",
-              status: err.status,
-            },
-            null
-          );
-        } else {
-          cb({ message: "please try againg later", status: 500 }, null);
-        }
+        cb(err, null);
       });
   };
 

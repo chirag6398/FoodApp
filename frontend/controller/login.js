@@ -20,9 +20,10 @@ app.controller("loginController", [
 
       apiHandler.postLogin($scope.object.lgn, function (err, result) {
         if (err) {
+          console.log(err);
           $scope.object.buttonText = "Retry";
           $scope.object.disabledFlag = false;
-          toastNotifications.error("Login Failed");
+          toastNotifications.error(err.data.message);
         } else {
           $scope.object.buttonText = "successfull";
           toastNotifications.success("login successfull");

@@ -10,7 +10,8 @@ app.controller("superAdminCreateBrandController", [
   "$scope",
   "adminApi",
   "superAdminService",
-  function ($scope, adminApi, superAdminService) {
+  "toastNotifications",
+  function ($scope, adminApi, superAdminService, toastNotifications) {
     $scope.object = {
       brands: [],
       searchBrand: "",
@@ -80,9 +81,9 @@ app.controller("superAdminCreateBrandController", [
       });
     };
 
-    $scope.setBasicBrandData = function (brand) {
-      $scope.object.brand = brand;
-    };
+    // $scope.setBasicBrandData = function (brand) {
+    //   $scope.object.brand = brand;
+    // };
 
     $scope.createBrandAdmin = function ($event) {
       $event.preventDefault();
@@ -98,10 +99,12 @@ app.controller("superAdminCreateBrandController", [
             $scope.object.btnText1 = "successful";
             $scope.object.admin = {};
             $("#exampleModal").modal("hide");
+            toastNotifications.success("admin added successfully");
           } else {
             $scope.object.btnText1 = "failed try later";
-
+            $("#exampleModal").modal("hide");
             console.log(err);
+            toastNotifications.error("please try later");
           }
         }
       );
@@ -112,7 +115,9 @@ app.controller("superAdminCreateBrandController", [
         if (result) {
           var indx = getBrandIndxById($scope.object.brands, brandId);
           $scope.object.brands[indx].isActive = false;
-          alert("brand deactivated");
+          toastNotifications.success("deactivate brand");
+        } else {
+          toastNotifications.error("please try later");
         }
       });
     };
@@ -122,7 +127,9 @@ app.controller("superAdminCreateBrandController", [
         if (result) {
           var indx = getBrandIndxById($scope.object.brands, brandId);
           $scope.object.brands[indx].isActive = true;
-          alert("brand activated");
+          toastNotifications.success("brand activated");
+        } else {
+          toastNotifications.error("try later");
         }
       });
     };
@@ -132,9 +139,9 @@ app.controller("superAdminCreateBrandController", [
         if (result) {
           var indx = getBrandIndxById($scope.object.brands, brandId);
           $scope.object.brands[indx].isDeleted = true;
-          alert("brand deleted successfully");
+          toastNotifications.success("brand deleted successfully");
         } else {
-          alert("brand not deleted try later");
+          toastNotifications.error("brand not deleted try later");
         }
       });
     };
@@ -146,14 +153,14 @@ app.controller("superAdminCreateBrandController", [
       superAdminService.createBrand(
         $scope.object.brand,
         function (err, result) {
-          console.log("result", result);
-
           if (result) {
             $scope.btnText = "created";
             $scope.object.brands.unshift(result.data);
             $("#createBrand").modal("hide");
+            toastNotifications.success("brand created");
           } else {
             $scope.btnText = "failed";
+            toastNotifications.error("failed try later");
           }
         }
       );
