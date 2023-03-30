@@ -5,7 +5,6 @@ var moment = require("moment");
 var startDate = moment().subtract(1, "month").toDate();
 var endDate = moment().toDate();
 var io = require("../middleware/socketIoMiddleware").getIo();
-console.log("io variable", io);
 module.exports = {
   createOrder: function (req, res) {
     var body = req.body;
@@ -60,10 +59,8 @@ module.exports = {
 
       Promise.all([data1])
         .then(function (result) {
-          console.log("outlet save result", result);
           io.sockets.emit(result[0].outlet._id, result[0]);
-          // console.log(socket);
-          // io.sockets.emit("hi", "hello");
+
           return res.send(result);
         })
         .catch(function (err) {

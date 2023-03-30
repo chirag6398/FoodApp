@@ -86,6 +86,69 @@ app.service("outletAgentService", function (outletAgentFactory) {
     return orderId;
   };
 
+  obj.getOutletAgentPage = function (cb) {
+    outletAgentFactory.getOutletAgentPage(function (err, result) {
+      console.log(err, result);
+      if (result) {
+        var data = result.data;
+        var brand = data.outlet.brand;
+        var tables = data.outlet.table;
+        var outlet = data.outlet;
+        var admin = data.agent;
+        var taxes = data.outlet.taxes;
+        var productsData = obj.groupProductByCategories(outlet.products);
+
+        var products =
+          productsData.categoryProducts[productsData.categories[0]];
+
+        var currentTime = null;
+        var orderNo = obj.generateOrderId();
+        var customer = {};
+        var cart = [];
+        var amount = 0;
+        var btnText = "Enter";
+        var orderBtn = "place order";
+        var type = null;
+        var saved = false;
+        var isSelected = 0;
+        var payableAmount = 0;
+        var allotedTables = null;
+
+        var cartProducts = [];
+        var recommendedProducts = [];
+        var searchText = "";
+        var searchTextResult = [];
+        cb(null, {
+          brand,
+          tables,
+          outlet,
+          admin,
+          taxes,
+          productsData,
+          products,
+          currentTime,
+          orderNo,
+          customer,
+          cart,
+          amount,
+          btnText,
+          orderBtn,
+          type,
+          saved,
+          isSelected,
+          payableAmount,
+          allotedTables,
+          cartProducts,
+          recommendedProducts,
+          searchText,
+          searchTextResult,
+        });
+      } else {
+        cb(err, null);
+      }
+    });
+  };
+
   obj.updateTablesIndexes = function (tables, allotedTables) {
     var indexes = [];
     allotedTables.forEach(function (tableNumber) {
@@ -108,7 +171,51 @@ app.service("outletAgentService", function (outletAgentFactory) {
     console.log(extraAmount);
     return extraAmount;
   };
+  obj.getOrders = function (data, cb) {
+    var outlet = data.data.outlet;
+    var tables = outlet.table;
+    var orders = [];
+    var activeIndex = [];
+    var newTable = [];
+    var filter = {
+      status: "pending",
+      type: "dine-in",
+    };
+    var item = null;
+    var customer = null;
+    var amount = 0;
+    var allotedTable = null;
+    var swapBtn = "Apply swaps";
+    outletAgentFactory.getOrders(outlet._id, function (err, result) {
+      if (result) {
+        orders = result.data;
 
+        orders.forEach(function (value) {
+          value.totalQuantity = value.items.reduce(function (accum, value) {
+            return accum + value.quantity;
+          }, 0);
+          value.totalPrice = value.items.reduce(function (accum, value) {
+            return accum + value.quantity * value.price;
+          }, 0);
+        });
+        cb(null, {
+          outlet,
+          tables,
+          orders,
+          activeIndex,
+          newTable,
+          filter,
+          item,
+          customer,
+          amount,
+          allotedTable,
+          swapBtn,
+        });
+      } else {
+        cb(err, null);
+      }
+    });
+  };
   obj.isTableAvailable = function (count, tables) {
     var allotedTables = [];
 
@@ -184,6 +291,17 @@ app.service("outletAgentService", function (outletAgentFactory) {
     });
   };
 
+  obj.updateTableNo = function (orderId, outletId, newTable, oldTables, cb) {
+    outletAgentFactory.updateTableNo(
+      {
+        _id: orderId,
+        outletId: outletId,
+        newTables: newTable,
+        oldTables: oldTables,
+      },
+      cb
+    );
+  };
   obj.cartsProducts = function (products) {
     var productsName = [];
     products.forEach(function (value) {
@@ -196,68 +314,28 @@ app.service("outletAgentService", function (outletAgentFactory) {
     outletAgentFactory.getRecommendedProduct(products, id, cb);
   };
 
-  obj.getOutletAgentPage = function (cb) {
-    outletAgentFactory.getOutletAgentPage(function (err, result) {
-      console.log(err, result);
-      if (result) {
-        var data = result.data;
-        var brand = data.outlet.brand;
-        var tables = data.outlet.table;
-        var outlet = data.outlet;
-        var admin = data.agent;
-        var taxes = data.outlet.taxes;
-        var productsData = obj.groupProductByCategories(outlet.products);
-
-        var products =
-          productsData.categoryProducts[productsData.categories[0]];
-
-        var currentTime = null;
-        var orderNo = obj.generateOrderId();
-        var customer = {};
-        var cart = [];
-        var amount = 0;
-        var btnText = "Enter";
-        var orderBtn = "place order";
-        var type = null;
-        var saved = false;
-        var isSelected = 0;
-        var payableAmount = 0;
-        var allotedTables = null;
-
-        var cartProducts = [];
-        var recommendedProducts = [];
-        var searchText = "";
-        var searchTextResult = [];
-        cb(null, {
-          brand,
-          tables,
-          outlet,
-          admin,
-          taxes,
-          productsData,
-          products,
-          currentTime,
-          orderNo,
-          customer,
-          cart,
-          amount,
-          btnText,
-          orderBtn,
-          type,
-          saved,
-          isSelected,
-          payableAmount,
-          allotedTables,
-          cartProducts,
-          recommendedProducts,
-          searchText,
-          searchTextResult,
-        });
-      } else {
-        cb(err, null);
-      }
-    });
+  obj.updateStatus = function (status, orderId, cb) {
+    outletAgentFactory.updateStatus({ status: status, _id: orderId }, cb);
   };
 
+  obj.updateStatusToCompleted = function (
+    status,
+    orderId,
+    tableNumbers,
+    id,
+    type,
+    cb
+  ) {
+    outletAgentFactory.updateStatus(
+      {
+        status: status,
+        _id: orderId,
+        tableNumbers: tableNumbers,
+        outletId: id,
+        orderType: type,
+      },
+      cb
+    );
+  };
   return obj;
 });

@@ -15,53 +15,23 @@ app.controller("outletAgentOrdersController", [
     socketService,
     toastNotifications
   ) {
-    $scope.object = {
-      orders: [],
-      activeIndex: [],
-      newTable: [],
-      tables: null,
-      outlet: null,
-      filter: {
-        status: "pending",
-        type: "dine-in",
-      },
-      item: null,
-      customer: null,
-      amount: 0,
-      allotedTable: null,
-      swapBtn: "Apply swaps",
-      isLoading: true,
-    };
-
-    console.log($stateParams.id);
+    $scope.isLoading = true;
+    socketService.socket.on($stateParams.id, function (data) {
+      console.log(data);
+      $scope.object.orders.push(data);
+    });
 
     outletAgentFactory.getOutletAgentPage(function (err, result) {
-      $scope.object.outlet = result.data.outlet;
-      $scope.object.tables = result.data.outlet.table;
-      socketService.socket.on($scope.object.outlet._id, function (data) {
-        console.log(data);
-        $scope.object.orders.push(data);
-      });
-      outletAgentFactory.getOrders(
-        $scope.object.outlet._id,
-
-        function (err, result) {
+      if (result) {
+        outletAgentService.getOrders(result, function (err, result) {
+          $scope.isLoading = false;
           if (result) {
-            $scope.object.orders = result.data;
-            $scope.object.isLoading = false;
-            $scope.object.orders.forEach(function (value) {
-              value.totalQuantity = value.items.reduce(function (accum, value) {
-                return accum + value.quantity;
-              }, 0);
-              value.totalPrice = value.items.reduce(function (accum, value) {
-                return accum + value.quantity * value.price;
-              }, 0);
-            });
-          } else {
-            alert("something is wrong in fetching orders");
+            $scope.object = result;
           }
-        }
-      );
+        });
+      } else {
+        toastNotifications.error("please try later ");
+      }
     });
 
     $scope.setType = function (value) {
@@ -80,27 +50,24 @@ app.controller("outletAgentOrdersController", [
     };
 
     $scope.updateStatus = function (status, orderId) {
-      outletAgentFactory.updateStatus(
-        { status: status, _id: orderId },
-        function (err, result) {
-          if (result) {
-            toastNotifications.success("status updated successfully");
+      outletAgentService.updateStatus(status, orderId, function (err, result) {
+        if (result) {
+          toastNotifications.info("status updated ");
 
-            var indx = outletAgentService.getIndxById(
-              $scope.object.orders,
-              orderId
-            );
-            var upData = $scope.object.orders[indx];
-            upData.status = status;
+          var indx = outletAgentService.getIndxById(
+            $scope.object.orders,
+            orderId
+          );
+          var upData = $scope.object.orders[indx];
+          upData.status = status;
 
-            $scope.object.orders.splice(indx, 1);
+          $scope.object.orders.splice(indx, 1);
 
-            $scope.object.orders.push(upData);
-          } else {
-            alert("try later");
-          }
+          $scope.object.orders.push(upData);
+        } else {
+          toastNotifications.error("plz try later");
         }
-      );
+      });
     };
 
     $scope.updateStatusToCompleted = function (
@@ -109,14 +76,12 @@ app.controller("outletAgentOrdersController", [
       tableNumbers,
       type
     ) {
-      outletAgentFactory.updateStatus(
-        {
-          status: status,
-          _id: orderId,
-          tableNumbers: tableNumbers,
-          outletId: $scope.object.outlet._id,
-          orderType: type,
-        },
+      outletAgentService.updateStatusToCompleted(
+        status,
+        orderId,
+        tableNumbers,
+        $scope.object.outlet._id,
+        type,
         function (err, result) {
           if (result) {
             var indx = outletAgentService.getIndxById(
@@ -130,7 +95,7 @@ app.controller("outletAgentOrdersController", [
 
             $scope.object.orders.push(upData);
           } else {
-            alert("try later");
+            toastNotifications.warning("plz try later");
           }
         }
       );
@@ -152,13 +117,11 @@ app.controller("outletAgentOrdersController", [
 
     $scope.updateTableNo = function (orderId, oldTables) {
       $scope.object.swapBtn = "Applying";
-      outletAgentFactory.updateTableNo(
-        {
-          _id: orderId,
-          outletId: $scope.object.outlet._id,
-          newTables: $scope.object.newTable,
-          oldTables: oldTables,
-        },
+      outletAgentService.updateTableNo(
+        orderId,
+        $scope.object.outlet._id,
+        $scope.object.newTable,
+        oldTables,
         function (err, result) {
           console.log(err, result);
           if (result) {
