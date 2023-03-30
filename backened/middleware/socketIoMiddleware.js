@@ -1,4 +1,5 @@
 var io = null;
+var socket = null;
 module.exports = {
   init: function (server) {
     io = require("socket.io")(server, {

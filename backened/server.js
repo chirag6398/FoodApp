@@ -12,6 +12,20 @@ dotenv.config({ path: "./.env" });
 require("./db/db");
 
 var port = process.env.PORT || 5000;
+var server = app.listen(port, function (err) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log("server started at port number : " + port);
+  }
+});
+
+var io = socketConnection.init(server);
+
+io.on("connection", function (socket) {
+  console.log(socket.id);
+  // socketConnection.setSocket(socket);
+});
 
 app.use(passport.initialize());
 app.use(cors());
@@ -33,17 +47,3 @@ app.use(require("./route/brandAdminDashboard.route"));
 app.use(require("./route/outletAdminDashboard.route"));
 app.use(require("./route/outlet.route"));
 app.use(require("./route/brand.route"));
-
-var server = app.listen(port, function (err) {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log("server started at port number : " + port);
-  }
-});
-
-var io = socketConnection.init(server);
-
-io.on("connection", function (socket) {
-  console.log(socket.id);
-});

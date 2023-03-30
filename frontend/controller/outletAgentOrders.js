@@ -5,7 +5,16 @@ app.controller("outletAgentOrdersController", [
   "outletAgentFactory",
   "outletAgentService",
   "$stateParams",
-  function ($scope, outletAgentFactory, outletAgentService, $stateParams) {
+  "socketService",
+  "toastNotifications",
+  function (
+    $scope,
+    outletAgentFactory,
+    outletAgentService,
+    $stateParams,
+    socketService,
+    toastNotifications
+  ) {
     $scope.object = {
       orders: [],
       activeIndex: [],
@@ -29,7 +38,10 @@ app.controller("outletAgentOrdersController", [
     outletAgentFactory.getOutletAgentPage(function (err, result) {
       $scope.object.outlet = result.data.outlet;
       $scope.object.tables = result.data.outlet.table;
-
+      socketService.socket.on($scope.object.outlet._id, function (data) {
+        console.log(data);
+        $scope.object.orders.push(data);
+      });
       outletAgentFactory.getOrders(
         $scope.object.outlet._id,
 
@@ -72,6 +84,8 @@ app.controller("outletAgentOrdersController", [
         { status: status, _id: orderId },
         function (err, result) {
           if (result) {
+            toastNotifications.success("status updated successfully");
+
             var indx = outletAgentService.getIndxById(
               $scope.object.orders,
               orderId

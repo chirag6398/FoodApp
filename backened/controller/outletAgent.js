@@ -5,10 +5,9 @@ var moment = require("moment");
 
 var startDate = moment().subtract(1, "month").toDate();
 var endDate = moment().toDate();
+
 module.exports = {
   getOutletAgentPage: function (req, res) {
-    console.log(req.io);
-
     if (req.user.userType === "outletAgent") {
       return outletModel
         .findById({ _id: req.user.outlet._id })

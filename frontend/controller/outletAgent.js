@@ -8,7 +8,6 @@ app.controller("outletAgentController", [
   "$interval",
   "$state",
   "toastNotifications",
-  "socketService",
   function (
     $scope,
     $location,
@@ -16,15 +15,11 @@ app.controller("outletAgentController", [
     outletAgentService,
     $interval,
     $state,
-    toastNotifications,
-    socketService
+    toastNotifications
   ) {
     $scope.isLoading = true;
-    socketService.socketConnect();
-    // socketService.socket.emit("hello", "hi");
-    // toastNotifications.success("hi");
+
     outletAgentService.getOutletAgentPage(function (err, result) {
-      console.log(err, result);
       $scope.isLoading = false;
       if (result) {
         $scope.object = result;
@@ -53,7 +48,7 @@ app.controller("outletAgentController", [
     };
 
     $scope.updateAdmin = function ($event) {
-      console.log($scope.object.admin);
+      // console.log($scope.object.admin);
       outletAgentFactory.updateAdmin(
         $scope.object.admin,
         $scope.object.admin._id,
