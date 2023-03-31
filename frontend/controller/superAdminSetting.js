@@ -6,7 +6,8 @@ app.controller("superAdminSettingController", [
   "adminApi",
   "$stateParams",
   "$rootScope",
-  function ($scope, adminApi, $stateParams, $rootScope) {
+  "toastNotifications",
+  function ($scope, adminApi, $stateParams, $rootScope, toastNotifications) {
     $scope.object = {
       admin: null,
       btnText1: "update",
@@ -27,7 +28,13 @@ app.controller("superAdminSettingController", [
         $stateParams.id,
         function (err, result) {
           console.log(result);
-          if (result) $scope.object.btnText1 = "successfull";
+          if (result) {
+            $scope.object.btnText1 = "successfull";
+            toastNotifications.success("updated successfully");
+          } else {
+            $scope.object.btnText1 = "Retry";
+            toastNotifications.error("updation failed");
+          }
         }
       );
     };
@@ -39,7 +46,12 @@ app.controller("superAdminSettingController", [
         $stateParams.id,
         function (err, result) {
           console.log(result);
-          $scope.object.btnText2 = "changed";
+          if (result) {
+            $scope.object.btnText2 = "changed";
+            toastNotifications.success("updated successfully");
+          } else {
+            toastNotifications.error("please try later");
+          }
         }
       );
     };

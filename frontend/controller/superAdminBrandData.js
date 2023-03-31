@@ -6,7 +6,15 @@ app.controller("superAdminBrandDataController", [
   "adminApi",
   "$stateParams",
   "superAdminService",
-  function ($scope, $location, adminApi, $stateParams, superAdminService) {
+  "toastNotifications",
+  function (
+    $scope,
+    $location,
+    adminApi,
+    $stateParams,
+    superAdminService,
+    toastNotifications
+  ) {
     $scope.object = {
       brand: null,
       data: null,
@@ -18,7 +26,7 @@ app.controller("superAdminBrandDataController", [
         $scope.object.brand = result;
         $scope.object.data = $scope.object.brand;
       } else {
-        $location.path("superAdmin");
+        toastNotifications.error("unable to fetch data");
       }
     });
 
@@ -30,8 +38,9 @@ app.controller("superAdminBrandDataController", [
           if (result) {
             console.log(result);
             $("#exampleModal1").modal("hide");
+            toastNotifications.success("logo has been updated successfully");
           } else {
-            console.log(err);
+            toastNotifications.error("please try later ");
           }
         }
       );
@@ -44,6 +53,9 @@ app.controller("superAdminBrandDataController", [
         function (err, result) {
           if (result) {
             console.log(result);
+            toastNotifications.success("updated successfully");
+          } else {
+            toastNotifications.error("please try later ");
           }
         }
       );
@@ -51,26 +63,28 @@ app.controller("superAdminBrandDataController", [
 
     $scope.updateLocation = function () {
       superAdminService.updateLocation(
-        $scope.data.location,
+        $scope.object.data.location,
         $scope.object.brand._id,
         function (err, result) {
           if (result) {
-            console.log(result);
+            toastNotifications.success("updated successfully");
           } else {
-            console.log(err);
+            toastNotifications.error("please try later ");
           }
         }
       );
     };
     $scope.updateContactInfo = function () {
       superAdminService.updateContactInfo(
-        $scope.data.contactInfo,
+        $scope.object.data.contactInfo,
         $scope.object.brand._id,
         function (err, result) {
           if (result) {
             console.log(result);
+            toastNotifications.success("updated successfully");
           } else {
             console.log(err);
+            toastNotifications.error("please try later ");
           }
         }
       );

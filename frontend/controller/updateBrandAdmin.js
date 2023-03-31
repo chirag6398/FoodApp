@@ -3,10 +3,11 @@
 
 app.controller("updatebrandadminController", [
   "$scope",
-  "$location",
+  "$state",
   "adminApi",
   "$stateParams",
-  function ($scope, $location, adminApi, $stateParams) {
+  "toastNotifications",
+  function ($scope, $state, adminApi, $stateParams, toastNotifications) {
     $scope.object = {
       admin: null,
       btnText: "update",
@@ -22,7 +23,7 @@ app.controller("updatebrandadminController", [
           number: result.data.number,
         };
       } else {
-        $location.path("login");
+        toastNotifications.error("unable to fetch data please try later");
       }
     });
 
@@ -36,7 +37,8 @@ app.controller("updatebrandadminController", [
         function (err, result) {
           if (result) {
             $scope.object.btnText = "updated";
-            alert("update successfully");
+            toastNotifications.success("update successfully");
+            $state.go("superAdmin.createBrand");
           }
         }
       );
