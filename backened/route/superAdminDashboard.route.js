@@ -22,7 +22,7 @@ superAdminDashboardRoute.get(
 );
 
 superAdminDashboardRoute.get(
-  "/api/superAdmin/getDataOfTopTwoBrands/:month",
+  "/api/superAdmin/getDataOfTopTwoBrands/:month/:year",
   passport.authenticate("jwt", { session: false }),
   middleware,
   superAdminDashboardController.getDataOfTopTwoBrands

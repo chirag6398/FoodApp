@@ -88,10 +88,15 @@
                 >
               </div>
             </div>
+            <div>
+              <i ng-click="decreaseYear()" class="bx bxs-left-arrow"></i>
+              <span> {{object.currentYear}} </span>
+              <i ng-click="increaseYear()" class="bx bxs-right-arrow"></i>
+            </div>
           </div>
           <div style="display: flex; gap: 5px">
             <div>
-              <h3>Brand Last Month Revenue Analysis</h3>
+              <h3>Brand Revenue Analysis</h3>
               <canvas id="myChart1" area-label="chart"></canvas>
             </div>
 
@@ -244,7 +249,7 @@
         ng-show="object.outletDates.length>1"
       >
         <div style="width: 450px">
-          <h3>Outlet Last Month Revenue Analysis</h3>
+          <h3>Outlet Revenue Analysis</h3>
           <canvas id="myChart2" area-label="chart"></canvas>
         </div>
         <div style="display: flex; gap: 5px; flex-wrap: wrap">

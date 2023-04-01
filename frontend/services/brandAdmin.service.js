@@ -163,6 +163,7 @@ app.service(
 
     obj.getBasicData = function (result, cb) {
       var brand = result.data.data;
+      var currentYear = new Date().getFullYear();
       var one = 1;
       var months = [
         "Jan",
@@ -215,6 +216,7 @@ app.service(
             month,
             outlets,
             totalEmployees,
+            currentYear,
             totalOutlets,
             totalRevenue,
             topTenCategories,

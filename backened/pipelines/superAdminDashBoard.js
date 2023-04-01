@@ -63,14 +63,14 @@ module.exports = {
   },
   topBrands: function (startDate, endDate) {
     return [
-      {
-        $match: {
-          createdAt: {
-            $gte: startDate,
-            $lt: endDate,
-          },
-        },
-      },
+      // {
+      //   $match: {
+      //     createdAt: {
+      //       $gte: startDate,
+      //       $lt: endDate,
+      //     },
+      //   },
+      // },
       {
         $unwind: "$items",
       },
@@ -107,14 +107,14 @@ module.exports = {
   },
   lastMonthRevenue: function (startDate, endDate) {
     return [
-      {
-        $match: {
-          createdAt: {
-            $gte: startDate,
-            $lt: endDate,
-          },
-        },
-      },
+      // {
+      //   $match: {
+      //     createdAt: {
+      //       $gte: startDate,
+      //       $lt: endDate,
+      //     },
+      //   },
+      // },
       {
         $unwind: "$items",
       },
@@ -228,14 +228,14 @@ module.exports = {
   },
   outletRanking: function (startDate, endDate) {
     return [
-      {
-        $match: {
-          createdAt: {
-            $gte: startDate,
-            $lt: endDate,
-          },
-        },
-      },
+      // {
+      //   $match: {
+      //     createdAt: {
+      //       $gte: startDate,
+      //       $lt: endDate,
+      //     },
+      //   },
+      // },
       {
         $unwind: "$items",
       },

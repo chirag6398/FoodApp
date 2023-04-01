@@ -26,8 +26,6 @@ module.exports = {
           } else {
             return res.status(500).send({
               message: "internal server error",
-              error: err,
-              status: 500,
             });
           }
         });
@@ -35,8 +33,6 @@ module.exports = {
       .catch(function (err) {
         return res.status(500).send({
           message: "internal server error",
-          error: err,
-          status: 500,
         });
       });
   },

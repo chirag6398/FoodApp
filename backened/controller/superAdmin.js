@@ -107,7 +107,7 @@ module.exports = {
       filter["contactInfo.number"] = +query.number;
     }
     if (query.brandName) {
-      filter["brand.name"] = query.brandName;
+      filter["brand.name"] = { $regex: new RegExp(query.brandName, "i") };
     }
 
     outletModel

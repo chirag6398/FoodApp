@@ -38,13 +38,15 @@ app.service("brandAdminDashBoardApi", function ($http) {
       };
   };
 
-  this.getGraphData = function (brandId, month, cb) {
+  this.getGraphData = function (brandId, month, year, cb) {
     $http
       .get(
         "http://localhost:5000/api/brandAdmin/getGraphData?id=" +
           brandId +
           "&month=" +
-          month,
+          month +
+          "&year=" +
+          year,
         {
           headers: {
             Authorization: window.localStorage.getItem("Authorization"),

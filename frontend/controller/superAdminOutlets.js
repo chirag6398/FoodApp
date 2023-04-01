@@ -85,6 +85,7 @@ app.controller("superAdminOutletsController", [
               $scope.object.totalCount,
               $scope.object.limit
             );
+            $scope.object.selectedOutlet = null;
           } else {
             alert("something is wrong");
           }

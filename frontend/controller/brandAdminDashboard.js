@@ -41,7 +41,7 @@ app.controller("brandAdminDashboardController", [
             $scope.object.brandDates,
             $scope.object.brandRevenue,
             $scope.object.brand.name,
-            document.getElementById("myChart1").getContext("2d"),
+            document.getElementById("myChart1"),
             $scope.object.myChart1
           );
         });
@@ -81,7 +81,7 @@ app.controller("brandAdminDashboardController", [
               $scope.object.outletDates,
               $scope.object.outletRevenue,
               outletName,
-              document.getElementById("myChart2").getContext("2d"),
+              document.getElementById("myChart2"),
               $scope.object.myChart2
             );
           }
@@ -94,6 +94,7 @@ app.controller("brandAdminDashboardController", [
       brandAdminDashBoardApi.getGraphData(
         $scope.object.brand._id,
         month,
+        $scope.object.currentYear,
         function (err, result) {
           if (result.data) {
             $scope.object.activity = brandAdminService.getGraphData(
@@ -119,12 +120,18 @@ app.controller("brandAdminDashboardController", [
               $scope.object.brandDates,
               $scope.object.brandRevenue,
               $scope.object.brand.name,
-              document.getElementById("myChart1").getContext("2d"),
+              document.getElementById("myChart1"),
               $scope.object.myChart1
             );
           }
         }
       );
+    };
+    $scope.decreaseYear = function () {
+      $scope.object.currentYear--;
+    };
+    $scope.increaseYear = function () {
+      $scope.object.currentYear++;
     };
   },
 ]);

@@ -58,10 +58,13 @@ app.service("superAdminDashBoardApi", function ($http) {
       };
   };
 
-  this.getDataOfTopTwoBrands = function (month, cb) {
+  this.getDataOfTopTwoBrands = function (month, year, cb) {
     $http
       .get(
-        "http://localhost:5000/api/superAdmin/getDataOfTopTwoBrands/" + month,
+        "http://localhost:5000/api/superAdmin/getDataOfTopTwoBrands/" +
+          month +
+          "/" +
+          year,
 
         {
           headers: {

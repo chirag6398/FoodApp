@@ -125,6 +125,7 @@ module.exports = {
     ];
   },
   brandGraphData: function (id, startDate, endDate) {
+    console.log("brandGraphData", startDate, endDate);
     return [
       {
         $match: {

@@ -13,17 +13,7 @@
         placeholder="Search user by user name"
       />
     </div>
-    <div
-      style="
-        position: absolute;
-        max-height: 325px;
-        overflow-y: scroll;
-        z-index: 1;
-        width: 400px;
-        box-shadow: #fffe 0px 0px 0px 1px;
-      "
-      ng-if="object.searchTextResult.length!==0"
-    >
+    <div class="searchResult" ng-if="object.searchTextResult.length!==0">
       <div class="list-group">
         <a
           style="cursor: pointer; background: #ededed"

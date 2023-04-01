@@ -4,7 +4,7 @@ var outletModel = require("../model/outlet.model");
 var pipelines = require("../pipelines/brandAdminDashBoard");
 var moment = require("moment");
 
-var startDate = moment().subtract(1, "month").toDate();
+var startDate = moment().startOf("month").toDate();
 var endDate = moment().toDate();
 module.exports = {
   getBasicData: function (req, res) {
@@ -67,7 +67,7 @@ module.exports = {
   getGraphData: function (req, res) {
     var id = req.query.id;
     var month = req.query.month;
-    var year = 2023;
+    var year = req.query.year;
     var sDate = moment({ year, month }).startOf("month").toDate();
     var eDate = moment({ year, month }).endOf("month").toDate();
 

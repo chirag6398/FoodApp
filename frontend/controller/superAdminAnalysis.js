@@ -33,7 +33,7 @@ app.controller("superAdminAnalysisController", [
           $scope.object.userPerBrand.cnts,
           "pie",
           "UserPerBrand",
-          document.getElementById("myChart5").getContext("2d"),
+          document.getElementById("myChart5"),
           $scope.object.chart5
         );
 
@@ -44,7 +44,7 @@ app.controller("superAdminAnalysisController", [
           $scope.object.topSecondBrandDates,
           $scope.object.topSecondBrandRevenue,
           $scope.object.topSecondBrandName,
-          document.getElementById("myChart3").getContext("2d"),
+          document.getElementById("myChart3"),
           $scope.object.chart1
         );
       }
@@ -100,7 +100,7 @@ app.controller("superAdminAnalysisController", [
               $scope.object.brandDates,
               $scope.object.brandRevenue,
               brandName,
-              document.getElementById("myChart1").getContext("2d"),
+              document.getElementById("myChart1"),
               $scope.object.chart2
             );
           }
@@ -131,7 +131,7 @@ app.controller("superAdminAnalysisController", [
               $scope.object.outletDates,
               $scope.object.outletRevenue,
               outletName,
-              document.getElementById("myChart2").getContext("2d"),
+              document.getElementById("myChart2"),
               $scope.object.chart3
             );
           }
@@ -143,6 +143,7 @@ app.controller("superAdminAnalysisController", [
       $scope.isLoading = true;
       superAdminDashBoardApi.getDataOfTopTwoBrands(
         month,
+        $scope.object.currentYear,
         function (err, result) {
           console.log(err, result);
           $scope.isLoading = false;
@@ -174,7 +175,7 @@ app.controller("superAdminAnalysisController", [
               $scope.object.topSecondBrandDates,
               $scope.object.topSecondBrandRevenue,
               $scope.object.topSecondBrandName,
-              document.getElementById("myChart3").getContext("2d"),
+              document.getElementById("myChart3"),
               $scope.object.chart1
             );
           } else {
@@ -201,12 +202,19 @@ app.controller("superAdminAnalysisController", [
               $scope.object.topSecondBrandDates,
               $scope.object.topSecondBrandRevenue,
               $scope.object.topSecondBrandName,
-              document.getElementById("myChart3").getContext("2d"),
+              document.getElementById("myChart3"),
               $scope.object.chart1
             );
           }
         }
       );
+    };
+
+    $scope.decreaseYear = function () {
+      $scope.object.currentYear--;
+    };
+    $scope.increaseYear = function () {
+      $scope.object.currentYear++;
     };
   },
 ]);

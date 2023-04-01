@@ -122,7 +122,7 @@ module.exports = {
   getDataOfTopTwoBrands: function (req, res) {
     console.log(req.params.month);
     var month = req.params.month;
-    var year = 2023;
+    var year = req.params.year;
     var sDate = moment({ year, month }).startOf("month").toDate();
     var eDate = moment({ year, month }).endOf("month").toDate();
 

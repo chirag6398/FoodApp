@@ -40,7 +40,7 @@ module.exports = {
       filter["email"] = query.email;
     }
     if (query.brandName) {
-      filter["brand.name"] = query.brandName;
+      filter["brand.name"] = { $regex: new RegExp(query.brandName, "i") };
     }
     if (query.userType) {
       filter["userType"] = query.userType;

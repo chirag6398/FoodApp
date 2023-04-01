@@ -59,15 +59,18 @@ app.service(
     };
 
     obj.getBasicData = function (cb) {
+      var currentYear = new Date().getFullYear();
       superAdminDashBoardApi.getBasicData(function (err, result) {
         console.log(result);
-        if (result && result.data) {
+
+        if (result) {
+          var totalRevenue = 0;
           var data = result.data;
           var brandCnt = data[0][0].count;
           var outletCnt = data[1][0].count;
           var userCnt = data[2][0].count;
           var brands = data[3];
-          if (data[5].length) var totalRevenue = data[5][0].lastMonthRevenue;
+          if (data[5].length) totalRevenue = data[5][0].lastMonthRevenue;
 
           var topBrands = data[4];
           var topBrandOutletCnt = data[9];
@@ -110,6 +113,7 @@ app.service(
             revenue,
             topSecondBrandRevenue,
             months,
+            currentYear,
           });
         } else {
           cb(err, null);
@@ -295,6 +299,10 @@ app.service(
         names.push(value.name);
         revenue.push(value.totalRevenue);
       });
+      if (names.length == 0) {
+        names = ["none"];
+        revenue = [0];
+      }
       return {
         names,
         revenue,
