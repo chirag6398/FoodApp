@@ -23,6 +23,18 @@ td{
     font-weight: 500;
 }
 
+.searchResult{
+  position: absolute;
+    z-index: 1;
+    min-width: 327px;
+    height: 369px;
+    border: 1px solid lightgray;
+    border-radius: 3px;
+    overflow-y: scroll;
+    background: lightgray;
+    box-shadow: #fffe 0px 0px 0px 1px;
+
+}
 
 
 .dark{

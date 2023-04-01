@@ -36,10 +36,22 @@ app.controller("outletAgentOrdersController", [
 
     $scope.setType = function (value) {
       $scope.object.filter.type = value;
+      outletAgentService.getOrder($scope.object, function (err, result) {
+        $scope.isLoading = false;
+        if (result) {
+          $scope.object.orders = result;
+        }
+      });
     };
 
     $scope.setFilter = function (value) {
       $scope.object.filter.status = value;
+      outletAgentService.getOrder($scope.object, function (err, result) {
+        $scope.isLoading = false;
+        if (result) {
+          $scope.object.orders = result;
+        }
+      });
     };
 
     $scope.setData = function (items, customer, amount, tableAlloted) {

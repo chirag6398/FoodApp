@@ -6,7 +6,14 @@ app.controller("brandAdminCategoryController", [
   "$rootScope",
   "brandApi",
   "brandAdminService",
-  function ($scope, $rootScope, brandApi, brandAdminService) {
+  "toastNotifications",
+  function (
+    $scope,
+    $rootScope,
+    brandApi,
+    brandAdminService,
+    toastNotifications
+  ) {
     $scope.object = {
       btnText: "Add Super Category",
       brand: null,
@@ -30,7 +37,7 @@ app.controller("brandAdminCategoryController", [
 
               $scope.object.isLoading = false;
             } else {
-              alert(
+              toastNotifications.error(
                 "plz try later some error has occured on fetching categories"
               );
             }
@@ -51,8 +58,10 @@ app.controller("brandAdminCategoryController", [
             $scope.object.superCategories.push(result.data);
             $scope.object.btnText = "added";
             $("#exampleModal").modal("hide");
+            toastNotifications.success("added successfully");
           } else {
             $scope.object.btnText = "try later";
+            toastNotifications.error("failed please try later");
           }
         }
       );
@@ -72,8 +81,9 @@ app.controller("brandAdminCategoryController", [
           console.log(result);
           if (result) {
             $("#exampleModal1").modal("hide");
+            toastNotifications.success("updated successfully");
           } else {
-            alert("not updated");
+            toastNotifications.error("not updated");
           }
         }
       );

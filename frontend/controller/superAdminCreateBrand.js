@@ -81,9 +81,9 @@ app.controller("superAdminCreateBrandController", [
       });
     };
 
-    // $scope.setBasicBrandData = function (brand) {
-    //   $scope.object.brand = brand;
-    // };
+    $scope.setBasicBrandData = function (brand) {
+      $scope.object.brand = brand;
+    };
 
     $scope.createBrandAdmin = function ($event) {
       $event.preventDefault();
@@ -159,8 +159,9 @@ app.controller("superAdminCreateBrandController", [
             $("#createBrand").modal("hide");
             toastNotifications.success("brand created");
           } else {
-            $scope.btnText = "failed";
-            toastNotifications.error("failed try later");
+            console.log(err);
+            $scope.object.btnText = "Retry";
+            toastNotifications.error(err.message);
           }
         }
       );

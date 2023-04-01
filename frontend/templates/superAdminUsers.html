@@ -18,6 +18,7 @@
         position: absolute;
         max-height: 325px;
         overflow-y: scroll;
+        z-index: 1;
         width: 400px;
         box-shadow: #fffe 0px 0px 0px 1px;
       "
@@ -40,52 +41,72 @@
     </div>
   </div>
 
-  <div
-    style="
-      display: flex;
-      justify-content: flex-start;
-      padding: 10px;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-    "
-  >
-    <div>
-      <input
-        class="form-control"
-        type="text"
-        ng-model="object.filter.brandName"
-        placeholder="brand name"
-      />
+  <form name="filter" novalidate>
+    <span
+      style="color: red"
+      ng-show="filter.email.$dirty && filter.email.$invalid"
+      >Please enter correct email</span
+    >
+    <span
+      style="color: red"
+      ng-show="filter.number.$dirty && filter.number.$invalid"
+      >please enter correct number</span
+    >
+    <div
+      style="
+        display: flex;
+        justify-content: flex-start;
+        padding: 10px;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+      "
+    >
+      <div>
+        <input
+          class="form-control"
+          type="text"
+          ng-model="object.filter.brandName"
+          placeholder="brand name"
+        />
+      </div>
+      <div>
+        <select class="form-control" ng-model="object.filter.userType">
+          <option value="brandAdmin">Brand Admin</option>
+          <option value="outletAdmin">Outlet Admin</option>
+          <option value="outletAgent">Outlet Agent</option>
+          <option value="">None</option>
+        </select>
+      </div>
+      <div>
+        <input
+          class="form-control"
+          type="number"
+          ng-pattern="/^\d{10}$/"
+          name="number"
+          placeholder="enter number"
+          ng-model="object.filter.number"
+        />
+      </div>
+      <div>
+        <input
+          class="form-control"
+          type="email"
+          ng-pattern="/^([a-z A-Z 0-9\.-]+)@([0-9 a-z A-Z -]+).([a-z]{2,8})(.[a-z{2,4}])?$/"
+          placeholder="enter email"
+          name="email"
+          ng-model="object.filter.email"
+        />
+      </div>
+      <button
+        class="btn"
+        style="cursor: pointer"
+        ng-click="getUserHandler(1,object.limit)"
+      >
+        <i class="bx bx-filter-alt"></i>
+      </button>
     </div>
-    <div>
-      <select class="form-control" ng-model="object.filter.userType">
-        <option value="brandAdmin">Brand Admin</option>
-        <option value="outletAdmin">Outlet Admin</option>
-        <option value="outletAgent">Outlet Agent</option>
-        <option value="">None</option>
-      </select>
-    </div>
-    <div>
-      <input
-        class="form-control"
-        type="number"
-        placeholder="enter number"
-        ng-model="object.filter.number"
-      />
-    </div>
-    <div>
-      <input
-        class="form-control"
-        type="email"
-        placeholder="enter email"
-        ng-model="object.filter.email"
-      />
-    </div>
-    <div style="cursor: pointer" ng-click="getUserHandler(1,object.limit)">
-      <i class="bx bx-filter-alt"></i>
-    </div>
-  </div>
+  </form>
 
   <div>
     <table class="table table-bordered table-hover">

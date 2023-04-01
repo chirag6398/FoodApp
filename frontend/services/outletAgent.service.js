@@ -181,40 +181,51 @@ app.service("outletAgentService", function (outletAgentFactory) {
       status: "pending",
       type: "dine-in",
     };
+    var limit = 10;
+    var page = 1;
     var item = null;
     var customer = null;
     var amount = 0;
     var allotedTable = null;
     var swapBtn = "Apply swaps";
-    outletAgentFactory.getOrders(outlet._id, function (err, result) {
-      if (result) {
-        orders = result.data;
+    outletAgentFactory.getOrders(
+      outlet._id,
+      filter,
+      limit,
+      page,
+      function (err, result) {
+        if (result) {
+          orders = result.data.result;
+          var count = result.data.count;
 
-        orders.forEach(function (value) {
-          value.totalQuantity = value.items.reduce(function (accum, value) {
-            return accum + value.quantity;
-          }, 0);
-          value.totalPrice = value.items.reduce(function (accum, value) {
-            return accum + value.quantity * value.price;
-          }, 0);
-        });
-        cb(null, {
-          outlet,
-          tables,
-          orders,
-          activeIndex,
-          newTable,
-          filter,
-          item,
-          customer,
-          amount,
-          allotedTable,
-          swapBtn,
-        });
-      } else {
-        cb(err, null);
+          orders.forEach(function (value) {
+            value.totalQuantity = value.items.reduce(function (accum, value) {
+              return accum + value.quantity;
+            }, 0);
+            value.totalPrice = value.items.reduce(function (accum, value) {
+              return accum + value.quantity * value.price;
+            }, 0);
+          });
+          cb(null, {
+            outlet,
+            tables,
+            orders,
+            activeIndex,
+            newTable,
+            filter,
+            item,
+            customer,
+            amount,
+            allotedTable,
+            swapBtn,
+            limit,
+            page,
+          });
+        } else {
+          cb(err, null);
+        }
       }
-    });
+    );
   };
   obj.isTableAvailable = function (count, tables) {
     var allotedTables = [];
@@ -291,6 +302,32 @@ app.service("outletAgentService", function (outletAgentFactory) {
     });
   };
 
+  obj.getOrder = function (data, cb) {
+    outletAgentFactory.getOrders(
+      data.outlet._id,
+      data.filter,
+      data.limit,
+      data.page,
+      function (err, result) {
+        if (result) {
+          orders = result.data.result;
+          data.count = result.data.count;
+
+          orders.forEach(function (value) {
+            value.totalQuantity = value.items.reduce(function (accum, value) {
+              return accum + value.quantity;
+            }, 0);
+            value.totalPrice = value.items.reduce(function (accum, value) {
+              return accum + value.quantity * value.price;
+            }, 0);
+          });
+          cb(null, orders);
+        } else {
+          cb(err, null);
+        }
+      }
+    );
+  };
   obj.updateTableNo = function (orderId, outletId, newTable, oldTables, cb) {
     outletAgentFactory.updateTableNo(
       {

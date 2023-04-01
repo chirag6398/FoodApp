@@ -6,7 +6,7 @@
     justify-content: center;
   "
 >
-  <div ng-if="object.outlets.length" class="spr__rightSide">
+  <div style="width: 100%" ng-if="object.outlets.length" class="spr__rightSide">
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
@@ -528,7 +528,7 @@
                 name="outletName"
                 ng-required="true"
                 ng-minlength="3"
-                ng-model="outlet.name"
+                ng-model="object.outlet.name"
                 class="form-control"
               />
               <span
@@ -542,7 +542,7 @@
                 type="text"
                 name="type"
                 ng-required="true"
-                ng-model="outlet.type"
+                ng-model="object.outlet.type"
                 class="form-control"
               />
               <span
@@ -558,7 +558,7 @@
                 type="text"
                 name="description"
                 ng-required="true"
-                ng-model="outlet.description"
+                ng-model="object.outlet.description"
                 class="form-control"
               />
               <span
@@ -573,7 +573,7 @@
                 name="email"
                 ng-required="true"
                 ng-pattern="/^([a-z A-Z 0-9\.-]+)@([0-9 a-z A-Z -]+).([a-z]{2,8})(.[a-z{2,4}])?$/"
-                ng-model="outlet.email"
+                ng-model="object.outlet.email"
                 class="form-control"
               />
               <span
@@ -592,7 +592,7 @@
                 name="number"
                 ng-required="true"
                 ng-pattern="/^\d{10}$/"
-                ng-model="outlet.number"
+                ng-model="object.outlet.number"
                 class="form-control"
               />
               <span
@@ -611,7 +611,7 @@
                 type="text"
                 name="address"
                 ng-required="true"
-                ng-model="outlet.address"
+                ng-model="object.outlet.address"
                 class="form-control"
                 id="address"
               />
@@ -627,7 +627,7 @@
                 name="city"
                 ng-required="true"
                 ng-minlength="3"
-                ng-model="outlet.city"
+                ng-model="object.outlet.city"
                 class="form-control"
               />
               <span
@@ -645,7 +645,7 @@
                 ng-required="true"
                 ng-minlength="6"
                 ng-maxlength="6"
-                ng-model="outlet.pinCode"
+                ng-model="object.outlet.pinCode"
                 class="form-control"
               />
               <span

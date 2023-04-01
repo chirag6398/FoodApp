@@ -6,7 +6,8 @@ app.controller("brandSettingController", [
   "$stateParams",
   "$stateParams",
   "brandApi",
-  function ($scope, $stateParams, $stateParams, brandApi) {
+  "toastNotifications",
+  function ($scope, $stateParams, $stateParams, brandApi, toastNotifications) {
     brandApi.getAdmin($stateParams.id, function (err, result) {
       console.log(err, result);
       if (result) {
@@ -19,6 +20,9 @@ app.controller("brandSettingController", [
       brandApi.updateAdmin($scope.brandAdmin, id, function (err, result) {
         if (result) {
           console.log(result);
+          toastNotifications.success("updated");
+        } else {
+          toastNotifications.error("failed");
         }
       });
     };
@@ -29,6 +33,11 @@ app.controller("brandSettingController", [
         $stateParams.id,
         function (err, result) {
           console.log(err, result);
+          if (result) {
+            toastNotifications.success("changed ");
+          } else {
+            toastNotifications.error("failed");
+          }
         }
       );
     };

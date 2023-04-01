@@ -24,7 +24,7 @@ app.controller("superAdminAnalysisController", [
           $scope.object.outletsRanking.revenue,
           "doughnut",
           "rankings",
-          document.getElementById("myChart4").getContext("2d"),
+          document.getElementById("myChart4"),
           $scope.object.chart4
         );
 

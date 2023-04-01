@@ -71,16 +71,28 @@ module.exports = {
     }
   },
   getOrders: function (req, res) {
+    var query = req.query;
+    var limit = query.limit || 10;
+    var pageNo = query.pageNo || 1;
+    var skipNo = (pageNo - 1) * limit;
+    var filter = {
+      $and: [
+        { "outlet._id": mongoose.Types.ObjectId(query.outletId) },
+        { createdAt: { $gte: startDate } },
+        { status: query.status },
+        { type: query.type },
+      ],
+    };
     orderModel
-      .find({
-        $and: [
-          { "outlet._id": mongoose.Types.ObjectId(req.params.id) },
-          { createdAt: { $gte: startDate } },
-        ],
-      })
+      .find(filter)
+      .skip(skipNo)
+      .limit(limit)
+      .sort({ createdAt: -1 })
       .then(function (result) {
-        console.log(result);
-        return res.send(result);
+        orderModel.countDocuments(filter, function (err, count) {
+          return res.status(200).send({ result, count });
+        });
+        // return res.send(result);
       })
       .catch(function (err) {
         console.log(err);

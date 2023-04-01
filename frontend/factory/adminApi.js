@@ -16,7 +16,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response.data);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
   obj.changeLogo = function (data, cb) {
@@ -29,7 +29,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response.data);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
   obj.createBrand = function (data, cb) {
@@ -44,7 +44,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response.data);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
@@ -72,7 +72,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response.data);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
@@ -90,7 +90,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
@@ -101,7 +101,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
@@ -117,7 +117,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
@@ -132,7 +132,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
@@ -143,7 +143,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
@@ -166,7 +166,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
@@ -178,7 +178,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
@@ -189,7 +189,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
@@ -204,7 +204,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
@@ -220,7 +220,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
   obj.activateBrand = function (brandId, cb) {
@@ -231,7 +231,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
@@ -243,7 +243,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
   obj.getUsers = function (filter, limit, pageNo, cb) {
@@ -266,7 +266,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
   obj.searchBrandBySearchText = function (searchText, cb) {
@@ -279,7 +279,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
   obj.searchOutletBySearchText = function (searchText, cb) {
@@ -293,7 +293,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
@@ -308,7 +308,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
@@ -322,7 +322,7 @@ app.factory("adminApi", function ($http, $rootScope) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 

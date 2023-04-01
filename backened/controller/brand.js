@@ -68,16 +68,18 @@ module.exports = {
               return res.send({ message: "created with image", data: result });
             })
             .catch(function (err) {
-              console.log(err);
-              return res.status(401).send({ error: err });
+              return res.status(400).send({
+                message:
+                  "brand name or email exists ,please enter unique values",
+              });
             });
         })
         .catch(function (err) {
           console.log(err);
-          return res.status(500).send({ error: err, status: 500 });
+          return res.status(500).send({ message: "internal server error" });
         });
     } else {
-      return res.status(404).send({ err: "file not found" });
+      return res.status(400).send({ message: "file not found" });
     }
   },
 
@@ -89,7 +91,7 @@ module.exports = {
         return res.send({ message: "deactivated" });
       })
       .catch(function (err) {
-        return res.status(500).send({ error: "server error" });
+        return res.status(500).send({ message: "server error" });
       });
   },
 
@@ -101,7 +103,7 @@ module.exports = {
         return res.send({ message: "deactivated" });
       })
       .catch(function (err) {
-        return res.status(500).send({ error: "server error" });
+        return res.status(500).send({ message: "server error" });
       });
   },
 
@@ -170,7 +172,7 @@ module.exports = {
           });
       })
       .catch(function (err) {
-        return res.status(500).send({ error: err });
+        return res.status(500).send({ message: err });
       });
   },
 
@@ -182,7 +184,7 @@ module.exports = {
       })
       .catch(function (err) {
         console.log(err);
-        return res.status(401).send(err);
+        return res.status(400).send(err);
       });
   },
   changeLogo: function (req, res) {
@@ -246,7 +248,7 @@ module.exports = {
                     .catch(function (err) {
                       session.endSession();
                       console.log(err);
-                      return res.status(500).send({ error: err });
+                      return res.status(500).send({ message: err });
                     });
                 } else {
                   session
@@ -267,10 +269,10 @@ module.exports = {
         })
         .catch(function (err) {
           console.log(err);
-          return res.status(500).send({ error: err, status: 500 });
+          return res.status(500).send({ message: "internal server error" });
         });
     } else {
-      return res.status(401).send({ message: "plz try later" });
+      return res.status(400).send({ message: "plz try later" });
     }
   },
   updateBrandName: function (req, res) {
@@ -324,7 +326,7 @@ module.exports = {
       })
       .catch(function (err) {
         console.log(err);
-        return res.status(404).send(err);
+        return res.status(400).send(err);
       });
   },
 };

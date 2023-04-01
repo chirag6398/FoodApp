@@ -6,7 +6,14 @@ app.controller("brandAdminUsersController", [
   "$rootScope",
   "brandApi",
   "brandAdminService",
-  function ($scope, $rootScope, brandApi, brandAdminService) {
+  "toastNotifications",
+  function (
+    $scope,
+    $rootScope,
+    brandApi,
+    brandAdminService,
+    toastNotifications
+  ) {
     $scope.object = {
       brand: null,
       users: null,
@@ -98,7 +105,7 @@ app.controller("brandAdminUsersController", [
               $scope.object.limit
             );
           } else {
-            alert("something is wrong");
+            toastNotifications.error("something is wrong");
           }
         }
       );

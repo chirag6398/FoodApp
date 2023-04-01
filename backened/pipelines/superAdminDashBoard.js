@@ -18,6 +18,12 @@ module.exports = {
   ],
   pipelineGroupBrandWithOutlets: [
     {
+      $match: {
+        isDeleted: false,
+        isActive: true,
+      },
+    },
+    {
       $group: {
         _id: "$brand._id",
         name: { $first: "$brand.name" },
@@ -38,6 +44,8 @@ module.exports = {
       {
         $match: {
           "brand.name": { $regex: regex },
+          isDeleted: false,
+          isActive: true,
         },
       },
       {

@@ -81,6 +81,7 @@ module.exports = {
         if (result) {
           Promise.all([data1, data2, data3, data4, data5, data6, data7, data8])
             .then(function (result1) {
+              console.log(result1);
               return res.send(result1.concat(result));
             })
             .catch(function (err) {

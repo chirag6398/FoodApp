@@ -7,7 +7,15 @@ app.controller("brandAdminHomeController", [
   "$location",
   "brandApi",
   "brandAdminService",
-  function ($scope, $rootScope, $location, brandApi, brandAdminService) {
+  "toastNotifications",
+  function (
+    $scope,
+    $rootScope,
+    $location,
+    brandApi,
+    brandAdminService,
+    toastNotifications
+  ) {
     $scope.object = {
       brand: null,
       outlets: null,
@@ -28,6 +36,10 @@ app.controller("brandAdminHomeController", [
           function (err, result) {
             if (result) {
               $scope.object.outlets = result.data;
+            } else {
+              toastNotifications.error(
+                "please visite later some issue has occured"
+              );
             }
           }
         );
@@ -36,6 +48,7 @@ app.controller("brandAdminHomeController", [
 
     $scope.createOutlet = function ($event) {
       $event.preventDefault();
+      console.log($scope.object.outlet);
       brandApi.createOutlet(
         $scope.object.outlet,
         $scope.object.brand._id,
@@ -45,8 +58,12 @@ app.controller("brandAdminHomeController", [
           if (result) {
             $scope.object.outlets.push(result.data);
             $("#exampleModal").modal("hide");
+            toastNotifications.success("outlet created successfully");
           } else {
             console.log(err);
+            toastNotifications.error(
+              "something went wrong please check all field have correct value"
+            );
           }
         }
       );
@@ -59,6 +76,9 @@ app.controller("brandAdminHomeController", [
         if (result) {
           console.log(result);
           $("#exampleModal10").modal("hide");
+          toastNotifications.success("updated successfully");
+        } else {
+          toastNotifications.error("updation failed");
         }
       });
     };
@@ -93,9 +113,11 @@ app.controller("brandAdminHomeController", [
             }
             $scope.object.btnText0 = "successfull";
             $("#exampleModal1").modal("hide");
+            toastNotifications.success("admin created");
           } else {
             $scope.object.btnText0 = "failed";
             console.log(err);
+            toastNotifications.error("failed please check values or try later");
           }
         }
       );
@@ -113,7 +135,9 @@ app.controller("brandAdminHomeController", [
           $scope.object.outlets[indx].isActive =
             !$scope.object.outlets[indx].isActive;
 
-          alert("outlet toggle succesfully");
+          toastNotifications.success("outlet toggle succesfully");
+        } else {
+          toastNotifications.error("failed to togle try later");
         }
       });
     };
@@ -122,9 +146,11 @@ app.controller("brandAdminHomeController", [
       brandApi.deleteOutlet(outletId, function (err, result) {
         console.log(err, result);
         if (result) {
-          alert("outlet deleted successfully");
+          toastNotifications.success("outlet deleted successfully");
           var indx = getIndxOfOutletById($scope.object.outlets, outletId);
           $scope.object.outlets[indx].isDeleted = true;
+        } else {
+          toastNotifications.error("failed try later");
         }
       });
     };

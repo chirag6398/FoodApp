@@ -73,12 +73,20 @@ app.factory("outletAgentFactory", function ($http, $rootScope, $timeout) {
       };
   };
 
-  obj.getOrders = function (outletId, cb) {
+  obj.getOrders = function (outletId, filter, limit, page, cb) {
     console.log(outletId);
     $http
       .get(
-        "http://localhost:5000/api/order/getOrders/" + outletId,
-
+        "http://localhost:5000/api/order/getOrders?outletId=" +
+          outletId +
+          "&type=" +
+          filter.type +
+          "&status=" +
+          filter.status +
+          "&limit=" +
+          limit +
+          "&page=" +
+          page,
         {
           headers: {
             Authorization: window.localStorage.getItem("Authorization"),

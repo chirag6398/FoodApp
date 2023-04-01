@@ -7,21 +7,21 @@ app.controller("categoryProductController", [
   "brandApi",
   "$stateParams",
   "brandAdminService",
-  function ($scope, $rootScope, brandApi, $stateParams, brandAdminService) {
+  "toastNotifications",
+  function (
+    $scope,
+    $rootScope,
+    brandApi,
+    $stateParams,
+    brandAdminService,
+    toastNotifications
+  ) {
     $scope.object = {
       products: [],
       product: null,
       btnText: "Add product",
       updateProduct: null,
     };
-
-    // brandApi.getBrandAdminPage();
-    // $rootScope.$on("passData", function (err, result) {
-    //   if (result) {
-    //     console.log(result);
-    //     $scope.object.brand = result.data.data;
-    //   }
-    // });
 
     brandAdminService.getProductsInBrand(function (err, result) {
       if (result) {
@@ -45,7 +45,9 @@ app.controller("categoryProductController", [
         function (err, result) {
           console.log(err, result);
           if (result) {
-            alert("updated");
+            toastNotifications.success("updated");
+          } else {
+            toastNotifications.error("failed");
           }
         }
       );
@@ -62,8 +64,9 @@ app.controller("categoryProductController", [
             console.log(result.data);
             $scope.object.products.push(result.data);
             $("#exampleModal").modal("hide");
+            toastNotifications.success("product created");
           } else {
-            alert("product not created");
+            toastNotifications.error("product not created");
             console.log(err);
           }
         }

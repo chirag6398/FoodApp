@@ -4,7 +4,8 @@ app.controller("brandAdminOutletDataController", [
   "$scope",
   "$stateParams",
   "brandApi",
-  function ($scope, $stateParams, brandApi) {
+  "toastNotifications",
+  function ($scope, $stateParams, brandApi, toastNotifications) {
     $scope.object = {
       outlet: null,
       data: null,
@@ -22,7 +23,7 @@ app.controller("brandAdminOutletDataController", [
         function (err, result) {
           if (result) {
             console.log(result);
-            alert("updated");
+            toastNotifications.success("updated");
           }
         }
       );
@@ -34,9 +35,10 @@ app.controller("brandAdminOutletDataController", [
         function (err, result) {
           if (result) {
             console.log(result);
-            alert("updated");
+            toastNotifications.success("updated");
           } else {
             console.log(err);
+            toastNotifications.error("failed");
           }
         }
       );
@@ -47,9 +49,10 @@ app.controller("brandAdminOutletDataController", [
         function (err, result) {
           if (result) {
             console.log(result);
-            alert("updated");
+            toastNotifications.success("updated");
           } else {
             console.log(err);
+            toastNotifications.error("failed");
           }
         }
       );

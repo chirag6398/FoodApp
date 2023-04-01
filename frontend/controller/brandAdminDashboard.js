@@ -17,11 +17,11 @@ app.controller("brandAdminDashboardController", [
     brandAdminService,
     superAdminService
   ) {
-    $timeout(function () {
-      if ($scope.object.myChart1 === null) {
-        brandApi.getBrandAdminPage();
-      }
-    }, 1300);
+    // $timeout(function () {
+    //   if ($scope.object.myChart1 === null) {
+    brandApi.getBrandAdminPage();
+    //   }
+    // }, 1300);
 
     $scope.isLoading = true;
 

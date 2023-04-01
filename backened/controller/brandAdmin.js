@@ -47,7 +47,7 @@ module.exports = {
         return res.status(200).send(result);
       })
       .catch(function (err) {
-        console.log("fenfi", err);
+        console.log("fenfi", err.errors["email"].message, err);
         return res
           .status(400)
           .send({ message: "please enter valid and unique data", status: 400 });

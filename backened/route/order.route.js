@@ -12,7 +12,7 @@ orderRoute.post(
   orderController.createOrder
 );
 orderRoute.get(
-  "/api/order/getOrders/:id",
+  "/api/order/getOrders",
   passport.authenticate("jwt", { session: false }),
   orderController.getOrders
 );

@@ -67,14 +67,15 @@ app.service(
           var outletCnt = data[1][0].count;
           var userCnt = data[2][0].count;
           var brands = data[3];
-          var totalRevenue = data[5][0].lastMonthRevenue;
+          if (data[5].length) var totalRevenue = data[5][0].lastMonthRevenue;
+
           var topBrands = data[4];
           var topBrandOutletCnt = data[9];
           var topBrandEmployeeCnt = data[10];
           var topSecondBrandOutletCnt = data[12];
           var topSecondBrandEmployeeCnt = data[13];
-          var topBrandName = data[8][0].name;
-          var topSecondBrandName = data[11][0].name;
+          if (data[8]) var topBrandName = data[8][0].name;
+          if (data[11]) var topSecondBrandName = data[11][0].name;
 
           var outletsRanking = obj.outletRanking(result.data[6]);
           var userPerBrand = obj.userPerBrand(result.data[7]);
@@ -239,10 +240,11 @@ app.service(
         dates.push(i);
         revenue.push(0);
       }
-      data.forEach(function (value) {
-        var date = +value._id.substr(0, 2);
-        revenue[date] = value.totalRevenue;
-      });
+      if (data)
+        data.forEach(function (value) {
+          var date = +value._id.substr(0, 2);
+          revenue[date] = value.totalRevenue;
+        });
       return {
         dates,
         revenue,

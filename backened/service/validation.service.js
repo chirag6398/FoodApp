@@ -75,46 +75,46 @@ module.exports = {
 
     if (!validateUserName(userName)) {
       return res
-        .status(403)
+        .status(400)
         .send({ message: "length of userName must be greater then 3" });
     }
 
     if (!validateName(firstName)) {
       return res
-        .status(403)
+        .status(400)
         .send({ message: "length of first must be greater then 3" });
     }
 
     if (!validateEmail(email)) {
-      return res.status(403).send({ message: "please enter valid email" });
+      return res.status(400).send({ message: "please enter valid email" });
     }
 
     if (!validateAddress(address)) {
-      return res.status(403).send({ message: "please enter valid address" });
+      return res.status(400).send({ message: "please enter valid address" });
     }
 
     if (!validatePassword(password)) {
       return res
-        .status(403)
+        .status(400)
         .send({ message: "password does not fill criteria" });
     }
 
     if (password !== cpassword) {
       return res
-        .status(403)
+        .status(400)
         .send({ message: "confirm password does not match password" });
     }
 
     if (!validateNumber(number)) {
-      return res.status(403).send({ message: "number is wrong" });
+      return res.status(400).send({ message: "number is wrong" });
     }
 
     if (!validateCity(city)) {
-      return res.status(403).send({ message: "please enter valid city" });
+      return res.status(400).send({ message: "please enter valid city" });
     }
 
     if (!validatePinCode(pinCode)) {
-      return res.status(403).send({ message: "please enter valid pinCode" });
+      return res.status(400).send({ message: "please enter valid pinCode" });
     }
 
     cb();
@@ -129,32 +129,27 @@ module.exports = {
     var number = body.number;
     var pinCode = body.pinCode;
 
-    // console.log(body);
-    // if (!file) {
-    //   return res.status(404).send({ err: "file not found" });
-    // }
-
     if (!validateEmail(email)) {
-      return res.status(403).send({ message: "please enter valid email" });
+      return res.status(400).send({ message: "please enter valid email" });
     }
     if (!validateNumber(number)) {
-      return res.status(403).send({ message: "please enter valid number" });
+      return res.status(400).send({ message: "please enter valid number" });
     }
 
     if (!validateAddress(address)) {
-      return res.status(403).send({ message: "please enter valid address" });
+      return res.status(400).send({ message: "please enter valid address" });
     }
 
     if (!validateName(name)) {
-      return res.status(403).send({ message: "please enter valid name" });
+      return res.status(400).send({ message: "please enter valid name" });
     }
 
     if (!validateCity(city)) {
-      return res.status(403).send({ message: "please enter valid city" });
+      return res.status(400).send({ message: "please enter valid city" });
     }
 
     if (!validatePinCode(pinCode)) {
-      return res.status(403).send({ message: "please enter valid pinCode" });
+      return res.status(400).send({ message: "please enter valid pinCode" });
     }
 
     console.log("called cb");
@@ -178,46 +173,41 @@ module.exports = {
     }
 
     if (!validateEmail(email)) {
-      return res.status(403).send({ message: "please enter valid email" });
+      return res.status(400).send({ message: "please enter valid email" });
     }
 
     if (!validateAddress(address)) {
-      return res.status(403).send({ message: "please enter valid address" });
+      return res.status(400).send({ message: "please enter valid address" });
     }
 
     if (!validateName(name)) {
-      return res.status(403).send({ message: "please enter valid name" });
+      return res.status(400).send({ message: "please enter valid name" });
     }
 
     if (!validateName(type)) {
-      return res.status(403).send({ message: "please enter valid type" });
+      return res.status(400).send({ message: "please enter valid type" });
     }
 
     if (!validateNumber(number)) {
-      return res.status(403).send({ message: "please enter valid number" });
+      return res.status(400).send({ message: "please enter valid number" });
     }
 
     if (!validateCity(city)) {
-      return res.status(403).send({ message: "please enter valid city" });
+      return res.status(400).send({ message: "please enter valid city" });
     }
 
     if (!validatePinCode(pinCode)) {
-      return res.status(403).send({ message: "please enter valid pinCode" });
+      return res.status(400).send({ message: "please enter valid pinCode" });
     }
 
     cb();
   },
   validateCategory: function (req, res, cb) {
     var body = req.body;
-    // var file = body.file;
     var name = body.name;
 
-    // if (!file) {
-    //   return res.status(404).send({ err: "file not found" });
-    // }
-
     if (!validateName(name)) {
-      return res.status(403).send({ message: "please enter valid name" });
+      return res.status(400).send({ message: "please enter valid name" });
     }
 
     cb();
@@ -227,12 +217,8 @@ module.exports = {
     // var file = body.file;
     var name = body.name;
 
-    // if (!file) {
-    //   return res.status(404).send({ err: "file not found" });
-    // }
-
     if (!validateName(name)) {
-      return res.status(403).send({ message: "please enter valid name" });
+      return res.status(400).send({ message: "please enter valid name" });
     }
 
     cb();
@@ -242,14 +228,14 @@ module.exports = {
     var name = body.name;
     var price = body.price;
 
-    console.log(name, validateName(name));
+    // console.log(name, validateName(name));
 
-    // if (!validateName(name)) {
-    //   return res.status(403).send({ message: "please enter valid name" });
-    // }
+    if (!validateName(name)) {
+      return res.status(400).send({ message: "please enter valid name" });
+    }
 
     if (!validatePrice(price)) {
-      return res.status(403).send({ message: "please enter valid price" });
+      return res.status(400).send({ message: "please enter valid price" });
     }
 
     cb();

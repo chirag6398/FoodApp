@@ -10,7 +10,7 @@
         placeholder="Search Brand by name"
       />
     </div>
-    <div ng-if="object.searchTextResult.length!==0">
+    <div class="searchResult" ng-if="object.searchTextResult.length!==0">
       <div class="list-group">
         <a
           style="cursor: pointer"
@@ -71,7 +71,7 @@
               <button
                 ng-disabled="!brand.isActive"
                 type="button"
-                class="btn btn-secondary"
+                class="btn btn-primary"
                 data-toggle="modal"
                 data-target="#exampleModal"
                 data-whatever="@mdo"
@@ -79,260 +79,12 @@
               >
                 Add admin
               </button>
-              <div
-                class="modal fade"
-                id="exampleModal"
-                tabindex="-1"
-                role="dialog"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-              >
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">
-                        Enter Admin Details
-                      </h5>
-                      <button
-                        type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <form name="adminData" novalidate>
-                        <div class="form-group">
-                          <label for="userName" class="col-form-label"
-                            >UserName :</label
-                          >
-                          <input
-                            type="text"
-                            name="userName"
-                            ng-required="true"
-                            ng-minlength="3"
-                            ng-model="object.admin.userName"
-                            class="form-control"
-                          />
-                          <span
-                            ng-show="adminData.userName.$dirty && adminData.userName.$error.minlength"
-                            >Minimum 3 characters required</span
-                          >
-                          <span
-                            ng-show="adminData.userName.$dirty && adminData.userName.$error.required"
-                            >Please fill this field</span
-                          >
-                        </div>
-                        <div class="form-group">
-                          <label for="firstName" class="col-form-label"
-                            >FirstName :</label
-                          >
-                          <input
-                            type="text"
-                            name="firstName"
-                            ng-required="true"
-                            ng-minlength="3"
-                            ng-model="object.admin.firstName"
-                            class="form-control"
-                          />
-                          <span
-                            ng-show="adminData.firstName.$dirty && adminData.firstName.$error.minlength"
-                            >Minimum 3 characters required</span
-                          >
-                          <span
-                            ng-show="adminData.firstName.$dirty && adminData.firstName.$error.required"
-                            >Please fill this field</span
-                          >
-                        </div>
-                        <div class="form-group">
-                          <label for="lastName" class="col-form-label"
-                            >LastName :</label
-                          >
-                          <input
-                            type="text"
-                            name="lastName"
-                            ng-minlength="0"
-                            ng-model="object.admin.lastName"
-                            class="form-control"
-                          />
-                          <span
-                            ng-show="adminData.lastName.$dirty && adminData.lastName.$error.minlength"
-                            >Minimum 3 characters required</span
-                          >
-                        </div>
-                        <div class="form-group">
-                          <label for="email" class="col-form-label"
-                            >Email :</label
-                          >
-                          <input
-                            type="email"
-                            name="email"
-                            ng-required="true"
-                            ng-pattern="/^([a-z A-Z 0-9\.-]+)@([0-9 a-z A-Z -]+).([a-z]{2,8})(.[a-z{2,4}])?$/"
-                            ng-model="object.admin.email"
-                            class="form-control"
-                          />
-                          <span
-                            ng-show="adminData.email.$dirty && !adminData.email.$error.required && adminData.email.$invalid"
-                            >Please enter correct email</span
-                          >
-                          <span
-                            ng-show="adminData.email.$dirty && adminData.email.$error.required"
-                            >Please fill this field</span
-                          >
-                        </div>
-                        <div class="form-group">
-                          <label for="number" class="col-form-label"
-                            >Phone Number :</label
-                          >
-                          <input
-                            type="number"
-                            name="number"
-                            ng-required="true"
-                            ng-pattern="/^\d{10}$/"
-                            ng-model="object.admin.number"
-                            class="form-control"
-                          />
-                          <span
-                            ng-show="adminData.number.$dirty && adminData.number.$invalid"
-                            >please enter correct number</span
-                          >
-                          <span
-                            ng-show="adminData.number.$dirty && adminData.number.$error.required"
-                            >Please fill this field</span
-                          >
-                        </div>
-                        <div class="form-group">
-                          <label for="address" class="col-form-label"
-                            >Address :</label
-                          >
-                          <input
-                            type="text"
-                            name="address"
-                            ng-required="true"
-                            ng-model="object.admin.address"
-                            class="form-control"
-                          />
-                          <span
-                            ng-show="adminData.address.$dirty && adminData.address.$error.required"
-                            >Please fill this field</span
-                          >
-                        </div>
-                        <div class="form-group">
-                          <label for="city" class="col-form-label"
-                            >City :</label
-                          >
-                          <input
-                            type="text"
-                            name="city"
-                            ng-required="true"
-                            ng-minlength="3"
-                            ng-model="object.admin.city"
-                            class="form-control"
-                          />
-                          <span
-                            ng-show="adminData.city.$dirty && adminData.city.$error.minlength"
-                            >Please fill this field</span
-                          >
-                        </div>
-                        <div class="form-group">
-                          <label for="pinCode" class="col-form-label"
-                            >Pin Code :</label
-                          >
-                          <input
-                            type="number"
-                            name="pinCode"
-                            ng-required="true"
-                            ng-minlength="6"
-                            ng-maxlength="6"
-                            ng-model="object.admin.pinCode"
-                            class="form-control"
-                          />
-                          <span
-                            ng-show="adminData.pinCode.$dirty && adminData.pinCode.$error.minlength "
-                            >6 characters required</span
-                          >
-                          <span
-                            ng-show="adminData.pinCode.$dirty && adminData.pinCode.$error.maxlength"
-                            >6 characters required</span
-                          >
-                        </div>
-                        <div class="form-group">
-                          <label for="password" class="col-form-label"
-                            >Password :</label
-                          >
-                          <input
-                            type="password"
-                            name="password"
-                            ng-required="true"
-                            ng-minlength="5"
-                            ng-maxlength="8"
-                            ng-model="object.admin.password"
-                            class="form-control"
-                          />
-                          <span
-                            ng-show="adminData.password.$dirty && (adminData.password.$error.minlength || adminData.password.$error.maxlength)"
-                            >Minimum 5-8 characters required</span
-                          >
-                          <span
-                            ng-show="adminData.password.$dirty && adminData.password.$error.required"
-                            >Please fill this field</span
-                          >
-                        </div>
-                        <div class="form-group">
-                          <label for="cpassword" class="col-form-label"
-                            >Confirm Password :</label
-                          >
-                          <input
-                            type="password"
-                            ng-disabled="!object.admin.password"
-                            name="cpassword"
-                            ng-required="true"
-                            ng-minlength="5"
-                            ng-maxlength="8"
-                            ng-model="object.admin.cpassword"
-                            class="form-control"
-                          />
-                          <span
-                            ng-show="adminData.cpassword.$dirty && adminData.cpassword.$error.required"
-                            >Please fill this field</span
-                          >
-                          <span
-                            ng-show="adminData.cpassword.$dirty && !(adminData.cpassword.$error.required) && object.admin.password && object.admin.password!=object.admin.cpassword"
-                            >confirm password is not matching password</span
-                          >
-                        </div>
-
-                        <div class="modal-footer">
-                          <button
-                            type="button"
-                            class="btn btn-secondary"
-                            data-dismiss="modal"
-                          >
-                            Close
-                          </button>
-                          <button
-                            type="submit"
-                            ng-disabled="adminData.$invalid"
-                            ng-click="createBrandAdmin($event)"
-                            class="btn btn-secondary"
-                          >
-                            {{object.btnText1}}
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
             <div ng-if="brand.brandAdminId">
               <button
                 ng-disabled="!brand.isActive"
                 ui-sref="updatebrandadmin({id:brand.brandAdminId})"
-                class="btn btn-secondary"
+                class="btn btn-primary"
               >
                 Update Admin
               </button>
@@ -343,7 +95,7 @@
               ng-disabled="!brand.isActive"
               ng-click="deactivateBrand(brand._id)"
               type="button"
-              class="btn btn-secondary"
+              class="btn btn-warning"
             >
               Deactivate
             </button>
@@ -353,7 +105,7 @@
               ng-disabled="brand.isActive"
               ng-click="activateBrand(brand._id)"
               type="button"
-              class="btn btn-secondary"
+              class="btn btn-success"
             >
               Activate
             </button>
@@ -362,7 +114,7 @@
             <button
               type="button"
               ng-click="deleteBrand(brand._id)"
-              class="btn btn-secondary"
+              class="btn btn-danger"
             >
               Delete
             </button>
@@ -489,15 +241,21 @@
               <input
                 type="text"
                 name="brandName"
-                ng-required="true"
+                required
                 ng-minlength="3"
                 ng-model="object.brand.name"
                 class="form-control"
                 id="brandName"
               />
               <span
+                style="color: red"
                 ng-show="BrandData.brandName.$dirty && BrandData.brandName.$error.minlength"
                 >Minimum 3 characters required</span
+              >
+              <span
+                style="color: red"
+                ng-show="BrandData.brandName.$dirty && BrandData.brandName.$error.required"
+                >Please fill this field</span
               >
             </div>
             <div class="form-group">
@@ -511,10 +269,12 @@
                 class="form-control"
               />
               <span
+                style="color: red"
                 ng-show="BrandData.email.$dirty && !BrandData.email.$error.required && BrandData.email.$invalid"
                 >Please enter correct email</span
               >
               <span
+                style="color: red"
                 ng-show="BrandData.email.$dirty && BrandData.email.$error.required"
                 >Please fill this field</span
               >
@@ -530,10 +290,12 @@
                 class="form-control"
               />
               <span
+                style="color: red"
                 ng-show="BrandData.number.$dirty && BrandData.number.$invalid"
                 >please enter correct number</span
               >
               <span
+                style="color: red"
                 ng-show="BrandData.number.$dirty && BrandData.number.$error.required"
                 >Please fill this field</span
               >
@@ -550,6 +312,7 @@
                 class="form-control"
               />
               <span
+                style="color: red"
                 ng-show="BrandData.description.$dirty && BrandData.description.$error.required"
                 >Please fill this field</span
               >
@@ -564,6 +327,7 @@
                 class="form-control"
               />
               <span
+                style="color: red"
                 ng-show="BrandData.address.$dirty && BrandData.address.$error.required"
                 >Please fill this field</span
               >
@@ -579,7 +343,13 @@
                 class="form-control"
               />
               <span
+                style="color: red"
                 ng-show="BrandData.city.$dirty && BrandData.city.$error.minlength"
+                >Minimum 3 characters required</span
+              >
+              <span
+                style="color: red"
+                ng-show="BrandData.city.$dirty && BrandData.city.$error.required"
                 >Please fill this field</span
               >
             </div>
@@ -595,10 +365,12 @@
                 class="form-control"
               />
               <span
+                style="color: red"
                 ng-show="BrandData.pinCode.$dirty && BrandData.pinCode.$error.minlength "
                 >6 characters required</span
               >
               <span
+                style="color: red"
                 ng-show="BrandData.pinCode.$dirty && BrandData.pinCode.$error.maxlength"
                 >6 characters required</span
               >
@@ -609,14 +381,14 @@
                 type="file"
                 name="logo"
                 ng-required="true"
-                ng-minlength="3"
                 file-model="object.brand.logo"
                 class="form-control"
                 id="logo"
               />
               <span
-                ng-show="BrandData.logo.$dirty && BrandData.logo.$error.minlength"
-                >Minimum 3 characters required</span
+                style="color: red"
+                ng-show="BrandData.logo.$dirty && BrandData.logo.$error.required"
+                >please upload file</span
               >
             </div>
 
@@ -639,6 +411,251 @@
             </div>
           </form>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Enter Admin Details</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form name="adminData" novalidate>
+          <div class="form-group">
+            <label for="userName" class="col-form-label">UserName :</label>
+            <input
+              type="text"
+              name="userName"
+              ng-required="true"
+              ng-minlength="3"
+              ng-model="object.admin.userName"
+              class="form-control"
+            />
+            <span
+              style="color: red"
+              ng-show="adminData.userName.$dirty && adminData.userName.$error.minlength"
+              >Minimum 3 characters required</span
+            >
+            <span
+              style="color: red"
+              ng-show="adminData.userName.$dirty && adminData.userName.$error.required"
+              >Please fill this field</span
+            >
+          </div>
+          <div class="form-group">
+            <label for="firstName" class="col-form-label">FirstName :</label>
+            <input
+              type="text"
+              name="firstName"
+              ng-required="true"
+              ng-minlength="3"
+              ng-model="object.admin.firstName"
+              class="form-control"
+            />
+            <span
+              style="color: red"
+              ng-show="adminData.firstName.$dirty && adminData.firstName.$error.minlength"
+              >Minimum 3 characters required</span
+            >
+            <span
+              style="color: red"
+              ng-show="adminData.firstName.$dirty && adminData.firstName.$error.required"
+              >Please fill this field</span
+            >
+          </div>
+          <div class="form-group">
+            <label for="lastName" class="col-form-label">LastName :</label>
+            <input
+              type="text"
+              name="lastName"
+              ng-minlength="0"
+              ng-model="object.admin.lastName"
+              class="form-control"
+            />
+            <span
+              style="color: red"
+              ng-show="adminData.lastName.$dirty && adminData.lastName.$error.minlength"
+              >Minimum 3 characters required</span
+            >
+          </div>
+          <div class="form-group">
+            <label for="email" class="col-form-label">Email :</label>
+            <input
+              type="email"
+              name="email"
+              ng-required="true"
+              ng-pattern="/^([a-z A-Z 0-9\.-]+)@([0-9 a-z A-Z -]+).([a-z]{2,8})(.[a-z{2,4}])?$/"
+              ng-model="object.admin.email"
+              class="form-control"
+            />
+            <span
+              style="color: red"
+              ng-show="adminData.email.$dirty && !adminData.email.$error.required && adminData.email.$invalid"
+              >Please enter correct email</span
+            >
+            <span
+              style="color: red"
+              ng-show="adminData.email.$dirty && adminData.email.$error.required"
+              >Please fill this field</span
+            >
+          </div>
+          <div class="form-group">
+            <label for="number" class="col-form-label">Phone Number :</label>
+            <input
+              type="number"
+              name="number"
+              ng-required="true"
+              ng-pattern="/^\d{10}$/"
+              ng-model="object.admin.number"
+              class="form-control"
+            />
+            <span
+              style="color: red"
+              ng-show="adminData.number.$dirty && adminData.number.$invalid"
+              >please enter correct number</span
+            >
+            <span
+              style="color: red"
+              ng-show="adminData.number.$dirty && adminData.number.$error.required"
+              >Please fill this field</span
+            >
+          </div>
+          <div class="form-group">
+            <label for="address" class="col-form-label">Address :</label>
+            <input
+              type="text"
+              name="address"
+              ng-required="true"
+              ng-model="object.admin.address"
+              class="form-control"
+            />
+            <span
+              style="color: red"
+              ng-show="adminData.address.$dirty && adminData.address.$error.required"
+              >Please fill this field</span
+            >
+          </div>
+          <div class="form-group">
+            <label for="city" class="col-form-label">City :</label>
+            <input
+              type="text"
+              name="city"
+              ng-required="true"
+              ng-minlength="3"
+              ng-model="object.admin.city"
+              class="form-control"
+            />
+            <span
+              style="color: red"
+              ng-show="adminData.city.$dirty && adminData.city.$error.required"
+              >Please fill this field</span
+            >
+          </div>
+          <div class="form-group">
+            <label for="pinCode" class="col-form-label">Pin Code :</label>
+            <input
+              type="number"
+              name="pinCode"
+              ng-required="true"
+              ng-minlength="6"
+              ng-maxlength="6"
+              ng-model="object.admin.pinCode"
+              class="form-control"
+            />
+            <span
+              style="color: red"
+              ng-show="adminData.pinCode.$dirty && adminData.pinCode.$error.minlength "
+              >6 characters required</span
+            >
+            <span
+              style="color: red"
+              ng-show="adminData.pinCode.$dirty && adminData.pinCode.$error.maxlength"
+              >6 characters required</span
+            >
+          </div>
+          <div class="form-group">
+            <label for="password" class="col-form-label">Password :</label>
+            <input
+              type="password"
+              name="password"
+              ng-required="true"
+              ng-minlength="5"
+              ng-maxlength="8"
+              ng-model="object.admin.password"
+              class="form-control"
+            />
+            <span
+              style="color: red"
+              ng-show="adminData.password.$dirty && (adminData.password.$error.minlength || adminData.password.$error.maxlength)"
+              >Minimum 5-8 characters required</span
+            >
+            <span
+              style="color: red"
+              ng-show="adminData.password.$dirty && adminData.password.$error.required"
+              >Please fill this field</span
+            >
+          </div>
+          <div class="form-group">
+            <label for="cpassword" class="col-form-label"
+              >Confirm Password :</label
+            >
+            <input
+              type="password"
+              ng-disabled="!object.admin.password"
+              name="cpassword"
+              ng-required="true"
+              ng-minlength="5"
+              ng-maxlength="8"
+              ng-model="object.admin.cpassword"
+              class="form-control"
+            />
+            <span
+              style="color: red"
+              ng-show="adminData.cpassword.$dirty && adminData.cpassword.$error.required"
+              >Please fill this field</span
+            >
+            <span
+              style="color: red"
+              ng-show="adminData.cpassword.$dirty && !(adminData.cpassword.$error.required) && object.admin.password && object.admin.password!=object.admin.cpassword"
+              >confirm password is not matching password</span
+            >
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="submit"
+              ng-disabled="adminData.$invalid"
+              ng-click="createBrandAdmin($event)"
+              class="btn btn-secondary"
+            >
+              {{object.btnText1}}
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

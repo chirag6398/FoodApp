@@ -94,7 +94,6 @@ outletAdminRoute.put(
 outletAdminRoute.put(
   "/api/outlet/togleOutlet",
   passport.authenticate("jwt", { session: false }),
-  middleware,
   outletAdminController.togleOutlet
 );
 outletAdminRoute.post(
