@@ -5,6 +5,7 @@ app.service(
   function (brandApi, $stateParams, $timeout, brandAdminDashBoardApi) {
     var obj = {};
     var timeout1 = null;
+    var timeout2 = null;
     obj.debouncing = function (searchUser, id, cb) {
       if (timeout1) {
         $timeout.cancel(timeout1);
@@ -13,6 +14,31 @@ app.service(
         if (searchUser) brandApi.searchUserBySearchText(searchUser, id, cb);
       }, 800);
     };
+
+    obj.outletDebouncing = function (object, cb) {
+      if (timeout2) {
+        $timeout.cancel(timeout2);
+      }
+      timeout2 = $timeout(function () {
+        brandApi.searchOutletBySearchText(
+          object.searchOutlet,
+          object.brand._id,
+          cb
+        );
+      }, 800);
+    };
+
+    obj.getOutlets = function (filter, limit, page, cb) {
+      adminApi.getOutlets(filter, limit, page, cb);
+    };
+
+    obj.getPages = function (totalCount, limit) {
+      var totalPage = Math.ceil(totalCount / limit);
+      var pages = new Array(totalPage).fill(0);
+
+      return pages;
+    };
+
     obj.addSuperCategory = function (superCategory, brand, cb) {
       var formData = new FormData();
       formData.append("name", superCategory.name);

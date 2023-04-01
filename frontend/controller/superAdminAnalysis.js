@@ -15,9 +15,9 @@ app.controller("superAdminAnalysisController", [
         console.log(result);
         $scope.object = result;
 
-        if ($scope.object.chart4) {
-          $scope.object.chart4.destroy();
-        }
+        // if ($scope.object.chart4) {
+        //   $scope.object.chart4.destroy();
+        // }
 
         $scope.object.chart4 = superAdminService.displayTypeGraph(
           $scope.object.outletsRanking.names,
@@ -89,9 +89,9 @@ app.controller("superAdminAnalysisController", [
             $scope.object.graphData = superAdminService.createGraphData(
               result.data
             );
-            if ($scope.object.chart2) {
-              $scope.object.chart2.destroy();
-            }
+            // if ($scope.object.chart2) {
+            //   $scope.object.chart2.destroy();
+            // }
 
             $scope.object.brandDates = $scope.object.graphData.dates;
             $scope.object.brandRevenue = $scope.object.graphData.revenue;
@@ -123,9 +123,9 @@ app.controller("superAdminAnalysisController", [
             $scope.object.outletDates = $scope.object.graphData.dates;
             $scope.object.outletRevenue = $scope.object.graphData.revenue;
 
-            if ($scope.object.chart3) {
-              $scope.object.chart3.destroy();
-            }
+            // if ($scope.object.chart3) {
+            //   $scope.object.chart3.destroy();
+            // }
 
             $scope.object.chart3 = superAdminService.displayGraph(
               $scope.object.outletDates,
@@ -165,9 +165,9 @@ app.controller("superAdminAnalysisController", [
               $scope.object.graphData.revenue;
             $scope.object.topSecondBrandName = result.data[3][0].name;
 
-            if ($scope.object.chart1) {
-              $scope.object.chart1.destroy();
-            }
+            // if ($scope.object.chart1) {
+            //   $scope.object.chart1.destroy();
+            // }
             $scope.object.chart1 = superAdminService.compareGraph(
               $scope.object.dates,
               $scope.object.revenue,
@@ -192,9 +192,9 @@ app.controller("superAdminAnalysisController", [
               $scope.object.graphData.revenue;
             $scope.object.topSecondBrandName = "None";
 
-            if ($scope.object.chart1) {
-              $scope.object.chart1.destroy();
-            }
+            // if ($scope.object.chart1) {
+            //   $scope.object.chart1.destroy();
+            // }
             $scope.object.chart1 = superAdminService.compareGraph(
               $scope.object.dates,
               $scope.object.revenue,

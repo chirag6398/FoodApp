@@ -104,6 +104,7 @@ app.controller("brandAdminUsersController", [
               $scope.object.totalCount,
               $scope.object.limit
             );
+            $scope.object.selectedUser = null;
           } else {
             toastNotifications.error("something is wrong");
           }

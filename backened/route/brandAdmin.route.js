@@ -28,12 +28,21 @@ brandAdminRoute.get(
   middleware,
   brandAdminController.getBrandAdminPage
 );
+
 brandAdminRoute.get(
-  "/api/brandAdmin/getOutlets/:id",
+  "/api/brandAdmin/getOutlets",
   passport.authenticate("jwt", { session: false }),
   middleware,
   brandAdminController.getOutlets
 );
+
+brandAdminRoute.get(
+  "/api/brandAdmin/searchOutletBySearchText",
+  passport.authenticate("jwt", { session: false }),
+  middleware,
+  brandAdminController.searchOutletBySearchText
+);
+
 brandAdminRoute.post(
   "/api/brandAdmin/getCategory",
   passport.authenticate("jwt", { session: false }),

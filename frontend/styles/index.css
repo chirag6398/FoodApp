@@ -27,7 +27,7 @@ td{
   position: absolute;
     z-index: 1;
     min-width: 327px;
-    height: 369px;
+    max-height: 369px;
     border: 1px solid lightgray;
     border-radius: 3px;
     overflow-y: scroll;

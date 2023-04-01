@@ -2,6 +2,11 @@
 
 app.factory("brandApi", function ($http, $rootScope, setAdminData) {
   var obj = {};
+  var config = {
+    headers: {
+      Authorization: window.localStorage.getItem("Authorization"),
+    },
+  };
 
   obj.searchUserBySearchText = function (searchText, id, cb) {
     $http
@@ -15,17 +20,13 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
   obj.getBrandAdminPage = function () {
     $http
-      .get("http://localhost:5000/api/brandAdmin/getBrandAdminPage", {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .get("http://localhost:5000/api/brandAdmin/getBrandAdminPage", config)
       .then(function (response) {
         $rootScope.$emit("passData", response);
         setAdminData.setAdminData(response);
@@ -40,16 +41,12 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
   };
   obj.getOutlet = function (data, cb) {
     $http
-      .get("http://localhost:5000/api/brandAdmin/getOutlet/" + data._id, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .get("http://localhost:5000/api/brandAdmin/getOutlet/" + data._id, config)
       .then(function (response) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb({ status: 401, message: "unauthorized user" }, null);
+        cb(err.data, null);
       });
   };
 
@@ -62,33 +59,51 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
     };
 
     $http
-      .post("http://localhost:5000/api/brandAdmin/createOutlet", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .post("http://localhost:5000/api/brandAdmin/createOutlet", data, config)
       .then(function (response) {
         cb(null, response);
-      }),
-      function (err) {
-        cb(err, null);
-      };
+      })
+      .catch(function (err) {
+        cb(err.data, null);
+      });
   };
 
-  obj.getOutletsByBrandId = function (id, cb) {
+  obj.getOutletsByBrandId = function (id, limit, page, cb) {
     console.log(id);
     $http
-      .get("http://localhost:5000/api/brandAdmin/getOutlets/" + id, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .get(
+        "http://localhost:5000/api/brandAdmin/getOutlets?id=" +
+          id +
+          "&limit=" +
+          limit +
+          "&page=" +
+          page,
+        config
+      )
       .then(function (response) {
         console.log(response);
         cb(null, response.data);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
+      });
+  };
+
+  obj.searchOutletBySearchText = function (text, id, cb) {
+    $http
+      .get(
+        "http://localhost:5000/api/brandAdmin/searchOutletBySearchText?id=" +
+          id +
+          "&text=" +
+          text,
+        config
+      )
+      .then(function (response) {
+        console.log(response);
+        cb(null, response.data);
+      })
+      .catch(function (err) {
+        cb(err.data, null);
       });
   };
 
@@ -113,31 +128,27 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
     };
     console.log(data);
     $http
-      .post("http://localhost:5000/api/brandAdmin/createOutletAdmin", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .post(
+        "http://localhost:5000/api/brandAdmin/createOutletAdmin",
+        data,
+        config
+      )
       .then(function (response) {
         cb(null, response);
       }),
       function (err) {
-        cb(err, null);
+        cb(err.data, null);
       };
   };
 
   obj.updateOutletData = function (data, cb) {
     $http
-      .put("http://localhost:5000/api/outlet/updateOutletData", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .put("http://localhost:5000/api/outlet/updateOutletData", data, config)
       .then(function (response) {
         cb(response, null);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
@@ -151,7 +162,7 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
         cb(null, response);
       }),
       function (err) {
-        cb(err, null);
+        cb(err.data, null);
       };
   };
 
@@ -165,23 +176,22 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
   obj.getSuperCategoryByBrandId = function (brandId, cb) {
     console.log(brandId);
     $http
-      .get("http://localhost:5000/api/brandAdmin/getSuperCategory/" + brandId, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .get(
+        "http://localhost:5000/api/brandAdmin/getSuperCategory/" + brandId,
+        config
+      )
       .then(function (response) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
@@ -191,16 +201,12 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
       superCategoryId,
     };
     $http
-      .post("http://localhost:5000/api/brandAdmin/getCategory/", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .post("http://localhost:5000/api/brandAdmin/getCategory/", data, config)
       .then(function (response) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
@@ -214,22 +220,18 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
         cb(null, response);
       }),
       function (err) {
-        cb(err, null);
+        cb(err.data, null);
       };
   };
 
   obj.getProductsInBrand = function (data, cb) {
     $http
-      .post("http://localhost:5000/api/product/getProducts", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .post("http://localhost:5000/api/product/getProducts", data, config)
       .then(function (response) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
@@ -258,23 +260,19 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
         cb(null, response);
       }),
       function (err) {
-        cb(err, null);
+        cb(err.data, null);
       };
   };
 
   obj.getSuperCategory = function (id, cb) {
     console.log(id);
     $http
-      .get("http://localhost:5000/api/product/getSuperCategory/" + id, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .get("http://localhost:5000/api/product/getSuperCategory/" + id, config)
       .then(function (response) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
@@ -296,61 +294,53 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
   obj.updateOutletName = function (data, cb) {
     console.log(data);
     $http
-      .post("http://localhost:5000/api/brandAdmin/updateOutletName", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .post(
+        "http://localhost:5000/api/brandAdmin/updateOutletName",
+        data,
+        config
+      )
       .then(function (response) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
   obj.updateLocation = function (data, cb) {
     $http
-      .post("http://localhost:5000/api/brandAdmin/updateLocation", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .post("http://localhost:5000/api/brandAdmin/updateLocation", data, config)
       .then(function (response) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
   obj.updateContactInfo = function (data, cb) {
     $http
-      .post("http://localhost:5000/api/brandAdmin/updateContactInfo", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .post(
+        "http://localhost:5000/api/brandAdmin/updateContactInfo",
+        data,
+        config
+      )
       .then(function (response) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
   obj.getAdmin = function (id, cb) {
     $http
-      .get("http://localhost:5000/api/brandAdmin/getAdmin/" + id, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .get("http://localhost:5000/api/brandAdmin/getAdmin/" + id, config)
       .then(function (response) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
@@ -361,11 +351,7 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
     };
     // console.log(data);
     $http
-      .put("http://localhost:5000/api/employee/updateUser", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .put("http://localhost:5000/api/employee/updateUser", data, config)
       .then(function (response) {
         cb(response);
       })
@@ -378,16 +364,12 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
       id: id,
     };
     $http
-      .put("http://localhost:5000/api/employee/updatePassword", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .put("http://localhost:5000/api/employee/updatePassword", data, config)
       .then(function (response) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 
@@ -406,7 +388,7 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
         cb(null, response);
       }),
       function (err) {
-        cb(err, null);
+        cb(err.data, null);
       };
   };
 
@@ -425,7 +407,7 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
         cb(null, response);
       }),
       function (err) {
-        cb(err, null);
+        cb(err.data, null);
       };
   };
 
@@ -440,7 +422,7 @@ app.factory("brandApi", function ($http, $rootScope, setAdminData) {
           cb(null, response.data);
         },
         function (error) {
-          cb(err, null);
+          cb(err.data, null);
         }
       );
   };

@@ -9,20 +9,16 @@ var awsService = require("../service/awsS3.service");
 
 module.exports = {
   getBrandAdminPage: function (req, res) {
-    if (req.user.userType == "brandAdmin") {
-      brandModel
-        .findById({ _id: req.user.brand._id })
-        .then(function (result) {
-          return res.status(200).send({ data: result, status: 200 });
-        })
-        .catch(function (err) {
-          return res
-            .status(500)
-            .send({ error: "internal server error", status: 500 });
-        });
-    } else {
-      return res.status(401).send({ message: "unauthorized", status: 401 });
-    }
+    brandModel
+      .findById({ _id: req.user.brand._id })
+      .then(function (result) {
+        return res.status(200).send({ data: result, status: 200 });
+      })
+      .catch(function (err) {
+        return res
+          .status(500)
+          .send({ message: "internal server error", status: 500 });
+      });
   },
 
   createOutlet: function (req, res) {
@@ -50,18 +46,33 @@ module.exports = {
         console.log("fenfi", err.errors["email"].message, err);
         return res
           .status(400)
-          .send({ message: "please enter valid and unique data", status: 400 });
+          .send({ message: "please enter valid and unique data" });
       });
   },
 
   getOutlets: function (req, res) {
-    console.log(req.params);
+    var query = req.query;
+    var limit = query.limit || 5;
+    var page = query.page || 1;
+    var skip = (page - 1) * limit;
+    var filter = { "brand._id": query.id, isDeleted: false, isActive: true };
 
     outletModel
-      .find({ "brand._id": req.params.id })
+      .find(filter)
+      .skip(skip)
+      .limit(limit)
       .then(function (result) {
         console.log(result);
-        return res.status(200).send({ data: result, status: 200 });
+        outletModel.countDocuments(filter, function (err, count) {
+          if (count) {
+            return res.send({ data: result, count });
+          } else {
+            return res
+              .status(500)
+              .send({ message: "please try later", status: 500 });
+          }
+        });
+        // return res.status(200).send({ data: result, status: 200 });
       })
       .catch(function (err) {
         console.log(err);
@@ -118,17 +129,17 @@ module.exports = {
               // console.log(err);
               return res
                 .status(500)
-                .send({ error: "internal server error", status: 500 });
+                .send({ message: "internal server error", status: 500 });
             });
         })
         .catch(function (err) {
           // console.log(err);
           return res
             .status(500)
-            .send({ error: "internal server error", status: 500 });
+            .send({ message: "internal server error", status: 500 });
         });
     } else {
-      return res.status(404).send({ error: "data not found", status: 404 });
+      return res.status(400).send({ message: "data not found", status: 400 });
     }
   },
 
@@ -159,15 +170,17 @@ module.exports = {
               console.log(err);
               return res
                 .status(500)
-                .send({ error: "internal server error", status: 500 });
+                .send({ message: "internal server error", status: 500 });
             });
         })
         .catch(function (err) {
           console.log(err);
-          return res.status(500).send({ error: err, status: 500 });
+          return res
+            .status(500)
+            .send({ message: "internal server error", status: 500 });
         });
     } else {
-      return res.status(404).send({ err: "file not found" });
+      return res.status(400).send({ message: "file not found" });
     }
   },
 
@@ -184,7 +197,9 @@ module.exports = {
         return res.status(200).send(result);
       })
       .catch(function (err) {
-        return res.status(500).send({ error: err, status: 500 });
+        return res
+          .status(500)
+          .send({ message: "internal server error", status: 500 });
       });
   },
 
@@ -207,15 +222,19 @@ module.exports = {
             })
             .catch(function (err) {
               console.log(err);
-              return res.status(401).send({ error: err });
+              return res
+                .status(400)
+                .send({ message: "please enter valid and correct data" });
             });
         })
         .catch(function (err) {
           console.log(err);
-          return res.status(500).send({ error: err, status: 500 });
+          return res
+            .status(500)
+            .send({ message: "internal server error", status: 500 });
         });
     } else {
-      return res.status(404).send({ err: "file not found" });
+      return res.status(400).send({ message: "file not found" });
     }
   },
 
@@ -228,7 +247,7 @@ module.exports = {
       })
       .catch(function (err) {
         console.log(err);
-        return res.status(500).send({ error: err });
+        return res.status(500).send({ message: "internal server error" });
       });
     //send super category
   },
@@ -270,7 +289,7 @@ module.exports = {
       })
       .catch(function (err) {
         console.log(err);
-        return res.status(500).send({ error: err });
+        return res.status(500).send({ message: "internal server error" });
       });
   },
 
@@ -313,12 +332,16 @@ module.exports = {
               return res.send(result);
             })
             .catch(function (err) {
-              return res.status(401).send({ error: err });
+              return res
+                .status(400)
+                .send({ message: "please enter valid and correct data" });
             });
         })
         .catch(function (err) {
           console.log(err);
-          return res.status(500).send({ error: err, status: 500 });
+          return res
+            .status(500)
+            .send({ message: "internal server error", status: 500 });
         });
     } else {
       var data1 = superCategoryModel.findByIdAndUpdate(
@@ -349,7 +372,9 @@ module.exports = {
         })
         .catch(function (err) {
           console.log(err);
-          return res.status(401).send({ error: err });
+          return res
+            .status(400)
+            .send({ message: "please enter valid and correct data" });
         });
     }
   },
@@ -393,12 +418,16 @@ module.exports = {
             })
             .catch(function (err) {
               console.log(err);
-              return res.status(401).send({ error: err });
+              return res
+                .status(400)
+                .send({ message: "please enter valid and correct data" });
             });
         })
         .catch(function (err) {
           console.log(err);
-          return res.status(500).send({ error: err, status: 500 });
+          return res
+            .status(500)
+            .send({ message: "internal server error", status: 500 });
         });
     } else {
       var data1 = categoryModel.findByIdAndUpdate(
@@ -430,7 +459,9 @@ module.exports = {
         })
         .catch(function (err) {
           console.log(err);
-          return res.status(401).send({ error: err });
+          return res
+            .status(400)
+            .send({ message: "please enter valid and correct data" });
         });
     }
   },
@@ -442,7 +473,7 @@ module.exports = {
       })
       .catch(function (err) {
         console.log(err);
-        return res.status(500).send(err);
+        return res.status(500).send({ message: "internal server error" });
       });
   },
   updateOutletName: function (req, res) {
@@ -493,7 +524,7 @@ module.exports = {
       })
       .catch(function (err) {
         console.log(err);
-        return res.status(404).send(err);
+        return res.status(500).send({ message: "internal server error" });
       });
   },
   updateContactInfo: function (req, res) {
@@ -507,7 +538,7 @@ module.exports = {
       })
       .catch(function (err) {
         console.log(err);
-        return res.status(404).send(err);
+        return res.status(500).send({ message: "internal server error" });
       });
   },
   getAdmin: function (req, res) {
@@ -528,7 +559,19 @@ module.exports = {
         return res.send(result);
       })
       .catch(function (err) {
-        return res.status(404).send(err);
+        return res.status(500).send({ message: "internal server error" });
+      });
+  },
+  searchOutletBySearchText: function (req, res) {
+    var regex = new RegExp(req.query.text, "i");
+    outletModel
+      .find({ "brand._id": req.query.id, name: { $regex: regex } })
+      .then(function (result) {
+        console.log(result);
+        return res.send(result);
+      })
+      .catch(function (err) {
+        return res.status(500).send({ message: "internal server error" });
       });
   },
 };

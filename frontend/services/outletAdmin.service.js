@@ -11,6 +11,64 @@ app.service(
       $anchorScroll();
     };
 
+    obj.getPages = function (totalCount, limit) {
+      var totalPage = Math.ceil(totalCount / limit);
+      var pages = new Array(totalPage).fill(0);
+
+      return pages;
+    };
+
+    obj.getUsers = function (data, cb) {
+      var outlet = data.data.outletData;
+      var brand = data.data.outletData.brand;
+      var users = [];
+      var filter = {
+        email: "",
+        userType: "",
+        number: "",
+      };
+      var limit = 5;
+      var page = 1;
+      var pages = null;
+      var totalCount = 0;
+      var totalPage = 1;
+      var one = 1;
+      var searchUser = "";
+      var searchTextResult = [];
+      outletApi.getUsers(
+        outlet._id,
+        limit,
+        page,
+        filter,
+        function (err, result) {
+          if (result) {
+            console.log(result);
+            users = result.data.data;
+            totalCount = result.data.count;
+            totalPage = Math.ceil(totalCount / limit);
+            pages = obj.getPages(totalCount, limit);
+
+            cb(null, {
+              users,
+              brand,
+              outlet,
+              limit,
+              page,
+              one,
+              searchTextResult,
+              searchUser,
+              pages,
+              totalCount,
+              totalPage,
+              filter,
+            });
+          } else {
+            cb(err, null);
+          }
+        }
+      );
+    };
+
     obj.displayGraph = function (dates, revenue, name, ctx, chart) {
       chart = new Chart(ctx, {
         type: "line",
@@ -171,13 +229,16 @@ app.service(
       var myChart1 = null;
 
       outletAdminDashBoardApi.getBasicData(outlet._id, function (err, result) {
+        var totalRevenue = 0;
+        var totalProduct = 0;
+        var totalEmployees = 0;
         if (result) {
           console.log(result);
           var data = result.data;
 
-          var totalProduct = data[0][0].productCount;
-          var totalEmployees = data[1][0].employeeCount;
-          var totalRevenue = data[2][0].totalRevenue;
+          totalProduct = data[0][0].productCount;
+          totalEmployees = data[1][0].employeeCount;
+          if (data[2].length) totalRevenue = data[2][0].totalRevenue;
           var topTenCategories = data[3];
           var topTenProducts = data[4];
           var ordersAnalysis = obj.getOrderAnalysis(data[7]);

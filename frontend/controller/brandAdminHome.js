@@ -24,6 +24,12 @@ app.controller("brandAdminHomeController", [
       admin: {},
       updateOutletData: {},
       outlet: {},
+      limit: 5,
+      page: 1,
+      totalPage: 0,
+      one: 1,
+      searchOutlet: "",
+      searchTextResult: [],
     };
     brandApi.getBrandAdminPage();
 
@@ -33,9 +39,19 @@ app.controller("brandAdminHomeController", [
 
         brandApi.getOutletsByBrandId(
           $scope.object.brand._id,
+          $scope.object.limit,
+          $scope.object.page,
           function (err, result) {
+            console.log(result);
             if (result) {
               $scope.object.outlets = result.data;
+              $scope.object.totalPage = Math.ceil(
+                result.count / $scope.object.limit
+              );
+              $scope.object.pages = brandAdminService.getPages(
+                result.count,
+                $scope.object.limit
+              );
             } else {
               toastNotifications.error(
                 "please visite later some issue has occured"
@@ -46,6 +62,24 @@ app.controller("brandAdminHomeController", [
       }
     });
 
+    $scope.searchTextHandler = function () {
+      brandAdminService.outletDebouncing($scope.object, function (err, result) {
+        // console.log(result);
+        if (result) {
+          $scope.object.searchTextResult = result;
+          if ($scope.object.searchTextResult.length == 0)
+            $scope.object.searchTextResult = [{ name: "Not found" }];
+        } else {
+          $scope.object.searchTextResult = [];
+        }
+      });
+    };
+
+    $scope.setSearchResult = function (res) {
+      $scope.object.outlets = [res];
+      $scope.object.selectedOutlet = res;
+      $scope.object.searchTextResult = [];
+    };
     $scope.createOutlet = function ($event) {
       $event.preventDefault();
       console.log($scope.object.outlet);
@@ -61,9 +95,7 @@ app.controller("brandAdminHomeController", [
             toastNotifications.success("outlet created successfully");
           } else {
             console.log(err);
-            toastNotifications.error(
-              "something went wrong please check all field have correct value"
-            );
+            toastNotifications.error(err.message);
           }
         }
       );
@@ -153,6 +185,33 @@ app.controller("brandAdminHomeController", [
           toastNotifications.error("failed try later");
         }
       });
+    };
+
+    $scope.getOutletHandler = function (page, limit) {
+      $scope.object.isLoading = true;
+      brandApi.getOutletsByBrandId(
+        $scope.object.brand._id,
+        limit,
+        page,
+        function (err, result) {
+          console.log(result);
+          if (result) {
+            $scope.object.outlets = result.data;
+            $scope.object.totalPage = Math.ceil(
+              result.count / $scope.object.limit
+            );
+            $scope.object.pages = brandAdminService.getPages(
+              result.count,
+              $scope.object.limit
+            );
+            $scope.object.page = page;
+          } else {
+            toastNotifications.error(
+              "please visite later some issue has occured"
+            );
+          }
+        }
+      );
     };
   },
 ]);

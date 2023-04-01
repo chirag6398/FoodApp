@@ -384,4 +384,39 @@ module.exports = {
         return res.status(500).send(err);
       });
   },
+  getUsers: function (req, res) {
+    var query = req.query;
+    var limit = query.limit;
+    var page = query.page;
+    var skip = (page - 1) * limit;
+    var filter = {
+      isDeleted: false,
+      isActive: true,
+      "outlet._id": query.id,
+    };
+    if (query.email) {
+      filter["email"] = query.email;
+    }
+
+    if (query.userType) {
+      filter["userType"] = query.userType;
+    }
+    if (query.number && query.number !== "null") {
+      filter["number"] = +query.number;
+    }
+
+    return employeeModel
+      .find(filter, { password: 0, createdAt: 0, updatedAt: 0 })
+      .skip(skip)
+      .limit(limit)
+      .then(function (result) {
+        employeeModel.countDocuments(filter, function (err, count) {
+          console.log(result, filter);
+          return res.send({ data: result, count });
+        });
+      })
+      .catch(function (err) {
+        return res.status(500).send(err);
+      });
+  },
 };

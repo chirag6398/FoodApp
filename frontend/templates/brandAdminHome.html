@@ -6,6 +6,35 @@
     justify-content: center;
   "
 >
+  <div style="margin-bottom: 15px; width: 100%">
+    <div class="mt-3 inputs">
+      <i class="fa fa-search"></i>
+      <input
+        type="text"
+        ng-model="object.searchOutlet"
+        ng-change="searchTextHandler()"
+        class="form-control1 form-control"
+        placeholder="Search outlet by name"
+      />
+    </div>
+    <div class="searchResult" ng-if="object.searchTextResult.length!==0">
+      <!-- {{object.searchTextResult}} -->
+      <div class="list-group">
+        <a
+          style="cursor: pointer; background: #ededed"
+          ng-repeat="res in object.searchTextResult"
+          class="list-group-item list-group-item-action"
+          ng-click="setSearchResult(res)"
+        >
+          <div style="display: flex; align-items: center; gap: 20px">
+            <div>
+              <span>{{res.name}}</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
   <div style="width: 100%" ng-if="object.outlets.length" class="spr__rightSide">
     <table class="table table-bordered table-hover">
       <thead>
@@ -481,7 +510,54 @@
         </tr>
       </tbody>
     </table>
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      "
+      ng-if="!object.selectedOutlet"
+    >
+      <nav
+        style="display: flex; align-items: center; justify-content: center"
+        aria-label="Page navigation example"
+      >
+        <ul
+          style="display: flex; gap: 4px"
+          class="pagination justify-content-end"
+        >
+          <button
+            class="page-item btn"
+            ng-click="getOutletHandler(object.page-1,object.limit)"
+            ng-disabled="object.page===object.one"
+            ng-class="{'disabled':object.page===1}"
+          >
+            <a class="page-link">Previous</a>
+          </button>
+          <button
+            class="page-item btn"
+            ng-click="getOutletHandler($index+1,object.limit)"
+            ng-disabled="$index+1===object.page"
+            ng-class="{'disabled':$index+1===object.page}"
+            ng-repeat="page in object.pages track by $index"
+          >
+            <a class="page-link">{{$index+1}}</a>
+          </button>
+
+          <button
+            ng-click="getOutletHandler(object.page+1,object.limit)"
+            ng-disabled="object.page===object.totalPage"
+            ng-class="{'disabled':object.page===object.totalPage}"
+            class="page-item btn"
+          >
+            <a class="page-link">Next</a>
+          </button>
+        </ul>
+      </nav>
+    </div>
   </div>
+
   <div class="spr__rightSide" ng-if="!object.outlets">
     <span>loading...</span>
   </div>
