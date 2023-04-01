@@ -19,7 +19,7 @@ app.controller("outletAdminDashboardController", [
 
     $timeout(function () {
       // console.log($scope.object.myChart1);
-      if ($scope.object.myChart1 === undefined) {
+      if ($scope.object.myChart1) {
         outletApi.getOutletAdminPage();
       }
     }, 1300);
@@ -45,8 +45,7 @@ app.controller("outletAdminDashboardController", [
                 $scope.object.outletDates,
                 $scope.object.outletRevenue,
                 $scope.object.outlet.name,
-                document.getElementById("myChart").getContext("2d"),
-                $scope.object.myChart1
+                document.getElementById("myChart")
               );
             }
           }
@@ -59,6 +58,7 @@ app.controller("outletAdminDashboardController", [
 
       outletAdminDashBoardApi.getOrderActivity(
         month,
+        $scope.object.currentYear2,
         $scope.object.outlet._id,
         function (err, result) {
           // console.log(err, result);
@@ -78,8 +78,10 @@ app.controller("outletAdminDashboardController", [
 
     $scope.getGraphData = function (month) {
       $scope.object.month1 = month;
+      // console.log($scope.object.curre)
       outletAdminDashBoardApi.getGraphData(
         month,
+        $scope.object.currentYear1,
         $scope.object.outlet._id,
         function (err, result) {
           if (result) {
@@ -90,7 +92,7 @@ app.controller("outletAdminDashboardController", [
 
             $scope.object.outletDates = $scope.object.activity.dates;
             $scope.object.outletRevenue = $scope.object.activity.activity;
-
+            console.log($scope.object.myChart1);
             if ($scope.object.myChart1) {
               $scope.object.myChart1.destroy();
             }
@@ -99,12 +101,24 @@ app.controller("outletAdminDashboardController", [
               $scope.object.outletDates,
               $scope.object.outletRevenue,
               $scope.object.outlet.name,
-              document.getElementById("myChart").getContext("2d"),
-              $scope.object.myChart1
+              document.getElementById("myChart")
             );
           }
         }
       );
+    };
+
+    $scope.decreaseYear1 = function () {
+      $scope.object.currentYear1--;
+    };
+    $scope.increaseYear1 = function () {
+      $scope.object.currentYear1++;
+    };
+    $scope.decreaseYear2 = function () {
+      $scope.object.currentYear2--;
+    };
+    $scope.increaseYear2 = function () {
+      $scope.object.currentYear2++;
     };
   },
 ]);

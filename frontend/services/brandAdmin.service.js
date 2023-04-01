@@ -140,7 +140,7 @@ app.service(
     var monthDetails = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
     obj.getActivityData = function (month, data) {
-      var dates = [0];
+      var dates = [];
       var activity = [""];
       for (var i = 1; i <= monthDetails[month]; i++) {
         dates.push(i);
@@ -150,7 +150,7 @@ app.service(
       if (data) {
         data.forEach(function (value) {
           var date = +value._id.substr(0, 2);
-          activity[date - 1] = value.count + " orders booked on " + date;
+          activity[date] = value.count + " orders booked on " + date;
         });
       }
       return {

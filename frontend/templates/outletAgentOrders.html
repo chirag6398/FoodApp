@@ -87,7 +87,7 @@
     <div
       ng-if="object.orders.length>0"
       class="order__card"
-      ng-repeat="order in object.orders"
+      ng-repeat="order in object.orders | filter:object.filter.status"
     >
       <div>
         <div

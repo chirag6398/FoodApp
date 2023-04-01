@@ -19,13 +19,15 @@ app.service("outletAdminDashBoardApi", function ($http) {
         cb(err, null);
       });
   };
-  this.getOrderActivity = function (month, id, cb) {
+  this.getOrderActivity = function (month, year, id, cb) {
     $http
       .get(
         "http://localhost:5000/api/outletAdmin/getOrderActivity?id=" +
           id +
           "&month=" +
-          month,
+          month +
+          "&year=" +
+          year,
 
         {
           headers: {
@@ -40,13 +42,15 @@ app.service("outletAdminDashBoardApi", function ($http) {
         cb(err, null);
       });
   };
-  this.getGraphData = function (month, id, cb) {
+  this.getGraphData = function (month, year, id, cb) {
     $http
       .get(
         "http://localhost:5000/api/outletAdmin/getOutletSale?id=" +
           id +
           "&month=" +
-          month,
+          month +
+          "&year=" +
+          year,
 
         {
           headers: {

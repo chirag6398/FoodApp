@@ -69,8 +69,8 @@ app.service(
       );
     };
 
-    obj.displayGraph = function (dates, revenue, name, ctx, chart) {
-      chart = new Chart(ctx, {
+    obj.displayGraph = function (dates, revenue, name, ctx) {
+      var chart = new Chart(ctx, {
         type: "line",
         data: {
           labels: dates,
@@ -153,7 +153,7 @@ app.service(
 
     var monthDetails = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     obj.getActivityData = function (month, data) {
-      var dates = [0];
+      var dates = [];
       var activity = [""];
       for (var i = 1; i <= monthDetails[month]; i++) {
         dates.push(i);
@@ -163,7 +163,8 @@ app.service(
       if (data) {
         data.forEach(function (value) {
           var date = +value._id.substr(0, 2);
-          activity[date - 1] = value.count + " orders booked on " + date;
+
+          activity[date] = value.count + " orders booked on " + date;
         });
       }
       return {
@@ -227,6 +228,8 @@ app.service(
       ];
       var one = 1;
       var myChart1 = null;
+      var currentYear1 = new Date().getFullYear();
+      var currentYear2 = currentYear1;
 
       outletAdminDashBoardApi.getBasicData(outlet._id, function (err, result) {
         var totalRevenue = 0;
@@ -254,6 +257,7 @@ app.service(
           var outletRevenue = activity.activity;
 
           activity = obj.getActivityData(month, data[6]);
+          console.log(activity);
           var orderDates = activity.dates;
           var orderCnts = activity.activity;
 
@@ -267,6 +271,8 @@ app.service(
             orderTypeAnalysis,
             bottomProducts,
             month,
+            currentYear1,
+            currentYear2,
             month1,
             outletDates,
             outletRevenue,

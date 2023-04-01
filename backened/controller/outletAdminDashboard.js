@@ -66,7 +66,7 @@ module.exports = {
   getOrderActivity: function (req, res) {
     var id = req.query.id;
     var month = req.query.month;
-    var year = 2023;
+    var year = req.query.year;
     var sDate = moment({ year, month }).startOf("month").toDate();
     var eDate = moment({ year, month }).endOf("month").toDate();
 
@@ -85,14 +85,15 @@ module.exports = {
   },
   getOutletSale: function (req, res) {
     var month = req.query.month;
-    var year = 2023;
+    var year = req.query.year;
     var sDate = moment({ year, month }).startOf("month").toDate();
     var eDate = moment({ year, month }).endOf("month").toDate();
-
+    console.log(sDate, eDate);
     orderModel
       .aggregate(pipelines.outletGraphData(req.query.id, sDate, eDate))
       .exec(function (err, result) {
         if (result) {
+          // console.log(result);
           return res.send(result);
         } else {
           return res.status(404).send(err);

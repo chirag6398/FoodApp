@@ -78,7 +78,7 @@
   >
     <div
       style="
-        width: 460px;
+        width: 500px;
         padding: 10px;
         border: 1px solid lightgray;
         margin: 10px;
@@ -115,6 +115,11 @@
               >{{month}}</a
             >
           </div>
+        </div>
+        <div>
+          <i ng-click="decreaseYear1()" class="bx bxs-left-arrow"></i>
+          <span> {{object.currentYear1}} </span>
+          <i ng-click="increaseYear1()" class="bx bxs-right-arrow"></i>
         </div>
       </div>
       <canvas id="myChart" area-label="chart"></canvas>
@@ -160,6 +165,11 @@
               >{{month}}</a
             >
           </div>
+        </div>
+        <div>
+          <i ng-click="decreaseYear2()" class="bx bxs-left-arrow"></i>
+          <span> {{object.currentYear2}} </span>
+          <i ng-click="increaseYear2()" class="bx bxs-right-arrow"></i>
         </div>
       </div>
 
