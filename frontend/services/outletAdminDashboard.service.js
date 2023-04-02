@@ -3,15 +3,7 @@
 app.service("outletAdminDashBoardApi", function ($http) {
   this.getBasicData = function (id, cb) {
     $http
-      .get(
-        "http://localhost:5000/api/outletAdmin/getBasicData/" + id,
-
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
-      )
+      .get("http://localhost:5000/api/outletAdmin/getBasicData/" + id)
       .then(function (response) {
         cb(null, response);
       })
@@ -27,13 +19,7 @@ app.service("outletAdminDashBoardApi", function ($http) {
           "&month=" +
           month +
           "&year=" +
-          year,
-
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
+          year
       )
       .then(function (response) {
         cb(null, response);
@@ -50,13 +36,7 @@ app.service("outletAdminDashBoardApi", function ($http) {
           "&month=" +
           month +
           "&year=" +
-          year,
-
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
+          year
       )
       .then(function (response) {
         cb(null, response);

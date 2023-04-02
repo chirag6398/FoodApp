@@ -3,15 +3,7 @@
 app.service("superAdminDashBoardApi", function ($http) {
   this.getBasicData = function (cb) {
     $http
-      .get(
-        "http://localhost:5000/api/superAdmin/getBasicData",
-
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
-      )
+      .get("http://localhost:5000/api/superAdmin/getBasicData")
       .then(function (response) {
         cb(null, response);
       }),
@@ -22,15 +14,7 @@ app.service("superAdminDashBoardApi", function ($http) {
 
   this.fetchBrandGraphData = function (id, cb) {
     $http
-      .get(
-        "http://localhost:5000/api/superAdmin/getBrandGraphData/" + id,
-
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
-      )
+      .get("http://localhost:5000/api/superAdmin/getBrandGraphData/" + id)
       .then(function (response) {
         cb(null, response);
       }),
@@ -41,15 +25,7 @@ app.service("superAdminDashBoardApi", function ($http) {
 
   this.fetchOutletGraphData = function (id, cb) {
     $http
-      .get(
-        "http://localhost:5000/api/superAdmin/getOutletGraphData/" + id,
-
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
-      )
+      .get("http://localhost:5000/api/superAdmin/getOutletGraphData/" + id)
       .then(function (response) {
         cb(null, response);
       }),
@@ -64,13 +40,7 @@ app.service("superAdminDashBoardApi", function ($http) {
         "http://localhost:5000/api/superAdmin/getDataOfTopTwoBrands/" +
           month +
           "/" +
-          year,
-
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
+          year
       )
       .then(function (response) {
         cb(null, response);

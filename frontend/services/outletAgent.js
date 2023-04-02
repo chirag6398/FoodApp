@@ -6,11 +6,7 @@ app.service("outletAgentService", function ($http, $rootScope, $timeout) {
 
   obj.getOutletAgentPage = function (cb) {
     $http
-      .get("http://localhost:5000/api/outletAgent/getOutletAgentPage", {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .get("http://localhost:5000/api/outletAgent/getOutletAgentPage")
       .then(function (response) {
         cb(null, response);
       })
@@ -26,11 +22,7 @@ app.service("outletAgentService", function ($http, $rootScope, $timeout) {
     };
 
     $http
-      .put("http://localhost:5000/api/employee/updateUser", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .put("http://localhost:5000/api/employee/updateUser", data)
       .then(function (response) {
         cb(response);
       })
@@ -43,11 +35,7 @@ app.service("outletAgentService", function ($http, $rootScope, $timeout) {
       id: id,
     };
     $http
-      .put("http://localhost:5000/api/employee/updatePassword", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .put("http://localhost:5000/api/employee/updatePassword", data)
       .then(function (response) {
         cb(null, response);
       })
@@ -60,11 +48,7 @@ app.service("outletAgentService", function ($http, $rootScope, $timeout) {
     console.log(data);
 
     $http
-      .post("http://localhost:5000/api/order/createOrder", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .post("http://localhost:5000/api/order/createOrder", data)
       .then(function (response) {
         cb(null, response);
       }),
@@ -86,12 +70,7 @@ app.service("outletAgentService", function ($http, $rootScope, $timeout) {
           "&limit=" +
           limit +
           "&page=" +
-          page,
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
+          page
       )
       .then(function (response) {
         cb(null, response);
@@ -103,11 +82,7 @@ app.service("outletAgentService", function ($http, $rootScope, $timeout) {
 
   obj.updateStatus = function (data, cb) {
     $http
-      .put("http://localhost:5000/api/order/updateStatus", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .put("http://localhost:5000/api/order/updateStatus", data)
       .then(function (response) {
         cb(null, response);
       }),
@@ -122,13 +97,7 @@ app.service("outletAgentService", function ($http, $rootScope, $timeout) {
         "http://localhost:5000/api/outletAgent/getProductByName/" +
           outletId +
           "/" +
-          searchText,
-
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
+          searchText
       )
       .then(function (response) {
         cb(null, response);
@@ -140,11 +109,7 @@ app.service("outletAgentService", function ($http, $rootScope, $timeout) {
 
   obj.updateTableNo = function (data, cb) {
     $http
-      .put("http://localhost:5000/api/order/updateTableNo", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .put("http://localhost:5000/api/order/updateTableNo", data)
       .then(function (response) {
         cb(null, response);
       })
@@ -174,12 +139,7 @@ app.service("outletAgentService", function ($http, $rootScope, $timeout) {
         "http://localhost:5000/api/outletAgent/getRecommendedProduct?products=" +
           products +
           "&id=" +
-          id,
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
+          id
       )
       .then(function (response) {
         cb(null, response);

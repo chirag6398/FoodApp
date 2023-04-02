@@ -2,11 +2,6 @@
 
 app.service("brandApi", function ($http, $rootScope, setAdminData) {
   var obj = {};
-  var config = {
-    headers: {
-      Authorization: window.localStorage.getItem("Authorization"),
-    },
-  };
 
   obj.searchUserBySearchText = function (searchText, id, cb) {
     $http
@@ -26,7 +21,7 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
 
   obj.getBrandAdminPage = function () {
     $http
-      .get("http://localhost:5000/api/brandAdmin/getBrandAdminPage", config)
+      .get("http://localhost:5000/api/brandAdmin/getBrandAdminPage")
       .then(function (response) {
         $rootScope.$emit("passData", response);
         setAdminData.setAdminData(response);
@@ -41,7 +36,7 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
   };
   obj.getOutlet = function (data, cb) {
     $http
-      .get("http://localhost:5000/api/brandAdmin/getOutlet/" + data._id, config)
+      .get("http://localhost:5000/api/brandAdmin/getOutlet/" + data._id)
       .then(function (response) {
         cb(null, response);
       })
@@ -59,7 +54,7 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
     };
 
     $http
-      .post("http://localhost:5000/api/brandAdmin/createOutlet", data, config)
+      .post("http://localhost:5000/api/brandAdmin/createOutlet", data)
       .then(function (response) {
         cb(null, response);
       })
@@ -77,8 +72,7 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
           "&limit=" +
           limit +
           "&page=" +
-          page,
-        config
+          page
       )
       .then(function (response) {
         console.log(response);
@@ -95,8 +89,7 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
         "http://localhost:5000/api/brandAdmin/searchOutletBySearchText?id=" +
           id +
           "&text=" +
-          text,
-        config
+          text
       )
       .then(function (response) {
         console.log(response);
@@ -126,11 +119,7 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
     };
     console.log(data);
     $http
-      .post(
-        "http://localhost:5000/api/brandAdmin/createOutletAdmin",
-        data,
-        config
-      )
+      .post("http://localhost:5000/api/brandAdmin/createOutletAdmin", data)
       .then(function (response) {
         cb(null, response);
       })
@@ -141,7 +130,7 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
 
   obj.updateOutletData = function (data, cb) {
     $http
-      .put("http://localhost:5000/api/outlet/updateOutletData", data, config)
+      .put("http://localhost:5000/api/outlet/updateOutletData", data)
       .then(function (response) {
         cb(response, null);
       })
@@ -181,10 +170,7 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
   obj.getSuperCategoryByBrandId = function (brandId, cb) {
     console.log(brandId);
     $http
-      .get(
-        "http://localhost:5000/api/brandAdmin/getSuperCategory/" + brandId,
-        config
-      )
+      .get("http://localhost:5000/api/brandAdmin/getSuperCategory/" + brandId)
       .then(function (response) {
         cb(null, response);
       })
@@ -199,7 +185,7 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
       superCategoryId,
     };
     $http
-      .post("http://localhost:5000/api/brandAdmin/getCategory/", data, config)
+      .post("http://localhost:5000/api/brandAdmin/getCategory/", data)
       .then(function (response) {
         cb(null, response);
       })
@@ -224,7 +210,7 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
 
   obj.getProductsInBrand = function (data, cb) {
     $http
-      .post("http://localhost:5000/api/product/getProducts", data, config)
+      .post("http://localhost:5000/api/product/getProducts", data)
       .then(function (response) {
         cb(null, response);
       })
@@ -247,12 +233,7 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
           "&limit=" +
           limit +
           "&pageNo=" +
-          pageNo,
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
+          pageNo
       )
       .then(function (response) {
         cb(null, response);
@@ -265,7 +246,7 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
   obj.getSuperCategory = function (id, cb) {
     console.log(id);
     $http
-      .get("http://localhost:5000/api/product/getSuperCategory/" + id, config)
+      .get("http://localhost:5000/api/product/getSuperCategory/" + id)
       .then(function (response) {
         cb(null, response);
       })
@@ -292,11 +273,7 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
   obj.updateOutletName = function (data, cb) {
     console.log(data);
     $http
-      .post(
-        "http://localhost:5000/api/brandAdmin/updateOutletName",
-        data,
-        config
-      )
+      .post("http://localhost:5000/api/brandAdmin/updateOutletName", data)
       .then(function (response) {
         cb(null, response);
       })
@@ -307,7 +284,7 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
 
   obj.updateLocation = function (data, cb) {
     $http
-      .post("http://localhost:5000/api/brandAdmin/updateLocation", data, config)
+      .post("http://localhost:5000/api/brandAdmin/updateLocation", data)
       .then(function (response) {
         cb(null, response);
       })
@@ -318,11 +295,7 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
 
   obj.updateContactInfo = function (data, cb) {
     $http
-      .post(
-        "http://localhost:5000/api/brandAdmin/updateContactInfo",
-        data,
-        config
-      )
+      .post("http://localhost:5000/api/brandAdmin/updateContactInfo", data)
       .then(function (response) {
         cb(null, response);
       })
@@ -333,7 +306,7 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
 
   obj.getAdmin = function (id, cb) {
     $http
-      .get("http://localhost:5000/api/brandAdmin/getAdmin/" + id, config)
+      .get("http://localhost:5000/api/brandAdmin/getAdmin/" + id)
       .then(function (response) {
         cb(null, response);
       })
@@ -349,7 +322,7 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
     };
     // console.log(data);
     $http
-      .put("http://localhost:5000/api/employee/updateUser", data, config)
+      .put("http://localhost:5000/api/employee/updateUser", data)
       .then(function (response) {
         cb(response);
       })
@@ -362,7 +335,7 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
       id: id,
     };
     $http
-      .put("http://localhost:5000/api/employee/updatePassword", data, config)
+      .put("http://localhost:5000/api/employee/updatePassword", data)
       .then(function (response) {
         cb(null, response);
       })
@@ -373,15 +346,7 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
 
   obj.togleOutlet = function (outletId, cb) {
     $http
-      .put(
-        "http://localhost:5000/api/outlet/togleOutlet",
-        { outletId },
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
-      )
+      .put("http://localhost:5000/api/outlet/togleOutlet", { outletId })
       .then(function (response) {
         cb(null, response);
       })
@@ -392,15 +357,7 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
 
   obj.deleteOutlet = function (outletId, cb) {
     $http
-      .put(
-        "http://localhost:5000/api/outlet/deleteOutlet",
-        { outletId },
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
-      )
+      .put("http://localhost:5000/api/outlet/deleteOutlet", { outletId })
       .then(function (response) {
         cb(null, response);
       })

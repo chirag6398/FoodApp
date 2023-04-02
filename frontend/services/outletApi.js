@@ -5,11 +5,7 @@ app.service("outletApi", function ($http, $rootScope) {
 
   obj.getOutletAdminPage = function () {
     $http
-      .get("http://localhost:5000/api/outletAdmin/getAdminPage", {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .get("http://localhost:5000/api/outletAdmin/getAdminPage")
       .then(function (response) {
         $rootScope.$emit("passData", response);
       })
@@ -21,11 +17,7 @@ app.service("outletApi", function ($http, $rootScope) {
   obj.createOutletAgent = function (data, cb) {
     console.log(data);
     $http
-      .post("http://localhost:5000/api/outletAdmin/createOutletAgent", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .post("http://localhost:5000/api/outletAdmin/createOutletAgent", data)
       .then(function (response) {
         cb(null, response);
       })
@@ -38,11 +30,7 @@ app.service("outletApi", function ($http, $rootScope) {
   obj.addTax = function (data, cb) {
     console.log(data);
     $http
-      .post("http://localhost:5000/api/outlet/addTax", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .post("http://localhost:5000/api/outlet/addTax", data)
       .then(function (response) {
         cb(null, response);
       })
@@ -52,11 +40,7 @@ app.service("outletApi", function ($http, $rootScope) {
   };
   obj.getTaxes = function (id, cb) {
     $http
-      .get("http://localhost:5000/api/outlet/getTaxes/" + id, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .get("http://localhost:5000/api/outlet/getTaxes/" + id)
       .then(function (response) {
         cb(null, response);
       })
@@ -66,11 +50,7 @@ app.service("outletApi", function ($http, $rootScope) {
   };
   obj.saveTableView = function (data, cb) {
     $http
-      .post("http://localhost:5000/api/outlet/saveTableView", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .post("http://localhost:5000/api/outlet/saveTableView", data)
       .then(function (response) {
         cb(null, response);
       })
@@ -81,11 +61,7 @@ app.service("outletApi", function ($http, $rootScope) {
 
   obj.getOutletAgentEmployees = function (id, cb) {
     $http
-      .get("http://localhost:5000/api/employee/getOutletAgentEmployees/" + id, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .get("http://localhost:5000/api/employee/getOutletAgentEmployees/" + id)
       .then(function (response) {
         cb(null, response);
       })
@@ -96,11 +72,7 @@ app.service("outletApi", function ($http, $rootScope) {
 
   obj.getSuperCategories = function (id, cb) {
     $http
-      .get("http://localhost:5000/api/outletAdmin/getSuperCategories/" + id, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .get("http://localhost:5000/api/outletAdmin/getSuperCategories/" + id)
       .then(function (response) {
         cb(null, response);
       })
@@ -110,11 +82,7 @@ app.service("outletApi", function ($http, $rootScope) {
   };
   obj.getSubCategory = function (id, cb) {
     $http
-      .get("http://localhost:5000/api/outletAdmin/getSubCategories/" + id, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .get("http://localhost:5000/api/outletAdmin/getSubCategories/" + id)
       .then(function (response) {
         cb(null, response);
       })
@@ -125,11 +93,7 @@ app.service("outletApi", function ($http, $rootScope) {
 
   obj.getProductByCategory = function (data, cb) {
     $http
-      .post("http://localhost:5000/api/outlet/categoryProduct", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .post("http://localhost:5000/api/outlet/categoryProduct", data)
       .then(function (response) {
         cb(null, response);
       })
@@ -145,11 +109,7 @@ app.service("outletApi", function ($http, $rootScope) {
     };
 
     $http
-      .post("http://localhost:5000/api/outlet/addProductToOutlet", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .post("http://localhost:5000/api/outlet/addProductToOutlet", data)
       .then(function (response) {
         cb(null, response);
       })
@@ -160,11 +120,7 @@ app.service("outletApi", function ($http, $rootScope) {
 
   obj.getOutletProducts = function (id, cb) {
     $http
-      .get("http://localhost:5000/api/outlet/getProduct/" + id, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .get("http://localhost:5000/api/outlet/getProduct/" + id)
       .then(function (response) {
         // console.log(response)
         cb(null, response);
@@ -182,11 +138,7 @@ app.service("outletApi", function ($http, $rootScope) {
     };
 
     $http
-      .post("http://localhost:5000/api/outlet/removeOutletProduct", data, {
-        headers: {
-          Authorization: window.localStorage.getItem("Authorization"),
-        },
-      })
+      .post("http://localhost:5000/api/outlet/removeOutletProduct", data)
       .then(function (response) {
         cb(null, response);
       })
@@ -201,12 +153,7 @@ app.service("outletApi", function ($http, $rootScope) {
         "http://localhost:5000/api/outletAdmin/removeTax?_id=" +
           _id +
           "&taxId=" +
-          taxId,
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
+          taxId
       )
       .then(function (response) {
         cb(null, response);
@@ -226,12 +173,7 @@ app.service("outletApi", function ($http, $rootScope) {
           "&taxName=" +
           tax.name +
           "&taxPerCent=" +
-          tax.percent,
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
+          tax.percent
       )
       .then(function (response) {
         cb(null, response);
@@ -255,12 +197,7 @@ app.service("outletApi", function ($http, $rootScope) {
           "&email=" +
           filter.email +
           "&number=" +
-          filter.number,
-        {
-          headers: {
-            Authorization: window.localStorage.getItem("Authorization"),
-          },
-        }
+          filter.number
       )
       .then(function (response) {
         cb(null, response);

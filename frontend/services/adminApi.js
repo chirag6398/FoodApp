@@ -3,15 +3,9 @@
 app.service("adminApi", function ($http, $rootScope) {
   var obj = {};
 
-  var config = {
-    headers: {
-      Authorization: window.localStorage.getItem("Authorization"),
-    },
-  };
-
   obj.getBrand = function (id, cb) {
     $http
-      .get("http://localhost:5000/api/brand/getBrand/" + id, config)
+      .get("http://localhost:5000/api/brand/getBrand/" + id)
       .then(function (response) {
         cb(null, response.data);
       })
@@ -50,7 +44,7 @@ app.service("adminApi", function ($http, $rootScope) {
 
   obj.getAdminPage = function () {
     $http
-      .get("http://localhost:5000/api/superAdmin/getAdminPage", config)
+      .get("http://localhost:5000/api/superAdmin/getAdminPage")
       .then(function (response) {
         $rootScope.$emit("passData", response.data.user);
       })
@@ -65,8 +59,7 @@ app.service("adminApi", function ($http, $rootScope) {
         "http://localhost:5000/api/brand/getBrands/" +
           data.limit +
           "/" +
-          data.page,
-        config
+          data.page
       )
       .then(function (response) {
         cb(null, response.data);
@@ -84,7 +77,7 @@ app.service("adminApi", function ($http, $rootScope) {
     };
     console.log(data);
     $http
-      .post("http://localhost:5000/api/superAdmin/addBrandAdmin", data, config)
+      .post("http://localhost:5000/api/superAdmin/addBrandAdmin", data)
       .then(function (response) {
         console.log(response);
         cb(null, response);
@@ -96,7 +89,7 @@ app.service("adminApi", function ($http, $rootScope) {
 
   obj.getUserById = function (id, cb) {
     $http
-      .get("http://localhost:5000/api/employee/getUserById/" + id, config)
+      .get("http://localhost:5000/api/employee/getUserById/" + id)
       .then(function (response) {
         cb(null, response);
       })
@@ -112,7 +105,7 @@ app.service("adminApi", function ($http, $rootScope) {
     };
     // console.log(data);
     $http
-      .put("http://localhost:5000/api/employee/updateUser", data, config)
+      .put("http://localhost:5000/api/employee/updateUser", data)
       .then(function (response) {
         cb(null, response);
       })
@@ -127,7 +120,7 @@ app.service("adminApi", function ($http, $rootScope) {
       id: id,
     };
     $http
-      .put("http://localhost:5000/api/employee/updatePassword", data, config)
+      .put("http://localhost:5000/api/employee/updatePassword", data)
       .then(function (response) {
         cb(null, response);
       })
@@ -138,7 +131,7 @@ app.service("adminApi", function ($http, $rootScope) {
 
   obj.getSuperCategories = function (cb) {
     $http
-      .get("http://localhost:5000/api/superAdmin/getSuperCategory", config)
+      .get("http://localhost:5000/api/superAdmin/getSuperCategory")
       .then(function (response) {
         cb(null, response);
       })
@@ -159,8 +152,7 @@ app.service("adminApi", function ($http, $rootScope) {
           "&limit=" +
           limit +
           "&number=" +
-          filter.number,
-        config
+          filter.number
       )
       .then(function (response) {
         cb(null, response);
@@ -173,7 +165,7 @@ app.service("adminApi", function ($http, $rootScope) {
   obj.updateBrandName = function (data, cb) {
     console.log(data);
     $http
-      .post("http://localhost:5000/api/brand/updateBrandName", data, config)
+      .post("http://localhost:5000/api/brand/updateBrandName", data)
       .then(function (response) {
         cb(null, response);
       })
@@ -184,7 +176,7 @@ app.service("adminApi", function ($http, $rootScope) {
 
   obj.updateLocation = function (data, cb) {
     $http
-      .post("http://localhost:5000/api/superAdmin/updateLocation", data, config)
+      .post("http://localhost:5000/api/superAdmin/updateLocation", data)
       .then(function (response) {
         cb(null, response);
       })
@@ -195,11 +187,7 @@ app.service("adminApi", function ($http, $rootScope) {
 
   obj.updateContactInfo = function (data, cb) {
     $http
-      .post(
-        "http://localhost:5000/api/superAdmin/updateContactInfo",
-        data,
-        config
-      )
+      .post("http://localhost:5000/api/superAdmin/updateContactInfo", data)
       .then(function (response) {
         cb(null, response);
       })
@@ -211,11 +199,7 @@ app.service("adminApi", function ($http, $rootScope) {
   obj.deactivateBrand = function (brandId, cb) {
     console.log(brandId);
     $http
-      .put(
-        "http://localhost:5000/api/brand/deactivateBrand",
-        { brandId },
-        config
-      )
+      .put("http://localhost:5000/api/brand/deactivateBrand", { brandId })
       .then(function (response) {
         cb(null, response);
       })
@@ -226,7 +210,7 @@ app.service("adminApi", function ($http, $rootScope) {
   obj.activateBrand = function (brandId, cb) {
     console.log(brandId);
     $http
-      .put("http://localhost:5000/api/brand/activateBrand", { brandId }, config)
+      .put("http://localhost:5000/api/brand/activateBrand", { brandId })
       .then(function (response) {
         cb(null, response);
       })
@@ -238,7 +222,7 @@ app.service("adminApi", function ($http, $rootScope) {
   obj.deleteBrand = function (brandId, cb) {
     console.log(brandId);
     $http
-      .post("http://localhost:5000/api/brand/deleteBrand", { brandId }, config)
+      .post("http://localhost:5000/api/brand/deleteBrand", { brandId })
       .then(function (response) {
         cb(null, response);
       })
@@ -272,8 +256,7 @@ app.service("adminApi", function ($http, $rootScope) {
   obj.searchBrandBySearchText = function (searchText, cb) {
     $http
       .get(
-        "http://localhost:5000/api/brand/searchBrandBySearchText/" + searchText,
-        config
+        "http://localhost:5000/api/brand/searchBrandBySearchText/" + searchText
       )
       .then(function (response) {
         cb(null, response);
@@ -286,8 +269,7 @@ app.service("adminApi", function ($http, $rootScope) {
     $http
       .get(
         "http://localhost:5000/api/outlet/searchOutletBySearchText/" +
-          searchText,
-        config
+          searchText
       )
       .then(function (response) {
         cb(null, response);
@@ -301,8 +283,7 @@ app.service("adminApi", function ($http, $rootScope) {
     $http
       .get(
         "http://localhost:5000/api/superAdmin/searchDashBoardBrandBySearchText/" +
-          searchText,
-        config
+          searchText
       )
       .then(function (response) {
         cb(null, response);

@@ -1,6 +1,7 @@
 ///<reference path="../module/module.js"/>
 
-app.config(function ($stateProvider, $urlRouterProvider) {
+app.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+  $httpProvider.interceptors.push("myInterceptor");
   $stateProvider
     .state("login", {
       url: "/login",
