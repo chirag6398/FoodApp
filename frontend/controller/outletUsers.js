@@ -16,12 +16,14 @@ app.controller("outletUsersController", [
     $rootScope,
     toastNotifications
   ) {
+    $scope.isLoading = true;
     outletApi.getOutletAdminPage();
 
     $rootScope.$on("passData", function (err, data) {
       if (data) {
         console.log(data);
         outletAdminFactory.getUsers(data, function (err, result) {
+          $scope.isLoading = false;
           if (result) {
             $scope.object = result;
             console.log($scope.object);

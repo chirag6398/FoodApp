@@ -1,6 +1,6 @@
 ///<reference path="../module/module.js"/>
 
-app.service("outletAgentFactory", function ($http, $rootScope, $timeout) {
+app.service("outletAgentService", function ($http, $rootScope, $timeout) {
   var obj = {};
   var timeout = null;
 

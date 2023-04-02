@@ -1,6 +1,6 @@
 ///<reference path="../module/module.js"/>
 
-app.factory("outletAgentFactory", function (outletAgentFactory) {
+app.factory("outletAgentFactory", function (outletAgentService) {
   var obj = {};
   obj.groupProductByCategories = function (products) {
     var categoryProducts = {};
@@ -87,7 +87,7 @@ app.factory("outletAgentFactory", function (outletAgentFactory) {
   };
 
   obj.getOutletAgentPage = function (cb) {
-    outletAgentFactory.getOutletAgentPage(function (err, result) {
+    outletAgentService.getOutletAgentPage(function (err, result) {
       console.log(err, result);
       if (result) {
         var data = result.data;
@@ -188,7 +188,7 @@ app.factory("outletAgentFactory", function (outletAgentFactory) {
     var amount = 0;
     var allotedTable = null;
     var swapBtn = "Apply swaps";
-    outletAgentFactory.getOrders(
+    outletAgentService.getOrders(
       outlet._id,
       filter,
       limit,
@@ -280,7 +280,7 @@ app.factory("outletAgentFactory", function (outletAgentFactory) {
     };
     console.log(data);
 
-    outletAgentFactory.placeOrder(data, function (err, result) {
+    outletAgentService.placeOrder(data, function (err, result) {
       if (result) {
         cb(null, result);
       } else {
@@ -303,7 +303,7 @@ app.factory("outletAgentFactory", function (outletAgentFactory) {
   };
 
   obj.getOrder = function (data, cb) {
-    outletAgentFactory.getOrders(
+    outletAgentService.getOrders(
       data.outlet._id,
       data.filter,
       data.limit,
@@ -329,7 +329,7 @@ app.factory("outletAgentFactory", function (outletAgentFactory) {
     );
   };
   obj.updateTableNo = function (orderId, outletId, newTable, oldTables, cb) {
-    outletAgentFactory.updateTableNo(
+    outletAgentService.updateTableNo(
       {
         _id: orderId,
         outletId: outletId,
@@ -348,11 +348,11 @@ app.factory("outletAgentFactory", function (outletAgentFactory) {
   };
 
   obj.getRecommendedProduct = function (products, id, cb) {
-    outletAgentFactory.getRecommendedProduct(products, id, cb);
+    outletAgentService.getRecommendedProduct(products, id, cb);
   };
 
   obj.updateStatus = function (status, orderId, cb) {
-    outletAgentFactory.updateStatus({ status: status, _id: orderId }, cb);
+    outletAgentService.updateStatus({ status: status, _id: orderId }, cb);
   };
 
   obj.updateStatusToCompleted = function (
@@ -363,7 +363,7 @@ app.factory("outletAgentFactory", function (outletAgentFactory) {
     type,
     cb
   ) {
-    outletAgentFactory.updateStatus(
+    outletAgentService.updateStatus(
       {
         status: status,
         _id: orderId,

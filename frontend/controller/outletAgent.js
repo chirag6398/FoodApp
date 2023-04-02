@@ -3,19 +3,19 @@
 app.controller("outletAgentController", [
   "$scope",
   "$location",
-  "outletAgentFactory",
-  "outletAgentFactory",
-  "$interval",
   "$state",
   "toastNotifications",
+  "outletAgentFactory",
+  "outletAgentService",
+  "$interval",
   function (
     $scope,
     $location,
-    outletAgentFactory,
-    outletAgentFactory,
-    $interval,
     $state,
-    toastNotifications
+    toastNotifications,
+    outletAgentFactory,
+    outletAgentService,
+    $interval
   ) {
     $scope.isLoading = true;
 
@@ -32,7 +32,7 @@ app.controller("outletAgentController", [
     });
 
     $scope.searchTextHandler = function () {
-      outletAgentFactory.debouncing(
+      outletAgentService.debouncing(
         $scope.object.searchText,
         $scope.object.outlet._id,
         function (err, result) {
@@ -49,7 +49,7 @@ app.controller("outletAgentController", [
 
     $scope.updateAdmin = function ($event) {
       // console.log($scope.object.admin);
-      outletAgentFactory.updateAdmin(
+      outletAgentService.updateAdmin(
         $scope.object.admin,
         $scope.object.admin._id,
         function (result) {
@@ -59,7 +59,7 @@ app.controller("outletAgentController", [
     };
 
     $scope.changePassword = function ($event) {
-      outletAgentFactory.updatePassword(
+      outletAgentService.updatePassword(
         $scope.object.admin,
         $scope.object.admin._id,
         function (err, result) {
@@ -165,17 +165,12 @@ app.controller("outletAgentController", [
           if (result) {
             toastNotifications.success("order placed successfull");
 
-            console.log(
-              result,
-              $scope.object.tables,
-              $scope.object.allotedTables
-            );
             if ($scope.type === "dine-in") {
               var indx = outletAgentFactory.updateTablesIndexes(
                 $scope.object.tables,
                 $scope.object.allotedTables
               );
-              console.log(indx);
+
               indx.forEach(function (value) {
                 $scope.object.tables[value].isAvailable = false;
               });
@@ -193,7 +188,7 @@ app.controller("outletAgentController", [
             $scope.object.recommendedProducts = [];
           } else {
             console.log(err);
-            alert("sorry order is not placed try later");
+            toastNotifications.error("sorry order is not placed try later");
           }
         }
       );

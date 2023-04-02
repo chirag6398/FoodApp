@@ -1,5 +1,5 @@
-<div style="width: 100%">
-  <div style="margin-bottom: 15px">
+<div ng-class="{'dim':isLoading}" style="width: 100%">
+  <!-- <div style="margin-bottom: 15px">
     <div class="mt-3 inputs">
       <i class="fa fa-search"></i>
       <input
@@ -37,18 +37,8 @@
         </a>
       </div>
     </div>
-  </div>
+  </div> -->
   <form name="filter" novalidate>
-    <span
-      style="color: red"
-      ng-show="filter.email.$dirty && filter.email.$invalid"
-      >Please enter correct email</span
-    >
-    <span
-      style="color: red"
-      ng-show="filter.number.$dirty && filter.number.$invalid"
-      >please enter correct number</span
-    >
     <div
       style="
         display: flex;
@@ -75,6 +65,11 @@
           placeholder="enter number"
           ng-model="object.filter.number"
         />
+        <span
+          style="color: red"
+          ng-show="filter.number.$dirty && filter.number.$invalid"
+          >please enter correct number</span
+        >
       </div>
       <div>
         <input
@@ -85,6 +80,11 @@
           name="email"
           ng-model="object.filter.email"
         />
+        <span
+          style="color: red"
+          ng-show="filter.email.$dirty && filter.email.$invalid"
+          >Please enter correct email</span
+        >
       </div>
       <button
         type="submit"
@@ -158,3 +158,8 @@
     </nav>
   </div>
 </div>
+<div
+  ng-if="isLoading"
+  class="loader"
+  style="width: 100%; height: -webkit-fill-available; position: absolute"
+></div>

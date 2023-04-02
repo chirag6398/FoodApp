@@ -98,11 +98,6 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       templateUrl: "./templates/brandAdminOutletData.html",
       controller: "brandAdminOutletDataController",
     })
-    .state("changePassword", {
-      url: "/changePassword/:id",
-      templateUrl: "./templates/changePassword.html",
-      controller: "changePasswordController",
-    })
     .state("outletAdmin.products", {
       url: "/products",
       templateUrl: "./templates/products.html",

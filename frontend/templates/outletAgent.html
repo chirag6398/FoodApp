@@ -709,15 +709,6 @@
                 >
               </div>
 
-              <!-- <button style="background: transparent;
-                  font-weight: 700;
-                  cursor: pointer;
-                  outline: none;
-                  border: 0px;
-                  opacity: 0.7;" type="button" data-toggle="modal" data-target="#exampleModal1"
-                                  data-whatever="@mdo">Change Password ?
-                              </button> -->
-
               <div class="modal-footer">
                 <button
                   type="button"
@@ -748,56 +739,3 @@
   class="loader"
   style="width: 100%; height: -webkit-fill-available; position: absolute"
 ></div>
-
-<!-- <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Update Password</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form name="passwordForm" novalidate>
-                            <div class="form-group">
-                                <label for="password" class="col-form-label">Password :</label>
-                                <input type="password" name="password" ng-required="true" ng-minlength="5"
-                                    ng-maxlength="8" ng-model="object.admin.password" class="form-control">
-                                <span
-                                    ng-show="passwordForm.password.$dirty && (passwordForm.password.$error.minlength || passwordForm.password.$error.maxlength)">Minimum
-                                    5-8 characters required</span>
-                                <span
-                                    ng-show="passwordForm.password.$dirty && passwordForm.password.$error.required">Please
-                                    fill this field</span>
-                            </div>
-                            <div class="form-group">
-                                <label for="cpassword" class="col-form-label">Confirm Password :</label>
-                                <input type="password" ng-disabled="!object.admin.password" name="cpassword"
-                                    ng-required="true" ng-minlength="5" ng-maxlength="8"
-                                    ng-model="object.admin.cpassword" class="form-control">
-                                <span
-                                    ng-show="passwordForm.cpassword.$dirty && passwordForm.cpassword.$error.required">Please
-                                    fill this field</span>
-                                <span
-                                    ng-show="passwordForm.cpassword.$dirty && !(passwordForm.cpassword.$error.required) && object.admin.password && object.admin.password!=object.admin.cpassword">confirm
-                                    password is not matching password</span>
-                                
-                            </div>
-
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary"
-                                    data-dismiss="modal">Close</button>
-                                <button type="submit" ng-disabled="passwordForm.$invalid"
-                                    ng-click="changePassword($event)"
-                                    class="btn btn-primary">update</button>
-                            </div>
-
-                        </form>
-                    </div>
-
-                </div>
-            </div>
-        </div> -->

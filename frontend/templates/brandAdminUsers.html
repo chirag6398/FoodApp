@@ -38,16 +38,6 @@
     </div>
   </div>
   <form name="filter" novalidate>
-    <span
-      style="color: red"
-      ng-show="filter.email.$dirty && filter.email.$invalid"
-      >Please enter correct email</span
-    >
-    <span
-      style="color: red"
-      ng-show="filter.number.$dirty && filter.number.$invalid"
-      >please enter correct number</span
-    >
     <div
       style="
         display: flex;
@@ -74,6 +64,11 @@
           placeholder="enter number"
           ng-model="object.filter.number"
         />
+        <span
+          style="color: red"
+          ng-show="filter.number.$dirty && filter.number.$invalid"
+          >please enter correct number</span
+        >
       </div>
       <div>
         <input
@@ -84,6 +79,11 @@
           name="email"
           ng-model="object.filter.email"
         />
+        <span
+          style="color: red"
+          ng-show="filter.email.$dirty && filter.email.$invalid"
+          >Please enter correct email</span
+        >
       </div>
       <button
         type="submit"
