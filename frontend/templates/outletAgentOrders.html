@@ -12,6 +12,15 @@
     "
   >
     <ul class="nav justify-content-center" style="display: contents">
+      <li style="position: absolute; left: 0px" ng-show="object.outlet">
+        <img
+          title="{{object.outlet.brand.name}}"
+          style="object-fit: contain; height: 72px"
+          src="{{object.outlet.brand.logo}}"
+          alt="..."
+          ui-sref="outletAgent"
+        />
+      </li>
       <li class="nav-item">
         <a
           class="nav-link"
@@ -119,7 +128,7 @@
             class="order__infoIcon"
             data-toggle="modal"
             data-target=".bd-example-modal-lg"
-            ng-click="setData(order.items,order.customer,order.totalPrice,order.tableNumber,order.status)"
+            ng-click="setData(order)"
           >
             <i class="fa-solid fa-info"></i>
           </div>
@@ -161,7 +170,7 @@
                         data-target="#tables"
                         data-whatever="@mdo"
                         class="btn btn-secondard"
-                        ng-if="object.status!='completed' && object.status!='cancelled'"
+                        ng-if="object.status!='completed' && object.status!='cancelled' && object.type!='take-away'"
                       >
                         Swap tables
                       </button>
@@ -350,6 +359,35 @@
     >
       <h4>No Order On this Page</h4>
     </div>
+  </div>
+  <div ng-if="object.orders.length && object.totalPage>1">
+    <nav
+      style="display: flex; align-items: center; justify-content: center"
+      aria-label="Page navigation example"
+    >
+      <ul
+        style="display: flex; gap: 4px"
+        class="pagination justify-content-end"
+      >
+        <button
+          class="page-item btn"
+          ng-click="getOrderHandler(object.page-1)"
+          ng-disabled="object.page===object.one"
+          ng-class="{'disabled':object.page===1}"
+        >
+          <a class="page-link">Previous</a>
+        </button>
+
+        <button
+          ng-click="getOrderHandler(object.page+1)"
+          ng-disabled="object.page===object.totalPage"
+          ng-class="{'disabled':object.page===object.totalPage}"
+          class="page-item btn"
+        >
+          <a class="page-link">Next</a>
+        </button>
+      </ul>
+    </nav>
   </div>
 </div>
 <div

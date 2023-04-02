@@ -71,10 +71,12 @@ module.exports = {
     var limit = query.limit || 10;
     var pageNo = query.pageNo || 1;
     var skipNo = (pageNo - 1) * limit;
+    var date = moment().startOf("day");
+    console.log(date);
     var filter = {
       $and: [
         { "outlet._id": mongoose.Types.ObjectId(query.outletId) },
-        { createdAt: { $gte: startDate } },
+        { createdAt: { $gte: date } },
         { status: query.status },
         { type: query.type },
       ],

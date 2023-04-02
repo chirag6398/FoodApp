@@ -184,6 +184,7 @@ app.factory("outletAgentFactory", function (outletAgentService) {
     var limit = 10;
     var page = 1;
     var item = null;
+    var one = 1;
     var customer = null;
     var amount = 0;
     var totalPage = 0;
@@ -218,6 +219,7 @@ app.factory("outletAgentFactory", function (outletAgentService) {
             filter,
             item,
             customer,
+            one,
             amount,
             allotedTable,
             swapBtn,
@@ -331,7 +333,7 @@ app.factory("outletAgentFactory", function (outletAgentService) {
               value.totalPrice
             );
           });
-          cb(null, orders);
+          cb(null, { orders, totalPage: data.totalPage });
         } else {
           cb(err, null);
         }

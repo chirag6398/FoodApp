@@ -27,7 +27,7 @@ app.controller("outletAgentOrdersController", [
           $scope.isLoading = false;
           if (result) {
             $scope.object = result;
-            // console.log($scope.object.count);
+            console.log($scope.object);
           }
         });
       } else {
@@ -41,7 +41,8 @@ app.controller("outletAgentOrdersController", [
       outletAgentFactory.getOrder($scope.object, function (err, result) {
         $scope.isLoading = false;
         if (result) {
-          $scope.object.orders = result;
+          $scope.object.orders = result.orders;
+          $scope.object.totalPage = result.totalPage;
         }
       });
     };
@@ -52,17 +53,31 @@ app.controller("outletAgentOrdersController", [
       outletAgentFactory.getOrder($scope.object, function (err, result) {
         $scope.isLoading = false;
         if (result) {
-          $scope.object.orders = result;
+          $scope.object.orders = result.orders;
+          $scope.object.totalPage = result.totalPage;
         }
       });
     };
 
-    $scope.setData = function (items, customer, amount, tableAlloted, status) {
-      $scope.object.items = items;
-      $scope.object.amount = amount;
-      $scope.object.customer = customer;
-      $scope.object.allotedTable = tableAlloted;
-      $scope.object.status = status;
+    $scope.getOrderHandler = function (page) {
+      $scope.object.page = page;
+      $scope.isLoading = true;
+      outletAgentFactory.getOrder($scope.object, function (err, result) {
+        $scope.isLoading = false;
+        if (result) {
+          $scope.object.orders = result.orders;
+          $scope.object.totalPage = result.totalPage;
+        }
+      });
+    };
+
+    $scope.setData = function (order) {
+      $scope.object.items = order.items;
+      $scope.object.amount = order.totalPrice;
+      $scope.object.customer = order.customer;
+      $scope.object.allotedTable = order.tableNumber;
+      $scope.object.status = order.status;
+      $scope.object.type = order.type;
     };
 
     $scope.updateStatus = function (status, orderId) {
