@@ -22,8 +22,9 @@ app.controller("categoryProductController", [
       btnText: "Add product",
       updateProduct: null,
     };
-
+    $scope.isLoading = true;
     brandAdminFactory.getProductsInBrand(function (err, result) {
+      $scope.isLoading = false;
       if (result) {
         console.log(result);
         $scope.object.products = result.data;

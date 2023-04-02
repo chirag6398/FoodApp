@@ -1,4 +1,4 @@
-<div>
+<div ng-class="{'dim':isLoading}">
   <div style="display: flex; padding: 30px">
     <button
       type="button"
@@ -266,3 +266,14 @@
     </div>
   </div>
 </div>
+<div
+  ng-if="isLoading"
+  class="loader"
+  style="
+    width: 100%;
+    position: absolute;
+    top: 141px;
+    height: -webkit-fill-available;
+    opacity: 0.5;
+  "
+></div>

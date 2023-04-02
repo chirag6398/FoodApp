@@ -7,8 +7,10 @@ app.controller("brandSettingController", [
   "brandApi",
   "toastNotifications",
   function ($scope, $stateParams, brandApi, toastNotifications) {
+    $scope.isLoading = true;
     brandApi.getAdmin($stateParams.id, function (err, result) {
       console.log(err, result);
+      $scope.isLoading = false;
       if (result) {
         $scope.brandAdmin = result.data;
       }

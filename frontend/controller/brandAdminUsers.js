@@ -31,6 +31,7 @@ app.controller("brandAdminUsersController", [
       searchUser: "",
       searchTextResult: [],
     };
+    $scope.isLoading = true;
     brandApi.getBrandAdminPage();
     $rootScope.$on("passData", function (err, result) {
       if (result) {
@@ -42,6 +43,7 @@ app.controller("brandAdminUsersController", [
           $scope.object.limit,
           $scope.object.page,
           function (err, result) {
+            $scope.isLoading = false;
             if (result) {
               console.log(result);
               $scope.object.users = result.data.data;

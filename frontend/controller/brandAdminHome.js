@@ -32,7 +32,7 @@ app.controller("brandAdminHomeController", [
       searchTextResult: [],
     };
     brandApi.getBrandAdminPage();
-
+    $scope.isLoading = true;
     $rootScope.$on("passData", function (err, result) {
       if (result) {
         $scope.object.brand = result.data.data;
@@ -42,6 +42,7 @@ app.controller("brandAdminHomeController", [
           $scope.object.limit,
           $scope.object.page,
           function (err, result) {
+            $scope.isLoading = false;
             console.log(result);
             if (result) {
               $scope.object.outlets = result.data;

@@ -1,4 +1,4 @@
-<div class="data__extDiv">
+<div ng-class="{'dim':isLoading}" class="data__extDiv">
   <div class="data__mainDiv">
     <div class="data__heading">
       <h4>Outlet Details</h4>
@@ -149,12 +149,16 @@
         </div>
       </div>
     </div>
-    <!-- <div class="data__description">
-             <div>
-                 <span>
-                     {{brand.description}}
-                 </span>
-             </div>
-         </div> -->
   </div>
 </div>
+<div
+  ng-if="isLoading"
+  class="loader"
+  style="
+    width: 100%;
+    position: absolute;
+    top: 141px;
+    height: -webkit-fill-available;
+    opacity: 0.5;
+  "
+></div>

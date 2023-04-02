@@ -1,4 +1,4 @@
-<div class="spr__extDiv">
+<div ng-class="{'dim':isLoading}" class="spr__extDiv">
   <div>
     <div
       style="
@@ -188,3 +188,14 @@
     </div>
   </div>
 </div>
+<div
+  ng-if="isLoading"
+  class="loader"
+  style="
+    width: 100%;
+    position: absolute;
+    top: 141px;
+    height: -webkit-fill-available;
+    opacity: 0.5;
+  "
+></div>

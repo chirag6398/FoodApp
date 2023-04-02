@@ -10,6 +10,7 @@ app.controller("subCategoryController", [
   "$stateParams",
   function ($scope, $http, $location, brandApi, $rootScope, $stateParams) {
     brandApi.getBrandAdminPage();
+    $scope.isLoading = true;
     $rootScope.$on("passData", function (err, result) {
       if (result) {
         $scope.brandName = result.data.data.name;
@@ -20,6 +21,7 @@ app.controller("subCategoryController", [
           result.data.data._id,
           $stateParams.id,
           function (err, result) {
+            $scope.isLoading = false;
             if (result) {
               $scope.object = { categories: [] };
               console.log(result);
