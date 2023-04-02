@@ -24,9 +24,11 @@ app.service("outletAgentService", function ($http, $rootScope, $timeout) {
     $http
       .put("http://localhost:5000/api/employee/updateUser", data)
       .then(function (response) {
-        cb(response);
+        cb(null, response);
       })
-      .catch(function (err) {});
+      .catch(function (err) {
+        cb(err, null);
+      });
   };
 
   obj.updatePassword = function (admin, id, cb) {
@@ -73,6 +75,7 @@ app.service("outletAgentService", function ($http, $rootScope, $timeout) {
           page
       )
       .then(function (response) {
+        console.log(response);
         cb(null, response);
       }),
       function (err) {

@@ -186,6 +186,7 @@ app.factory("outletAgentFactory", function (outletAgentService) {
     var item = null;
     var customer = null;
     var amount = 0;
+    var totalPage = 0;
     var allotedTable = null;
     var swapBtn = "Apply swaps";
     outletAgentService.getOrders(
@@ -197,7 +198,7 @@ app.factory("outletAgentFactory", function (outletAgentService) {
         if (result) {
           orders = result.data.result;
           var count = result.data.count;
-
+          totalPage = Math.ceil(count / limit);
           orders.forEach(function (value) {
             value.totalQuantity = value.items.reduce(function (accum, value) {
               return accum + value.quantity;
@@ -205,6 +206,8 @@ app.factory("outletAgentFactory", function (outletAgentService) {
             value.totalPrice = value.items.reduce(function (accum, value) {
               return accum + value.quantity * value.price;
             }, 0);
+            console.log(value.totalPrice);
+            value.totalPrice += obj.addTaxes(outlet.taxes, value.totalPrice);
           });
           cb(null, {
             outlet,
@@ -220,6 +223,8 @@ app.factory("outletAgentFactory", function (outletAgentService) {
             swapBtn,
             limit,
             page,
+            count,
+            totalPage,
           });
         } else {
           cb(err, null);
@@ -312,6 +317,7 @@ app.factory("outletAgentFactory", function (outletAgentService) {
         if (result) {
           orders = result.data.result;
           data.count = result.data.count;
+          data.totalPage = Math.ceil(data.count / data.limit);
 
           orders.forEach(function (value) {
             value.totalQuantity = value.items.reduce(function (accum, value) {
@@ -320,6 +326,10 @@ app.factory("outletAgentFactory", function (outletAgentService) {
             value.totalPrice = value.items.reduce(function (accum, value) {
               return accum + value.quantity * value.price;
             }, 0);
+            value.totalPrice += obj.addTaxes(
+              data.outlet.taxes,
+              value.totalPrice
+            );
           });
           cb(null, orders);
         } else {

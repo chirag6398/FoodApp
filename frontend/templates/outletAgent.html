@@ -521,6 +521,7 @@
                         id="customerName"
                       />
                       <span
+                        style="color: red"
                         ng-show="customerData.customerName.$dirty && customerData.customerName.$error.minlength"
                         >Minimum 3 characters required</span
                       >
@@ -541,6 +542,7 @@
                         id="customerNumber"
                       />
                       <span
+                        style="color: red"
                         ng-show="customerData.customerNumber.$dirty && customerData.customerNumber.$invalid"
                         >Enter valid number</span
                       >
@@ -737,5 +739,5 @@
 <div
   ng-if="isLoading"
   class="loader"
-  style="width: 100%; height: -webkit-fill-available; position: absolute"
+  style="width: 100%; position: absolute; top: 0px; height: 100vh"
 ></div>

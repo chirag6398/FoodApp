@@ -52,8 +52,12 @@ app.controller("outletAgentController", [
       outletAgentService.updateAdmin(
         $scope.object.admin,
         $scope.object.admin._id,
-        function (result) {
-          console.log(result);
+        function (err, result) {
+          if (result) {
+            toastNotifications.success("updated successfully");
+          } else {
+            toastNotifications.error(err.message);
+          }
         }
       );
     };

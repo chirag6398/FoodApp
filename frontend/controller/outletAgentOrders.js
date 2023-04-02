@@ -27,6 +27,7 @@ app.controller("outletAgentOrdersController", [
           $scope.isLoading = false;
           if (result) {
             $scope.object = result;
+            // console.log($scope.object.count);
           }
         });
       } else {
@@ -36,6 +37,7 @@ app.controller("outletAgentOrdersController", [
 
     $scope.setType = function (value) {
       $scope.object.filter.type = value;
+      $scope.isLoading = true;
       outletAgentFactory.getOrder($scope.object, function (err, result) {
         $scope.isLoading = false;
         if (result) {
@@ -46,6 +48,7 @@ app.controller("outletAgentOrdersController", [
 
     $scope.setFilter = function (value) {
       $scope.object.filter.status = value;
+      $scope.isLoading = true;
       outletAgentFactory.getOrder($scope.object, function (err, result) {
         $scope.isLoading = false;
         if (result) {
@@ -54,11 +57,12 @@ app.controller("outletAgentOrdersController", [
       });
     };
 
-    $scope.setData = function (items, customer, amount, tableAlloted) {
+    $scope.setData = function (items, customer, amount, tableAlloted, status) {
       $scope.object.items = items;
       $scope.object.amount = amount;
       $scope.object.customer = customer;
       $scope.object.allotedTable = tableAlloted;
+      $scope.object.status = status;
     };
 
     $scope.updateStatus = function (status, orderId) {

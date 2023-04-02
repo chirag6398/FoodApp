@@ -41,7 +41,9 @@
     align-items: center;
     justify-content: center;
     background: aliceblue;
-    border-radius: 20px;
+    box-shadow: #fffe 0px 0px 0px 1px;
+
+    /* border-radius: 20px; */
     cursor: pointer;
 }
 .order__modalContainer{

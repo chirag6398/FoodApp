@@ -6,9 +6,5 @@ app.service("socketService", function () {
     obj.socket = io("http://localhost:5000");
   };
 
-  //   obj.emit=function(eventName,data){
-  //     obj.socket.emit(eventName,data);
-  //   }
-
   return obj;
 });

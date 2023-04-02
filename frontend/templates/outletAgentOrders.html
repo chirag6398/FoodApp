@@ -1,4 +1,4 @@
-<div ng-class="{'dim':object.isLoading}" class="order__extDiv">
+<div ng-class="{'dim':isLoading}" class="order__extDiv">
   <div
     style="
       display: flex;
@@ -96,11 +96,30 @@
           <!-- <div>
             <span style="font-weight: 600">OrderId : </span>{{order.orderId}}
           </div> -->
+          <div class="order__customerDetail">
+            <div>
+              <span style="font-weight: 900; opacity: 0.7">
+                Customer Details
+              </span>
+            </div>
+            <div>
+              <i class="fas fa-user"></i><span> {{order.customer.name}} </span>
+            </div>
+
+            <div>
+              <i class="fas fa-phone"></i
+              ><span> {{order.customer.number}} </span>
+            </div>
+            <div>
+              <!-- <span> {{(order.updatedAt)}} </span> -->
+            </div>
+          </div>
+
           <div
             class="order__infoIcon"
             data-toggle="modal"
             data-target=".bd-example-modal-lg"
-            ng-click="setData(order.items,order.customer,order.totalPrice,order.tableNumber)"
+            ng-click="setData(order.items,order.customer,order.totalPrice,order.tableNumber,order.status)"
           >
             <i class="fa-solid fa-info"></i>
           </div>
@@ -142,6 +161,7 @@
                         data-target="#tables"
                         data-whatever="@mdo"
                         class="btn btn-secondard"
+                        ng-if="object.status!='completed' && object.status!='cancelled'"
                       >
                         Swap tables
                       </button>
@@ -318,16 +338,22 @@
         </button>
       </div>
     </div>
-    <div ng-if="!object.orders.length">empty orders</div>
+    <div
+      style="
+        display: flex;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+      "
+      ng-if="!object.orders.length"
+    >
+      <h4>No Order On this Page</h4>
+    </div>
   </div>
 </div>
 <div
-  ng-if="object.isLoading"
+  ng-if="isLoading"
   class="loader"
-  style="
-    width: 100%;
-    height: -webkit-fill-available;
-    position: absolute;
-    top: 0px;
-  "
+  style="width: 100%; position: absolute; top: 0px; height: 100vh"
 ></div>
