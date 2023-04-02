@@ -22,8 +22,7 @@ app.service("outletApi", function ($http, $rootScope) {
         cb(null, response);
       })
       .catch(function (err) {
-        cb(err, null);
-        cb(err, null);
+        cb(err.data, null);
       });
   };
 

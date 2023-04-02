@@ -67,10 +67,12 @@
                   class="form-control"
                 />
                 <span
+                  style="color: red"
                   ng-show="agentData.userName.$dirty && agentData.userName.$error.minlength"
                   >Minimum 3 characters required</span
                 >
                 <span
+                  style="color: red"
                   ng-show="agentData.userName.$dirty && agentData.userName.$error.required"
                   >Please fill this field</span
                 >
@@ -88,10 +90,12 @@
                   class="form-control"
                 />
                 <span
+                  style="color: red"
                   ng-show="agentData.firstName.$dirty && agentData.firstName.$error.minlength"
                   >Minimum 3 characters required</span
                 >
                 <span
+                  style="color: red"
                   ng-show="agentData.firstName.$dirty && agentData.firstName.$error.required"
                   >Please fill this field</span
                 >
@@ -106,6 +110,7 @@
                   class="form-control"
                 />
                 <span
+                  style="color: red"
                   ng-show="agentData.lastName.$dirty && agentData.lastName.$error.minlength"
                   >Minimum 3 characters required</span
                 >
@@ -122,10 +127,12 @@
                   class="form-control"
                 />
                 <span
+                  style="color: red"
                   ng-show="agentData.email.$dirty && !agentData.email.$error.required && agentData.email.$invalid"
                   >Please enter correct email</span
                 >
                 <span
+                  style="color: red"
                   ng-show="agentData.email.$dirty && agentData.email.$error.required"
                   >Please fill this field</span
                 >
@@ -143,10 +150,12 @@
                   class="form-control"
                 />
                 <span
+                  style="color: red"
                   ng-show="agentData.number.$dirty && agentData.number.$invalid"
                   >please enter correct number</span
                 >
                 <span
+                  style="color: red"
                   ng-show="agentData.number.$dirty && agentData.number.$error.required"
                   >Please fill this field</span
                 >
@@ -162,6 +171,7 @@
                   id="address"
                 />
                 <span
+                  style="color: red"
                   ng-show="agentData.address.$dirty && agentData.address.$error.required"
                   >Please fill this field</span
                 >
@@ -178,6 +188,7 @@
                   id="city"
                 />
                 <span
+                  style="color: red"
                   ng-show="agentData.city.$dirty && agentData.city.$error.minlength"
                   >Please fill this field</span
                 >
@@ -196,6 +207,7 @@
                   class="form-control"
                 />
                 <span
+                  style="color: red"
                   ng-show="agentData.outletPinCode.$dirty && agentData.outletPinCode.$error.minlength && agentData.outletPinCode.$error.maxlength"
                   >6 characters required</span
                 >
@@ -212,10 +224,12 @@
                   class="form-control"
                 />
                 <span
+                  style="color: red"
                   ng-show="agentData.password.$dirty && (agentData.password.$error.minlength || agentData.password.$error.maxlength)"
                   >Minimum 5-8 characters required</span
                 >
                 <span
+                  style="color: red"
                   ng-show="agentData.password.$dirty && agentData.password.$error.required"
                   >Please fill this field</span
                 >
@@ -236,10 +250,12 @@
                 />
                 <!-- <span ng-show="agentData.cpassword.$dirty && (agentData.cpassword.$error.minlength || agentData.cpassword.$error.maxlength)">Minimum 5-8 characters required</span> -->
                 <span
+                  style="color: red"
                   ng-show="agentData.cpassword.$dirty && agentData.cpassword.$error.required"
                   >Please fill this field</span
                 >
                 <span
+                  style="color: red"
                   ng-show="agentData.cpassword.$dirty && !(agentData.cpassword.$error.required) && object.agent.password && object.agent.password!=object.agent.cpassword"
                   >confirm password is not matching password</span
                 >

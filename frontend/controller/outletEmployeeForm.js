@@ -1,5 +1,4 @@
 ///<reference path="../module/module.js"/>
-///<reference path="../factory/apicall.js"/>
 
 app.controller("outletEmployeeFormController", [
   "$scope",
@@ -8,13 +7,15 @@ app.controller("outletEmployeeFormController", [
   "apiHandler",
   "outletApi",
   "$rootScope",
+  "toastNotifications",
   function (
     $scope,
     outletAdminFactory,
     $location,
     apiHandler,
     outletApi,
-    $rootScope
+    $rootScope,
+    toastNotifications
   ) {
     outletApi.getOutletAdminPage();
     $scope.object = {
@@ -53,8 +54,11 @@ app.controller("outletEmployeeFormController", [
           if (result) {
             console.log(result);
             $scope.object.agents.unshift([result.data.data]);
-            $scope.object.btnText = "created";
+            $scope.object.btnText = "create";
             $("#exampleModal").modal("hide");
+            toastNotifications.success("created successfully");
+          } else {
+            toastNotifications.error(err.message);
           }
         }
       );

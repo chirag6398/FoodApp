@@ -72,7 +72,7 @@ module.exports = {
     var pageNo = query.pageNo || 1;
     var skipNo = (pageNo - 1) * limit;
     var date = moment().startOf("day");
-    console.log(date);
+    // console.log(date);
     var filter = {
       $and: [
         { "outlet._id": mongoose.Types.ObjectId(query.outletId) },
