@@ -6,14 +6,14 @@ app.controller("brandAdminHomeController", [
   "$rootScope",
   "$location",
   "brandApi",
-  "brandAdminService",
+  "brandAdminFactory",
   "toastNotifications",
   function (
     $scope,
     $rootScope,
     $location,
     brandApi,
-    brandAdminService,
+    brandAdminFactory,
     toastNotifications
   ) {
     $scope.object = {
@@ -48,7 +48,7 @@ app.controller("brandAdminHomeController", [
               $scope.object.totalPage = Math.ceil(
                 result.count / $scope.object.limit
               );
-              $scope.object.pages = brandAdminService.getPages(
+              $scope.object.pages = brandAdminFactory.getPages(
                 result.count,
                 $scope.object.limit
               );
@@ -63,8 +63,7 @@ app.controller("brandAdminHomeController", [
     });
 
     $scope.searchTextHandler = function () {
-      brandAdminService.outletDebouncing($scope.object, function (err, result) {
-        // console.log(result);
+      brandAdminFactory.outletDebouncing($scope.object, function (err, result) {
         if (result) {
           $scope.object.searchTextResult = result;
           if ($scope.object.searchTextResult.length == 0)
@@ -79,6 +78,9 @@ app.controller("brandAdminHomeController", [
       $scope.object.outlets = [res];
       $scope.object.selectedOutlet = res;
       $scope.object.searchTextResult = [];
+    };
+    $scope.resetOutletData = function () {
+      $scope.object.outlet = {};
     };
     $scope.createOutlet = function ($event) {
       $event.preventDefault();
@@ -115,28 +117,31 @@ app.controller("brandAdminHomeController", [
       });
     };
 
+    $scope.setOutletData = function (outlet) {
+      $scope.object.outlet = outlet;
+      $scope.object.btnText0 = "Add Admin";
+    };
+
     $scope.createOutletAdmin = function (
       $event,
       outletId,
       outletName,
-      // outlateLocation,
       outletType
     ) {
       $event.preventDefault();
       $scope.object.btnText0 = "processing";
-
+      console.log(outletId);
       brandApi.createOutletAdmin(
         $scope.object.admin,
         outletId,
         outletName,
-        // outlateLocation,
         outletType,
         $scope.object.brand._id,
         $scope.object.brand.name,
         function (err, result) {
           if (result) {
             console.log(result);
-            var indx = brandAdminService.getIndxById(
+            var indx = brandAdminFactory.getIndxById(
               $scope.object.outlets,
               outletId
             );
@@ -147,9 +152,9 @@ app.controller("brandAdminHomeController", [
             $("#exampleModal1").modal("hide");
             toastNotifications.success("admin created");
           } else {
-            $scope.object.btnText0 = "failed";
+            $scope.object.btnText0 = "retry";
             console.log(err);
-            toastNotifications.error("failed please check values or try later");
+            toastNotifications.error(err.message);
           }
         }
       );
@@ -160,7 +165,7 @@ app.controller("brandAdminHomeController", [
       brandApi.togleOutlet(outletId, function (err, result) {
         if (result) {
           console.log(result);
-          var indx = brandAdminService.getIndxById(
+          var indx = brandAdminFactory.getIndxById(
             $scope.object.outlets,
             outletId
           );
@@ -200,7 +205,7 @@ app.controller("brandAdminHomeController", [
             $scope.object.totalPage = Math.ceil(
               result.count / $scope.object.limit
             );
-            $scope.object.pages = brandAdminService.getPages(
+            $scope.object.pages = brandAdminFactory.getPages(
               result.count,
               $scope.object.limit
             );

@@ -5,13 +5,13 @@ app.controller("brandAdminCategoryController", [
   "$scope",
   "$rootScope",
   "brandApi",
-  "brandAdminService",
+  "brandAdminFactory",
   "toastNotifications",
   function (
     $scope,
     $rootScope,
     brandApi,
-    brandAdminService,
+    brandAdminFactory,
     toastNotifications
   ) {
     $scope.object = {
@@ -50,7 +50,7 @@ app.controller("brandAdminCategoryController", [
       $event.preventDefault();
       $scope.object.btnText = "adding...";
 
-      brandAdminService.addSuperCategory(
+      brandAdminFactory.addSuperCategory(
         $scope.object.superCategory,
         $scope.object.brand,
         function (err, result) {
@@ -74,7 +74,7 @@ app.controller("brandAdminCategoryController", [
     $scope.updateSuperCategory = function ($event) {
       $event.preventDefault();
 
-      brandAdminService.updateSuperCategory(
+      brandAdminFactory.updateSuperCategory(
         $scope.object.category,
         $scope.object.brand,
         function (err, result) {

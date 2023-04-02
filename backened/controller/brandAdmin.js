@@ -43,10 +43,13 @@ module.exports = {
         return res.status(200).send(result);
       })
       .catch(function (err) {
-        console.log("fenfi", err.errors["email"].message, err);
-        return res
-          .status(400)
-          .send({ message: "please enter valid and unique data" });
+        let errMsg;
+        if (err.code == 11000) {
+          errMsg = Object.keys(err.keyValue)[0] + " already exists.";
+        } else {
+          errMsg = "unknown error please try later";
+        }
+        res.status(400).send({ message: errMsg });
       });
   },
 
@@ -83,6 +86,7 @@ module.exports = {
   },
 
   createOutletAdmin: function (req, res) {
+    console.log(req.body);
     if (
       req.body.outletId &&
       req.body.brandId &&
@@ -124,19 +128,21 @@ module.exports = {
                 adminId: result._id,
                 status: 200,
               });
-            })
-            .catch(function (err) {
-              // console.log(err);
-              return res
-                .status(500)
-                .send({ message: "internal server error", status: 500 });
             });
+          // .catch(function (err) {
+          //   return res
+          //     .status(500)
+          //     .send({ message: "internal server error", status: 500 });
+          // });
         })
         .catch(function (err) {
-          // console.log(err);
-          return res
-            .status(500)
-            .send({ message: "internal server error", status: 500 });
+          let errMsg;
+          if (err.code == 11000) {
+            errMsg = Object.keys(err.keyValue)[0] + " already exists.";
+          } else {
+            errMsg = "unknown error please try later";
+          }
+          res.status(400).send({ message: errMsg });
         });
     } else {
       return res.status(400).send({ message: "data not found", status: 400 });

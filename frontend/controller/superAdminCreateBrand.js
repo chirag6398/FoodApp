@@ -1,17 +1,11 @@
 ///<reference path="../module/module.js"/>
-///<reference path="../factory/apicall.js"/>
 
-function getBrandIndxById(brands, id) {
-  return brands.findIndex(function (value) {
-    return value._id === id;
-  });
-}
 app.controller("superAdminCreateBrandController", [
   "$scope",
   "adminApi",
-  "superAdminService",
+  "superAdminFactory",
   "toastNotifications",
-  function ($scope, adminApi, superAdminService, toastNotifications) {
+  function ($scope, adminApi, superAdminFactory, toastNotifications) {
     $scope.object = {
       brands: [],
       searchBrand: "",
@@ -31,7 +25,7 @@ app.controller("superAdminCreateBrandController", [
     };
 
     $scope.searchTextHandler = function () {
-      superAdminService.searchBrandDebouncing(
+      superAdminFactory.searchBrandDebouncing(
         $scope.object.searchBrand,
         function (err, result) {
           console.log(err, result);
@@ -50,7 +44,7 @@ app.controller("superAdminCreateBrandController", [
       $scope.object.searchTextResult = [];
     };
 
-    superAdminService.getBrands(
+    superAdminFactory.getBrands(
       $scope.object.limit,
       $scope.object.page,
       function (err, result) {
@@ -61,7 +55,7 @@ app.controller("superAdminCreateBrandController", [
           $scope.object.totalPage = Math.ceil(
             $scope.object.totalBrands / $scope.object.limit
           );
-          $scope.object.pages = superAdminService.getPages(
+          $scope.object.pages = superAdminFactory.getPages(
             $scope.object.totalBrands,
             $scope.object.limit
           );
@@ -70,7 +64,7 @@ app.controller("superAdminCreateBrandController", [
     );
 
     $scope.getBrandHandler = function (page, limit) {
-      superAdminService.getBrands(limit, page, function (err, result) {
+      superAdminFactory.getBrands(limit, page, function (err, result) {
         if (result) {
           $scope.object.brands = result.data;
           $scope.object.page = page;
@@ -96,16 +90,17 @@ app.controller("superAdminCreateBrandController", [
         function (err, result) {
           if (result) {
             console.log(result);
-            $scope.object.btnText1 = "successful";
+            // $scope.object.btnText1 = "Add Admin";
             $scope.object.admin = {};
             $("#exampleModal").modal("hide");
             toastNotifications.success("admin added successfully");
           } else {
-            $scope.object.btnText1 = "failed try later";
+            // $scope.object.btnText1 = "failed try later";
             $("#exampleModal").modal("hide");
             console.log(err);
-            toastNotifications.error("please try later");
+            toastNotifications.error(err.message);
           }
+          $scope.object.btnText1 = "Add Admin";
         }
       );
     };
@@ -113,7 +108,10 @@ app.controller("superAdminCreateBrandController", [
     $scope.deactivateBrand = function (brandId) {
       adminApi.deactivateBrand(brandId, function (err, result) {
         if (result) {
-          var indx = getBrandIndxById($scope.object.brands, brandId);
+          var indx = superAdminFactory.getBrandIndxById(
+            $scope.object.brands,
+            brandId
+          );
           $scope.object.brands[indx].isActive = false;
           toastNotifications.success("deactivate brand");
         } else {
@@ -125,7 +123,10 @@ app.controller("superAdminCreateBrandController", [
     $scope.activateBrand = function (brandId) {
       adminApi.activateBrand(brandId, function (err, result) {
         if (result) {
-          var indx = getBrandIndxById($scope.object.brands, brandId);
+          var indx = superAdminFactory.getBrandIndxById(
+            $scope.object.brands,
+            brandId
+          );
           $scope.object.brands[indx].isActive = true;
           toastNotifications.success("brand activated");
         } else {
@@ -137,7 +138,10 @@ app.controller("superAdminCreateBrandController", [
     $scope.deleteBrand = function (brandId) {
       adminApi.deleteBrand(brandId, function (err, result) {
         if (result) {
-          var indx = getBrandIndxById($scope.object.brands, brandId);
+          var indx = superAdminFactory.getBrandIndxById(
+            $scope.object.brands,
+            brandId
+          );
           $scope.object.brands[indx].isDeleted = true;
           toastNotifications.success("brand deleted successfully");
         } else {
@@ -150,7 +154,7 @@ app.controller("superAdminCreateBrandController", [
       $event.preventDefault();
       $scope.object.btnText = "creating...";
       console.log($scope.object.brand);
-      superAdminService.createBrand(
+      superAdminFactory.createBrand(
         $scope.object.brand,
         function (err, result) {
           if (result) {
@@ -166,5 +170,11 @@ app.controller("superAdminCreateBrandController", [
         }
       );
     };
+    // $scope.navPage = 0;
+    // $scope.navLimit = 2;
+    // $scope.navPageHandler = function (page) {
+    //   $scope.navPage = page;
+    //   console.log($scope.navPage);
+    // };
   },
 ]);

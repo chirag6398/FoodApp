@@ -4,8 +4,8 @@
 app.controller("superAdminUsersController", [
   "$scope",
   "adminApi",
-  "superAdminService",
-  function ($scope, adminApi, superAdminService) {
+  "superAdminFactory",
+  function ($scope, adminApi, superAdminFactory) {
     $scope.object = {
       page: 1,
       limit: 5,
@@ -27,7 +27,7 @@ app.controller("superAdminUsersController", [
 
     $scope.searchTextHandler = function () {
       // $scope.object.isLoading = true;
-      superAdminService.debouncing(
+      superAdminFactory.debouncing(
         $scope.object.searchUser,
         function (err, result) {
           // $scope.object.isLoading = false;
@@ -46,7 +46,7 @@ app.controller("superAdminUsersController", [
       $scope.object.searchTextResult = [];
     };
 
-    superAdminService.getUsers(
+    superAdminFactory.getUsers(
       $scope.object.filter,
       $scope.object.limit,
       $scope.object.page,
@@ -59,7 +59,7 @@ app.controller("superAdminUsersController", [
           $scope.object.totalPage = Math.ceil(
             $scope.object.totalCount / $scope.object.limit
           );
-          $scope.object.pages = superAdminService.getPages(
+          $scope.object.pages = superAdminFactory.getPages(
             $scope.object.totalCount,
             $scope.object.limit
           );
@@ -69,7 +69,7 @@ app.controller("superAdminUsersController", [
 
     $scope.getUserHandler = function (page, limit) {
       $scope.object.isLoading = true;
-      superAdminService.getUsers(
+      superAdminFactory.getUsers(
         $scope.object.filter,
         limit,
         page,
@@ -84,7 +84,7 @@ app.controller("superAdminUsersController", [
             $scope.object.totalPage = Math.ceil(
               $scope.object.totalCount / $scope.object.limit
             );
-            $scope.object.pages = superAdminService.getPages(
+            $scope.object.pages = superAdminFactory.getPages(
               $scope.object.totalCount,
               $scope.object.limit
             );
@@ -99,7 +99,7 @@ app.controller("superAdminUsersController", [
     // $scope.applyFilter = function () {
     //   console.log($scope.object.filter);
 
-    //   superAdminService.applyFilterOnUsers(
+    //   superAdminFactory.applyFilterOnUsers(
     //     $scope.object.filter,
     //     $scope.object.limit,
     //     1,

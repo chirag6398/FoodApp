@@ -203,6 +203,7 @@
 
 <div>
   <button
+    ng-if="!object.selectedBrand"
     type="button"
     class="btn btn-primary"
     data-toggle="modal"
@@ -671,3 +672,56 @@
     opacity: 0.5;
   "
 ></div>
+
+<!-- <div ng-if="!object.selectedBrand">
+  <nav
+    style="display: flex; align-items: center; justify-content: center"
+    aria-label="Page navigation example"
+  >
+    <ul
+      style="display: flex; gap: 4px"
+      class="pagination justify-content-end"
+    >
+      <button
+        class="page-item btn"
+        ng-click="navPageHandler(navPage-1)"
+        ng-disabled="object.page===object.one"
+      >
+        <a class="page-link"><i class="fa-solid fa-arrow-left"></i></a>
+      </button>
+
+      <button
+        class="page-item btn"
+        ng-click="getBrandHandler(object.page-1,object.limit)"
+        ng-disabled="object.page===object.one"
+        ng-class="{'disabled':object.page===1}"
+      >
+        <a class="page-link">Previous</a>
+      </button>
+      <button
+        class="page-item btn"
+        ng-click="getBrandHandler(navPage*navLimit+$index+1,object.limit)"
+        ng-disabled="navPage*navLimit+$index+1===object.page"
+        ng-repeat="page in object.pages |startFrom:navPage*navLimit | limitTo:navLimit track by $index"
+      >
+        <a class="page-link">{{navPage*navLimit+$index+1}}</a>
+      </button>
+
+      <button
+        ng-click="getBrandHandler(object.page+1,object.limit)"
+        ng-disabled="object.page===object.totalPage"
+        ng-class="{'disabled':object.page===object.totalPage}"
+        class="page-item btn"
+      >
+        <a class="page-link">Next</a>
+      </button>
+      <button
+        ng-click="navPageHandler(navPage+1)"
+        ng-disabled="object.page===object.totalPage"
+        class="page-item btn"
+      >
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </ul>
+  </nav>
+</div> -->

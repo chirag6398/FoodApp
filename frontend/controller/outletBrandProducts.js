@@ -4,14 +4,14 @@
 app.controller("brandProductsController", [
   "$scope",
   "outletApi",
-  "outletAdminService",
+  "outletAdminFactory",
   "apiHandler",
   "$rootScope",
   "$timeout",
   function (
     $scope,
     outletApi,
-    outletAdminService,
+    outletAdminFactory,
     apiHandler,
     $rootScope,
     $timeout
@@ -36,7 +36,7 @@ app.controller("brandProductsController", [
         console.log(data);
         $scope.object.outlet = data.data.outletData;
         $scope.object.brand = data.data.outletData.brand;
-        outletAdminService.getSuperCategories(
+        outletAdminFactory.getSuperCategories(
           $scope.object.brand._id,
           function (err, result) {
             $scope.object.isLoading = false;
@@ -49,11 +49,11 @@ app.controller("brandProductsController", [
 
     $scope.getSubCategory = function (id) {
       $scope.object.isLoading = true;
-      outletAdminService.getSubCategory(id, function (err, result) {
+      outletAdminFactory.getSubCategory(id, function (err, result) {
         console.log(err, result);
         if (result) {
           $scope.object.isLoading = false;
-          outletAdminService.scrollToSubCategory();
+          outletAdminFactory.scrollToSubCategory();
           $scope.object.subCategories = result.data;
           if ($scope.object.subCategories.length == 0) {
             alert("no sub category");
@@ -64,12 +64,12 @@ app.controller("brandProductsController", [
 
     $scope.getProducts = function (id) {
       $scope.object.isLoading = true;
-      outletAdminService.getProducts(
+      outletAdminFactory.getProducts(
         id,
         $scope.object.outlet._id,
         function (err, result) {
           $scope.object.isLoading = false;
-          outletAdminService.scrollToProducts();
+          outletAdminFactory.scrollToProducts();
           if (result.data.length) {
             $scope.object.products = result.data;
           } else if (result) {
@@ -81,13 +81,13 @@ app.controller("brandProductsController", [
 
     $scope.addProduct = function (product) {
       $scope.object.isLoading = true;
-      outletAdminService.addProductToOutlet(
+      outletAdminFactory.addProductToOutlet(
         product,
         $scope.object.outlet._id,
         function (err, result) {
           $scope.object.isLoading = false;
           if (result) {
-            var indx = outletAdminService.getIndx(
+            var indx = outletAdminFactory.getIndx(
               $scope.object.products,
               product
             );

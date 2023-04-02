@@ -5,13 +5,13 @@ app.controller("brandAdminUsersController", [
   "$scope",
   "$rootScope",
   "brandApi",
-  "brandAdminService",
+  "brandAdminFactory",
   "toastNotifications",
   function (
     $scope,
     $rootScope,
     brandApi,
-    brandAdminService,
+    brandAdminFactory,
     toastNotifications
   ) {
     $scope.object = {
@@ -49,7 +49,7 @@ app.controller("brandAdminUsersController", [
               $scope.object.totalPage = Math.ceil(
                 $scope.object.totalCount / $scope.object.limit
               );
-              $scope.object.pages = brandAdminService.getPages(
+              $scope.object.pages = brandAdminFactory.getPages(
                 $scope.object.totalCount,
                 $scope.object.limit
               );
@@ -60,7 +60,7 @@ app.controller("brandAdminUsersController", [
     });
 
     $scope.searchTextHandler = function () {
-      brandAdminService.debouncing(
+      brandAdminFactory.debouncing(
         $scope.object.searchUser,
         $scope.object.brand._id,
         function (err, result) {
@@ -100,7 +100,7 @@ app.controller("brandAdminUsersController", [
             $scope.object.totalPage = Math.ceil(
               $scope.object.totalCount / $scope.object.limit
             );
-            $scope.object.pages = brandAdminService.getPages(
+            $scope.object.pages = brandAdminFactory.getPages(
               $scope.object.totalCount,
               $scope.object.limit
             );

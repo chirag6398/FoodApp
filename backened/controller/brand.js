@@ -64,10 +64,13 @@ module.exports = {
               return res.send({ message: "created with image", data: result });
             })
             .catch(function (err) {
-              return res.status(400).send({
-                message:
-                  "brand name or email exists ,please enter unique values",
-              });
+              let errMsg;
+              if (err.code == 11000) {
+                errMsg = Object.keys(err.keyValue)[0] + " already exists.";
+              } else {
+                errMsg = "unknown error please try later";
+              }
+              res.status(400).send({ message: errMsg });
             });
         })
         .catch(function (err) {

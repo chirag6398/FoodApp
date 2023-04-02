@@ -4,7 +4,7 @@ app.controller("outletAgentController", [
   "$scope",
   "$location",
   "outletAgentFactory",
-  "outletAgentService",
+  "outletAgentFactory",
   "$interval",
   "$state",
   "toastNotifications",
@@ -12,14 +12,14 @@ app.controller("outletAgentController", [
     $scope,
     $location,
     outletAgentFactory,
-    outletAgentService,
+    outletAgentFactory,
     $interval,
     $state,
     toastNotifications
   ) {
     $scope.isLoading = true;
 
-    outletAgentService.getOutletAgentPage(function (err, result) {
+    outletAgentFactory.getOutletAgentPage(function (err, result) {
       $scope.isLoading = false;
       if (result) {
         $scope.object = result;
@@ -72,7 +72,7 @@ app.controller("outletAgentController", [
 
     $scope.setOrderType = function (type) {
       if (type === "Dine-in") {
-        var value = outletAgentService.isTableAvailable(
+        var value = outletAgentFactory.isTableAvailable(
           $scope.object.customer.personCount,
           $scope.object.tables
         );
@@ -97,15 +97,15 @@ app.controller("outletAgentController", [
     };
 
     $scope.addToCart = function (product) {
-      $scope.object.cart = outletAgentService.addToCart(
+      $scope.object.cart = outletAgentFactory.addToCart(
         $scope.object.cart,
         product
       );
-      $scope.object.cartProducts = outletAgentService.cartsProducts(
+      $scope.object.cartProducts = outletAgentFactory.cartsProducts(
         $scope.object.cart
       );
       if ($scope.object.cartProducts.length < 3) {
-        outletAgentService.getRecommendedProduct(
+        outletAgentFactory.getRecommendedProduct(
           $scope.object.cartProducts,
           $scope.object.outlet._id,
           function (err, result) {
@@ -117,26 +117,26 @@ app.controller("outletAgentController", [
         $scope.object.recommendedProducts = [];
       }
 
-      $scope.object.amount = outletAgentService.totalPrice($scope.object.cart);
+      $scope.object.amount = outletAgentFactory.totalPrice($scope.object.cart);
       $scope.object.payableAmount =
         $scope.object.amount +
-        outletAgentService.addTaxes($scope.object.taxes, $scope.object.amount);
+        outletAgentFactory.addTaxes($scope.object.taxes, $scope.object.amount);
     };
 
     $scope.plus = function (product) {
-      $scope.object.cart = outletAgentService.addToCart(
+      $scope.object.cart = outletAgentFactory.addToCart(
         $scope.object.cart,
         product
       );
 
-      $scope.object.amount = outletAgentService.totalPrice($scope.object.cart);
+      $scope.object.amount = outletAgentFactory.totalPrice($scope.object.cart);
       $scope.object.payableAmount =
         $scope.object.amount +
-        outletAgentService.addTaxes($scope.object.taxes, $scope.object.amount);
+        outletAgentFactory.addTaxes($scope.object.taxes, $scope.object.amount);
     };
 
     $scope.minus = function (product) {
-      $scope.object.cart = outletAgentService.removeFromCart(
+      $scope.object.cart = outletAgentFactory.removeFromCart(
         $scope.object.cart,
         product
       );
@@ -144,16 +144,16 @@ app.controller("outletAgentController", [
       if ($scope.object.cart.length === 0)
         $scope.object.recommendedProducts = [];
 
-      $scope.object.amount = outletAgentService.totalPrice($scope.object.cart);
+      $scope.object.amount = outletAgentFactory.totalPrice($scope.object.cart);
       $scope.object.payableAmount =
         $scope.object.amount +
-        outletAgentService.addTaxes($scope.object.taxes, $scope.object.amount);
+        outletAgentFactory.addTaxes($scope.object.taxes, $scope.object.amount);
     };
 
     $scope.orderHandler = function () {
       $scope.object.orderBtn = "placing...";
       // console.log($scope.object.type);
-      outletAgentService.placeOrder(
+      outletAgentFactory.placeOrder(
         $scope.object.customer,
         $scope.object.type,
         $scope.object.orderNo,
@@ -171,7 +171,7 @@ app.controller("outletAgentController", [
               $scope.object.allotedTables
             );
             if ($scope.type === "dine-in") {
-              var indx = outletAgentService.updateTablesIndexes(
+              var indx = outletAgentFactory.updateTablesIndexes(
                 $scope.object.tables,
                 $scope.object.allotedTables
               );
@@ -181,7 +181,7 @@ app.controller("outletAgentController", [
               });
             }
 
-            $scope.orderNo = outletAgentService.generateOrderId();
+            $scope.orderNo = outletAgentFactory.generateOrderId();
             $scope.object.cart = [];
             $scope.object.amount = 0;
             $scope.object.saved = false;

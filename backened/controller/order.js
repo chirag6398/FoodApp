@@ -33,16 +33,12 @@ module.exports = {
 
       Promise.all([data1, data2])
         .then(function (result) {
-          console.log(result);
           socket.emit("outlet" + result.outlet._id, result);
-          console.log(socket);
-          socket.emit("hi", "hello");
           return res.send(result);
         })
         .catch(function (err) {
           console.log(err);
-
-          return res.status(500).send({ error: err });
+          return res.status(500).send({ message: "internal server error" });
         });
     } else {
       order = new orderModel({
@@ -65,8 +61,7 @@ module.exports = {
         })
         .catch(function (err) {
           console.log(err);
-
-          return res.status(500).send({ error: err });
+          return res.status(500).send({ message: "internal server error" });
         });
     }
   },
@@ -97,7 +92,7 @@ module.exports = {
       .catch(function (err) {
         console.log(err);
 
-        return res.status(500).send({ error: err });
+        return res.status(500).send({ message: "internal server error" });
       });
   },
   updateStatus: function (req, res) {

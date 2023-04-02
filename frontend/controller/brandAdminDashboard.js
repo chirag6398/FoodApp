@@ -6,16 +6,16 @@ app.controller("brandAdminDashboardController", [
   "brandApi",
   "brandAdminDashBoardApi",
   "$timeout",
-  "brandAdminService",
-  "superAdminService",
+  "brandAdminFactory",
+  "superAdminFactory",
   function (
     $scope,
     $rootScope,
     brandApi,
     brandAdminDashBoardApi,
     $timeout,
-    brandAdminService,
-    superAdminService
+    brandAdminFactory,
+    superAdminFactory
   ) {
     // $timeout(function () {
     //   if ($scope.object.myChart1 === null) {
@@ -28,7 +28,7 @@ app.controller("brandAdminDashboardController", [
     $rootScope.$on("passData", function (err, result) {
       if (result) {
         console.log(result);
-        brandAdminService.getBasicData(result, function (err, result) {
+        brandAdminFactory.getBasicData(result, function (err, result) {
           console.log(result);
           $scope.isLoading = false;
           $scope.object = result;
@@ -37,7 +37,7 @@ app.controller("brandAdminDashboardController", [
             $scope.object.myChart1.destroy();
           }
 
-          $scope.object.myChart1 = superAdminService.displayGraph(
+          $scope.object.myChart1 = superAdminFactory.displayGraph(
             $scope.object.brandDates,
             $scope.object.brandRevenue,
             $scope.object.brand.name,
@@ -55,7 +55,7 @@ app.controller("brandAdminDashboardController", [
           console.log(err, result);
           if (result.data) {
             $scope.object.outletOrdersData = result.data[1];
-            $scope.object.ordersAnalysis = brandAdminService.getOrderAnalysis(
+            $scope.object.ordersAnalysis = brandAdminFactory.getOrderAnalysis(
               result.data[1]
             );
 
@@ -65,7 +65,7 @@ app.controller("brandAdminDashboardController", [
               $scope.object.myChart2.destroy();
             }
 
-            $scope.object.activity = brandAdminService.getGraphData(
+            $scope.object.activity = brandAdminFactory.getGraphData(
               $scope.object.month,
               result.data[0]
             );
@@ -77,7 +77,7 @@ app.controller("brandAdminDashboardController", [
               $scope.object.myChart2.destroy();
             }
 
-            $scope.object.myChart2 = superAdminService.displayGraph(
+            $scope.object.myChart2 = superAdminFactory.displayGraph(
               $scope.object.outletDates,
               $scope.object.outletRevenue,
               outletName,
@@ -97,14 +97,14 @@ app.controller("brandAdminDashboardController", [
         $scope.object.currentYear,
         function (err, result) {
           if (result.data) {
-            $scope.object.activity = brandAdminService.getGraphData(
+            $scope.object.activity = brandAdminFactory.getGraphData(
               $scope.object.month,
               result.data[0]
             );
 
             $scope.object.brandDates = $scope.object.activity.dates;
             $scope.object.brandRevenue = $scope.object.activity.activity;
-            $scope.object.activity = brandAdminService.getActivityData(
+            $scope.object.activity = brandAdminFactory.getActivityData(
               $scope.object.month,
               result.data[1]
             );
@@ -116,7 +116,7 @@ app.controller("brandAdminDashboardController", [
               $scope.object.myChart1.destroy();
             }
 
-            $scope.object.myChart1 = superAdminService.displayGraph(
+            $scope.object.myChart1 = superAdminFactory.displayGraph(
               $scope.object.brandDates,
               $scope.object.brandRevenue,
               $scope.object.brand.name,

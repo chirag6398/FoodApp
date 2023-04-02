@@ -2,11 +2,11 @@
 
 app.controller("outletAdminSettingController", [
   "$scope",
-  "outletAdminService",
+  "outletAdminFactory",
   "$location",
   "outletApi",
   "$rootScope",
-  function ($scope, outletAdminService, $location, outletApi, $rootScope) {
+  function ($scope, outletAdminFactory, $location, outletApi, $rootScope) {
     $scope.object = {
       taxes: [],
       tables: [],
@@ -27,7 +27,7 @@ app.controller("outletAdminSettingController", [
     });
 
     $scope.addTax = function () {
-      outletAdminService.addTax(
+      outletAdminFactory.addTax(
         $scope.object.outlet._id,
         $scope.object.tax,
         function (err, result) {
@@ -42,7 +42,7 @@ app.controller("outletAdminSettingController", [
 
     $scope.addTableData = function () {
       if (
-        !outletAdminService.isExistTable(
+        !outletAdminFactory.isExistTable(
           $scope.object.table,
           $scope.object.tables
         )
@@ -55,7 +55,7 @@ app.controller("outletAdminSettingController", [
     };
 
     $scope.saveTableView = function () {
-      outletAdminService.saveTableView(
+      outletAdminFactory.saveTableView(
         $scope.object.outlet._id,
         $scope.object.addingTables,
         function (err, result) {

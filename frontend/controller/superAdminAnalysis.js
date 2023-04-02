@@ -4,12 +4,12 @@
 app.controller("superAdminAnalysisController", [
   "$scope",
   "superAdminDashBoardApi",
-  "superAdminService",
+  "superAdminFactory",
   "$rootScope",
-  function ($scope, superAdminDashBoardApi, superAdminService, $rootScope) {
-    superAdminService.displayMap();
+  function ($scope, superAdminDashBoardApi, superAdminFactory, $rootScope) {
+    superAdminFactory.displayMap();
     $scope.isLoading = true;
-    superAdminService.getBasicData(function (err, result) {
+    superAdminFactory.getBasicData(function (err, result) {
       $scope.isLoading = false;
       if (result) {
         console.log(result);
@@ -19,7 +19,7 @@ app.controller("superAdminAnalysisController", [
           $scope.object.chart4.destroy();
         }
 
-        $scope.object.chart4 = superAdminService.displayTypeGraph(
+        $scope.object.chart4 = superAdminFactory.displayTypeGraph(
           $scope.object.outletsRanking.names,
           $scope.object.outletsRanking.revenue,
           "doughnut",
@@ -28,7 +28,7 @@ app.controller("superAdminAnalysisController", [
           $scope.object.chart4
         );
 
-        $scope.object.chart5 = superAdminService.displayTypeGraph(
+        $scope.object.chart5 = superAdminFactory.displayTypeGraph(
           $scope.object.userPerBrand.names,
           $scope.object.userPerBrand.cnts,
           "pie",
@@ -37,7 +37,7 @@ app.controller("superAdminAnalysisController", [
           $scope.object.chart5
         );
 
-        $scope.object.chart1 = superAdminService.compareGraph(
+        $scope.object.chart1 = superAdminFactory.compareGraph(
           $scope.object.dates,
           $scope.object.revenue,
           $scope.object.topBrandName,
@@ -51,7 +51,7 @@ app.controller("superAdminAnalysisController", [
     });
 
     $scope.searchTextHandler = function () {
-      superAdminService.searchDashboardBrandDebouncing(
+      superAdminFactory.searchDashboardBrandDebouncing(
         $scope.object.searchBrand,
         function (err, result) {
           console.log(err, result);
@@ -86,7 +86,7 @@ app.controller("superAdminAnalysisController", [
           $scope.isLoading = false;
           console.log(err, result);
           if (result.data) {
-            $scope.object.graphData = superAdminService.createGraphData(
+            $scope.object.graphData = superAdminFactory.createGraphData(
               result.data
             );
             if ($scope.object.chart2) {
@@ -96,7 +96,7 @@ app.controller("superAdminAnalysisController", [
             $scope.object.brandDates = $scope.object.graphData.dates;
             $scope.object.brandRevenue = $scope.object.graphData.revenue;
 
-            $scope.object.chart2 = superAdminService.displayGraph(
+            $scope.object.chart2 = superAdminFactory.displayGraph(
               $scope.object.brandDates,
               $scope.object.brandRevenue,
               brandName,
@@ -116,7 +116,7 @@ app.controller("superAdminAnalysisController", [
         function (err, result) {
           $scope.isLoading = false;
           if (result.data) {
-            $scope.object.graphData = superAdminService.createGraphData(
+            $scope.object.graphData = superAdminFactory.createGraphData(
               result.data
             );
 
@@ -127,7 +127,7 @@ app.controller("superAdminAnalysisController", [
               $scope.object.chart3.destroy();
             }
 
-            $scope.object.chart3 = superAdminService.displayGraph(
+            $scope.object.chart3 = superAdminFactory.displayGraph(
               $scope.object.outletDates,
               $scope.object.outletRevenue,
               outletName,
@@ -148,7 +148,7 @@ app.controller("superAdminAnalysisController", [
           console.log(err, result);
           $scope.isLoading = false;
           if (result.data.length) {
-            $scope.object.graphData = superAdminService.createGraphData(
+            $scope.object.graphData = superAdminFactory.createGraphData(
               result.data[0]
             );
 
@@ -156,7 +156,7 @@ app.controller("superAdminAnalysisController", [
             $scope.object.revenue = $scope.object.graphData.revenue;
             $scope.object.topBrandName = result.data[0][0].name;
             if (result.data.length >= 3)
-              $scope.object.graphData = superAdminService.createGraphData(
+              $scope.object.graphData = superAdminFactory.createGraphData(
                 result.data[3]
               );
 
@@ -168,7 +168,7 @@ app.controller("superAdminAnalysisController", [
             if ($scope.object.chart1) {
               $scope.object.chart1.destroy();
             }
-            $scope.object.chart1 = superAdminService.compareGraph(
+            $scope.object.chart1 = superAdminFactory.compareGraph(
               $scope.object.dates,
               $scope.object.revenue,
               $scope.object.topBrandName,
@@ -179,13 +179,13 @@ app.controller("superAdminAnalysisController", [
               $scope.object.chart1
             );
           } else {
-            $scope.object.graphData = superAdminService.createGraphData([]);
+            $scope.object.graphData = superAdminFactory.createGraphData([]);
 
             $scope.object.dates = $scope.object.graphData.dates;
             $scope.object.revenue = $scope.object.graphData.revenue;
             $scope.object.topBrandName = "None";
 
-            $scope.object.graphData = superAdminService.createGraphData([]);
+            $scope.object.graphData = superAdminFactory.createGraphData([]);
 
             $scope.object.topSecondBrandDates = $scope.object.graphData.dates;
             $scope.object.topSecondBrandRevenue =
@@ -195,7 +195,7 @@ app.controller("superAdminAnalysisController", [
             if ($scope.object.chart1) {
               $scope.object.chart1.destroy();
             }
-            $scope.object.chart1 = superAdminService.compareGraph(
+            $scope.object.chart1 = superAdminFactory.compareGraph(
               $scope.object.dates,
               $scope.object.revenue,
               $scope.object.topBrandName,

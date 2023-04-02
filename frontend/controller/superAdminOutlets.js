@@ -2,9 +2,9 @@
 
 app.controller("superAdminOutletsController", [
   "$scope",
-  "superAdminService",
+  "superAdminFactory",
   "$rootScope",
-  function ($scope, superAdminService, $rootScope) {
+  function ($scope, superAdminFactory, $rootScope) {
     $scope.object = {
       outlets: null,
       isLoading: true,
@@ -23,7 +23,7 @@ app.controller("superAdminOutletsController", [
       searchTextResult: [],
     };
 
-    superAdminService.getOutlets(
+    superAdminFactory.getOutlets(
       $scope.object.filter,
       $scope.object.limit,
       $scope.object.page,
@@ -36,7 +36,7 @@ app.controller("superAdminOutletsController", [
           $scope.object.totalPage = Math.ceil(
             $scope.object.totalCount / $scope.object.limit
           );
-          $scope.object.pages = superAdminService.getPages(
+          $scope.object.pages = superAdminFactory.getPages(
             $scope.object.totalCount,
             $scope.object.limit
           );
@@ -45,7 +45,7 @@ app.controller("superAdminOutletsController", [
     );
 
     $scope.searchTextHandler = function () {
-      superAdminService.outletDebouncing(
+      superAdminFactory.outletDebouncing(
         $scope.object.searchOutlet,
         function (err, result) {
           // $scope.object.isLoading = false;
@@ -66,7 +66,7 @@ app.controller("superAdminOutletsController", [
 
     $scope.getOutletHandler = function (page, limit) {
       $scope.object.isLoading = true;
-      superAdminService.getOutlets(
+      superAdminFactory.getOutlets(
         $scope.object.filter,
         limit,
         page,
@@ -81,7 +81,7 @@ app.controller("superAdminOutletsController", [
             $scope.object.totalPage = Math.ceil(
               $scope.object.totalCount / $scope.object.limit
             );
-            $scope.object.pages = superAdminService.getPages(
+            $scope.object.pages = superAdminFactory.getPages(
               $scope.object.totalCount,
               $scope.object.limit
             );

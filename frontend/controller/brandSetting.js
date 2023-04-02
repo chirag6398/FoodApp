@@ -4,10 +4,9 @@
 app.controller("brandSettingController", [
   "$scope",
   "$stateParams",
-  "$stateParams",
   "brandApi",
   "toastNotifications",
-  function ($scope, $stateParams, $stateParams, brandApi, toastNotifications) {
+  function ($scope, $stateParams, brandApi, toastNotifications) {
     brandApi.getAdmin($stateParams.id, function (err, result) {
       console.log(err, result);
       if (result) {

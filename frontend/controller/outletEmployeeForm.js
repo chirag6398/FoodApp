@@ -3,14 +3,14 @@
 
 app.controller("outletEmployeeFormController", [
   "$scope",
-  "outletAdminService",
+  "outletAdminFactory",
   "$location",
   "apiHandler",
   "outletApi",
   "$rootScope",
   function (
     $scope,
-    outletAdminService,
+    outletAdminFactory,
     $location,
     apiHandler,
     outletApi,
@@ -29,7 +29,7 @@ app.controller("outletEmployeeFormController", [
       if (data) {
         $scope.object.outlet = data.data.outletData;
 
-        outletAdminService.getOutletAgentEmployees(
+        outletAdminFactory.getOutletAgentEmployees(
           $scope.object.outlet._id,
           function (err, result) {
             $scope.object.isLoading = false;
@@ -46,7 +46,7 @@ app.controller("outletEmployeeFormController", [
       $event.preventDefault();
       $scope.object.btnText = "creating...";
 
-      outletAdminService.createOutletAgent(
+      outletAdminFactory.createOutletAgent(
         $scope.object.agent,
         $scope.object.outlet,
         function (err, result) {

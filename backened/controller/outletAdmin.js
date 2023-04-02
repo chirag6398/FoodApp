@@ -9,34 +9,28 @@ const superCategoryModel = require("../model/superCategory.model");
 
 module.exports = {
   getAdminPage: function (req, res) {
-    if (req.user.userType === "outletAdmin") {
-      console.log(req.user);
-      outletModel
-        .findById({ _id: req.user.outlet._id })
-        .then(function (result) {
-          return brandModel
-            .findById({ _id: result.brand._id }, { brandLogo: 1 })
-            .then(function (brand) {
-              console.log("brand outletadmin id", brand);
-              return res.status(200).send({
-                outletData: result,
-                outletAdminData: req.user,
-                brandLogo: brand.logo,
-                brandId: brand._id,
-              });
-            })
-            .catch(function (err) {
-              console.log(err);
-              return res
-                .status(500)
-                .send({ status: 500, message: "try later" });
+    outletModel
+      .findById({ _id: req.user.outlet._id })
+      .then(function (result) {
+        return brandModel
+          .findById({ _id: result.brand._id }, { brandLogo: 1 })
+          .then(function (brand) {
+            return res.status(200).send({
+              outletData: result,
+              outletAdminData: req.user,
+              brandLogo: brand.logo,
+              brandId: brand._id,
             });
-        })
-        .catch(function (err) {
-          console.log(err);
-          return res.status(500).send({ status: 500, message: "try later" });
-        });
-    }
+          })
+          .catch(function (err) {
+            console.log(err);
+            return res.status(500).send({ status: 500, message: "try later" });
+          });
+      })
+      .catch(function (err) {
+        console.log(err);
+        return res.status(500).send({ status: 500, message: "try later" });
+      });
   },
   categoryProduct: function (req, res) {
     console.log(req.body);
@@ -252,14 +246,14 @@ module.exports = {
         });
       })
       .catch(function (err) {
-        console.log(err);
-        return res
-          .status(500)
-          .send({ error: "internal server error", status: 500 });
+        let errMsg;
+        if (err.code == 11000) {
+          errMsg = Object.keys(err.keyValue)[0] + " already exists.";
+        } else {
+          errMsg = "unknown error please try later";
+        }
+        res.status(400).send({ message: errMsg });
       });
-    // } else {
-    //   return res.status(500).send({ error: "try later", status: 500 });
-    // }
   },
   updateOutletData: function (req, res) {
     var body = req.body;

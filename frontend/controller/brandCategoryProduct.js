@@ -6,14 +6,14 @@ app.controller("categoryProductController", [
   "$rootScope",
   "brandApi",
   "$stateParams",
-  "brandAdminService",
+  "brandAdminFactory",
   "toastNotifications",
   function (
     $scope,
     $rootScope,
     brandApi,
     $stateParams,
-    brandAdminService,
+    brandAdminFactory,
     toastNotifications
   ) {
     $scope.object = {
@@ -23,7 +23,7 @@ app.controller("categoryProductController", [
       updateProduct: null,
     };
 
-    brandAdminService.getProductsInBrand(function (err, result) {
+    brandAdminFactory.getProductsInBrand(function (err, result) {
       if (result) {
         console.log(result);
         $scope.object.products = result.data;
@@ -40,7 +40,7 @@ app.controller("categoryProductController", [
     $scope.updateProductHandler = function ($event) {
       $event.preventDefault();
 
-      brandAdminService.updateProduct(
+      brandAdminFactory.updateProduct(
         $scope.object.updateProduct,
         function (err, result) {
           console.log(err, result);
@@ -56,7 +56,7 @@ app.controller("categoryProductController", [
     $scope.createProduct = function ($event) {
       $event.preventDefault();
       $scope.object.btnText = "adding";
-      brandAdminService.addProduct(
+      brandAdminFactory.addProduct(
         $scope.object.product,
         function (err, result) {
           if (result) {

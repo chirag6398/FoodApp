@@ -2,15 +2,15 @@
 
 app.controller("outletAgentOrdersController", [
   "$scope",
-  "outletAgentFactory",
   "outletAgentService",
+  "outletAgentFactory",
   "$stateParams",
   "socketService",
   "toastNotifications",
   function (
     $scope,
-    outletAgentFactory,
     outletAgentService,
+    outletAgentFactory,
     $stateParams,
     socketService,
     toastNotifications
@@ -21,9 +21,9 @@ app.controller("outletAgentOrdersController", [
       $scope.object.orders.push(data);
     });
 
-    outletAgentFactory.getOutletAgentPage(function (err, result) {
+    outletAgentService.getOutletAgentPage(function (err, result) {
       if (result) {
-        outletAgentService.getOrders(result, function (err, result) {
+        outletAgentFactory.getOrders(result, function (err, result) {
           $scope.isLoading = false;
           if (result) {
             $scope.object = result;
@@ -36,7 +36,7 @@ app.controller("outletAgentOrdersController", [
 
     $scope.setType = function (value) {
       $scope.object.filter.type = value;
-      outletAgentService.getOrder($scope.object, function (err, result) {
+      outletAgentFactory.getOrder($scope.object, function (err, result) {
         $scope.isLoading = false;
         if (result) {
           $scope.object.orders = result;
@@ -46,7 +46,7 @@ app.controller("outletAgentOrdersController", [
 
     $scope.setFilter = function (value) {
       $scope.object.filter.status = value;
-      outletAgentService.getOrder($scope.object, function (err, result) {
+      outletAgentFactory.getOrder($scope.object, function (err, result) {
         $scope.isLoading = false;
         if (result) {
           $scope.object.orders = result;
@@ -62,11 +62,11 @@ app.controller("outletAgentOrdersController", [
     };
 
     $scope.updateStatus = function (status, orderId) {
-      outletAgentService.updateStatus(status, orderId, function (err, result) {
+      outletAgentFactory.updateStatus(status, orderId, function (err, result) {
         if (result) {
           toastNotifications.info("status updated ");
 
-          var indx = outletAgentService.getIndxById(
+          var indx = outletAgentFactory.getIndxById(
             $scope.object.orders,
             orderId
           );
@@ -88,7 +88,7 @@ app.controller("outletAgentOrdersController", [
       tableNumbers,
       type
     ) {
-      outletAgentService.updateStatusToCompleted(
+      outletAgentFactory.updateStatusToCompleted(
         status,
         orderId,
         tableNumbers,
@@ -96,7 +96,7 @@ app.controller("outletAgentOrdersController", [
         type,
         function (err, result) {
           if (result) {
-            var indx = outletAgentService.getIndxById(
+            var indx = outletAgentFactory.getIndxById(
               $scope.object.orders,
               orderId
             );
@@ -114,7 +114,7 @@ app.controller("outletAgentOrdersController", [
     };
 
     $scope.swapTableHandler = function (table, index) {
-      var existIndex = outletAgentService.checkExistanceOfTable(
+      var existIndex = outletAgentFactory.checkExistanceOfTable(
         $scope.object.newTable,
         table
       );
@@ -129,7 +129,7 @@ app.controller("outletAgentOrdersController", [
 
     $scope.updateTableNo = function (orderId, oldTables) {
       $scope.object.swapBtn = "Applying";
-      outletAgentService.updateTableNo(
+      outletAgentFactory.updateTableNo(
         orderId,
         $scope.object.outlet._id,
         $scope.object.newTable,
@@ -138,7 +138,7 @@ app.controller("outletAgentOrdersController", [
           console.log(err, result);
           if (result) {
             $scope.object.swapBtn = "Applied";
-            var indx = outletAgentService.getIndxById(
+            var indx = outletAgentFactory.getIndxById(
               $scope.object.orders,
               orderId
             );

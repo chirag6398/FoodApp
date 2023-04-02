@@ -6,14 +6,14 @@ app.controller("outletAdminDashboardController", [
   "$rootScope",
   "outletApi",
   "$timeout",
-  "outletAdminService",
+  "outletAdminFactory",
   function (
     $scope,
     outletAdminDashBoardApi,
     $rootScope,
     outletApi,
     $timeout,
-    outletAdminService
+    outletAdminFactory
   ) {
     $scope.isLoading = true;
 
@@ -29,7 +29,7 @@ app.controller("outletAdminDashboardController", [
       if (data) {
         $scope.object.outlet = data.data.outletData;
 
-        outletAdminService.getBasicData(
+        outletAdminFactory.getBasicData(
           $scope.object.outlet,
           function (err, result) {
             console.log(err, result);
@@ -41,7 +41,7 @@ app.controller("outletAdminDashboardController", [
                 $scope.object.myChart1.destroy();
               }
 
-              $scope.object.myChart1 = outletAdminService.displayGraph(
+              $scope.object.myChart1 = outletAdminFactory.displayGraph(
                 $scope.object.outletDates,
                 $scope.object.outletRevenue,
                 $scope.object.outlet.name,
@@ -63,7 +63,7 @@ app.controller("outletAdminDashboardController", [
         function (err, result) {
           // console.log(err, result);
           if (result) {
-            $scope.object.activity = outletAdminService.getActivityData(
+            $scope.object.activity = outletAdminFactory.getActivityData(
               month,
               result.data[0]
             );
@@ -85,7 +85,7 @@ app.controller("outletAdminDashboardController", [
         $scope.object.outlet._id,
         function (err, result) {
           if (result) {
-            $scope.object.activity = outletAdminService.getOutletGraphData(
+            $scope.object.activity = outletAdminFactory.getOutletGraphData(
               $scope.object.month1,
               result.data
             );
@@ -97,7 +97,7 @@ app.controller("outletAdminDashboardController", [
               $scope.object.myChart1.destroy();
             }
 
-            $scope.object.myChart1 = outletAdminService.displayGraph(
+            $scope.object.myChart1 = outletAdminFactory.displayGraph(
               $scope.object.outletDates,
               $scope.object.outletRevenue,
               $scope.object.outlet.name,

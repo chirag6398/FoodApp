@@ -5,14 +5,14 @@ app.controller("superAdminBrandDataController", [
   "$location",
   "adminApi",
   "$stateParams",
-  "superAdminService",
+  "superAdminFactory",
   "toastNotifications",
   function (
     $scope,
     $location,
     adminApi,
     $stateParams,
-    superAdminService,
+    superAdminFactory,
     toastNotifications
   ) {
     $scope.object = {
@@ -31,7 +31,7 @@ app.controller("superAdminBrandDataController", [
     });
 
     $scope.changeLogo = function ($event) {
-      superAdminService.changeLogo(
+      superAdminFactory.changeLogo(
         $scope.object.brand._id,
         $scope.object.data.logo,
         function (err, result) {
@@ -47,7 +47,7 @@ app.controller("superAdminBrandDataController", [
     };
 
     $scope.updateName = function () {
-      superAdminService.updateName(
+      superAdminFactory.updateName(
         $scope.object.brand._id,
         $scope.object.data.name,
         function (err, result) {
@@ -62,7 +62,7 @@ app.controller("superAdminBrandDataController", [
     };
 
     $scope.updateLocation = function () {
-      superAdminService.updateLocation(
+      superAdminFactory.updateLocation(
         $scope.object.data.location,
         $scope.object.brand._id,
         function (err, result) {
@@ -75,7 +75,7 @@ app.controller("superAdminBrandDataController", [
       );
     };
     $scope.updateContactInfo = function () {
-      superAdminService.updateContactInfo(
+      superAdminFactory.updateContactInfo(
         $scope.object.data.contactInfo,
         $scope.object.brand._id,
         function (err, result) {

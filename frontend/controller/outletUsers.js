@@ -4,14 +4,14 @@
 app.controller("outletUsersController", [
   "$scope",
   "$state",
-  "outletAdminService",
+  "outletAdminFactory",
   "outletApi",
   "$rootScope",
   "toastNotifications",
   function (
     $scope,
     $state,
-    outletAdminService,
+    outletAdminFactory,
     outletApi,
     $rootScope,
     toastNotifications
@@ -21,7 +21,7 @@ app.controller("outletUsersController", [
     $rootScope.$on("passData", function (err, data) {
       if (data) {
         console.log(data);
-        outletAdminService.getUsers(data, function (err, result) {
+        outletAdminFactory.getUsers(data, function (err, result) {
           if (result) {
             $scope.object = result;
             console.log($scope.object);
@@ -71,7 +71,7 @@ app.controller("outletUsersController", [
             $scope.object.totalPage = Math.ceil(
               $scope.object.totalCount / $scope.object.limit
             );
-            $scope.object.pages = outletAdminService.getPages(
+            $scope.object.pages = outletAdminFactory.getPages(
               $scope.object.totalCount,
               $scope.object.limit
             );
