@@ -106,6 +106,7 @@
           <th scope="col">UserName</th>
           <th scope="col">Email</th>
           <th scope="col">Phone Number</th>
+          <th scope="col">Address</th>
           <th scope="col">Brand</th>
           <th scope="col">Type</th>
         </tr>
@@ -116,6 +117,13 @@
           <td>{{user.userName}}</td>
           <td>{{user.email}}</td>
           <td>{{user.number}}</td>
+          <td>
+            <div>
+              <span> {{user.location.address}} </span>
+              <span> -({{user.location.pinCode}}) </span>
+              <span> ,{{user.location.city}} </span>
+            </div>
+          </td>
           <td>{{user.brand.name}}</td>
           <td>{{user.userType}}</td>
         </tr>

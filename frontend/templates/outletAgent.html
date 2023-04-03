@@ -248,6 +248,16 @@
         </div>
         <span class="agt__itemsNumbering"></span>
         <div class="items">
+          <div style="margin-bottom: 6px" class="agt__products1">
+            <div
+              class="agt__product"
+              ng-class="{'activeCategory':object.isSelected1===$index}"
+              ng-click="setIndexingForCategory($index)"
+              ng-repeat="category in object.subCategory"
+            >
+              <span> {{category}} </span>
+            </div>
+          </div>
           <!-- {{products}} -->
 
           <div class="agt__products1">
@@ -313,7 +323,7 @@
           <!-- {{object.productsData}} -->
           <div class="agt__categoryCard">
             <div
-              ng-class="{'agt__active': object.isSelected==$index}"
+              ng-class="{'activeCategory': object.isSelected==$index}"
               style="
                 min-width: 145px;
                 min-height: 64px;
@@ -321,10 +331,10 @@
                 align-items: center;
                 justify-content: center;
               "
-              ng-repeat="category in object.productsData.categories"
+              ng-repeat="superCategory in object.productsData.superCategories"
               ng-click="setIndexing($index)"
             >
-              <div style="font-weight: bold">{{category}}</div>
+              <div style="font-weight: bold">{{superCategory}}</div>
             </div>
           </div>
         </div>

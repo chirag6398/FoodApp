@@ -23,6 +23,7 @@ app.controller("outletAgentController", [
       $scope.isLoading = false;
       if (result) {
         $scope.object = result;
+        console.log(result);
         $interval(function () {
           $scope.object.currentTime = new Date();
         }, 1000);
@@ -200,13 +201,22 @@ app.controller("outletAgentController", [
 
     $scope.setIndexing = function (ind) {
       $scope.object.isSelected = ind;
-
+      $scope.object.subCategory =
+        $scope.object.productsData.categoryInSuperCategory[
+          $scope.object.productsData.superCategories[$scope.object.isSelected]
+        ];
       $scope.object.products =
         $scope.object.productsData.categoryProducts[
-          $scope.object.productsData.categories[$scope.object.isSelected]
+          $scope.object.subCategory[0]
         ];
+    };
 
-      console.log($scope.object.products);
+    $scope.setIndexingForCategory = function (ind) {
+      $scope.object.isSelected1 = ind;
+      $scope.object.products =
+        $scope.object.productsData.categoryProducts[
+          $scope.object.productsData.categories[$scope.object.isSelected1]
+        ];
     };
 
     $scope.logOutHandler = function () {

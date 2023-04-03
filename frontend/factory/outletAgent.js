@@ -5,12 +5,21 @@ app.factory("outletAgentFactory", function (outletAgentService) {
   obj.groupProductByCategories = function (products) {
     var categoryProducts = {};
     var categories = [];
+    var superCategories = [];
+    var categoryInSuperCategory = {};
+
     products.forEach(function (value) {
       var categoryName = value.product.superCategory.category.name;
+      var superCategoryName = value.product.superCategory.name;
+
       var product = value.product;
       var indx = categories.findIndex(function (value) {
         return value === categoryName;
       });
+      var indx1 = superCategories.findIndex(function (value) {
+        return value === superCategoryName;
+      });
+
       if (indx !== -1) {
         categoryProducts[categoryName].push(product);
       } else {
@@ -20,9 +29,30 @@ app.factory("outletAgentFactory", function (outletAgentService) {
           [categoryName]: [product],
         };
       }
+
+      if (indx1 !== -1) {
+        var exist = categoryInSuperCategory[superCategoryName].findIndex(
+          function (value) {
+            return value === categoryName;
+          }
+        );
+        if (exist === -1)
+          categoryInSuperCategory[superCategoryName].push(categoryName);
+      } else {
+        superCategories.push(superCategoryName);
+        categoryInSuperCategory = {
+          ...categoryInSuperCategory,
+          [superCategoryName]: [categoryName],
+        };
+      }
     });
 
-    return { categories, categoryProducts };
+    return {
+      categories,
+      categoryProducts,
+      superCategories,
+      categoryInSuperCategory,
+    };
   };
   obj.addToCart = function (cart, product) {
     if (cart === undefined) cart = [];
@@ -97,9 +127,11 @@ app.factory("outletAgentFactory", function (outletAgentService) {
         var admin = data.agent;
         var taxes = data.outlet.taxes;
         var productsData = obj.groupProductByCategories(outlet.products);
+        var subCategory =
+          productsData.categoryInSuperCategory[productsData.superCategories[0]];
 
-        var products =
-          productsData.categoryProducts[productsData.categories[0]];
+        var products = productsData.categoryProducts[subCategory[0]];
+        // var products = [];
 
         var currentTime = null;
         var orderNo = obj.generateOrderId();
@@ -111,6 +143,7 @@ app.factory("outletAgentFactory", function (outletAgentService) {
         var type = null;
         var saved = false;
         var isSelected = 0;
+        var isSelected1 = 0;
         var payableAmount = 0;
         var allotedTables = null;
 
@@ -124,6 +157,7 @@ app.factory("outletAgentFactory", function (outletAgentService) {
           outlet,
           admin,
           taxes,
+          isSelected1,
           productsData,
           products,
           currentTime,
@@ -132,6 +166,7 @@ app.factory("outletAgentFactory", function (outletAgentService) {
           cart,
           amount,
           btnText,
+          subCategory,
           orderBtn,
           type,
           saved,
