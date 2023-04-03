@@ -238,9 +238,8 @@ app.factory(
         if (result) {
           console.log(result);
           var data = result.data;
-
-          totalProduct = data[0][0].productCount;
-          totalEmployees = data[1][0].employeeCount;
+          if (data[0].length) totalProduct = data[0][0].productCount;
+          if (data[1].length) totalEmployees = data[1][0].employeeCount;
           if (data[2].length) totalRevenue = data[2][0].totalRevenue;
           var topTenCategories = data[3];
           var topTenProducts = data[4];

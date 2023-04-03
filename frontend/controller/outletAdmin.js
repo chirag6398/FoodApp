@@ -1,5 +1,4 @@
 ///<reference path="../module/module.js"/>
-///<reference path="../factory/apicall.js"/>
 
 app.controller("outletAdminController", [
   "$scope",

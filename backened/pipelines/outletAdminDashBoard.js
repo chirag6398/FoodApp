@@ -28,6 +28,11 @@ module.exports = {
         },
       },
       {
+        $match: {
+          userType: { $ne: "outletAdmin" },
+        },
+      },
+      {
         $group: {
           _id: null,
           employeeCount: { $sum: 1 },

@@ -53,7 +53,7 @@ app.controller("outletEmployeeFormController", [
         function (err, result) {
           if (result) {
             console.log(result);
-            $scope.object.agents.unshift([result.data.data]);
+            $scope.object.agents.unshift(result.data.data);
             $scope.object.btnText = "create";
             $("#exampleModal").modal("hide");
             toastNotifications.success("created successfully");

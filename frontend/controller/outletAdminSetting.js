@@ -6,7 +6,15 @@ app.controller("outletAdminSettingController", [
   "$location",
   "outletApi",
   "$rootScope",
-  function ($scope, outletAdminFactory, $location, outletApi, $rootScope) {
+  "toastNotifications",
+  function (
+    $scope,
+    outletAdminFactory,
+    $location,
+    outletApi,
+    $rootScope,
+    toastNotifications
+  ) {
     $scope.object = {
       taxes: [],
       tables: [],
@@ -33,8 +41,9 @@ app.controller("outletAdminSettingController", [
         function (err, result) {
           if (result) {
             $scope.object.taxes = result.data.taxes;
+            toastNotifications.success("added successfully");
           } else {
-            alert("something went wrong try later/already exist");
+            toastNotifications.error(err.data.message);
           }
         }
       );
@@ -47,10 +56,11 @@ app.controller("outletAdminSettingController", [
           $scope.object.tables
         )
       ) {
-        $scope.object.tables.push({ ...$scope.table });
-        $scope.object.addingTables.push({ ...$scope.table });
+        $scope.object.tables.push({ ...$scope.object.table });
+        console.log($scope.object.tables);
+        $scope.object.addingTables.push({ ...$scope.object.table });
       } else {
-        alert("table number existed");
+        toastNotifications.error("table number existed");
       }
     };
 
@@ -60,9 +70,9 @@ app.controller("outletAdminSettingController", [
         $scope.object.addingTables,
         function (err, result) {
           if (result) {
-            alert("table added");
+            toastNotifications.success("table added");
           } else {
-            alert("try later not added");
+            toastNotifications.error(err.message);
           }
         }
       );
@@ -79,9 +89,9 @@ app.controller("outletAdminSettingController", [
         function (err, result) {
           console.log(err, result);
           if (result) {
-            alert("tax removed");
+            toastNotifications.success("tax removed");
           } else {
-            alert("something went wrong");
+            toastNotifications.error(err.message);
           }
         }
       );
@@ -94,11 +104,11 @@ app.controller("outletAdminSettingController", [
         function (err, result) {
           console.log(err, result);
           if (result) {
-            alert("updated successfully");
-            $("#exampleModal").modal("hide");
+            toastNotifications.success("updated successfully");
           } else {
-            alert("failed");
+            toastNotifications(err.message);
           }
+          $("#exampleModal").modal("hide");
         }
       );
     };

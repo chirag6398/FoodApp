@@ -570,10 +570,12 @@
               class="form-control"
             />
             <span
+              style="color: red"
               ng-show="adminData.userName.$dirty && adminData.userName.$error.minlength"
               >Minimum 3 characters required</span
             >
             <span
+              style="color: red"
               ng-show="adminData.userName.$dirty && adminData.userName.$error.required"
               >Please fill this field</span
             >
@@ -589,10 +591,12 @@
               class="form-control"
             />
             <span
+              style="color: red"
               ng-show="adminData.firstName.$dirty && adminData.firstName.$error.minlength"
               >Minimum 3 characters required</span
             >
             <span
+              style="color: red"
               ng-show="adminData.firstName.$dirty && adminData.firstName.$error.required"
               >Please fill this field</span
             >
@@ -607,6 +611,7 @@
               class="form-control"
             />
             <span
+              style="color: red"
               ng-show="adminData.lastName.$dirty && adminData.lastName.$error.minlength"
               >Minimum 3 characters required</span
             >
@@ -623,10 +628,12 @@
               class="form-control"
             />
             <span
+              style="color: red"
               ng-show="adminData.email.$dirty && !adminData.email.$error.required && adminData.email.$invalid"
               >Please enter correct email</span
             >
             <span
+              style="color: red"
               ng-show="adminData.email.$dirty && adminData.email.$error.required"
               >Please fill this field</span
             >
@@ -645,6 +652,7 @@
               >please enter correct number</span
             >
             <span
+              style="color: red"
               ng-show="adminData.number.$dirty && adminData.number.$error.required"
               >Please fill this field</span
             >
@@ -659,6 +667,7 @@
               class="form-control"
             />
             <span
+              style="color: red"
               ng-show="adminData.address.$dirty && adminData.address.$error.required"
               >Please fill this field</span
             >
@@ -673,6 +682,7 @@
               class="form-control"
             />
             <span
+              style="color: red"
               ng-show="adminData.city.$dirty && adminData.city.$error.required"
               >Please fill this field</span
             >
@@ -689,6 +699,7 @@
               class="form-control"
             />
             <span
+              style="color: red"
               ng-show="adminData.pinCode.$dirty && adminData.pinCode.$error.minlength && adminData.pinCode.$error.maxlength"
               >6 characters required</span
             >
@@ -705,10 +716,12 @@
               class="form-control"
             />
             <span
+              style="color: red"
               ng-show="adminData.password.$dirty && (adminData.password.$error.minlength || adminData.password.$error.maxlength)"
               >Minimum 5-8 characters required</span
             >
             <span
+              style="color: red"
               ng-show="adminData.password.$dirty && adminData.password.$error.required"
               >Please fill this field</span
             >
@@ -729,10 +742,12 @@
             />
             <!-- <span ng-show="adminData.cpassword.$dirty && (adminData.cpassword.$error.minlength || adminData.cpassword.$error.maxlength)">Minimum 5-8 characters required</span> -->
             <span
+              style="color: red"
               ng-show="adminData.cpassword.$dirty && adminData.cpassword.$error.required"
               >Please fill this field</span
             >
             <span
+              style="color: red"
               ng-show="adminData.cpassword.$dirty && !(adminData.cpassword.$error.required) && object.admin.password && object.admin.password!=object.admin.cpassword"
               >confirm password is not matching password</span
             >

@@ -1,5 +1,5 @@
-<div>
-  <div ng-if="object.products" class="products">
+<div ng-class="{'dim':object.isLoading}">
+  <div ng-if="object.products.length" class="products">
     <table
       class="table table-bordered table-hover"
       ng-repeat="categoryProduct in object.products"
@@ -44,6 +44,9 @@
         </tr>
       </tbody>
     </table>
+  </div>
+  <div ng-if="!object.products.length && !object.isLoading">
+    <h3>No products added yet</h3>
   </div>
 </div>
 <div

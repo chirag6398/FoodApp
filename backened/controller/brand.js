@@ -20,7 +20,7 @@ module.exports = {
       .sort({ name: "asc" })
       .then(function (result) {
         brandModel.countDocuments({}, function (err, count) {
-          if (count) {
+          if (!err) {
             console.log(result, count);
             return res.status(200).send({ data: result, count: count });
           } else {

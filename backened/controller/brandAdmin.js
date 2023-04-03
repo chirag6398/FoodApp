@@ -67,9 +67,10 @@ module.exports = {
       .then(function (result) {
         console.log(result);
         outletModel.countDocuments(filter, function (err, count) {
-          if (count) {
+          if (!err) {
             return res.send({ data: result, count });
           } else {
+            console.log("error", err);
             return res
               .status(500)
               .send({ message: "please try later", status: 500 });

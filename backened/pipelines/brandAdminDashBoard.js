@@ -24,6 +24,11 @@ module.exports = {
         },
       },
       {
+        $match: {
+          userType: { $ne: "brandAdmin" },
+        },
+      },
+      {
         $group: {
           _id: null,
           count: { $sum: 1 },

@@ -211,11 +211,18 @@ app.factory(
       brandAdminDashBoardApi.getBasicData(brand._id, function (err, result) {
         if (result) {
           var data = result.data;
+          console.log(data);
+          var outlets = [];
+          var totalRevenue = 0;
+          var totalOutlets = 0;
+          var totalEmployees = 0;
+          if (data[0].length) {
+            outlets = data[0][0].names;
+            totalOutlets = data[0][0].count;
+          }
 
-          var outlets = data[0][0].names;
-          var totalOutlets = data[1][0].count;
-          var totalEmployees = data[1][0].count;
-          var totalRevenue = data[2][0].totalRevenue;
+          if (data[1].length) totalEmployees = data[1][0].count;
+          if (data[2].length) totalRevenue = data[2][0].totalRevenue;
           var topTenCategories = data[3];
           var topTenProducts = data[4];
           var brandGraphData = data[5];
