@@ -47,10 +47,12 @@
                   class="form-control"
                 />
                 <span
+                  style="color: red"
                   ng-show="productDetail.productName.$dirty && productDetail.productName.$error.minlength"
                   >Minimum 3 characters required</span
                 >
                 <span
+                  style="color: red"
                   ng-show="productDetail.productName.$dirty && productDetail.productName.$error.required"
                   >Please fill this field</span
                 >
@@ -80,10 +82,12 @@
                   class="form-control"
                 />
                 <span
+                  style="color: red"
                   ng-show="productDetail.price.$dirty && !productDetail.price.$error.required && productDetail.price.$invalid"
                   >please enter correct price</span
                 >
                 <span
+                  style="color: red"
                   ng-show="productDetail.price.$dirty && productDetail.price.$error.required"
                   >Please fill this field</span
                 >

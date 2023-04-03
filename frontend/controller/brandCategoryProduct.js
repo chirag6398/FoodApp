@@ -49,6 +49,7 @@ app.controller("categoryProductController", [
           } else {
             toastNotifications.error("failed");
           }
+          $("#exampleModal1").modal("hide");
         }
       );
     };
@@ -62,13 +63,16 @@ app.controller("categoryProductController", [
           if (result) {
             $scope.object.btnText = "added";
             console.log(result.data);
+
             $scope.object.products.push(result.data);
-            $("#exampleModal").modal("hide");
+
             toastNotifications.success("product created");
           } else {
-            toastNotifications.error("product not created");
+            toastNotifications.error(err.message);
             console.log(err);
           }
+          $("#exampleModal").modal("hide");
+          $scope.object.product = {};
         }
       );
     };

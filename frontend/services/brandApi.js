@@ -149,6 +149,7 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
         cb(null, response);
       })
       .catch(function (err) {
+        console.log(err);
         cb(err.data, null);
       });
   };
@@ -264,9 +265,9 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
       .then(function (result) {
         cb(null, result);
       })
-      .catch(function (error) {
-        console.log(error);
-        cb(error, null);
+      .catch(function (err) {
+        console.log(err);
+        cb(err.data, null);
       });
   };
 
@@ -377,6 +378,24 @@ app.service("brandApi", function ($http, $rootScope, setAdminData) {
           cb(null, response.data);
         },
         function (error) {
+          cb(err.data, null);
+        }
+      );
+  };
+
+  obj.updateCategory = function (formData, cb) {
+    $http
+      .post("http://localhost:5000/api/brandAdmin/updateCategory", formData, {
+        transformRequest: angular.identity,
+        headers: { "Content-Type": undefined },
+      })
+      .then(
+        function (response) {
+          console.log(response.data);
+          cb(null, response);
+        },
+        function (err) {
+          console.log(err);
           cb(err.data, null);
         }
       );

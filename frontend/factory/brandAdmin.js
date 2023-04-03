@@ -260,6 +260,27 @@ app.factory(
       });
     };
 
+    obj.addCategory = function (category, brand, cb) {
+      var formData = new FormData();
+      formData.append("name", category.name);
+      formData.append("file", category.logo);
+      formData.append("superCategoryName", $stateParams.name);
+      formData.append("superCategoryId", $stateParams.id);
+      formData.append("brandName", brand.name);
+      formData.append("brandId", brand._id);
+
+      brandApi.addCategory(formData, cb);
+    };
+
+    obj.updateCategory = function (category, brand, cb) {
+      var formData = new FormData();
+
+      formData.append("name", category.name);
+      formData.append("file", category.logo);
+      formData.append("_id", category._id);
+      formData.append("brandId", brand._id);
+      brandApi.updateCategory(formData, cb);
+    };
     return obj;
   }
 );

@@ -10,8 +10,10 @@ app.controller("brandAdminOutletDataController", [
       outlet: null,
       data: null,
     };
+    $scope.isLoading = true;
     brandApi.getOutlet({ _id: $stateParams.id }, function (err, result) {
       if (result) {
+        $scope.isLoading = false;
         $scope.object.outlet = result.data;
         $scope.object.data = $scope.object.outlet;
       }

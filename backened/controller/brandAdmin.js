@@ -166,11 +166,27 @@ module.exports = {
             "superCategory.name": req.body.superCategoryName,
           });
 
-          category
-            .save()
+          categoryModel
+            .findOne({ name: req.body.name, "brand._id": req.body.brandId })
             .then(function (result) {
-              console.log("added category", result);
-              return res.status(200).send(result);
+              if (result) {
+                return res
+                  .status(400)
+                  .send({ message: "category name exists" });
+              } else {
+                category
+                  .save()
+                  .then(function (result) {
+                    console.log("added category", result);
+                    return res.status(200).send(result);
+                  })
+                  .catch(function (err) {
+                    console.log(err);
+                    return res
+                      .status(500)
+                      .send({ message: "internal server error", status: 500 });
+                  });
+              }
             })
             .catch(function (err) {
               console.log(err);
@@ -221,16 +237,29 @@ module.exports = {
             "brand.name": req.body.brandName,
             "brand._id": req.body.brandId,
           });
-          superCategory
-            .save()
+          superCategoryModel
+            .findOne({ name: req.body.name, "brand._id": req.body.brandId })
             .then(function (result) {
-              return res.send(result);
+              if (result) {
+                return res
+                  .status(400)
+                  .send({ message: "supercategory name exists" });
+              } else {
+                superCategory
+                  .save()
+                  .then(function (result) {
+                    return res.send(result);
+                  })
+                  .catch(function (err) {
+                    console.log(err);
+                    return res
+                      .status(400)
+                      .send({ message: "please enter valid and correct data" });
+                  });
+              }
             })
             .catch(function (err) {
-              console.log(err);
-              return res
-                .status(400)
-                .send({ message: "please enter valid and correct data" });
+              return res.status(500).send({ message: "please try later " });
             });
         })
         .catch(function (err) {
@@ -300,6 +329,7 @@ module.exports = {
   },
 
   updateSuperCategory: function (req, res) {
+    console.log(req.body);
     if (req.file) {
       return awsService
         .updateToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
@@ -350,42 +380,56 @@ module.exports = {
             .send({ message: "internal server error", status: 500 });
         });
     } else {
-      var data1 = superCategoryModel.findByIdAndUpdate(
-        { _id: req.body._id },
-        {
-          name: req.body.name,
-        }
-      );
-
-      var data2 = categoryModel.updateMany(
-        { "superCategory._id": req.body._id },
-        { "superCategory.name": req.body.name }
-      );
-      var data3 = productModel.updateMany(
-        { "superCategory._id": req.body._id },
-        { "superCategory.name": req.body.name }
-      );
-      var data4 = outletModel.updateMany(
-        { "brand._id": req.body.brandId },
-        { "products.$[elem].product.superCategory.name": req.body.name },
-        { arrayFilters: [{ "elem.product.superCategory._id": req.body._id }] }
-      );
-
-      Promise.all([data1, data2, data3, data4])
+      superCategoryModel
+        .findOne({ name: req.body.name, "brand._id": req.body.brandId })
         .then(function (result) {
-          console.log(result);
-          return res.send(result);
-        })
-        .catch(function (err) {
-          console.log(err);
-          return res
-            .status(400)
-            .send({ message: "please enter valid and correct data" });
+          if (result) {
+            return res.status(400).send({ message: "name must be unique" });
+          } else {
+            console.log(result);
+            var data1 = superCategoryModel.findByIdAndUpdate(
+              { _id: req.body._id },
+              {
+                name: req.body.name,
+              }
+            );
+
+            var data2 = categoryModel.updateMany(
+              { "superCategory._id": req.body._id },
+              { "superCategory.name": req.body.name }
+            );
+            var data3 = productModel.updateMany(
+              { "superCategory._id": req.body._id },
+              { "superCategory.name": req.body.name }
+            );
+            var data4 = outletModel.updateMany(
+              { "brand._id": req.body.brandId },
+              { "products.$[elem].product.superCategory.name": req.body.name },
+              {
+                arrayFilters: [
+                  { "elem.product.superCategory._id": req.body._id },
+                ],
+              }
+            );
+
+            Promise.all([data1, data2, data3, data4])
+              .then(function (result) {
+                // console.log(result);
+                return res.send(result);
+              })
+              .catch(function (err) {
+                // console.log(err);
+                return res
+                  .status(400)
+                  .send({ message: "please enter valid and correct data" });
+              });
+          }
         });
     }
   },
 
   updateCategory: function (req, res) {
+    console.log(req.body);
     if (req.file) {
       return awsService
         .updateToS3(req.file.buffer, req.file.originalname, req.file.mimetype)
@@ -436,38 +480,47 @@ module.exports = {
             .send({ message: "internal server error", status: 500 });
         });
     } else {
-      var data1 = categoryModel.findByIdAndUpdate(
-        { _id: req.body._id },
-        {
-          name: req.body.name,
-        }
-      );
-
-      var data2 = productModel.updateMany(
-        { "category._id": req.body._id },
-        { "category.name": req.body.name }
-      );
-      var data3 = outletModel.updateMany(
-        { "brand._id": req.body.brandId },
-        {
-          "products.$[elem].product.superCategory.category.name": req.body.name,
-        },
-        {
-          arrayFilters: [
-            { "elem.product.superCategory.category._id": req.body._id },
-          ],
-        }
-      );
-
-      Promise.all([data1, data2, data3])
+      categoryModel
+        .findOne({ "brand._id": req.body.brandId, name: req.body.name })
         .then(function (result) {
-          return res.send(result);
-        })
-        .catch(function (err) {
-          console.log(err);
-          return res
-            .status(400)
-            .send({ message: "please enter valid and correct data" });
+          if (result) {
+            return res.status(400).send({ message: "name must be unique" });
+          } else {
+            var data1 = categoryModel.findByIdAndUpdate(
+              { _id: req.body._id },
+              {
+                name: req.body.name,
+              }
+            );
+
+            var data2 = productModel.updateMany(
+              { "category._id": req.body._id },
+              { "category.name": req.body.name }
+            );
+            var data3 = outletModel.updateMany(
+              { "brand._id": req.body.brandId },
+              {
+                "products.$[elem].product.superCategory.category.name":
+                  req.body.name,
+              },
+              {
+                arrayFilters: [
+                  { "elem.product.superCategory.category._id": req.body._id },
+                ],
+              }
+            );
+
+            Promise.all([data1, data2, data3])
+              .then(function (result) {
+                return res.send(result);
+              })
+              .catch(function (err) {
+                console.log(err);
+                return res
+                  .status(400)
+                  .send({ message: "please enter valid and correct data" });
+              });
+          }
         });
     }
   },

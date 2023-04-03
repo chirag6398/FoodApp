@@ -27,10 +27,26 @@ module.exports = {
                 description: body.description,
                 img: image,
               });
-              return product
-                .save()
+              productModel
+                .findOne({ "brand._id": result.brand._id, name: body.name })
                 .then(function (result) {
-                  return res.status(200).send(result);
+                  if (result) {
+                    return res
+                      .status(400)
+                      .send({ message: "product name should be unique" });
+                  } else {
+                    return product
+                      .save()
+                      .then(function (result) {
+                        return res.status(200).send(result);
+                      })
+                      .catch(function (err) {
+                        console.log(err);
+                        return res
+                          .status(500)
+                          .send({ error: err, status: 500 });
+                      });
+                  }
                 })
                 .catch(function (err) {
                   console.log(err);
