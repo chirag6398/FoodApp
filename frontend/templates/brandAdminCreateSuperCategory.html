@@ -1,4 +1,4 @@
-<div>
+<div ng-class="{'dim':object.isLoading}">
   <div>
     <h3>Super Categories</h3>
   </div>
@@ -219,3 +219,8 @@
     </div>
   </div>
 </div>
+<div
+  ng-if="object.isLoading"
+  class="loader"
+  style="width: 100%; position: absolute; top: 0px; height: 100vh"
+></div>

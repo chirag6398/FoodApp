@@ -1,4 +1,4 @@
-<div class="setting__container">
+<div ng-class="{'dim':object.isLoading}" class="setting__container">
   <div
     style="
       border: 1px solid lightgray;
@@ -220,3 +220,8 @@
     </div>
   </div>
 </div>
+<div
+  ng-if="object.isLoading"
+  class="loader"
+  style="width: 100%; position: absolute; top: 0px; height: 100vh"
+></div>

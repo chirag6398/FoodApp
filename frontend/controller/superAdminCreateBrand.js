@@ -64,7 +64,11 @@ app.controller("superAdminCreateBrandController", [
     );
 
     $scope.getBrandHandler = function (page, limit) {
+      $scope.object.isLoading = true;
+
       superAdminFactory.getBrands(limit, page, function (err, result) {
+        $scope.object.isLoading = false;
+
         if (result) {
           $scope.object.brands = result.data;
           $scope.object.page = page;

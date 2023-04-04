@@ -648,7 +648,9 @@
               ng-model="object.admin.number"
               class="form-control"
             />
-            <span ng-show="adminData.number.$dirty && adminData.number.$invalid"
+            <span
+              style="color: red"
+              ng-show="adminData.number.$dirty && adminData.number.$invalid"
               >please enter correct number</span
             >
             <span
@@ -779,11 +781,5 @@
 <div
   ng-if="isLoading"
   class="loader"
-  style="
-    width: 100%;
-    position: absolute;
-    top: 141px;
-    height: -webkit-fill-available;
-    opacity: 0.5;
-  "
+  style="width: 100%; position: absolute; top: 0px; height: 100vh"
 ></div>

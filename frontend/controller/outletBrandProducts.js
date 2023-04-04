@@ -1,5 +1,4 @@
 ///<reference path="../module/module.js"/>
-///<reference path="../factory/apicall.js"/>
 
 app.controller("brandProductsController", [
   "$scope",
@@ -8,13 +7,15 @@ app.controller("brandProductsController", [
   "apiHandler",
   "$rootScope",
   "$timeout",
+  "toastNotifications",
   function (
     $scope,
     outletApi,
     outletAdminFactory,
     apiHandler,
     $rootScope,
-    $timeout
+    $timeout,
+    toastNotifications
   ) {
     $scope.object = {
       brand: null,
@@ -56,7 +57,7 @@ app.controller("brandProductsController", [
           outletAdminFactory.scrollToSubCategory();
           $scope.object.subCategories = result.data;
           if ($scope.object.subCategories.length == 0) {
-            alert("no sub category");
+            toastNotifications.info("no sub category");
           }
         }
       });
@@ -73,7 +74,9 @@ app.controller("brandProductsController", [
           if (result.data.length) {
             $scope.object.products = result.data;
           } else if (result) {
-            alert("all products of this category already added");
+            toastNotifications.info(
+              "all products of this category already added"
+            );
           }
         }
       );
@@ -92,7 +95,9 @@ app.controller("brandProductsController", [
               product
             );
             $scope.object.products.splice(indx, 1);
-            alert("product added ");
+            toastNotifications.success("product added ");
+          } else {
+            toastNotifications.error("please try later");
           }
         }
       );

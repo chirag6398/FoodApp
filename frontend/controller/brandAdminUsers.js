@@ -84,14 +84,14 @@ app.controller("brandAdminUsersController", [
     };
 
     $scope.getUserHandler = function (page, limit) {
-      $scope.object.isLoading = true;
+      $scope.isLoading = true;
       brandApi.getBrandUsers(
         $scope.object.brand._id,
         $scope.object.filter,
         limit,
         page,
         function (err, result) {
-          $scope.object.isLoading = false;
+          $scope.isLoading = false;
           if (result) {
             console.log(result);
             $scope.object.users = result.data.data;

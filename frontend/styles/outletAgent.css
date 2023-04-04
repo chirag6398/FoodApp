@@ -16,6 +16,8 @@
     background-image: linear-gradient(to right top, #0d141e, #212c3d, #37455e, #506082, #6a7ca7);
 }
 .activeCategory{
+
+    /* transition: 0.5s all ease-in; */
     background-image: linear-gradient(to right top, #1169ee, #4278e7, #5f86df, #7894d6, #90a2cc);    color: white;
     font-weight: 500;
     font-size: 20px;

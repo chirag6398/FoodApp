@@ -193,13 +193,15 @@ app.controller("brandAdminHomeController", [
     };
 
     $scope.getOutletHandler = function (page, limit) {
-      $scope.object.isLoading = true;
+      $scope.isLoading = true;
       brandApi.getOutletsByBrandId(
         $scope.object.brand._id,
         limit,
         page,
         function (err, result) {
           console.log(result);
+          $scope.isLoading = false;
+
           if (result) {
             $scope.object.outlets = result.data;
             $scope.object.totalPage = Math.ceil(

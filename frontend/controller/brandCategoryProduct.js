@@ -61,7 +61,6 @@ app.controller("categoryProductController", [
         $scope.object.product,
         function (err, result) {
           if (result) {
-            $scope.object.btnText = "added";
             console.log(result.data);
 
             $scope.object.products.push(result.data);
@@ -72,7 +71,9 @@ app.controller("categoryProductController", [
             console.log(err);
           }
           $("#exampleModal").modal("hide");
+          $scope.productDetail.$setPristine();
           $scope.object.product = {};
+          $scope.object.btnText = "add";
         }
       );
     };

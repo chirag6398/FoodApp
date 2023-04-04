@@ -30,10 +30,9 @@ app.controller("brandAdminCategoryController", [
           function (err, result) {
             console.log(result);
 
+            $scope.object.isLoading = false;
             if (result) {
               $scope.object.superCategories = result.data;
-
-              $scope.object.isLoading = false;
             } else {
               toastNotifications.error(err.message);
             }

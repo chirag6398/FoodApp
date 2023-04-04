@@ -279,7 +279,7 @@ module.exports = {
       },
       {
         $match: {
-          status: { $in: ["served", "cancelled"] },
+          status: { $in: ["completed", "cancelled"] },
         },
       },
       {

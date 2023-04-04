@@ -22,10 +22,12 @@ app.controller("outletAdminSettingController", [
       tax: {},
       table: {},
       addingTables: [],
+      isLoading: true,
     };
     outletApi.getOutletAdminPage();
 
     $rootScope.$on("passData", function (err, data) {
+      $scope.object.isLoading = false;
       if (data) {
         console.log(data);
         $scope.object.outlet = data.data.outletData;
