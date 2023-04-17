@@ -6,7 +6,15 @@ app.controller("outletAdminProductsController", [
   "$location",
   "outletApi",
   "$rootScope",
-  function ($scope, $http, $location, outletApi, $rootScope) {
+  "toastNotifications",
+  function (
+    $scope,
+    $http,
+    $location,
+    outletApi,
+    $rootScope,
+    toastNotifications
+  ) {
     $scope.object = {
       outlet: null,
       brand: null,
@@ -40,8 +48,29 @@ app.controller("outletAdminProductsController", [
         $scope.object.outlet._id,
         function (err, result) {
           if (result) {
-            alert("product removed");
+            toastNotifications.success("product removed");
           }
+        }
+      );
+    };
+
+    $scope.editProduct = function (product) {
+      $scope.productPrice.$setPristine();
+      $scope.newProduct = { ...product };
+    };
+
+    $scope.editPrice = function (product) {
+      console.log("called");
+      outletApi.updateProductPrice(
+        $scope.object.outlet._id,
+        product,
+        function (err, result) {
+          if (result) {
+            toastNotifications.success("price edited");
+          } else {
+            toastNotifications.error(err.message);
+          }
+          $("#exampleModal").modal("hide");
         }
       );
     };

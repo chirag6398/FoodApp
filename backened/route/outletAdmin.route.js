@@ -47,9 +47,15 @@ outletAdminRoute.put(
   "/api/outletAdmin/removeTax",
   outletAdminController.removeTax
 );
+
 outletAdminRoute.put(
   "/api/outletAdmin/updateTax",
   outletAdminController.updateTax
+);
+
+outletAdminRoute.put(
+  "/api/outletAdmin/updateProductPrice",
+  outletAdminController.updateProductPrice
 );
 
 outletAdminRoute.get(

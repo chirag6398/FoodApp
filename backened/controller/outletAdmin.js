@@ -180,6 +180,7 @@ module.exports = {
 
   removeOutletProduct: function (req, res) {
     var body = req.body;
+    console.log(body);
 
     outletModel
       .updateOne(
@@ -195,7 +196,7 @@ module.exports = {
       .then(function (result1) {
         productModel
           .updateOne(
-            { name: body.name },
+            { _id: body._id },
             {
               $pull: {
                 outlet: {
@@ -378,6 +379,24 @@ module.exports = {
       .catch(function (err) {
         console.log(err);
         return res.status(500).send(err);
+      });
+  },
+  updateProductPrice: function (req, res) {
+    var query = req.query;
+    outletModel
+      .findOneAndUpdate(
+        { _id: query._id },
+        { $set: { "products.$[elem].product.price": query.price } },
+        { arrayFilters: [{ "elem.product._id": query.productId }] }
+      )
+      .then(function (result) {
+        return res.status(200).send({ message: "price updated" });
+      })
+      .catch(function (err) {
+        console.log(err);
+        return res
+          .status(500)
+          .send({ message: "internal server error please try later" });
       });
   },
   getUsers: function (req, res) {

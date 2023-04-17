@@ -206,5 +206,22 @@ app.service("outletApi", function ($http, $rootScope) {
       });
   };
 
+  obj.updateProductPrice = function (_id, product, cb) {
+    $http
+      .put(
+        "http://localhost:5000/api/outletAdmin/updateProductPrice?_id=" +
+          _id +
+          "&price=" +
+          product.price +
+          "&productId=" +
+          product._id
+      )
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb(err.data, null);
+      });
+  };
   return obj;
 });
