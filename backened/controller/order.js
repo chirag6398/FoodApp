@@ -83,8 +83,8 @@ module.exports = {
     };
     orderModel
       .find(filter)
-      .skip(skipNo)
-      .limit(limit)
+      // .skip(skipNo)
+      // .limit(limit)
       .sort({ createdAt: -1 })
       .then(function (result) {
         orderModel.countDocuments(filter, function (err, count) {

@@ -173,7 +173,7 @@ app.factory(
         orderAnalysis.cancellationRate =
           (data[1].count / orderAnalysis.totalOrders) * 100;
       } else if (data.length == 1) {
-        if (data[0]._id === "completed") {
+        if (data[0]._id === "completed" || data[0]._id === "served") {
           orderAnalysis.totalOrders = data[0].count;
           orderAnalysis.successRate =
             (data[0].count / orderAnalysis.totalOrders) * 100;

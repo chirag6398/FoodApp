@@ -39,7 +39,7 @@
 .agt__navComponent{
     transform: rotate(-90deg);
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 500;
     color: white;
     cursor: pointer;
     
@@ -47,7 +47,7 @@
 }
 .agt__navProfileBtn{
     background: transparent;
-    font-weight: 700;
+    font-weight: 500;
     cursor: pointer;
     outline: none;
     border: 0px;

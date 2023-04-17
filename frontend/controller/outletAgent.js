@@ -223,6 +223,7 @@ app.controller("outletAgentController", [
     };
 
     $scope.logOutHandler = function () {
+      $("#logOut").modal("hide");
       window.localStorage.removeItem("Authorization");
       toastNotifications.success("Logout successfull");
       $state.go("login");

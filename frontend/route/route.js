@@ -158,5 +158,10 @@ app.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
       url: "/brandData/:id",
       templateUrl: "./templates/superAdminBrandData.html",
       controller: "superAdminBrandDataController",
+    })
+    .state("outletAgentProfile", {
+      url: "/profile",
+      templateUrl: "./templates/outletAgentProfile.html",
+      controller: "outletAgentProfileController",
     });
 });

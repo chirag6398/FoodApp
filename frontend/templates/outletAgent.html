@@ -1,6 +1,14 @@
 <div ng-class="{'dim':isLoading}">
   <div class="agt__extDiv">
     <div class="agt__nav">
+      <div ng-show="object.brand">
+        <img
+          title="{{object.brand.name}}"
+          style="object-fit: contain; height: 32px"
+          src="{{object.brand.logo}}"
+          alt="..."
+        />
+      </div>
       <div class="agt__navComponent agt__activeNav" ui-sref="outletAgent">
         Home
       </div>
@@ -60,25 +68,10 @@
           </div>
         </div>
       </div>
-      <div class="agt__navComponent" ng-click="logOutHandler()">Logout</div>
-      <div class="agt__navComponent">
-        <button
-          type="button"
-          class="agt__navProfileBtn"
-          data-toggle="modal"
-          data-target="#exampleModal2"
-          data-whatever="@mdo"
-        >
-          Profile
-        </button>
-      </div>
-      <div ng-show="object.brand">
-        <img
-          title="{{object.brand.name}}"
-          style="object-fit: contain; height: 32px"
-          src="{{object.brand.logo}}"
-          alt="..."
-        />
+
+      <div ui-sref="outletAgentProfile" class="agt__navComponent">Profile</div>
+      <div class="agt__navComponent" data-toggle="modal" data-target="#logOut">
+        Logout
       </div>
     </div>
     <div
@@ -605,146 +598,42 @@
       </div>
     </div>
   </div>
-  <div>
-    <div
-      class="modal fade"
-      id="exampleModal2"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Details</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form name="adminData" novalidate>
-              <div class="form-group">
-                <label for="userName" class="col-form-label">UserName :</label>
-                <input
-                  type="text"
-                  name="userName"
-                  ng-required="true"
-                  ng-minlength="3"
-                  ng-model="object.admin.userName"
-                  class="form-control"
-                />
-                <span
-                  ng-show="adminData.userName.$dirty && adminData.userName.$error.minlength"
-                  >Minimum 3 characters required</span
-                >
-                <span
-                  ng-show="adminData.userName.$dirty && adminData.userName.$error.required"
-                  >Please fill this field</span
-                >
-              </div>
-              <div class="form-group">
-                <label for="firstName" class="col-form-label"
-                  >FirstName :</label
-                >
-                <input
-                  type="text"
-                  name="firstName"
-                  ng-required="true"
-                  ng-minlength="3"
-                  ng-model="object.admin.firstName"
-                  class="form-control"
-                />
-                <span
-                  ng-show="adminData.firstName.$dirty && adminData.firstName.$error.minlength"
-                  >Minimum 3 characters required</span
-                >
-                <span
-                  ng-show="adminData.firstName.$dirty && adminData.firstName.$error.required"
-                  >Please fill this field</span
-                >
-              </div>
-              <div class="form-group">
-                <label for="lastName" class="col-form-label">LastName :</label>
-                <input
-                  type="text"
-                  name="lastName"
-                  ng-minlength="0"
-                  ng-model="object.admin.lastName"
-                  class="form-control"
-                />
-                <span
-                  ng-show="adminData.lastName.$dirty && adminData.lastName.$error.minlength"
-                  >Minimum 3 characters required</span
-                >
-                <!-- <span ng-show="adminData.lastName.$dirty && adminData.lastName.$error.required">Please fill this field</span> -->
-              </div>
-              <div class="form-group">
-                <label for="email" class="col-form-label">Email :</label>
-                <input
-                  type="email"
-                  name="email"
-                  ng-required="true"
-                  ng-pattern="/^([a-z A-Z 0-9\.-]+)@([0-9 a-z A-Z -]+).([a-z]{2,8})(.[a-z{2,4}])?$/"
-                  ng-model="object.admin.email"
-                  class="form-control"
-                />
-                <span
-                  ng-show="adminData.email.$dirty && !adminData.email.$error.required && adminData.email.$invalid"
-                  >Please enter correct email</span
-                >
-                <span
-                  ng-show="adminData.email.$dirty && adminData.email.$error.required"
-                  >Please fill this field</span
-                >
-              </div>
-              <div class="form-group">
-                <label for="number" class="col-form-label"
-                  >Phone Number :</label
-                >
-                <input
-                  type="number"
-                  name="number"
-                  ng-required="true"
-                  ng-pattern="/^\d{10}$/"
-                  ng-model="object.admin.number"
-                  class="form-control"
-                />
-                <span
-                  ng-show="adminData.number.$dirty && adminData.number.$invalid"
-                  >please enter correct number</span
-                >
-                <span
-                  ng-show="adminData.number.$dirty && adminData.number.$error.required"
-                  >Please fill this field</span
-                >
-              </div>
+</div>
 
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button
-                  type="submit"
-                  ng-disabled="adminData.$invalid"
-                  ng-click="updateAdmin($event)"
-                  class="btn btn-primary"
-                >
-                  update
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
+<div
+  class="modal fade"
+  id="logOut"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <span>Are you sure,You want to logout!!!</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cancel
+        </button>
+        <button
+          type="button"
+          ng-click="logOutHandler()"
+          class="btn btn-primary"
+        >
+          Confirm
+        </button>
       </div>
     </div>
   </div>

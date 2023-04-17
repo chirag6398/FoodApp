@@ -1,0 +1,361 @@
+<div ng-class="{'dim':isLoading}" style="width: 100%; min-height: 100vh">
+  <div style="padding: 10px">
+    <img
+      title="{{brand.name}}"
+      style="object-fit: contain; height: 45px; cursor: pointer"
+      src="{{brand.logo}}"
+      alt="..."
+      ui-sref="outletAgent"
+    />
+  </div>
+  <div class="profile__extDiv">
+    <div class="profile__mainDiv">
+      <div class="profile__row">
+        <div style="font-weight: 700">User Name</div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-item: center;
+          "
+        >
+          <div>{{agent.userName}}</div>
+          <div>
+            <button
+              ng-click="setFormData(agent)"
+              class="btn"
+              data-toggle="modal"
+              data-target="#exampleModal1"
+            >
+              Edit
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="profile__row">
+        <div style="font-weight: 700">Email</div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-item: center;
+          "
+        >
+          <div>{{agent.email}}</div>
+          <div>
+            <button
+              ng-click="setFormData(agent)"
+              class="btn"
+              data-toggle="modal"
+              data-target="#exampleModal2"
+            >
+              Edit
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="profile__row">
+        <div style="font-weight: 700">Number</div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-item: center;
+          "
+        >
+          <div>{{agent.number}}</div>
+          <div>
+            <button
+              ng-click="setFormData(agent)"
+              class="btn"
+              data-toggle="modal"
+              data-target="#exampleModal3"
+            >
+              Edit
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="profile__row">
+        <div style="font-weight: 700">Password</div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-item: center;
+          "
+        >
+          <div style="font-weight: 900">. . . .</div>
+          <div>
+            <button
+              ng-click="setFormData(agent)"
+              class="btn"
+              data-toggle="modal"
+              data-target="#exampleModal4"
+            >
+              Change
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+  class="modal fade"
+  id="exampleModal1"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit UserName</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form name="adminData" novalidate>
+        <div class="form-group">
+          <label for="userName" class="col-form-label">UserName :</label>
+          <input
+            type="text"
+            name="userName"
+            ng-required="true"
+            ng-minlength="3"
+            ng-model="updateAgent.userName"
+            class="form-control"
+          />
+          <span
+            style="color: red"
+            ng-show="adminData.userName.$dirty && adminData.userName.$error.minlength"
+            >Minimum 3 characters required</span
+          >
+          <span
+            style="color: red"
+            ng-show="adminData.userName.$dirty && adminData.userName.$error.required"
+            >Please fill this field</span
+          >
+        </div>
+      </form>
+      </div>
+    
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button type="button" ng-click="updateUserName()" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+class="modal fade"
+id="exampleModal2"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Edit Email</h5>
+      <button
+        type="button"
+        class="close"
+        data-dismiss="modal"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form name="adminData" novalidate>
+        <div class="form-group">
+          <label for="email" class="col-form-label">Email :</label>
+          <input
+            type="email"
+            name="email"
+            ng-required="true"
+            ng-pattern="/^([a-z A-Z 0-9\.-]+)@([0-9 a-z A-Z -]+).([a-z]{2,8})(.[a-z{2,4}])?$/"
+            ng-model="updateAgent.email"
+            class="form-control"
+          />
+          <span
+            style:"color:red"
+            ng-show="adminData.email.$dirty && !adminData.email.$error.required && adminData.email.$invalid"
+            >Please enter correct email
+          </span>
+          <span
+          style:"color:red"
+            ng-show="adminData.email.$dirty && adminData.email.$error.required"
+            >Please fill this field
+            </span>
+        </div>
+      </form>
+    </div>
+  
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">
+        Close
+      </button>
+      <button type="button" ng-click="updateEmail()" class="btn btn-primary">Save changes</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<div
+class="modal fade"
+id="exampleModal3"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog">
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit Phone Number</h5>
+    <button
+      type="button"
+      class="close"
+      data-dismiss="modal"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form name="adminData" novalidate>
+      <div class="form-group">
+        <label for="number" class="col-form-label">Phone Number :</label>
+        <input
+          type="number"
+          name="number"
+          ng-required="true"
+          ng-pattern="/^\d{10}$/"
+          ng-model="updateAgent.number"
+          class="form-control"
+        />
+        <span style="color:red" ng-show="adminData.number.$dirty && adminData.number.$invalid"
+          >please enter correct number</span
+        >
+        <span
+        style="color:red"
+          ng-show="adminData.number.$dirty && adminData.number.$error.required"
+          >Please fill this field</span
+        >
+      </div>
+  </div>
+</form>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+      Close
+    </button>
+    <button type="button" ng-click="updatePhoneNumber()" class="btn btn-primary">Save changes</button>
+  </div>
+</div>
+</div>
+</div>
+
+<div
+class="modal fade"
+id="exampleModal4"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog">
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+    <button
+      type="button"
+      class="close"
+      data-dismiss="modal"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form name="passwordForm" novalidate>
+      <div class="form-group">
+        <label for="password" class="col-form-label">Password :</label>
+        <input
+          type="password"
+          name="password"
+          ng-required="true"
+          ng-minlength="5"
+          ng-maxlength="8"
+          ng-model="updateAgent.password"
+          class="form-control"
+        />
+        <span
+        style="color:red"
+          ng-show="passwordForm.password.$dirty && (passwordForm.password.$error.minlength || passwordForm.password.$error.maxlength)"
+          >Minimum 5-8 characters required</span
+        >
+        <span
+        style="color:red"
+          ng-show="passwordForm.password.$dirty && passwordForm.password.$error.required"
+          >Please fill this field</span
+        >
+      </div>
+      <div class="form-group">
+        <label for="cpassword" class="col-form-label"
+          >Confirm Password :</label
+        >
+        <input
+          type="password"
+          ng-disabled="!updateAgent.password"
+          name="cpassword"
+          ng-required="true"
+          ng-minlength="5"
+          ng-maxlength="8"
+          ng-model="updateAgent.cpassword"
+          class="form-control"
+        />
+        <span
+        style="color:red"
+          ng-show="passwordForm.cpassword.$dirty && passwordForm.cpassword.$error.required"
+          >Please fill this field</span
+        >
+        <span
+        style="color:red"
+          ng-show="passwordForm.cpassword.$dirty && !(passwordForm.cpassword.$error.required) && updateAgent.password && updateAgent.password!=updateAgent.cpassword"
+          >confirm password is not matching password</span
+        >
+      </div>
+
+     
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+      Close
+    </button>
+    <button 
+    class="btn btn-primary"
+    type="submit"
+    ng-disabled="passwordForm.$invalid"
+    ng-click="changePassword()">
+    Save changes</button>
+  </div>
+</div>
+</div>
+</div>
+
+  <div
+    ng-if="object.isLoading"
+    class="loader"
+    style="width: 100%; height: 100vh; position: absolute; opacity: 0.5"
+  ></div>
+</div>
