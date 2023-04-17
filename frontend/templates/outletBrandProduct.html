@@ -1,0 +1,49 @@
+<div style="width: 100%" ng-class="{'dim':object.isLoading}">
+  <div id="products" ng-if="object.products" class="products">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th scope="col">S.No</th>
+          <th scope="col">Image</th>
+          <th scope="col">Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Price</th>
+          <th scope="col">Add</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          ng-if="product"
+          style="cursor: pointer"
+          ng-repeat="product in object.products"
+        >
+          <th scope="row">{{$index}}</th>
+          <td>
+            <img
+              style="object-fit: contain; height: 50px"
+              src="{{product.img}}"
+              alt="..."
+            />
+          </td>
+          <td>{{product.name}}</td>
+          <td>{{product.description}}</td>
+          <td>{{product.price}}</td>
+          <td>
+            <button
+              type="button"
+              ng-click="addProduct(product)"
+              class="btn btn-primary"
+            >
+              Add
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div
+  ng-if="object.isLoading"
+  class="loader"
+  style="width: 100%; height: -webkit-fill-available; position: absolute"
+></div>

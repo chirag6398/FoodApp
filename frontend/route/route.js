@@ -105,9 +105,19 @@ app.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
       controller: "outletAdminProductsController",
     })
     .state("outletAdmin.outletBrandProducts", {
-      url: "/brandProducts",
+      url: "/brandSuperCategory",
       templateUrl: "./templates/outletBrandProducts.html",
       controller: "brandProductsController",
+    })
+    .state("outletAdmin.brandSubCategory", {
+      url: "/brandSubCategory/:id",
+      templateUrl: "./templates/outletBrandSubCategory.html",
+      controller: "outletBrandSubCategoryController",
+    })
+    .state("outletAdmin.outletBrandProduct", {
+      url: "/brandProduct/:id",
+      templateUrl: "./templates/outletBrandProduct.html",
+      controller: "brandProductController",
     })
     .state("outletAdmin.employee", {
       url: "/addemployee",

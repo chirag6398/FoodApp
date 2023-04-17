@@ -1,13 +1,9 @@
 <div style="width: 100%" ng-class="{'dim':object.isLoading}">
-  <div style="padding: 10px">
-    <h4>Super Categories</h4>
+  <div ng-if="object.subCategories" style="padding: 10px">
+    <h4>Sub Categories</h4>
   </div>
-  <div style="display: flex; flex-wrap: wrap; gap: 15px">
-    <div
-      ng-if="object.superCategories"
-      class="spr__brandCard"
-      ng-repeat="superCategory in object.superCategories"
-    >
+  <div id="subCategory" style="display: flex; flex-wrap: wrap; gap: 15px">
+    <div class="spr__brandCard" ng-repeat="subCategory in object.subCategories">
       <div
         style="
           display: flex;
@@ -18,15 +14,15 @@
       >
         <div>
           <img
-            src="{{superCategory.logo}}"
+            src="{{subCategory.logo}}"
             style="object-fit: contain; height: 80px"
             alt="..."
           />
         </div>
-        <div>{{superCategory.name}}</div>
+        <div>{{subCategory.name}}</div>
       </div>
       <div
-        ui-sref="outletAdmin.brandSubCategory({id:superCategory._id})"
+        ui-sref="outletAdmin.outletBrandProduct({id:subCategory._id})"
         style="
           cursor: pointer;
           padding: 5px;
@@ -37,7 +33,7 @@
           box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
         "
       >
-        Show Sub Categories
+        Show Products
       </div>
     </div>
   </div>

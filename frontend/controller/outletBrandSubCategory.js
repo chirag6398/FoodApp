@@ -1,10 +1,10 @@
 ///<reference path="../module/module.js"/>
 
-app.controller("brandProductsController", [
+app.controller("outletBrandSubCategoryController", [
   "$scope",
   "outletApi",
   "outletAdminFactory",
-  "apiHandler",
+  "$stateParams",
   "$rootScope",
   "$timeout",
   "toastNotifications",
@@ -12,7 +12,7 @@ app.controller("brandProductsController", [
     $scope,
     outletApi,
     outletAdminFactory,
-    apiHandler,
+    $stateParams,
     $rootScope,
     $timeout,
     toastNotifications
@@ -20,7 +20,7 @@ app.controller("brandProductsController", [
     $scope.object = {
       brand: null,
       outlet: null,
-      superCategories: null,
+
       subCategories: null,
       isLoading: true,
       products: null,
@@ -33,12 +33,19 @@ app.controller("brandProductsController", [
         console.log(data);
         $scope.object.outlet = data.data.outletData;
         $scope.object.brand = data.data.outletData.brand;
-        outletAdminFactory.getSuperCategories(
-          $scope.object.brand._id,
+
+        outletAdminFactory.getSubCategory(
+          $stateParams.id,
           function (err, result) {
-            $scope.object.isLoading = false;
             console.log(err, result);
-            $scope.object.superCategories = result.data;
+            if (result) {
+              $scope.object.isLoading = false;
+              outletAdminFactory.scrollToSubCategory();
+              $scope.object.subCategories = result.data;
+              if ($scope.object.subCategories.length == 0) {
+                toastNotifications.info("no sub category");
+              }
+            }
           }
         );
       }

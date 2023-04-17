@@ -1,4 +1,4 @@
-<div ng-class="{'dim':object.isLoading}">
+<div style="width: 100%" ng-class="{'dim':object.isLoading}">
   <div ng-if="object.products.length" class="products">
     <div ng-repeat="categoryProduct in object.products">
       <span> {{categoryProduct._id.superCategory}} </span>
@@ -30,7 +30,7 @@
 
             <td>{{product.name}}</td>
 
-            <td>{{product.description}}</td>
+            <td style="width: 333px">{{product.description}}</td>
             <td>{{product.price}}</td>
             <td>
               <button
