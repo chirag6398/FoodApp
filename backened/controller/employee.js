@@ -148,4 +148,37 @@ module.exports = {
         return res.status(404).send(err);
       });
   },
+  updateUserName: function (req, res) {
+    var query = req.query;
+    employeeModel
+      .findOneAndUpdate({ _id: query.id }, { userName: query.userName })
+      .then(function (result) {
+        return res.send({ message: "update successful" });
+      })
+      .catch(function (err) {
+        return res.status(500).send({ message: "internale server error" });
+      });
+  },
+  updateEmail: function (req, res) {
+    var query = req.query;
+    employeeModel
+      .findOneAndUpdate({ _id: query.id }, { email: query.email })
+      .then(function (result) {
+        return res.send({ message: "update successful" });
+      })
+      .catch(function (err) {
+        return res.status(500).send({ message: "internale server error" });
+      });
+  },
+  updatePhoneNumber: function (req, res) {
+    var query = req.query;
+    employeeModel
+      .findOneAndUpdate({ _id: query.id }, { number: query.phoneNumber })
+      .then(function (result) {
+        return res.send({ message: "update successful" });
+      })
+      .catch(function (err) {
+        return res.status(500).send({ message: "internale server error" });
+      });
+  },
 };

@@ -1,5 +1,4 @@
 ///<reference path="../module/module.js"/>
-///<reference path="../factory/apicall.js"/>
 
 app.controller("superAdminSettingController", [
   "$scope",
@@ -10,9 +9,8 @@ app.controller("superAdminSettingController", [
   function ($scope, adminApi, $stateParams, $rootScope, toastNotifications) {
     $scope.object = {
       admin: null,
-      btnText1: "update",
-      btnText2: "change",
       isLoading: true,
+      updateAdmin: null,
     };
     adminApi.getAdminPage();
     $rootScope.$on("passData", function (err, data) {
@@ -20,38 +18,86 @@ app.controller("superAdminSettingController", [
       $scope.object.isLoading = false;
     });
 
-    $scope.updateAdmin = function ($event, adminId) {
-      $event.preventDefault();
-      $scope.object.btnText1 = "processing";
-      adminApi.updateAdmin(
-        $scope.object.admin,
+    $scope.setFormData = function (admin) {
+      $scope.object.updateAdmin = { ...admin };
+    };
+
+    // $scope.updateAdmin = function () {
+
+    //   adminApi.updateAdmin(
+    //     $scope.object.admin,
+    //     $stateParams.id,
+    //     function (err, result) {
+    //       console.log(result);
+    //       if (result) {
+    //         toastNotifications.success("updated successfully");
+    //       } else {
+    //         toastNotifications.error("updation failed");
+    //       }
+    //     }
+    //   );
+    // };
+
+    $scope.updateUserName = function () {
+      adminApi.updateUserName(
+        $scope.object.updateAdmin.userName,
         $stateParams.id,
         function (err, result) {
-          console.log(result);
           if (result) {
-            $scope.object.btnText1 = "successfull";
+            $scope.object.admin.userName = $scope.object.updateAdmin.userName;
             toastNotifications.success("updated successfully");
           } else {
-            $scope.object.btnText1 = "Retry";
-            toastNotifications.error("updation failed");
+            toastNotifications.error(err.message);
           }
+          $("#exampleModal1").modal("hide");
         }
       );
     };
-    $scope.changePassword = function ($event) {
-      $event.preventDefault();
-      $scope.object.btnText2 = "changing";
+
+    $scope.updateEmail = function () {
+      adminApi.updateEmail(
+        $scope.object.updateAdmin.email,
+        $stateParams.id,
+        function (err, result) {
+          if (result) {
+            $scope.object.admin.email = $scope.object.updateAdmin.email;
+            toastNotifications.success("updated successfully");
+          } else {
+            toastNotifications.error(err.message);
+          }
+          $("#exampleModal2").modal("hide");
+        }
+      );
+    };
+
+    $scope.updatePhoneNumber = function () {
+      adminApi.updatePhoneNumber(
+        $scope.object.updateAdmin.number,
+        $stateParams.id,
+        function (err, result) {
+          if (result) {
+            $scope.object.admin.number = $scope.object.updateAdmin.number;
+            toastNotifications.success("updated successfully");
+          } else {
+            toastNotifications.error(err.message);
+          }
+          $("#exampleModal3").modal("hide");
+        }
+      );
+    };
+
+    $scope.changePassword = function () {
       adminApi.updatePassword(
-        $scope.object.admin,
+        $scope.object.updateAdmin,
         $stateParams.id,
         function (err, result) {
           console.log(result);
           if (result) {
-            $scope.object.btnText2 = "changed";
-            toastNotifications.success("updated successfully");
+            toastNotifications.success("Password Changed");
           } else {
             toastNotifications.error("please try later");
           }
+          $("#exampleModal4").modal("hide");
         }
       );
     };

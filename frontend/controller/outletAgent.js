@@ -201,6 +201,7 @@ app.controller("outletAgentController", [
 
     $scope.setIndexing = function (ind) {
       $scope.object.isSelected = ind;
+      $scope.object.isSelected1 = 0;
       $scope.object.subCategory =
         $scope.object.productsData.categoryInSuperCategory[
           $scope.object.productsData.superCategories[$scope.object.isSelected]
@@ -215,7 +216,9 @@ app.controller("outletAgentController", [
       $scope.object.isSelected1 = ind;
       $scope.object.products =
         $scope.object.productsData.categoryProducts[
-          $scope.object.productsData.categories[$scope.object.isSelected1]
+          $scope.object.productsData.categoryInSuperCategory[
+            $scope.object.productsData.superCategories[$scope.object.isSelected]
+          ][ind]
         ];
     };
 

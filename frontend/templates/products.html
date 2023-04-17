@@ -1,49 +1,50 @@
 <div ng-class="{'dim':object.isLoading}">
   <div ng-if="object.products.length" class="products">
-    <table
-      class="table table-bordered table-hover"
-      ng-repeat="categoryProduct in object.products"
-    >
-      <thead>
-        <tr>
-          <th scope="col">S.No</th>
-          <th scope="col">Image</th>
-          <th scope="col">Name</th>
-          <th scope="col">Sub Category</th>
-          <th scope="col">Description</th>
-          <th scope="col">Price</th>
-          <th scope="col">Remove</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          style="cursor: pointer"
-          ng-repeat="product in categoryProduct.products"
-        >
-          <th scope="row">{{$index}}</th>
-          <td>
-            <img
-              style="object-fit: contain; height: 50px"
-              src="{{product.img}}"
-              alt="..."
-            />
-          </td>
-          <td>{{product.name}}</td>
-          <td>{{product.superCategory.category.name}}</td>
-          <td>{{product.description}}</td>
-          <td>{{product.price}}</td>
-          <td>
-            <button
-              type="button"
-              ng-click="removeProduct(product)"
-              class="btn btn-primary"
-            >
-              Remove
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div ng-repeat="categoryProduct in object.products">
+      <span> {{categoryProduct._id.superCategory}} </span>
+      <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Image</th>
+            <th scope="col">Name</th>
+
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col">Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            style="cursor: pointer"
+            ng-repeat="product in categoryProduct.products"
+          >
+            <th scope="row">{{$index}}</th>
+            <td>
+              <img
+                style="object-fit: contain; height: 50px"
+                src="{{product.img}}"
+                alt="..."
+              />
+            </td>
+
+            <td>{{product.name}}</td>
+
+            <td>{{product.description}}</td>
+            <td>{{product.price}}</td>
+            <td>
+              <button
+                type="button"
+                ng-click="removeProduct(product)"
+                class="btn btn-danger"
+              >
+                Remove
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
   <div ng-if="!object.products.length && !object.isLoading">
     <h3>No products added yet</h3>

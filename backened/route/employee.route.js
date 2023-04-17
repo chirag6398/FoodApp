@@ -26,9 +26,22 @@ employeeRoute.get(
 );
 
 employeeRoute.put("/api/employee/updateUser", employeeController.updateUser);
+
 employeeRoute.put(
   "/api/employee/updatePassword",
   employeeController.updatePassword
+);
+
+employeeRoute.put(
+  "/api/employee/updateUserName",
+  employeeController.updateUserName
+);
+
+employeeRoute.put("/api/employee/updateEmail", employeeController.updateEmail);
+
+employeeRoute.put(
+  "/api/employee/updatePhoneNumber",
+  employeeController.updatePhoneNumber
 );
 
 employeeRoute.post(

@@ -155,14 +155,16 @@ module.exports = {
         },
         {
           $group: {
-            _id: "$products.product.superCategory.category._id",
-            name: { $first: "$products.product.superCategory.category.name" },
+            _id: {
+              superCategory: "$products.product.superCategory.name",
+              category: "$products.product.superCategory.category.name",
+            },
             brandLogo: { $first: "$brand.logo" },
             products: { $push: "$products.product" },
           },
         },
         {
-          $sort: { name: 1 },
+          $sort: { "_id.superCategory": 1 },
         },
       ])
       .exec(function (err, result) {

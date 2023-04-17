@@ -307,5 +307,53 @@ app.service("adminApi", function ($http, $rootScope) {
       });
   };
 
+  obj.updateUserName = function (name, id, cb) {
+    $http
+      .put(
+        "http://localhost:5000/api/employee/updateUserName?userName=" +
+          name +
+          "&id=" +
+          id
+      )
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb(err.data, null);
+      });
+  };
+
+  obj.updateEmail = function (email, id, cb) {
+    $http
+      .put(
+        "http://localhost:5000/api/employee/updateEmail?email=" +
+          email +
+          "&id=" +
+          id
+      )
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb(err.data, null);
+      });
+  };
+
+  obj.updatePhoneNumber = function (phoneNumber, id, cb) {
+    $http
+      .put(
+        "http://localhost:5000/api/employee/updatePhoneNumber?phoneNumber=" +
+          phoneNumber +
+          "&id=" +
+          id
+      )
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb(err.data, null);
+      });
+  };
+
   return obj;
 });

@@ -35,25 +35,15 @@
       </a>
     </li>
 
-    <li></li>
-    <!-- <li>
-      <a ui-sref-active="activeNavBar" ui-sref="superAdmin.superCategories">
-        <i title="food categories" class="bx bx-category"></i>
-        <span class="link_name">Categories</span>
-      </a>
-    </li> -->
-
-    <li>
+    <li style="cursor: pointer">
       <a
         ui-sref-active="activeNavBar"
         ui-sref="superAdmin.setting({id:object.superAdmin._id})"
       >
-        <i class="bx bx-cog"></i>
-        <span class="link_name">Setting</span>
+        <i title="profile" class="fa fa-user" aria-hidden="true"></i>
+
+        <span class="link_name">Profile</span>
       </a>
-      <ul class="sub-menu blank">
-        <li><a class="link_name" href="#">Setting</a></li>
-      </ul>
     </li>
     <li style="cursor: pointer">
       <a ng-click="logOutHandler()">
@@ -68,7 +58,6 @@
     <div>
       <i class="bx bx-menu"></i>
     </div>
-
     <div style="height: inherit; width: 100%" ui-view></div>
   </div>
 </section>

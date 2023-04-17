@@ -1,0 +1,26 @@
+.profile__extDiv{
+    
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  
+}
+.profile__mainDiv{
+    background: #fffe;
+    border: 1px solid lightgray;
+    width: 500px;
+    height: 500px;
+    border-radius: 3px;
+    box-shadow: #fffe 0px 0px 0px 1px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  
+}
+.profile__row{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}

@@ -1,5 +1,4 @@
 ///<reference path="../module/module.js"/>
-///<reference path="../factory/apicall.js"/>
 
 app.controller("outletAdminProductsController", [
   "$scope",
@@ -25,6 +24,7 @@ app.controller("outletAdminProductsController", [
           $scope.object.outlet._id,
           function (err, result) {
             if (result) {
+              console.log(result);
               $scope.object.isLoading = false;
               $scope.object.products = result.data;
             }
