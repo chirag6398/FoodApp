@@ -1,5 +1,4 @@
 ///<reference path="../module/module.js"/>
-///<reference path="../factory/apicall.js"/>
 
 app.controller("superAdminUsersController", [
   "$scope",
@@ -42,7 +41,8 @@ app.controller("superAdminUsersController", [
 
     $scope.setSearchResult = function (res) {
       $scope.object.users = [res];
-      $scope.object.selectedUser = {} = res;
+      $scope.object.selectedUser = res;
+      $scope.object.page = 1;
       $scope.object.searchTextResult = [];
     };
 
@@ -67,7 +67,7 @@ app.controller("superAdminUsersController", [
       }
     );
 
-    $scope.getUserHandler = function (page, limit) {
+    $scope.getUserHandler = function (page, limit, notation) {
       $scope.object.isLoading = true;
       superAdminFactory.getUsers(
         $scope.object.filter,
@@ -89,25 +89,15 @@ app.controller("superAdminUsersController", [
               $scope.object.limit
             );
             $scope.object.selectedUser = null;
+            $scope.object.pages = superAdminFactory.updatePages(
+              page,
+              $scope.object.totalPage
+            );
           } else {
             alert("something is wrong");
           }
         }
       );
     };
-
-    // $scope.applyFilter = function () {
-    //   console.log($scope.object.filter);
-
-    //   superAdminFactory.applyFilterOnUsers(
-    //     $scope.object.filter,
-    //     $scope.object.limit,
-    //     1,
-    //     function (err, result) {
-    //       console.log(err, result);
-    //       $scope.object.users = result.data.data;
-    //     }
-    //   );
-    // };
   },
 ]);

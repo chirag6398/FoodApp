@@ -20,7 +20,10 @@
 }
 .data__container{
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    gap:10px;
+    /* justify-content: flex-start; */
 }
 .data__input{
     display: flex;

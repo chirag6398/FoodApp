@@ -150,12 +150,12 @@
         </button>
         <button
           class="page-item btn"
-          ng-click="getUserHandler($index+1,object.limit)"
-          ng-disabled="$index+1===object.page"
+          ng-click="getUserHandler($index+1,object.limit,page)"
+          ng-disabled="$index+1===object.page || page==='...'"
           ng-class="{'disabled':$index+1===object.page}"
           ng-repeat="page in object.pages track by $index"
         >
-          <a class="page-link">{{$index+1}}</a>
+          <a class="page-link">{{page}}</a>
         </button>
 
         <button

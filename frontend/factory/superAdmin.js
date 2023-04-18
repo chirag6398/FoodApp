@@ -137,8 +137,38 @@ app.factory(
 
     obj.getPages = function (totalCount, limit) {
       var totalPage = Math.ceil(totalCount / limit);
-      var pages = new Array(totalPage).fill(0);
 
+      // var pages = new Array(totalPage).fill(0);
+      var pages = [];
+      for (var i = 1; i <= totalPage; i++) {
+        if (i <= 3) {
+          pages.push(i);
+        } else {
+          pages.push("...");
+          return pages;
+        }
+      }
+
+      return pages;
+    };
+
+    obj.updatePages = function (currentPage, totalPage) {
+      var pages = [];
+      // console.log(pages);
+      var startPage = Math.max(1, currentPage - 1);
+      var endPage = Math.min(startPage + 2, totalPage);
+
+      if (startPage > 1) {
+        pages.push("...");
+      }
+      for (var i = startPage; i <= endPage; i++) {
+        pages.push(i);
+      }
+
+      if (endPage < totalPage) {
+        pages.push("...");
+      }
+      // console.log(pages);
       return pages;
     };
 
