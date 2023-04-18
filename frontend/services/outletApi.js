@@ -223,5 +223,23 @@ app.service("outletApi", function ($http, $rootScope) {
         cb(err.data, null);
       });
   };
+  obj.getOrders = function (id, page, limit, cb) {
+    console.log(id);
+    $http
+      .get(
+        "http://localhost:5000/api/outletAdmin/getOrders?id=" +
+          id +
+          "&page=" +
+          page +
+          "&limit=" +
+          limit
+      )
+      .then(function (response) {
+        cb(null, response);
+      })
+      .catch(function (err) {
+        cb(err, null);
+      });
+  };
   return obj;
 });

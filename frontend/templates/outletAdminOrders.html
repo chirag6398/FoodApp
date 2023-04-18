@@ -1,1 +1,75 @@
-<div>hi</div>
+<div
+  ng-class="{'dim':isLoading}"
+  style="display: flex; flex-direction: column; width: 100%; padding: 20px"
+>
+  <div>
+    <table class="table table-bordered table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Customer Name</th>
+          <th scope="col">Phone Number</th>
+          <th scope="col">Order Type</th>
+          <th scope="col">Status</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="order in object.orders">
+          <th scope="row">{{(object.page-1)*object.limit+$index+1}}</th>
+          <td>{{order.customer.name}}</td>
+          <td>{{order.customer.number}}</td>
+          <td>{{order.type}}</td>
+          <td>{{order.status}}</td>
+          <td>{{order.totalQuantity}}</td>
+          <td>{{order.createdAt}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div ng-if="!object.selectedUser">
+    <nav
+      style="display: flex; align-items: center; justify-content: center"
+      aria-label="Page navigation example"
+    >
+      <ul
+        style="display: flex; gap: 4px"
+        class="pagination justify-content-end"
+      >
+        <button
+          class="page-item btn"
+          ng-click="getOrderHandler(object.page-1,object.limit)"
+          ng-disabled="object.page===object.one"
+          ng-class="{'disabled':object.page===1}"
+        >
+          <a class="page-link">Previous</a>
+        </button>
+        <button
+          class="page-item btn"
+          ng-click="getOrderHandler($index+1,object.limit,page)"
+          ng-disabled="$index+1===object.page || page==='...'"
+          ng-class="{'disabled':$index+1===object.page}"
+          ng-repeat="page in object.pages track by $index"
+        >
+          <a class="page-link">{{page}}</a>
+        </button>
+
+        <button
+          ng-click="getOrderHandler(object.page+1,object.limit)"
+          ng-disabled="object.page===object.totalPage"
+          ng-class="{'disabled':object.page===object.totalPage}"
+          class="page-item btn"
+        >
+          <a class="page-link">Next</a>
+        </button>
+      </ul>
+    </nav>
+  </div>
+</div>
+<div
+  ng-if="isLoading"
+  class="loader"
+  style="width: 100%; height: 100vh; top: 0px; position: absolute"
+></div>

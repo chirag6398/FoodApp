@@ -1,11 +1,11 @@
-var outletModel = require("../model/outlet.model");
-var brandModel = require("../model/brand.model");
-var productModel = require("../model/product.model");
-var categoryModel = require("../model/category.model");
+var outletModel = require("../model/outlet.model.js");
+var brandModel = require("../model/brand.model.js");
+var productModel = require("../model/product.model.js");
+var categoryModel = require("../model/category.model.js");
 var mongoose = require("mongoose");
-var validation = require("../service/validation.service");
-var employeeModel = require("../model/employee.model");
-const superCategoryModel = require("../model/superCategory.model");
+var employeeModel = require("../model/employee.model.js");
+var superCategoryModel = require("../model/superCategory.model.js");
+var orderModel = require("../model/order.model.js");
 
 module.exports = {
   getAdminPage: function (req, res) {
@@ -71,6 +71,32 @@ module.exports = {
       .catch(function (err) {
         console.log(err);
         return res.status(500).send({ error: err });
+      });
+  },
+  getOrders: function (req, res) {
+    var id = req.query.id;
+    var limit = req.query.limit;
+    var page = req.query.page;
+    var skip = (page - 1) * limit;
+
+    console.log(id);
+    orderModel
+      .find({ "outlet._id": mongoose.Types.ObjectId(id) })
+      .skip(skip)
+      .limit(limit)
+      .then(function (result) {
+        orderModel.countDocuments(
+          { "outlet._id": mongoose.Types.ObjectId(id) },
+          function (err, count) {
+            if (count) {
+              return res.status(200).send({ orders: result, count });
+            }
+          }
+        );
+      })
+      .catch(function (err) {
+        console.log(err);
+        return res.status(500).send({ message: "internal server error" });
       });
   },
   addProductToOutlet: function (req, res) {

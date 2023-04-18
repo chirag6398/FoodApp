@@ -43,6 +43,13 @@ outletAdminRoute.get(
   outletAdminController.getSubCategories
 );
 
+outletAdminRoute.get(
+  "/api/outletAdmin/getOrders",
+  passport.authenticate("jwt", { session: false }),
+  middleware,
+  outletAdminController.getOrders
+);
+
 outletAdminRoute.put(
   "/api/outletAdmin/removeTax",
   outletAdminController.removeTax

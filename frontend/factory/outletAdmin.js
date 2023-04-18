@@ -2,7 +2,13 @@
 
 app.factory(
   "outletAdminFactory",
-  function (outletApi, outletAdminDashBoardApi, $anchorScroll, $location) {
+  function (
+    outletApi,
+    outletAdminDashBoardApi,
+    $anchorScroll,
+    $location,
+    $stateParams
+  ) {
     var obj = {};
 
     obj.scrollToSubCategory = function () {
@@ -296,6 +302,40 @@ app.factory(
           });
         } else {
           cb(err, null);
+        }
+      });
+    };
+
+    obj.getOrders = function (limit, page, cb) {
+      outletApi.getOrders($stateParams.id, page, limit, function (err, result) {
+        if (err) {
+          cb(err, null);
+        } else {
+          var data = result.data;
+          var orders = data.orders;
+          var one = 1;
+          orders.forEach(function (value) {
+            value.totalQuantity = value.items.reduce(function (accum, value) {
+              return accum + value.quantity;
+            }, 0);
+          });
+          var totalPage = Math.ceil(data.count / limit);
+          var totalCount = data.count;
+
+          var pages = [];
+          for (var i = 1; i <= totalPage; i++) {
+            pages.push(i);
+          }
+
+          return cb(null, {
+            orders,
+            pages,
+            limit,
+            totalPage,
+            totalCount,
+            one,
+            page,
+          });
         }
       });
     };
