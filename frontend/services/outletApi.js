@@ -223,8 +223,8 @@ app.service("outletApi", function ($http, $rootScope) {
         cb(err.data, null);
       });
   };
-  obj.getOrders = function (id, page, limit, cb) {
-    console.log(id);
+  obj.getOrders = function (id, page, limit, filter, cb) {
+    console.log(filter);
     $http
       .get(
         "http://localhost:5000/api/outletAdmin/getOrders?id=" +
@@ -232,7 +232,15 @@ app.service("outletApi", function ($http, $rootScope) {
           "&page=" +
           page +
           "&limit=" +
-          limit
+          limit +
+          "&customerName=" +
+          filter.customerName +
+          "&number=" +
+          filter.number +
+          "&status=" +
+          filter.status +
+          "&orderType=" +
+          filter.orderType
       )
       .then(function (response) {
         cb(null, response);

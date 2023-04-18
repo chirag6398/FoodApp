@@ -3,6 +3,68 @@
   style="display: flex; flex-direction: column; width: 100%; padding: 20px"
 >
   <div>
+    <form name="filter" novalidate>
+      <div
+        style="
+          display: flex;
+          justify-content: flex-start;
+          padding: 10px;
+          flex-wrap: wrap;
+          gap: 10px;
+          align-items: center;
+        "
+      >
+        <div>
+          <input
+            class="form-control"
+            type="text"
+            ng-model="object.filter.customerName"
+            placeholder="Customer Name"
+          />
+        </div>
+        <div>
+          <input
+            class="form-control"
+            type="number"
+            ng-pattern="/^\d{10}$/"
+            name="number"
+            placeholder="enter customer number"
+            ng-model="object.filter.number"
+          />
+          <span
+            style="color: red"
+            ng-show="filter.number.$dirty && filter.number.$invalid"
+            >please enter correct number</span
+          >
+        </div>
+        <div>
+          <select class="form-control" ng-model="object.filter.orderType">
+            <option value="take-away">Take-Away</option>
+            <option value="dine-in">Dine-In</option>
+            <option value="">select orderType</option>
+          </select>
+        </div>
+
+        <div>
+          <select class="form-control" ng-model="object.filter.status">
+            <option value="served">Served</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+            <option value="">select status</option>
+          </select>
+        </div>
+
+        <button
+          class="btn"
+          style="cursor: pointer"
+          ng-click="getOrderHandler(1,object.limit)"
+        >
+          <i class="bx bx-filter-alt"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+  <div>
     <table class="table table-bordered table-hover">
       <thead class="thead-dark">
         <tr>
@@ -48,7 +110,7 @@
         </button>
         <button
           class="page-item btn"
-          ng-click="getOrderHandler($index+1,object.limit,page)"
+          ng-click="getOrderHandler($index+1,object.limit)"
           ng-disabled="$index+1===object.page || page==='...'"
           ng-class="{'disabled':$index+1===object.page}"
           ng-repeat="page in object.pages track by $index"

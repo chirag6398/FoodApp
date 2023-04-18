@@ -74,25 +74,40 @@ module.exports = {
       });
   },
   getOrders: function (req, res) {
-    var id = req.query.id;
-    var limit = req.query.limit;
-    var page = req.query.page;
+    var query = req.query;
+    var id = query.id;
+    var limit = query.limit;
+    var page = query.page;
     var skip = (page - 1) * limit;
+    var filter = {
+      "outlet._id": mongoose.Types.ObjectId(id),
+    };
+    if (query.customerName) {
+      filter["customer.name"] = { $regex: new RegExp(query.customerName, "i") };
+    }
+    if (query.number && query.number !== "null") {
+      filter["customer.number"] = +query.number;
+    }
+    if (query.status) {
+      filter["status"] = query.status;
+    }
+    if (query.orderType) {
+      filter["type"] = query.orderType;
+    }
 
     console.log(id);
     orderModel
-      .find({ "outlet._id": mongoose.Types.ObjectId(id) })
+      .find(filter)
       .skip(skip)
       .limit(limit)
       .then(function (result) {
-        orderModel.countDocuments(
-          { "outlet._id": mongoose.Types.ObjectId(id) },
-          function (err, count) {
-            if (count) {
-              return res.status(200).send({ orders: result, count });
-            }
+        orderModel.countDocuments(filter, function (err, count) {
+          if (!err) {
+            return res.status(200).send({ orders: result, count });
+          } else {
+            return res.status(500).send({ message: "internal server error" });
           }
-        );
+        });
       })
       .catch(function (err) {
         console.log(err);

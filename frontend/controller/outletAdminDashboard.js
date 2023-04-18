@@ -17,12 +17,7 @@ app.controller("outletAdminDashboardController", [
   ) {
     $scope.isLoading = true;
 
-    $timeout(function () {
-      // console.log($scope.object.myChart1);
-      if ($scope.object.myChart1) {
-        outletApi.getOutletAdminPage();
-      }
-    }, 1300);
+    outletApi.getOutletAdminPage();
 
     $rootScope.$on("passData", function (err, data) {
       console.log(data);

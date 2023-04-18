@@ -30,7 +30,6 @@ app.controller("brandProductsController", [
 
     $rootScope.$on("passData", function (err, data) {
       if (data) {
-        console.log(data);
         $scope.object.outlet = data.data.outletData;
         $scope.object.brand = data.data.outletData.brand;
         outletAdminFactory.getSuperCategories(

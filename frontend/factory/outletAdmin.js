@@ -306,38 +306,57 @@ app.factory(
       });
     };
 
-    obj.getOrders = function (limit, page, cb) {
-      outletApi.getOrders($stateParams.id, page, limit, function (err, result) {
-        if (err) {
-          cb(err, null);
-        } else {
-          var data = result.data;
-          var orders = data.orders;
-          var one = 1;
-          orders.forEach(function (value) {
-            value.totalQuantity = value.items.reduce(function (accum, value) {
-              return accum + value.quantity;
-            }, 0);
-          });
-          var totalPage = Math.ceil(data.count / limit);
-          var totalCount = data.count;
+    var filter1 = {
+      customerName: "",
+      number: "",
+      status: "",
+      orderType: "",
+    };
 
-          var pages = [];
-          for (var i = 1; i <= totalPage; i++) {
-            pages.push(i);
+    obj.getOrders = function (limit, page, filter, cb) {
+      if (filter === null) {
+        filter = filter1;
+      }
+      // console.log(filter);
+      outletApi.getOrders(
+        $stateParams.id,
+        page,
+        limit,
+        filter,
+        function (err, result) {
+          if (err) {
+            cb(err, null);
+          } else {
+            var data = result.data;
+            var orders = data.orders;
+            var one = 1;
+
+            orders.forEach(function (value) {
+              value.totalQuantity = value.items.reduce(function (accum, value) {
+                return accum + value.quantity;
+              }, 0);
+            });
+            var totalPage = Math.ceil(data.count / limit);
+            var totalCount = data.count;
+
+            var pages = [];
+            for (var i = 1; i <= totalPage; i++) {
+              pages.push(i);
+            }
+
+            return cb(null, {
+              orders,
+              pages,
+              limit,
+              totalPage,
+              totalCount,
+              one,
+              page,
+              filter,
+            });
           }
-
-          return cb(null, {
-            orders,
-            pages,
-            limit,
-            totalPage,
-            totalCount,
-            one,
-            page,
-          });
         }
-      });
+      );
     };
     return obj;
   }
