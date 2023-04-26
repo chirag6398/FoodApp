@@ -24,6 +24,24 @@ Overall, the food app with a multitenant architecture provides a robust and scal
 # Login Page
 ![Screenshot 2023-04-05 183050](https://user-images.githubusercontent.com/67423768/234512862-6d7463ef-523e-4c92-9cb0-52f2c754da8f.png)
 
+# Super Admin View
+
+SuperAdmin Dashboard where he can view brands growth and their outlets in graph form and some other analysis too. 
+
+![analysisSuperAdmin](https://user-images.githubusercontent.com/67423768/234513835-cff5237e-c013-4b4a-ad19-cdd89e7c06db.png)
+
+# Super Admin Home Page
+
+Here he can register new brand and can add brand admin.
+
+![SuperAdminHome](https://user-images.githubusercontent.com/67423768/234514248-183c1dba-6daf-4f10-8287-6415cf37a583.png)
+
+# Super Admin Users View
+
+Here all the users are visible and we can filter users on the basis of its role and name , number, email,etc
+
+![SuperAdminUsers](https://user-images.githubusercontent.com/67423768/234514293-1a8741ca-9053-459a-9d6c-1bc3d4345581.png)
+
 # Conceptual Framework
 
 Backend
