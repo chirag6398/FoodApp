@@ -23,3 +23,27 @@ Overall, the food app with a multitenant architecture provides a robust and scal
 
 # Login Page
 ![Screenshot 2023-04-05 183050](https://user-images.githubusercontent.com/67423768/234512862-6d7463ef-523e-4c92-9cb0-52f2c754da8f.png)
+
+# Conceptual Framework
+
+Backend
+
+1. Server side pagination - Server-side pagination refers to the practice of breaking down a large set of data into smaller chunks that can be loaded and displayed on a web page incrementally, rather than all at once. This approach offers several benefits such as Improved performance, Reduced server load, More efficient memory usage, Easier maintenance.
+
+2. PassportJS - PassportJS is a popular authentication middleware for Node.js. It provides a simple, modular and flexible way to add authentication to web applications and APIs.
+
+3. AWS S3 - Amazon S3 (Simple Storage Service) is a cloud-based object storage service provided by Amazon Web Services (AWS). It is designed to store and retrieve any amount of data from anywhere on the web. Application's photos and files are stores on aws s3 bucket.
+
+4. MongoDb Transactions - MongoDB transactions allow you to perform multiple operations as a single logical unit of work, ensuring that either all of the operations are applied, or none of them are. Update operations and many other queries are written using MongoDB Transactions.
+
+5. Update - Bulk update refers to the process of updating multiple documents at once in a database, rather than updating them one by one. This can be done to optimize performance and reduce the amount of time it takes to update a large number of documents. bulkWrite() is being used for bulk updates.
+
+6. Aggregations - Aggregations in MongoDB are a way to process data and return computed results based on some criteria. They allow you to perform advanced analytics and data processing on large datasets. Aggregations has been used for in-depth statistics which helps brand owners to optimize their company's processes.
+
+Frontend
+
+1. Auth Interceptor - An auth interceptor is a piece of middleware that intercepts HTTP requests and adds authentication information to them. It is used in support app to ensure that only authenticated users can access protected resources.
+
+2. Debouncing - Debouncing is a technique used in web development to optimize search functionality and improve user experience. It involves delaying the execution of a search query until the user has finished typing, rather than triggering a search query for every keystroke. Deboucning is used in every search feild in support App.
+
+3. Modularization - Code is divided into smaller, independent, and interchangeable modules or components.Each module performs a specific set of functions or tasks and can be developed, tested, and maintained independently.Modularization is used to improve the scalability, flexibility, maintainability, and reusability of the software.
