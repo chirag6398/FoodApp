@@ -42,6 +42,37 @@ Here all the users are visible and we can filter users on the basis of its role 
 
 ![SuperAdminUsers](https://user-images.githubusercontent.com/67423768/234514293-1a8741ca-9053-459a-9d6c-1bc3d4345581.png)
 
+# Brand Admin View
+
+![brandAdminAnalysis](https://user-images.githubusercontent.com/67423768/234515284-db3e8f92-5f7c-4e2b-b20c-e6f9af4c92bc.png)
+
+# Brand Admin Home
+
+![brandAdminOutlets](https://user-images.githubusercontent.com/67423768/234515395-f7465ba7-d408-45a4-8b94-6ac400677be6.png)
+
+# Brand Admin SuperCategory
+
+![brandAdminSuperCategory](https://user-images.githubusercontent.com/67423768/234515494-82b695a1-4bbc-42bd-b098-8ec57325cbfe.png)
+
+# Outlet Admin View
+
+![OutletAdminAnalysis](https://user-images.githubusercontent.com/67423768/234515611-cb102e25-111b-4e6c-99e2-a082637d517e.png)
+
+# Outlet Admin Brand Products
+
+![outletBrandProducts](https://user-images.githubusercontent.com/67423768/234515800-350bafa6-3a47-49c7-a34f-c75650a95a50.png)
+
+# Outlet Products
+
+![OutletProducts](https://user-images.githubusercontent.com/67423768/234515904-71c65fd6-26f1-4a16-85bd-daf97e0338bc.png)
+
+# Outlet Setting
+
+![OutletSetting](https://user-images.githubusercontent.com/67423768/234516003-0c8dd302-f4d4-4b60-af59-b1ee6e5ce7e3.png)
+
+
+
+
 # Conceptual Framework
 
 Backend
