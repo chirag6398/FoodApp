@@ -64,13 +64,24 @@ Here all the users are visible and we can filter users on the basis of its role 
 
 # Outlet Products
 
-![OutletProducts](https://user-images.githubusercontent.com/67423768/234515904-71c65fd6-26f1-4a16-85bd-daf97e0338bc.png)
+![OutletProducts](https://user-images.githubusercontent.com/67423768/234541249-1b2b61ac-683d-49d9-ba0e-b10505271572.png)
+
 
 # Outlet Setting
 
 ![OutletSetting](https://user-images.githubusercontent.com/67423768/234516003-0c8dd302-f4d4-4b60-af59-b1ee6e5ce7e3.png)
 
+# Outlet Agent View
 
+![outletAgentOrderBooking](https://user-images.githubusercontent.com/67423768/234542105-241e863c-dfcf-4d8d-bbdc-da89aa61360a.png)
+
+# Outlet Table View
+
+![TableBooking](https://user-images.githubusercontent.com/67423768/234542185-45accba7-a350-4505-84de-1447bf21af04.png)
+
+# Outlet Order Screen
+
+![OrderScreen](https://user-images.githubusercontent.com/67423768/234542292-606be785-9690-4128-bc9c-26e920840771.png)
 
 
 # Conceptual Framework
