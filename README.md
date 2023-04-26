@@ -15,3 +15,11 @@ Overall, the food app with a multitenant architecture provides a robust and scal
 # Multitenant Architecture
 ![MultitenantArchitecture](https://user-images.githubusercontent.com/67423768/234512236-0f4de536-48a2-4cd4-bc8b-123275970700.png)
 
+# Tech Stack
+1. Backend - NodeJS, ExpressJs
+2. Database - MongoDB
+3. Fronted - AngularJS
+4. Services - AWS S3, SocketIo, Nodemailer, passportJS
+
+# Login Page
+![Screenshot 2023-04-05 183050](https://user-images.githubusercontent.com/67423768/234512862-6d7463ef-523e-4c92-9cb0-52f2c754da8f.png)
